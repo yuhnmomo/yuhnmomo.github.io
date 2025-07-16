@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本內容提取工具 (可自訂規則)</title>
+    <!-- 引入 Tailwind CSS 以進行快速美化 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 使用 Google Fonts 的 'Inter' 字體，讓整體視覺更現代化 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* 為 textarea 提供一個最小高度，避免初始看起來太扁 */
+        textarea {
+            min-height: 300px;
+        }
+        /* 按鈕禁用時的樣式 */
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+        input:disabled {
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen p-4">
+
+    <div class="w-full max-w-5xl bg-gray-800 rounded-xl shadow-2xl p-6 md:p-8">
+        
+        <!-- 標題和說明 -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-white">文本內容提取工具</h1>
+            <p class="text-gray-400 mt-2">優化版：支援大量文本、上傳檔案，並可自訂過濾規則與內容標記。</p>
+        </div>
+
+        <!-- 輸入與輸出的文字區域 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- 原始文本輸入區 -->
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label for="inputText" class="text-sm font-medium text-gray-300">原始文本</label>
+                    <button id="uploadButton" class="text-sm bg-gray-700 hover:bg-gray-600 text-white font-medium py-1 px-3 rounded-lg transition-colors duration-200">上傳檔案</button>
+                    <input type="file" id="fileInput" class="hidden" accept=".txt,text/plain">
+                </div>
+                <textarea 
+                    id="inputText" 
+                    class="w-full h-full bg-gray-900 border border-gray-700 rounded-lg p-4 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition duration-200 resize-none"
+                    placeholder="請在此貼上您的原始文本，或點擊上方按鈕上傳 .txt 檔..."></textarea>
+            </div>
+            <!-- 處理結果輸出區 -->
+            <div>
+                <div class="flex justify-between items-center mb-2">
+                    <label for="outputText" class="text-sm font-medium text-gray-300">處理結果</label>
+                    <button id="copyButton" class="text-sm bg-gray-700 hover:bg-gray-600 text-white font-medium py-1 px-3 rounded-lg transition-colors duration-200">複製</button>
+                </div>
+                <textarea 
+                    id="outputText" 
+                    readonly 
+                    class="w-full h-full bg-gray-900 border border-gray-700 rounded-lg p-4 text-gray-300 resize-none"
+                    placeholder="處理後的本文內容將顯示在此..."></textarea>
+            </div>
+        </div>
+
+        <!-- 規則與標記管理區 -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 border-t border-gray-700 pt-6">
+            <!-- 過濾規則管理 -->
+            <div>
+                <h2 class="text-xl font-semibold text-center text-white mb-4">過濾規則管理</h2>
+                <div class="flex gap-2 mb-4">
+                    <input type="text" id="newRuleInput" class="flex-grow bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="輸入要移除的行的開頭文字...">
+                    <button id="addRuleButton" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">新增</button>
+                </div>
+                <div id="ruleListContainer" class="bg-gray-900/50 p-4 rounded-lg h-40 overflow-y-auto">
+                    <!-- 規則列表將由 JavaScript 動態生成於此 -->
+                </div>
+            </div>
+            <!-- 內容標記管理 -->
+            <div>
+                <h2 class="text-xl font-semibold text-center text-white mb-4">內容標記管理</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label for="startTagInput" class="block mb-1 text-sm font-medium text-gray-300">開始標記</label>
+                        <input type="text" id="startTagInput" class="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label for="endTagInput" class="block mb-1 text-sm font-medium text-gray-300">結束標記</label>
+                        <input type="text" id="endTagInput" class="w-full bg-gray-900 border border-gray-600 rounded-lg px-3 py-2 text-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    <p class="text-xs text-gray-500 text-center">提示：可使用 `||` 分隔多個標記，例如：[開始]||START</p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 操作按鈕與訊息提示 -->
+        <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button id="processButton" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200">
+                開始處理
+            </button>
+            <button id="clearButton" class="w-full sm:w-auto bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-200">
+                全部清除
+            </button>
+        </div>
+        <p id="statusMessage" class="text-center text-green-400 mt-4 h-5"></p>
+
+    </div>
+
+    <script>
+        // 獲取頁面上的 HTML 元素
+        const processButton = document.getElementById('processButton');
+        const clearButton = document.getElementById('clearButton');
+        const copyButton = document.getElementById('copyButton');
+        const uploadButton = document.getElementById('uploadButton');
+        const fileInput = document.getElementById('fileInput');
+        const inputText = document.getElementById('inputText');
+        const outputText = document.getElementById('outputText');
+        const statusMessage = document.getElementById('statusMessage');
+        // 規則管理元素
+        const newRuleInput = document.getElementById('newRuleInput');
+        const addRuleButton = document.getElementById('addRuleButton');
+        const ruleListContainer = document.getElementById('ruleListContainer');
+        // 內容標記元素
+        const startTagInput = document.getElementById('startTagInput');
+        const endTagInput = document.getElementById('endTagInput');
+
+        // --- 全域狀態 ---
+        let filterPrefixes = [
+            "時間：", "地點：", "📆時間：", "🗺️地點：",
+            "A.", "B.", "C.",
+            "文章裡的時間："
+        ];
+
+        // --- 初始化 ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // 渲染初始的過濾規則列表
+            renderRuleList();
+            // 設定預設的內容標記
+            startTagInput.value = '[開始本文]||[本文開始]';
+            endTagInput.value = '[結束本文]||[本文結束]';
+        });
+
+        // --- 規則管理 ---
+        function renderRuleList() {
+            ruleListContainer.innerHTML = '';
+            if (filterPrefixes.length === 0) {
+                ruleListContainer.innerHTML = '<p class="text-gray-500 text-center">目前沒有過濾規則</p>';
+                return;
+            }
+            filterPrefixes.forEach((rule, index) => {
+                const ruleElement = document.createElement('div');
+                ruleElement.className = 'flex justify-between items-center bg-gray-700/50 p-2 rounded-md mb-2';
+                ruleElement.innerHTML = `
+                    <span class="text-gray-300">${rule}</span>
+                    <button data-index="${index}" class="remove-rule-btn text-red-400 hover:text-red-300 font-bold text-lg leading-none p-1">&times;</button>
+                `;
+                ruleListContainer.appendChild(ruleElement);
+            });
+        }
+
+        addRuleButton.addEventListener('click', () => {
+            const newRule = newRuleInput.value.trim();
+            if (newRule && !filterPrefixes.includes(newRule)) {
+                filterPrefixes.push(newRule);
+                renderRuleList();
+                newRuleInput.value = '';
+                showStatus(`規則 "${newRule}" 已新增`, "green");
+            } else if (!newRule) {
+                showStatus("規則不能為空", "yellow");
+            } else {
+                showStatus("規則已存在", "yellow");
+            }
+        });
+        
+        newRuleInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addRuleButton.click();
+        });
+
+        ruleListContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('remove-rule-btn')) {
+                const indexToRemove = parseInt(e.target.dataset.index, 10);
+                const removedRule = filterPrefixes.splice(indexToRemove, 1)[0];
+                renderRuleList();
+                showStatus(`規則 "${removedRule}" 已移除`, "green");
+            }
+        });
+
+        // --- 主要按鈕事件監聽器 ---
+        processButton.addEventListener('click', () => {
+            const originalText = inputText.value;
+            if (!originalText.trim()) {
+                showStatus("請先貼上或上傳文本！", "yellow");
+                return;
+            }
+            processTextAsync(originalText);
+        });
+
+        clearButton.addEventListener('click', () => {
+            inputText.value = '';
+            outputText.value = '';
+            fileInput.value = '';
+            showStatus("已清除", "green");
+        });
+
+        copyButton.addEventListener('click', () => {
+            if (!outputText.value) {
+                showStatus("沒有內容可以複製", "yellow");
+                return;
+            }
+            navigator.clipboard.writeText(outputText.value).then(() => {
+                showStatus("已複製到剪貼簿！", "green");
+            }).catch(err => {
+                showStatus("複製失敗！", "red");
+                console.error('複製失敗: ', err);
+            });
+        });
+
+        uploadButton.addEventListener('click', () => fileInput.click());
+
+        fileInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+            if (file.type && file.type !== 'text/plain' && !file.name.endsWith('.txt')) {
+                 showStatus("請選擇一個 .txt 檔案", "red");
+                 return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                inputText.value = e.target.result;
+                showStatus(`檔案 "${file.name}" 已成功載入！`, "green");
+            };
+            reader.onerror = () => {
+                showStatus(`讀取檔案時發生錯誤`, "red");
+            };
+            reader.readAsText(file, 'UTF-8');
+        });
+
+        // --- 核心處理函式 ---
+        function processTextAsync(text) {
+            setControlsDisabled(true);
+            showStatus("處理中，請稍候...", "blue");
+
+            // 從 UI 獲取標記並分割成陣列，過濾掉空字串
+            const startTags = startTagInput.value.split('||').map(t => t.trim()).filter(Boolean);
+            const endTags = endTagInput.value.split('||').map(t => t.trim()).filter(Boolean);
+
+            const lines = text.split('\n');
+            let processedLines = [];
+            let inside = false;
+            let currentIndex = 0;
+            const chunkSize = 2000;
+
+            function processChunk() {
+                const chunkEnd = Math.min(currentIndex + chunkSize, lines.length);
+                
+                for (; currentIndex < chunkEnd; currentIndex++) {
+                    const line = lines[currentIndex];
+
+                    // 檢查是否為開始標記
+                    if (startTags.length > 0 && startTags.some(tag => line.includes(tag))) {
+                        inside = true; continue;
+                    }
+                    // 檢查是否為結束標記
+                    if (endTags.length > 0 && endTags.some(tag => line.includes(tag))) {
+                        inside = false; processedLines.push(''); continue;
+                    }
+
+                    const shouldRemove = filterPrefixes.some(prefix => line.trim().startsWith(prefix));
+                    if (shouldRemove) {
+                        continue;
+                    }
+
+                    if (inside) {
+                        processedLines.push(line);
+                    }
+                }
+
+                if (currentIndex < lines.length) {
+                    setTimeout(processChunk, 0);
+                } else {
+                    outputText.value = processedLines.join('\n');
+                    setControlsDisabled(false);
+                    showStatus("處理完成！", "green");
+                }
+            }
+            processChunk();
+        }
+
+        // --- 輔助函式 ---
+        function showStatus(message, color) {
+            const colorMap = {
+                green: 'text-green-400',
+                yellow: 'text-yellow-400',
+                red: 'text-red-500',
+                blue: 'text-blue-400'
+            };
+            statusMessage.textContent = message;
+            statusMessage.className = `text-center mt-4 h-5 ${colorMap[color] || 'text-gray-400'}`;
+            
+            if (message !== "處理中，請稍候...") {
+                 setTimeout(() => {
+                    if (statusMessage.textContent === message) {
+                       statusMessage.textContent = "";
+                    }
+                }, 3000);
+            }
+        }
+
+        function setControlsDisabled(disabled) {
+            const buttons = [processButton, clearButton, copyButton, uploadButton, addRuleButton];
+            const inputs = [newRuleInput, startTagInput, endTagInput];
+
+            buttons.forEach(btn => btn.disabled = disabled);
+            inputs.forEach(input => input.disabled = disabled);
+
+            if (disabled) {
+                processButton.textContent = "處理中...";
+            } else {
+                processButton.textContent = "開始處理";
+            }
+        }
+    </script>
+
+</body>
+</html>
