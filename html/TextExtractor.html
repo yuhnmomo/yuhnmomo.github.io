@@ -113,6 +113,7 @@
         const processButton = document.getElementById('processButton');
         const clearButton = document.getElementById('clearButton');
         const copyButton = document.getElementById('copyButton');
+        const downloadTxtButton = document.getElementById('downloadTxtButton'); // 新增的下載按鈕
         const uploadButton = document.getElementById('uploadButton');
         const fileInput = document.getElementById('fileInput');
         const inputText = document.getElementById('inputText');
@@ -135,9 +136,7 @@
 
         // --- 初始化 ---
         document.addEventListener('DOMContentLoaded', () => {
-            // 渲染初始的過濾規則列表
             renderRuleList();
-            // 設定預設的內容標記
             startTagInput.value = '[開始本文]||[本文開始]';
             endTagInput.value = '[結束本文]||[本文結束]';
         });
@@ -205,7 +204,7 @@
         });
 
         copyButton.addEventListener('click', () => {
-            if (!outputText.value) {
+            if (!outputText.value.trim()) {
                 showStatus("沒有內容可以複製", "yellow");
                 return;
             }
@@ -216,6 +215,35 @@
                 console.error('複製失敗: ', err);
             });
         });
+
+        // ▼▼▼ 新增的下載功能 ▼▼▼
+        downloadTxtButton.addEventListener('click', () => {
+            const textToSave = outputText.value;
+            if (!textToSave.trim()) {
+                showStatus("沒有內容可以下載", "yellow");
+                return;
+            }
+
+            // 建立一個 Blob 物件 (二進位大型物件)
+            const blob = new Blob([textToSave], { type: 'text/plain;charset=utf-8' });
+            
+            // 建立一個隱藏的下載連結
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.href = url;
+            link.download = '處理後的文本.txt'; // 設定下載檔案的預設名稱
+            document.body.appendChild(link);
+            
+            // 觸發點擊以下載檔案
+            link.click();
+            
+            // 清理，移除連結並釋放 URL 物件
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+
+            showStatus("檔案已開始下載！", "green");
+        });
+        // ▲▲▲ 新增的下載功能 ▲▲▲
 
         uploadButton.addEventListener('click', () => fileInput.click());
 
@@ -242,7 +270,6 @@
             setControlsDisabled(true);
             showStatus("處理中，請稍候...", "blue");
 
-            // 從 UI 獲取標記並分割成陣列，過濾掉空字串
             const startTags = startTagInput.value.split('||').map(t => t.trim()).filter(Boolean);
             const endTags = endTagInput.value.split('||').map(t => t.trim()).filter(Boolean);
 
@@ -258,11 +285,9 @@
                 for (; currentIndex < chunkEnd; currentIndex++) {
                     const line = lines[currentIndex];
 
-                    // 檢查是否為開始標記
                     if (startTags.length > 0 && startTags.some(tag => line.includes(tag))) {
                         inside = true; continue;
                     }
-                    // 檢查是否為結束標記
                     if (endTags.length > 0 && endTags.some(tag => line.includes(tag))) {
                         inside = false; processedLines.push(''); continue;
                     }
@@ -309,7 +334,8 @@
         }
 
         function setControlsDisabled(disabled) {
-            const buttons = [processButton, clearButton, copyButton, uploadButton, addRuleButton];
+            // 將所有需要控制的按鈕和輸入框集中管理
+            const buttons = [processButton, clearButton, copyButton, uploadButton, addRuleButton, downloadTxtButton];
             const inputs = [newRuleInput, startTagInput, endTagInput];
 
             buttons.forEach(btn => btn.disabled = disabled);
