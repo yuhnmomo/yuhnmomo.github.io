@@ -15,6 +15,19 @@
             color: white;
             font-weight: bold;
         }
+        /* 針對 novel-view 內的滾動區域 */
+        .scrollable-content {
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch; /* 提升 iOS 上的滾動流暢度 */
+        }
+        /* 隱藏滾動條，但保留滾動功能 */
+        .scrollable-content::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollable-content {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
@@ -29,22 +42,24 @@
         </main>
     </div>
 
-    <div id="novel-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-4xl">
-        <header class="text-center mb-8">
+    <div id="novel-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl h-screen flex flex-col">
+        <header class="text-center mb-4 md:mb-8">
             <h1 id="novel-title" class="text-3xl sm:text-4xl font-bold text-violet-600 dark:text-violet-400"></h1>
-            <p id="novel-author" class="mt-4 text-lg text-gray-700 dark:text-gray-300"></p>
+            <p id="novel-author" class="mt-2 text-lg text-gray-700 dark:text-gray-300"></p>
             <button id="back-to-library" class="text-violet-500 hover:underline mt-2 inline-block">&larr; 返回書庫</button>
         </header>
-        <main class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-lg space-y-8">
-            <div>
-                 <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">章節列表</h2>
-                 <div id="chapter-list" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3"></div>
+        <main class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <div class="md:col-span-1 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg flex flex-col">
+                <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">章節列表</h2>
+                <div id="chapter-list" class="flex flex-col gap-2 scrollable-content flex-grow pr-2">
+                    </div>
             </div>
-            <div>
+            
+            <div class="md:col-span-2 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg flex flex-col">
                 <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">章節內容</h2>
                 <div id="content-title" class="mt-4 mb-2 text-2xl font-bold text-gray-800 dark:text-gray-200"></div>
                 <p id="content-note" class="mt-1 text-sm text-gray-500 dark:text-gray-400"></p>
-                <div class="mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg min-h-[100px] max-h-[50vh] overflow-y-auto leading-relaxed">
+                <div class="mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg flex-grow scrollable-content leading-relaxed">
                     <div id="content-body"><p class="text-gray-500">請從上方選擇一個章節。</p></div>
                 </div>
             </div>
@@ -59,18 +74,14 @@
         // --- 全域變數和 DOM 元素 ---
         let allNovels = [];
         const views = {
-            // 由於移除了年齡驗證頁面，ageGate 視圖不再需要
             bookList: document.getElementById('book-list-view'),
             novel: document.getElementById('novel-view')
         };
 
         // --- 核心邏輯 ---
         document.addEventListener('DOMContentLoaded', () => {
-            // 網頁載入後直接顯示書庫列表並載入資料
             showView('bookList');
             loadLibrary();
-            
-            // 返回書庫按鈕的事件監聽器保持不變
             document.getElementById('back-to-library').addEventListener('click', () => showView('bookList'));
         });
 
@@ -87,42 +98,38 @@
             const bookListContainer = document.getElementById('book-list');
             const loadingText = document.getElementById('loading-books-text');
             
-            // 檢查是否已經載入過小說列表，如果已載入則不重複執行 [Inference]
             if (allNovels.length > 0) {
-                loadingText.style.display = 'none'; // 隱藏載入中文字
+                loadingText.style.display = 'none';
                 return;
             }
 
-            loadingText.textContent = "正在載入書庫..."; // 確保載入訊息顯示
-            loadingText.className = 'text-gray-500 col-span-full text-center'; // 重置樣式
+            loadingText.textContent = "正在載入書庫...";
+            loadingText.className = 'text-gray-500 col-span-full text-center';
 
             try {
                 const response = await fetch('filelist.json');
                 
                 if (!response.ok) {
-                    // 如果 HTTP 狀態碼不是 2xx，則拋出錯誤
                     throw new Error(`無法載入 filelist.json: 狀態碼 ${response.status}`);
                 }
 
-                const data = await response.json(); // 解析 JSON 內容
+                const data = await response.json();
 
-                // 檢查解析後的數據是否是陣列，且有內容
                 if (!Array.isArray(data) || data.length === 0) {
                     bookListContainer.innerHTML = '<p class="text-red-500 col-span-full text-center">`filelist.json` 是空的或格式錯誤。</p>';
-                    loadingText.style.display = 'none'; // 隱藏載入中文字
+                    loadingText.style.display = 'none';
                     return;
                 }
 
-                allNovels = data; // 將解析後的數據賦值給 allNovels
+                allNovels = data;
 
-                loadingText.style.display = 'none'; // 隱藏載入中文字
-                bookListContainer.innerHTML = ''; // 清空載入中的文字或錯誤訊息
+                loadingText.style.display = 'none';
+                bookListContainer.innerHTML = '';
 
                 allNovels.forEach(novel => {
-                    // 檢查 novel 物件是否具備預期的屬性，以避免因資料不完整而導致的錯誤 [Inference]
                     if (!novel.title || !novel.author || !Array.isArray(novel.chapters)) {
-                        console.warn('偵測到不完整的小說資料:', novel); // 輸出警告到控制台
-                        return; // 跳過此不完整的小說
+                        console.warn('偵測到不完整的小說資料:', novel);
+                        return;
                     }
 
                     const card = document.createElement('div');
@@ -132,11 +139,10 @@
                     bookListContainer.appendChild(card);
                 });
             } catch (error) {
-                // 捕獲所有載入和解析過程中的錯誤
-                console.error('載入書庫失敗:', error); // 輸出詳細錯誤到控制台
+                console.error('載入書庫失敗:', error);
                 loadingText.textContent = `載入書庫失敗: ${error.message}`;
                 loadingText.className = 'text-red-500 col-span-full text-center';
-                bookListContainer.innerHTML = ''; // 清空其他內容
+                bookListContainer.innerHTML = '';
             }
         }
 
@@ -147,8 +153,9 @@
             chapterListContainer.innerHTML = '';
             novel.chapters.forEach(chapter => {
                 const button = document.createElement('button');
+                // 將按鈕的 class 調整為 block 和 w-full 以佔滿整個寬度並垂直堆疊 [Inference]
                 button.textContent = chapter.title;
-                button.className = "p-3 bg-gray-200 dark:bg-gray-700 rounded-lg text-center hover:bg-violet-500 dark:hover:bg-violet-600 hover:text-white transition-all duration-200 truncate";
+                button.className = "p-3 bg-gray-200 dark:bg-gray-700 rounded-lg text-left hover:bg-violet-500 dark:hover:bg-violet-600 hover:text-white transition-all duration-200 truncate block w-full";
                 button.addEventListener('click', (event) => {
                     document.querySelectorAll('#chapter-list button').forEach(btn => btn.classList.remove('selected'));
                     event.currentTarget.classList.add('selected');
@@ -178,7 +185,8 @@
             contentBody.innerHTML = `<p class="text-gray-500">正在載入章節...</p>`;
             
             try {
-                const response = await fetch(`${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`);
+                // 更正了 fetch 路徑，確保在正確的 novels 子資料夾下尋找文件
+                const response = await fetch(`novels/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`);
                 if (!response.ok) throw new Error(`檔案讀取失敗 (${response.status})`);
                 const content = await response.text();
                 contentBody.innerHTML = content.replace(/\n/g, '<br>');
