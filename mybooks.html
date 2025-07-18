@@ -12,47 +12,66 @@
     .view { display: none !important; } /* 所有視圖預設隱藏，並強制執行 */
     .view.active { display: block !important; } /* 使用 .active 來顯示視圖，並強制執行 */
     
-    /* 針對 novel-view 內的滾動區域 */
+    /* 針對內容區域的滾動條樣式 */
     .scrollable-content {
         overflow-y: auto;
         -webkit-overflow-scrolling: touch; /* 提升 iOS 上的滾動流暢度 */
     }
-    /* 隱藏滾動條，但保留滾動功能 */
     .scrollable-content::-webkit-scrollbar {
-        display: none;
+        display: none; /* 隱藏滾動條 */
     }
     .scrollable-content {
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
     }
 
-    /* 將 fixed-top-bar 修改為 position: fixed，並定義寬度 */
+    /* 固定頂部欄樣式 */
     .fixed-top-bar {
-        position: fixed; /* 變更為 fixed */
+        position: fixed; /* 絕對固定 */
         top: 0;
         left: 0; 
-        right: 0; /* 讓它佔據整個寬度 */ 
+        right: 0; /* 佔據整個寬度 */ 
         z-index: 100; /* 確保在其他內容之上 */
-        background-color: var(--tw-bg-opacity, #ffffff); /* 使用 Tailwind CSS 變數來適應暗色模式，提供一個預設值 */
-        /* 增加背景模糊效果，使其更像一個浮動的導航欄 */
-        backdrop-filter: blur(8px);
+        background-color: var(--tw-bg-opacity, #ffffff); /* 適應暗色模式的背景色 */
+        backdrop-filter: blur(8px); /* 背景模糊效果 */
         -webkit-backdrop-filter: blur(8px); /* 兼容 Safari */
-        padding: 0.75rem; /* p-3 的預設值 */
-        border-bottom-left-radius: 0.5rem; /* rounded-b-lg 的預設值 */ 
-        border-bottom-right-radius: 0.5rem; /* rounded-b-lg 的預設值 */ 
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* shadow-lg 的預設值 */ 
+        padding: 0.75rem; /* 內邊距 */
+        border-bottom-left-radius: 0.5rem; /* 圓角 */ 
+        border-bottom-right-radius: 0.5rem; /* 圓角 */ 
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* 陰影 */ 
     }
-    /* 為 novel-view 內容區域預留空間 */
-    #novel-view.active .content-area { /* 注意這裡的選擇器 */ 
+    /* 為小說章節內容區域預留空間 */
+    #novel-view.active .content-area { 
         padding-top: 100px; /* 根據 fixed-top-bar 的實際高度調整此值 */ 
-        /* 這個值需要根據 fixed-top-bar 的實際高度和內邊距來估算，
-           您可能需要根據實際顯示情況調整這個數字。
-           可以通過開發者工具檢查 fixed-top-bar 的 computed height 來決定。
-           大約 80px-120px 之間，取決於內容和padding。 */
     }
 
-    /* 確保 age-gate-view 強制置中 */
-    #age-gate-view.active { /* 只在活躍時強制置中 */ 
+    /* R18 提示框樣式 */
+    .r18-modal {
+        display: none; /* 預設隱藏 */
+        position: fixed;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 200;
+    }
+    .r18-modal-content {
+        background-color: #fff;
+        color: #333;
+        padding: 2rem;
+        border-radius: 1rem;
+        text-align: center;
+        max-width: 400px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+    .dark .r18-modal-content {
+        background-color: #1f2937; /* dark:bg-gray-800 */
+        color: #d1d5db; /* dark:text-gray-200 */
+    }
+
+    /* 確保 age-gate-view 強制置中 (此視圖已移除，但保留樣式以防萬一或未來使用) */
+    #age-gate-view.active { 
         display: flex !important; /* 確保 Flexbox 啟用 */ 
         align-items: center !important; /* 垂直居中 */ 
         justify-content: center !important; /* 水平居中 */ 
@@ -69,26 +88,49 @@
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
+    <!-- 頂部固定欄 (用於小說章節頁面) -->
     <div id="fixed-header-bar" class="fixed-top-bar bg-white dark:bg-gray-800"> 
         <div class="flex items-center justify-between flex-wrap gap-2">
-            <button id="back-to-library" class="text-violet-500 hover:underline inline-block flex-shrink-0">&larr; 返回書庫</button>
+            <!-- 返回書庫按鈕 - 順序 1 -->
+            <button id="back-to-library" class="text-violet-500 hover:underline inline-block flex-shrink-0 order-1">&larr; 返回書庫</button>
             
-            <div class="flex-grow flex justify-center order-first md:order-none">
+            <!-- 小說標題和作者 - 順序 2 -->
+            <div class="flex-grow text-center min-w-0 order-2">
+                <h1 id="novel-title" class="text-lg sm:text-xl font-bold text-violet-600 dark:text-violet-400 truncate"></h1>
+                <p id="novel-author" class="text-xs text-gray-700 dark:text-gray-300 truncate hidden md:block"></p>
+                <p id="novel-author-mobile" class="text-xs text-gray-700 dark:text-gray-300 md:hidden"></p>
+            </div>
+
+            <!-- 章節下拉選單 - 順序 3 -->
+            <div class="flex-grow flex justify-center order-3">
                 <label for="chapter-select" class="sr-only">選擇章節</label>
                 <select id="chapter-select" class="block w-full max-w-xs p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-violet-500 focus:border-violet-500 transition duration-150 ease-in-out text-sm">
                     <option value="">請選擇章節</option>
                 </select>
             </div>
-
-            <div class="flex-grow text-center min-w-0 order-last md:order-none">
-                <h1 id="novel-title" class="text-lg sm:text-xl font-bold text-violet-600 dark:text-violet-400 truncate"></h1>
-                <p id="novel-author" class="text-xs text-gray-700 dark:text-gray-300 truncate hidden md:block"></p>
-                <p id="novel-author-mobile" class="text-xs text-gray-700 dark:text-gray-300 md:hidden"></p>
+            
+            <!-- 章節分頁按鈕 - 順序 4 -->
+            <div class="flex items-center space-x-2 flex-shrink-0 order-4">
+                <button id="first-chapter" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">⏮️</button>
+                <button id="prev-chapter" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">◀️</button>
+                <button id="next-chapter" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">▶️</button>
+                <button id="last-chapter" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">⏭️</button>
             </div>
         </div>
     </div>
 
-    <div id="age-gate-view" class="view active fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
+    <!-- R18 驗證提示框 -->
+    <div id="r18-modal" class="r18-modal hidden">
+        <div class="r18-modal-content">
+            <h3 class="text-xl font-bold mb-4">內容警告</h3>
+            <p class="mb-6">此章節包含限制級內容，未滿18歲者請勿觀看。</p>
+            <button id="r18-confirm-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg mr-2">我已滿18歲</button>
+            <button id="r18-cancel-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg">取消</button>
+        </div>
+    </div>
+
+    <!-- 視圖 1: 年齡驗證 (此視圖已不再使用，但保留以供參考，預設為隱藏且不會被啟用) -->
+    <div id="age-gate-view" class="view fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center max-w-sm w-full">
             <h2 id="age-gate-title" class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">年齡確認</h2>
             <p id="age-gate-message" class="text-gray-600 dark:text-gray-400 mb-8">本網站內容可能不適合未滿18歲的使用者，<br>您是否已年滿18歲？</p>
@@ -99,21 +141,33 @@
         </div>
     </div>
 
-    <div id="book-list-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+    <!-- 視圖 2: 書庫列表 (現在是初始顯示的視圖) -->
+    <div id="book-list-view" class="view active container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
         <header class="text-center mb-8">
             <h1 class="text-3xl sm:text-4xl font-bold text-violet-600 dark:text-violet-400">線上書庫</h1>
             <p class="mt-4 text-lg text-gray-700 dark:text-gray-300">作者：法式草莓布丁</p>
+            
+            <!-- Tag 搜尋輸入框 -->
+            <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-2">
+                <input type="text" id="tag-search-input" placeholder="搜尋標籤 (例如: 小說-R18)" 
+                       class="w-full sm:w-80 p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-violet-500 focus:border-violet-500">
+                <button id="tag-search-btn" class="bg-violet-600 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105">搜尋</button>
+                <button id="tag-reset-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105">重置</button>
+            </div>
         </header>
-        <main id="book-list" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <main id="book-list" class="grid grid-cols-1 gap-4"> <!-- 改為單列，內部使用 flex 實現橫式 -->
             <p id="loading-books-text" class="text-gray-500 col-span-full text-center">正在載入書庫...</p>
         </main>
     </div>
 
+    <!-- 視圖 3: 小說章節頁面 -->
     <div id="novel-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl"> 
         <main class="content-area bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg flex flex-col h-full scrollable-content"> 
             <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">章節內容</h2>
             <div id="content-title" class="mt-2 mb-2 text-2xl font-bold text-gray-800 dark:text-gray-200"></div>
             <p id="content-note" class="mt-1 text-sm text-gray-500 dark:text-gray-400"></p>
+            <!-- 圖片容器 -->
+            <div id="chapter-image-container" class="w-full flex justify-center mb-4"></div>
             <div id="content-body" class="leading-relaxed flex-grow"><p class="text-gray-500">請從上方選擇一個章節。</p></div> 
 
             <div class="mt-4 text-center text-xs text-gray-400 dark:text-gray-500 pb-2 flex-shrink-0">
@@ -124,59 +178,107 @@
 
 <script>
     // --- 全域變數和 DOM 元素 ---
-    let allNovels = [];
-    let views = {}; // 先定義為空物件
-    let chapterSelect; // 先定義為空變數
-    let fixedHeaderBar; // 先定義為空變數
+    let allNovels = []; // 儲存所有小說數據
+    let filteredNovels = []; // 儲存經過標籤篩選後的小說
+    let currentNovel = null; // 當前正在閱讀的小說
+    let currentChapterIndex = 0; // 當前閱讀的章節索引
+
+    let views = {}; 
+    let chapterSelect; 
+    let fixedHeaderBar;
+    let r18Modal;
+    let r18ConfirmBtn;
+    let r18CancelBtn;
+    let tagSearchInput;
+    let tagSearchBtn;
+    let tagResetBtn;
+    let chapterImageContainer; // 新增圖片容器變數
 
     // --- 核心邏輯 ---
     document.addEventListener('DOMContentLoaded', () => {
         // 在 DOMContentLoaded 內部獲取所有 DOM 元素
         views = {
-            ageGate: document.getElementById('age-gate-view'),
+            // ageGate: document.getElementById('age-gate-view'), // 移除 ageGate 視圖的引用
             bookList: document.getElementById('book-list-view'),
             novel: document.getElementById('novel-view')
         };
         chapterSelect = document.getElementById('chapter-select');
         fixedHeaderBar = document.getElementById('fixed-header-bar');
+        r18Modal = document.getElementById('r18-modal');
+        r18ConfirmBtn = document.getElementById('r18-confirm-btn');
+        r18CancelBtn = document.getElementById('r18-cancel-btn');
+        tagSearchInput = document.getElementById('tag-search-input');
+        tagSearchBtn = document.getElementById('tag-search-btn');
+        tagResetBtn = document.getElementById('tag-reset-btn');
+        chapterImageContainer = document.getElementById('chapter-image-container'); // 獲取圖片容器
 
-        // 初始隱藏固定頂部欄 (確保元素已經被獲取)
-        if (fixedHeaderBar) { // 檢查元素是否存在 
+        // 初始隱藏固定頂部欄
+        if (fixedHeaderBar) { 
             fixedHeaderBar.style.display = 'none';
         }
 
-        // 檢查 sessionStorage 是否有年齡驗證狀態
-        if (sessionStorage.getItem('isAgeVerified') === 'true') {
-            showView('bookList');
-            loadLibrary();
-        } else {
-            showView('ageGate'); // 如果未驗證，顯示年齡驗證頁面
-        }
+        // 直接顯示書庫列表，不再進行初始年齡驗證
+        showView('bookList');
+        loadLibrary();
         
-        // 綁定年齡驗證按鈕的事件監聽器
-        const btnYes = document.getElementById('btnYes');
-        const btnNo = document.getElementById('btnNo');
-        if (btnYes) btnYes.addEventListener('click', handleAgeGateYes);
-        if (btnNo) btnNo.addEventListener('click', handleAgeGateNo);
-
+        // --- 事件監聽器 ---
+        // 移除年齡驗證按鈕的事件監聽器 (因為 age-gate-view 已不再使用)
+        // const btnYes = document.getElementById('btnYes');
+        // const btnNo = document.getElementById('btnNo');
+        // if (btnYes) btnYes.addEventListener('click', handleAgeGateYes);
+        // if (btnNo) btnNo.addEventListener('click', handleAgeGateNo);
 
         document.getElementById('back-to-library').addEventListener('click', () => showView('bookList'));
         
-        // 新增章節選單的事件監聽器
-        if (chapterSelect) { // 檢查 chapterSelect 是否存在
+        if (chapterSelect) { 
             chapterSelect.addEventListener('change', (event) => {
-                const selectedIndex = event.target.value;
-                if (selectedIndex !== "") { // 確保不是預設的空選項
-                    // 在此處需要找到當前顯示的小說數據
-                    const currentNovelTitle = document.getElementById('novel-title').textContent;
-                    const currentNovel = allNovels.find(n => n.title === currentNovelTitle);
-                    
-                    if (currentNovel && currentNovel.chapters[selectedIndex]) {
-                        const chapter = currentNovel.chapters[selectedIndex];
-                        loadChapterContent(currentNovel.folder, chapter.file, chapter.title, chapter.note);
-                    }
+                const selectedIndex = parseInt(event.target.value); // 確保是數字
+                if (!isNaN(selectedIndex) && selectedIndex >= 0) { // 確保是有效索引
+                    currentChapterIndex = selectedIndex;
+                    loadChapterWithR18Check(currentNovel.folder, currentNovel.chapters[currentChapterIndex]);
                 }
             });
+        }
+
+        // 分頁按鈕事件監聽器
+        document.getElementById('first-chapter').addEventListener('click', () => goToChapter(0));
+        document.getElementById('prev-chapter').addEventListener('click', () => goToChapter(currentChapterIndex - 1));
+        document.getElementById('next-chapter').addEventListener('click', () => goToChapter(currentChapterIndex + 1));
+        document.getElementById('last-chapter').addEventListener('click', () => goToChapter(currentNovel.chapters.length - 1));
+
+        // R18 彈窗按鈕事件監聽器
+        if (r18ConfirmBtn) r18ConfirmBtn.addEventListener('click', confirmR18);
+        if (r18CancelBtn) r18CancelBtn.addEventListener('click', cancelR18);
+
+        // Tag 搜尋事件監聽器
+        if (tagSearchBtn) {
+            console.log('Tag Search Button found. Attaching click listener.');
+            tagSearchBtn.addEventListener('click', searchBooks);
+        } else {
+            console.error('Tag Search Button not found!');
+        }
+        
+        if (tagSearchInput) {
+            console.log('Tag Search Input found. Attaching keypress listener.');
+            tagSearchInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    console.log('Enter key pressed in search input.');
+                    searchBooks();
+                }
+            });
+        } else {
+            console.error('Tag Search Input not found!');
+        }
+
+        if (tagResetBtn) {
+            console.log('Tag Reset Button found. Attaching click listener.');
+            tagResetBtn.addEventListener('click', () => {
+                if (tagSearchInput) tagSearchInput.value = '';
+                console.log('Reset button clicked. Calling searchBooks.');
+                searchBooks(); // 重置後再次搜尋 (顯示所有)
+            });
+        } else {
+            console.error('Tag Reset Button not found!');
         }
     });
 
@@ -190,7 +292,7 @@
         }
 
         // 根據視圖顯示或隱藏固定頂部欄
-        if (fixedHeaderBar) { // 檢查元素是否存在 
+        if (fixedHeaderBar) { 
             if (viewName === 'novel') {
                 fixedHeaderBar.style.display = 'block';
             } else {
@@ -199,18 +301,38 @@
         }
     }
 
-    // --- 年齡驗證的事件處理函式 ---
-    function handleAgeGateYes() {
-        sessionStorage.setItem('isAgeVerified', 'true');
-        showView('bookList');
-        loadLibrary();
+    // --- R18 驗證邏輯 ---
+    let pendingChapterLoad = null; // 儲存待載入的章節資訊
+
+    function loadChapterWithR18Check(folder, chapter) {
+        if (chapter.isR18) {
+            // 如果是 R18 章節，且用戶未確認過，則顯示彈窗
+            if (sessionStorage.getItem('isAgeVerifiedForR18') !== 'true') {
+                r18Modal.classList.remove('hidden');
+                r18Modal.style.display = 'flex'; // 確保顯示
+                pendingChapterLoad = { folder, chapter }; // 儲存待載入章節
+                return; // 暫停載入
+            }
+        }
+        // 如果不是 R18 或已驗證，則直接載入
+        loadChapterContent(folder, chapter.file, chapter.title, chapter.note, chapter.hasChapterTitleInContent, chapter.img, chapter.imgWidth, chapter.imgHeight);
     }
 
-    function handleAgeGateNo() {
-        const ageGateView = views.ageGate;
-        ageGateView.querySelector('#age-gate-title').textContent = "存取限制";
-        ageGateView.querySelector('#age-gate-message').innerHTML = "抱歉，您必須年滿18歲才能瀏覽本網站。";
-        ageGateView.querySelector('#age-gate-buttons').style.display = 'none';
+    function confirmR18() {
+        sessionStorage.setItem('isAgeVerifiedForR18', 'true');
+        r18Modal.classList.add('hidden');
+        r18Modal.style.display = 'none'; // 確保隱藏
+        if (pendingChapterLoad) {
+            loadChapterContent(pendingChapterLoad.folder, pendingChapterLoad.chapter.file, pendingChapterLoad.chapter.title, pendingChapterLoad.chapter.note, pendingChapterLoad.chapter.hasChapterTitleInContent, pendingChapterLoad.chapter.img, pendingChapterLoad.chapter.imgWidth, pendingChapterLoad.chapter.imgHeight);
+            pendingChapterLoad = null;
+        }
+    }
+
+    function cancelR18() {
+        r18Modal.classList.add('hidden');
+        r18Modal.style.display = 'none'; // 確保隱藏
+        // 如果取消，可以選擇返回書庫列表或停留在當前頁面
+        showView('bookList'); 
     }
 
     // --- 資料載入與渲染 ---
@@ -218,55 +340,116 @@
         const bookListContainer = document.getElementById('book-list');
         const loadingText = document.getElementById('loading-books-text');
         
-        if (allNovels.length > 0) {
-            loadingText.style.display = 'none';
-            return;
-        }
+        if (allNovels.length === 0) { // 只有在尚未載入時才 fetch
+            loadingText.textContent = "正在載入書庫...";
+            loadingText.className = 'text-gray-500 col-span-full text-center';
 
-        loadingText.textContent = "正在載入書庫...";
-        loadingText.className = 'text-gray-500 col-span-full text-center';
+            try {
+                const fetchUrl = 'filelist.json'; // 確認要載入的 URL
+                console.log('嘗試從此 URL 載入 filelist.json:', fetchUrl); // 增加偵錯日誌
 
-        try {
-            const response = await fetch('filelist.json');
-            
-            if (!response.ok) {
-                throw new Error(`無法載入 filelist.json: 狀態碼 ${response.status}`);
-            }
+                const response = await fetch(fetchUrl);
+                
+                if (!response.ok) {
+                    // 如果 HTTP 狀態碼不是 2xx，則拋出錯誤
+                    console.error(`載入 filelist.json 失敗 - 狀態碼: ${response.status}, URL: ${response.url}`);
+                    throw new Error(`無法載入 filelist.json: 狀態碼 ${response.status}`);
+                }
 
-            const data = await response.json();
+                const data = await response.json();
 
-            if (!Array.isArray(data) || data.length === 0) {
-                bookListContainer.innerHTML = '<p class="text-red-500 col-span-full text-center">`filelist.json` 是空的或格式錯誤。</p>';
-                loadingText.style.display = 'none';
-                return;
-            }
-
-            allNovels = data;
-
-            loadingText.style.display = 'none';
-            bookListContainer.innerHTML = '';
-
-            allNovels.forEach(novel => {
-                if (!novel.title || !novel.author || !Array.isArray(novel.chapters)) {
-                    console.warn('偵測到不完整的小說資料:', novel);
+                if (!Array.isArray(data) || data.length === 0) {
+                    bookListContainer.innerHTML = '<p class="text-red-500 col-span-full text-center">`filelist.json` 是空的或格式錯誤。</p>';
+                    loadingText.style.display = 'none';
                     return;
                 }
 
-                const card = document.createElement('div');
-                card.className = "bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer";
-                card.innerHTML = `<h2 class="text-xl font-bold text-violet-700 dark:text-violet-400">${novel.title}</h2><p class="mt-2 text-gray-600 dark:text-gray-400">作者：${novel.author}</p><p class="mt-4 text-sm text-gray-500 dark:text-gray-500">共 ${novel.chapters.length} 章</p>`;
-                card.addEventListener('click', () => renderNovelView(novel));
-                bookListContainer.appendChild(card);
-            });
-        } catch (error) {
-            console.error('載入書庫失敗:', error);
-            loadingText.textContent = `載入書庫失敗: ${error.message}`;
-            loadingText.className = 'text-red-500 col-span-full text-center';
-            bookListContainer.innerHTML = '';
+                allNovels = data; // 儲存所有小說數據
+                filteredNovels = [...allNovels]; // 初始時篩選結果等於所有小說
+                console.log('filelist.json 載入成功，所有小說:', allNovels);
+
+            } catch (error) {
+                // 捕獲所有載入和解析過程中的錯誤
+                console.error('載入書庫失敗:', error); 
+                loadingText.textContent = `載入書庫失敗: ${error.message}`;
+                loadingText.className = 'text-red-500 col-span-full text-center';
+                bookListContainer.innerHTML = '';
+                return; // 載入失敗則停止
+            }
         }
+        // 無論是初次載入還是重新篩選，都調用 renderBookList
+        renderBookList(filteredNovels);
     }
 
+    function renderBookList(novelsToDisplay) {
+        const bookListContainer = document.getElementById('book-list');
+        const loadingText = document.getElementById('loading-books-text');
+
+        // 修正：只有當 loadingText 元素存在時才嘗試隱藏它
+        if (loadingText) { 
+            loadingText.style.display = 'none'; 
+        }
+        bookListContainer.innerHTML = ''; // 清空舊內容
+
+        if (novelsToDisplay.length === 0) {
+            bookListContainer.innerHTML = '<p class="text-gray-500 col-span-full text-center">沒有找到符合條件的書本。</p>';
+            return;
+        }
+
+        novelsToDisplay.forEach(novel => {
+            if (!novel.title || !novel.author || !Array.isArray(novel.chapters)) {
+                console.warn('偵測到不完整的小說資料:', novel);
+                return;
+            }
+
+            const card = document.createElement('div');
+            card.className = "bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer flex items-center justify-between"; // Flex 橫式佈局
+            
+            let tagsHtml = '';
+            if (novel.tags) {
+                const tags = novel.tags.split('-').map(tag => `<span class="inline-block bg-violet-200 dark:bg-violet-700 text-violet-800 dark:text-violet-200 text-xs px-2 py-1 rounded-full">${tag.trim()}</span>`).join(' ');
+                tagsHtml = `<div class="flex flex-wrap gap-1 mt-2">${tags}</div>`;
+            }
+
+            card.innerHTML = `
+                <div class="flex-grow">
+                    <h2 class="text-xl font-bold text-violet-700 dark:text-violet-400">${novel.title}</h2>
+                    <p class="mt-1 text-gray-600 dark:text-gray-400">作者：${novel.author}</p>
+                    ${tagsHtml}
+                </div>
+                <div class="text-right text-sm text-gray-500 dark:text-gray-500 flex-shrink-0 ml-4">
+                    共 ${novel.chapters.length} 章
+                </div>
+            `;
+            card.addEventListener('click', () => renderNovelView(novel));
+            bookListContainer.appendChild(card);
+        });
+        console.log('已渲染書本列表，顯示數量:', novelsToDisplay.length);
+    }
+
+    function searchBooks() {
+        const searchTerm = tagSearchInput.value.toLowerCase().trim();
+        console.log('執行搜尋，搜尋詞:', searchTerm); // 偵錯日誌
+        if (searchTerm === '') {
+            filteredNovels = [...allNovels]; // 如果搜尋詞為空，顯示所有小說
+            console.log('搜尋詞為空，顯示所有小說。');
+        } else {
+            filteredNovels = allNovels.filter(novel => {
+                const novelTags = novel.tags ? novel.tags.toLowerCase() : '';
+                const includesTerm = novelTags.includes(searchTerm);
+                console.log(`小說: ${novel.title}, 標籤: "${novelTags}", 搜尋詞: "${searchTerm}", 包含: ${includesTerm}`); // 偵錯日誌
+                return includesTerm;
+            });
+        }
+        console.log('篩選後的小說數量:', filteredNovels.length); // 偵錯日誌
+        renderBookList(filteredNovels);
+    }
+
+
     function renderNovelView(novel) {
+        currentNovel = novel; // 儲存當前小說
+        currentChapterIndex = 0; // 預設從第一章開始
+
         document.getElementById('novel-title').textContent = novel.title;
         document.getElementById('novel-author').textContent = `作者：${novel.author}`;
         document.getElementById('novel-author-mobile').textContent = `作者：${novel.author}`;
@@ -277,6 +460,10 @@
             const option = document.createElement('option');
             option.value = index; // 使用索引作為值
             option.textContent = chapter.title;
+            // 如果章節是 R18，則添加紅色文字樣式
+            if (chapter.isR18) {
+                option.classList.add('text-red-500'); // Tailwind CSS 的紅色文字
+            }
             chapterSelect.appendChild(option);
         });
 
@@ -287,15 +474,27 @@
         document.getElementById('content-title').textContent = '';
         document.getElementById('content-body').innerHTML = '<p class="text-gray-500">請從上方選擇一個章節。</p>';
         document.getElementById('content-note').textContent = '';
+        // 確保圖片容器在載入新章節前清空
+        if (chapterImageContainer) {
+            chapterImageContainer.innerHTML = '';
+        }
         showView('novel');
+
+        // 如果有章節，自動載入第一章 (並進行R18檢查)
+        if (novel.chapters.length > 0) {
+            loadChapterWithR18Check(currentNovel.folder, currentNovel.chapters[currentChapterIndex]);
+            updatePaginationButtons(); // 更新分頁按鈕狀態
+        } else {
+            // 如果沒有章節，禁用分頁按鈕
+            updatePaginationButtons(true);
+        }
     }
 
-    async function loadChapterContent(folder, filename, displayTitle, note) {
+    async function loadChapterContent(folder, filename, displayTitle, note, hasChapterTitleInContent, img, imgWidth, imgHeight) {
         const contentTitle = document.getElementById('content-title');
         const contentBody = document.getElementById('content-body');
         const contentNote = document.getElementById('content-note');
         
-        // 這裡不再清空 contentTitle，讓它正常顯示章節名稱
         contentTitle.textContent = displayTitle;
         contentTitle.style.display = 'block';
 
@@ -307,31 +506,103 @@
             contentNote.style.display = 'none';
         }
         contentBody.innerHTML = `<p class="text-gray-500">正在載入章節...</p>`;
+        // 清空圖片容器
+        if (chapterImageContainer) {
+            chapterImageContainer.innerHTML = '';
+        }
         
         try {
-            // 注意：這裡假設 filelist.json 中的 filename 已經是 .md 結尾
-            // 如果 filelist.json 中的 filename 還是 .txt，需要調整為 filename.replace('.txt', '.md')
             const response = await fetch(`novels/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`);
             if (!response.ok) throw new Error(`檔案讀取失敗 (${response.status})`);
             
             let markdownContent = await response.text(); 
             
-            // 檢查 markdownContent 是否有內容，然後移除第一行
-            const lines = markdownContent.split('\n');
-            if (lines.length > 1) {
-                markdownContent = lines.slice(1).join('\n');
-            } else {
-                markdownContent = '';
+            // 根據 hasChapterTitleInContent 判斷是否移除第一行
+            if (hasChapterTitleInContent) {
+                const lines = markdownContent.split('\n');
+                if (lines.length > 1) {
+                    markdownContent = lines.slice(1).join('\n');
+                } else {
+                    markdownContent = ''; // 如果只有一行，可能是只包含標題，則顯示為空內容
+                }
             }
 
-            // 將 Markdown 轉換為 HTML
-            const htmlContent = marked.parse(markdownContent); //
+            const htmlContent = marked.parse(markdownContent); 
             
+            // 如果有圖片，在內容上方顯示圖片
+            if (img && chapterImageContainer) {
+                const imgPath = `novels/${encodeURIComponent(folder)}/img/${encodeURIComponent(img)}`;
+                const imgElement = document.createElement('img');
+                imgElement.src = imgPath;
+                imgElement.alt = displayTitle;
+                imgElement.className = "max-w-full h-auto rounded-lg shadow-md mb-4"; // 響應式圖片樣式
+                // 設定圖片尺寸，避免 CLS
+                if (imgWidth && imgHeight) {
+                    imgElement.width = imgWidth;
+                    imgElement.height = imgHeight;
+                } else {
+                    // 提供預設尺寸或佔位圖，如果 JSON 中沒有提供
+                    // 將預設寬高改為 800x800
+                    imgElement.src = `https://placehold.co/800x800/cccccc/333333?text=No+Image`;
+                    imgElement.alt = "圖片載入失敗或不存在";
+                    imgElement.width = 800; // 設定預設寬度
+                    imgElement.height = 800; // 設定預設高度
+                }
+                chapterImageContainer.appendChild(imgElement);
+            }
+
             contentBody.innerHTML = htmlContent; 
+
+            // 更新下拉選單的選擇
+            if (chapterSelect) {
+                chapterSelect.value = currentChapterIndex.toString();
+            }
+            updatePaginationButtons(); // 載入內容後更新分頁按鈕狀態
+
         } catch (error) {
             contentBody.innerHTML = `<p class="text-red-500">載入章節時發生錯誤: ${error.message}</p>`;
+            updatePaginationButtons(true); // 載入失敗則禁用按鈕
         }
     }
+
+    // --- 章節分頁功能 ---
+    function goToChapter(index) {
+        if (!currentNovel || !currentNovel.chapters || currentNovel.chapters.length === 0) {
+            return; // 沒有小說或章節
+        }
+
+        const totalChapters = currentNovel.chapters.length;
+
+        if (index < 0) {
+            index = 0; // 不能小於第一章
+        } else if (index >= totalChapters) {
+            index = totalChapters - 1; // 不能大於最後一章
+        }
+
+        currentChapterIndex = index;
+        loadChapterWithR18Check(currentNovel.folder, currentNovel.chapters[currentChapterIndex]);
+    }
+
+    function updatePaginationButtons(disableAll = false) {
+        const firstBtn = document.getElementById('first-chapter');
+        const prevBtn = document.getElementById('prev-chapter');
+        const nextBtn = document.getElementById('next-chapter');
+        const lastBtn = document.getElementById('last-chapter');
+
+        if (disableAll || !currentNovel || currentNovel.chapters.length === 0) {
+            firstBtn.disabled = true;
+            prevBtn.disabled = true;
+            nextBtn.disabled = true;
+            lastBtn.disabled = true;
+            return;
+        }
+
+        firstBtn.disabled = (currentChapterIndex === 0);
+        prevBtn.disabled = (currentChapterIndex === 0);
+        nextBtn.disabled = (currentChapterIndex === currentNovel.chapters.length - 1);
+        lastBtn.disabled = (currentChapterIndex === currentNovel.chapters.length - 1);
+    }
+
 </script>
 </body>
 </html>
