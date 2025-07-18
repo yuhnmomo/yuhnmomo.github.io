@@ -69,123 +69,154 @@
         <p>&copy; 2024. All rights reserved.</p>
     </footer>
 
-    <script>
-        // --- 全域變數和 DOM 元素 ---
-        let allNovels = [];
-        const views = {
-            ageGate: document.getElementById('age-gate-view'),
-            bookList: document.getElementById('book-list-view'),
-            novel: document.getElementById('novel-view')
-        };
+<script>
+    // --- 全域變數和 DOM 元素 ---
+    let allNovels = [];
+    const views = {
+        ageGate: document.getElementById('age-gate-view'),
+        bookList: document.getElementById('book-list-view'),
+        novel: document.getElementById('novel-view')
+    };
 
-        // --- 核心邏輯 ---
-        document.addEventListener('DOMContentLoaded', () => {
-            if (sessionStorage.getItem('isAgeVerified') === 'true') {
-                showView('bookList');
-                loadLibrary();
-            } else {
-                showView('ageGate');
-            }
-            document.getElementById('btnYes').addEventListener('click', handleAgeGateYes);
-            document.getElementById('btnNo').addEventListener('click', handleAgeGateNo);
-            document.getElementById('back-to-library').addEventListener('click', () => showView('bookList'));
-        });
-
-        // --- 視圖管理 ---
-        function showView(viewName) {
-            Object.values(views).forEach(view => view.classList.remove('active'));
-            if (views[viewName]) {
-                views[viewName].classList.add('active');
-            }
-        }
-
-        // --- 事件處理函式 ---
-        function handleAgeGateYes() {
-            sessionStorage.setItem('isAgeVerified', 'true');
+    // --- 核心邏輯 ---
+    document.addEventListener('DOMContentLoaded', () => {
+        if (sessionStorage.getItem('isAgeVerified') === 'true') {
             showView('bookList');
             loadLibrary();
+        } else {
+            showView('ageGate');
+        }
+        document.getElementById('btnYes').addEventListener('click', handleAgeGateYes);
+        document.getElementById('btnNo').addEventListener('click', handleAgeGateNo);
+        document.getElementById('back-to-library').addEventListener('click', () => showView('bookList'));
+    });
+
+    // --- 視圖管理 ---
+    function showView(viewName) {
+        Object.values(views).forEach(view => view.classList.remove('active'));
+        if (views[viewName]) {
+            views[viewName].classList.add('active');
+        }
+    }
+
+    // --- 事件處理函式 ---
+    function handleAgeGateYes() {
+        sessionStorage.setItem('isAgeVerified', 'true');
+        showView('bookList');
+        loadLibrary();
+    }
+
+    function handleAgeGateNo() {
+        const ageGateView = views.ageGate;
+        ageGateView.querySelector('#age-gate-title').textContent = "存取限制";
+        ageGateView.querySelector('#age-gate-message').innerHTML = "抱歉，您必須年滿18歲才能瀏覽本網站。";
+        ageGateView.querySelector('#age-gate-buttons').style.display = 'none';
+    }
+
+    // --- 資料載入與渲染 ---
+    async function loadLibrary() {
+        const bookListContainer = document.getElementById('book-list');
+        const loadingText = document.getElementById('loading-books-text');
+        
+        // 檢查是否已經載入過小說列表，如果已載入則不重複執行
+        if (allNovels.length > 0) {
+            loadingText.style.display = 'none'; // 隱藏載入中文字
+            return;
         }
 
-        function handleAgeGateNo() {
-            const ageGateView = views.ageGate;
-            ageGateView.querySelector('#age-gate-title').textContent = "存取限制";
-            ageGateView.querySelector('#age-gate-message').innerHTML = "抱歉，您必須年滿18歲才能瀏覽本網站。";
-            ageGateView.querySelector('#age-gate-buttons').style.display = 'none';
-        }
+        loadingText.textContent = "正在載入書庫..."; // 確保載入訊息顯示
+        loadingText.className = 'text-gray-500 col-span-full text-center'; // 重置樣式
 
-        // --- 資料載入與渲染 ---
-        async function loadLibrary() {
-            if (allNovels.length > 0) return;
-            const bookListContainer = document.getElementById('book-list');
-            const loadingText = document.getElementById('loading-books-text');
-            try {
-                const response = await fetch('filelist.json');
-                if (!response.ok) throw new Error('找不到 filelist.json');
-                allNovels = await response.json();
-                loadingText.style.display = 'none';
-                if (allNovels.length === 0) {
-                    bookListContainer.innerHTML = '<p class="text-red-500 col-span-full text-center">`filelist.json` 是空的或格式錯誤。</p>';
-                    return;
+        try {
+            const response = await fetch('filelist.json');
+            
+            if (!response.ok) {
+                // 如果 HTTP 狀態碼不是 2xx，則拋出錯誤
+                throw new Error(`無法載入 filelist.json: 狀態碼 ${response.status}`);
+            }
+
+            const data = await response.json(); // 解析 JSON 內容
+
+            // 檢查解析後的數據是否是陣列，且有內容
+            if (!Array.isArray(data) || data.length === 0) {
+                bookListContainer.innerHTML = '<p class="text-red-500 col-span-full text-center">`filelist.json` 是空的或格式錯誤。</p>';
+                loadingText.style.display = 'none'; // 隱藏載入中文字
+                return;
+            }
+
+            allNovels = data; // 將解析後的數據賦值給 allNovels
+
+            loadingText.style.display = 'none'; // 隱藏載入中文字
+            bookListContainer.innerHTML = ''; // 清空載入中的文字或錯誤訊息
+
+            allNovels.forEach(novel => {
+                // [Inference] 這裡檢查 novel 物件是否具備預期的屬性，以避免因資料不完整而導致的錯誤。
+                if (!novel.title || !novel.author || !Array.isArray(novel.chapters)) {
+                    console.warn('偵測到不完整的小說資料:', novel); // 輸出警告到控制台
+                    return; // 跳過此不完整的小說
                 }
-                allNovels.forEach(novel => {
-                    const card = document.createElement('div');
-                    card.className = "bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer";
-                    card.innerHTML = `<h2 class="text-xl font-bold text-violet-700 dark:text-violet-400">${novel.title}</h2><p class="mt-2 text-gray-600 dark:text-gray-400">作者：${novel.author}</p><p class="mt-4 text-sm text-gray-500 dark:text-gray-500">共 ${novel.chapters.length} 章</p>`;
-                    card.addEventListener('click', () => renderNovelView(novel));
-                    bookListContainer.appendChild(card);
-                });
-            } catch (error) {
-                loadingText.textContent = `載入失敗: ${error.message}`;
-                loadingText.className = 'text-red-500 col-span-full text-center';
-            }
-        }
 
-        function renderNovelView(novel) {
-            document.getElementById('novel-title').textContent = novel.title;
-            document.getElementById('novel-author').textContent = `作者：${novel.author}`;
-            const chapterListContainer = document.getElementById('chapter-list');
-            chapterListContainer.innerHTML = '';
-            novel.chapters.forEach(chapter => {
-                const button = document.createElement('button');
-                button.textContent = chapter.title;
-                button.className = "p-3 bg-gray-200 dark:bg-gray-700 rounded-lg text-center hover:bg-violet-500 dark:hover:bg-violet-600 hover:text-white transition-all duration-200 truncate";
-                button.addEventListener('click', (event) => {
-                    document.querySelectorAll('#chapter-list button').forEach(btn => btn.classList.remove('selected'));
-                    event.currentTarget.classList.add('selected');
-                    loadChapterContent(novel.folder, chapter.file, chapter.title, chapter.note);
-                });
-                chapterListContainer.appendChild(button);
+                const card = document.createElement('div');
+                card.className = "bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer";
+                card.innerHTML = `<h2 class="text-xl font-bold text-violet-700 dark:text-violet-400">${novel.title}</h2><p class="mt-2 text-gray-600 dark:text-gray-400">作者：${novel.author}</p><p class="mt-4 text-sm text-gray-500 dark:text-gray-500">共 ${novel.chapters.length} 章</p>`;
+                card.addEventListener('click', () => renderNovelView(novel));
+                bookListContainer.appendChild(card);
             });
-            document.getElementById('content-title').textContent = '';
-            document.getElementById('content-body').innerHTML = '<p class="text-gray-500">請從上方選擇一個章節。</p>';
-            document.getElementById('content-note').textContent = '';
-            showView('novel');
+        } catch (error) {
+            // 捕獲所有載入和解析過程中的錯誤
+            console.error('載入書庫失敗:', error); // 輸出詳細錯誤到控制台
+            loadingText.textContent = `載入書庫失敗: ${error.message}`;
+            loadingText.className = 'text-red-500 col-span-full text-center';
+            bookListContainer.innerHTML = ''; // 清空其他內容
         }
+    }
 
-        async function loadChapterContent(folder, filename, displayTitle, note) {
-            const contentTitle = document.getElementById('content-title');
-            const contentBody = document.getElementById('content-body');
-            const contentNote = document.getElementById('content-note');
-            
-            contentTitle.textContent = displayTitle;
-            if (note) {
-                contentNote.textContent = `📝 ${note}`;
-                contentNote.style.display = 'block';
-            } else {
-                contentNote.textContent = '';
-                contentNote.style.display = 'none';
-            }
-            contentBody.innerHTML = `<p class="text-gray-500">正在載入章節...</p>`;
-            
-            try {
-                const response = await fetch(`novels/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`);
-                if (!response.ok) throw new Error(`檔案讀取失敗 (${response.status})`);
-                const content = await response.text();
-                contentBody.innerHTML = content.replace(/\n/g, '<br>');
-            } catch (error) {
-                contentBody.innerHTML = `<p class="text-red-500">載入章節時發生錯誤: ${error.message}</p>`;
-            }
+    function renderNovelView(novel) {
+        document.getElementById('novel-title').textContent = novel.title;
+        document.getElementById('novel-author').textContent = `作者：${novel.author}`;
+        const chapterListContainer = document.getElementById('chapter-list');
+        chapterListContainer.innerHTML = '';
+        novel.chapters.forEach(chapter => {
+            const button = document.createElement('button');
+            button.textContent = chapter.title;
+            button.className = "p-3 bg-gray-200 dark:bg-gray-700 rounded-lg text-center hover:bg-violet-500 dark:hover:bg-violet-600 hover:text-white transition-all duration-200 truncate";
+            button.addEventListener('click', (event) => {
+                document.querySelectorAll('#chapter-list button').forEach(btn => btn.classList.remove('selected'));
+                event.currentTarget.classList.add('selected');
+                loadChapterContent(novel.folder, chapter.file, chapter.title, chapter.note);
+            });
+            chapterListContainer.appendChild(button);
+        });
+        document.getElementById('content-title').textContent = '';
+        document.getElementById('content-body').innerHTML = '<p class="text-gray-500">請從上方選擇一個章節。</p>';
+        document.getElementById('content-note').textContent = '';
+        showView('novel');
+    }
+
+    async function loadChapterContent(folder, filename, displayTitle, note) {
+        const contentTitle = document.getElementById('content-title');
+        const contentBody = document.getElementById('content-body');
+        const contentNote = document.getElementById('content-note');
+        
+        contentTitle.textContent = displayTitle;
+        if (note) {
+            contentNote.textContent = `📝 ${note}`;
+            contentNote.style.display = 'block';
+        } else {
+            contentNote.textContent = '';
+            contentNote.style.display = 'none';
         }
-    </script>
+        contentBody.innerHTML = `<p class="text-gray-500">正在載入章節...</p>`;
+        
+        try {
+            const response = await fetch(`novels/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`);
+            if (!response.ok) throw new Error(`檔案讀取失敗 (${response.status})`);
+            const content = await response.text();
+            contentBody.innerHTML = content.replace(/\n/g, '<br>');
+        } catch (error) {
+            contentBody.innerHTML = `<p class="text-red-500">載入章節時發生錯誤: ${error.message}</p>`;
+        }
+    }
+</script>
 </body>
 </html>
