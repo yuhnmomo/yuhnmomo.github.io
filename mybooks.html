@@ -88,38 +88,28 @@
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
-    <!-- 頂部固定欄 (用於小說章節頁面) -->
     <div id="fixed-header-bar" class="fixed-top-bar bg-white dark:bg-gray-800"> 
-        <div class="flex items-center justify-between flex-wrap gap-2">
-            <!-- 返回書庫按鈕 - 順序 1 -->
-            <button id="back-to-library" class="text-violet-500 hover:underline inline-block flex-shrink-0 order-1">&larr; 返回書庫</button>
+        <div class="flex items-center justify-between gap-2 md:gap-4 px-2">
+            <button id="back-to-library" class="text-violet-500 hover:underline flex-shrink-0 whitespace-nowrap">&larr; 返回書庫</button>
             
-            <!-- 小說標題和作者 - 順序 2 -->
-            <div class="flex-grow text-center min-w-0 order-2">
+            <div class="flex-grow text-center min-w-0">
                 <h1 id="novel-title" class="text-lg sm:text-xl font-bold text-violet-600 dark:text-violet-400 truncate"></h1>
-                <p id="novel-author" class="text-xs text-gray-700 dark:text-gray-300 truncate hidden md:block"></p>
-                <p id="novel-author-mobile" class="text-xs text-gray-700 dark:text-gray-300 md:hidden"></p>
-            </div>
-
-            <!-- 章節下拉選單 - 順序 3 -->
-            <div class="flex-grow flex justify-center order-3">
+                <p id="novel-author" class="text-xs text-gray-700 dark:text-gray-300 truncate"></p>
+                </div>
+            
+            <div class="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
                 <label for="chapter-select" class="sr-only">選擇章節</label>
-                <select id="chapter-select" class="block w-full max-w-xs p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-violet-500 focus:border-violet-500 transition duration-150 ease-in-out text-sm">
+                <select id="chapter-select" class="block w-28 sm:w-36 md:w-48 p-1 sm:p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-violet-500 focus:border-violet-500 transition duration-150 ease-in-out text-xs sm:text-sm flex-shrink-0">
                     <option value="">請選擇章節</option>
                 </select>
-            </div>
-            
-            <!-- 章節分頁按鈕 - 順序 4 -->
-            <div class="flex items-center space-x-2 flex-shrink-0 order-4">
-                <button id="first-chapter" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">⏮️</button>
-                <button id="prev-chapter" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">◀️</button>
-                <button id="next-chapter" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">▶️</button>
-                <button id="last-chapter" class="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200">⏭️</button>
+                <button id="first-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">⏮️</button>
+                <button id="prev-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">◀️</button>
+                <button id="next-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">▶️</button>
+                <button id="last-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">⏭️</button>
             </div>
         </div>
     </div>
 
-    <!-- R18 驗證提示框 -->
     <div id="r18-modal" class="r18-modal hidden">
         <div class="r18-modal-content">
             <h3 class="text-xl font-bold mb-4">內容警告</h3>
@@ -129,7 +119,6 @@
         </div>
     </div>
 
-    <!-- 視圖 1: 年齡驗證 (此視圖已不再使用，但保留以供參考，預設為隱藏且不會被啟用) -->
     <div id="age-gate-view" class="view fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center max-w-sm w-full">
             <h2 id="age-gate-title" class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">年齡確認</h2>
@@ -141,32 +130,29 @@
         </div>
     </div>
 
-    <!-- 視圖 2: 書庫列表 (現在是初始顯示的視圖) -->
     <div id="book-list-view" class="view active container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
         <header class="text-center mb-8">
             <h1 class="text-3xl sm:text-4xl font-bold text-violet-600 dark:text-violet-400">線上書庫</h1>
             <p class="mt-4 text-lg text-gray-700 dark:text-gray-300">作者：法式草莓布丁</p>
             
-            <!-- Tag 搜尋輸入框 -->
-            <div class="mt-6 flex flex-col sm:flex-row items-center justify-center gap-2">
+            <div class="mt-6 flex flex-col items-center justify-center gap-2">
                 <input type="text" id="tag-search-input" placeholder="搜尋標籤 (例如: 小說-R18)" 
-                       class="w-full sm:w-80 p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-violet-500 focus:border-violet-500">
-                <button id="tag-search-btn" class="bg-violet-600 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105">搜尋</button>
-                <button id="tag-reset-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105">重置</button>
+                       class="w-full max-w-xs p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:ring-violet-500 focus:border-violet-500">
+                <div class="flex justify-center gap-2 w-full max-w-xs"> 
+                    <button id="tag-search-btn" class="bg-violet-600 hover:bg-violet-700 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105 flex-grow">搜尋</button>
+                    <button id="tag-reset-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-lg transition-transform transform hover:scale-105 flex-grow">重置</button>
+                </div>
             </div>
         </header>
-        <main id="book-list" class="grid grid-cols-1 gap-4"> <!-- 改為單列，內部使用 flex 實現橫式 -->
-            <p id="loading-books-text" class="text-gray-500 col-span-full text-center">正在載入書庫...</p>
+        <main id="book-list" class="grid grid-cols-1 gap-4"> <p id="loading-books-text" class="text-gray-500 col-span-full text-center">正在載入書庫...</p>
         </main>
     </div>
 
-    <!-- 視圖 3: 小說章節頁面 -->
     <div id="novel-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl"> 
         <main class="content-area bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg flex flex-col h-full scrollable-content"> 
             <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">章節內容</h2>
             <div id="content-title" class="mt-2 mb-2 text-2xl font-bold text-gray-800 dark:text-gray-200"></div>
             <p id="content-note" class="mt-1 text-sm text-gray-500 dark:text-gray-400"></p>
-            <!-- 圖片容器 -->
             <div id="chapter-image-container" class="w-full flex justify-center mb-4"></div>
             <div id="content-body" class="leading-relaxed flex-grow"><p class="text-gray-500">請從上方選擇一個章節。</p></div> 
 
@@ -452,7 +438,7 @@
 
         document.getElementById('novel-title').textContent = novel.title;
         document.getElementById('novel-author').textContent = `作者：${novel.author}`;
-        document.getElementById('novel-author-mobile').textContent = `作者：${novel.author}`;
+        // document.getElementById('novel-author-mobile').textContent = `作者：${novel.author}`; // 移除此行，因為已統一
 
         // 清空舊選項，並添加預設選項
         chapterSelect.innerHTML = '<option value="">請選擇章節</option>';
