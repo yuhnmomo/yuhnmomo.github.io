@@ -6,6 +6,7 @@
     <title>線上書庫</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<<<<<<< HEAD
 <style>
     body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
     .view { display: none !important; } /* 所有視圖預設隱藏，並強制執行 */
@@ -86,6 +87,40 @@
             </div>
         </div>
     </div>
+=======
+    <style>
+        body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
+        .view { display: none; } /* 所有視圖預設隱藏 */
+        .view.active { display: block; } /* 使用 .active 來顯示視圖 */
+        /* 針對 novel-view 內的滾動區域 */
+        .scrollable-content {
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch; /* 提升 iOS 上的滾動流暢度 */
+        }
+        /* 隱藏滾動條，但保留滾動功能 */
+        .scrollable-content::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollable-content {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* 新增：置頂固定導航欄樣式 */
+        .fixed-top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100; /* 確保在其他內容之上 */
+            background-color: var(--tw-bg-opacity, #ffffff); /* 使用 Tailwind CSS 變數來適應暗色模式，提供一個預設值 */
+            /* 增加背景模糊效果，使其更像一個浮動的導航欄 */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px); /* 兼容 Safari */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+>>>>>>> c2441bdbd9cbf77229e99e4e97d0844894f2f9d6
     <div id="age-gate-view" class="view active fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center max-w-sm w-full">
             <h2 id="age-gate-title" class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">年齡確認</h2>
@@ -107,6 +142,7 @@
         </main>
     </div>
 
+<<<<<<< HEAD
     <div id="novel-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl"> 
         <main class="content-area bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg flex flex-col h-full scrollable-content"> 
             <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">章節內容</h2>
@@ -116,10 +152,40 @@
 
             <div class="mt-4 text-center text-xs text-gray-400 dark:text-gray-500 pb-2 flex-shrink-0">
                 <p>&copy; 2025. All rights reserved.</p>
+=======
+    <div id="novel-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl h-screen flex flex-col">
+        <div class="fixed-top-bar bg-white dark:bg-gray-800 p-4 rounded-b-lg shadow-lg mb-4">
+            <div class="flex items-center justify-between mb-2">
+                <button id="back-to-library" class="text-violet-500 hover:underline inline-block">&larr; 返回書庫</button>
+                <h1 id="novel-title" class="text-2xl sm:text-3xl font-bold text-violet-600 dark:text-violet-400 text-center flex-grow mx-4"></h1>
+                <p id="novel-author" class="text-sm text-gray-700 dark:text-gray-300 hidden md:block"></p> 
+            </div>
+            <div class="text-center md:hidden mb-2">
+                 <p id="novel-author-mobile" class="text-sm text-gray-700 dark:text-gray-300"></p>
+            </div>
+            <div class="flex items-center justify-center">
+                <label for="chapter-select" class="sr-only">選擇章節</label>
+                <select id="chapter-select" class="block w-full max-w-md p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-violet-500 focus:border-violet-500 transition duration-150 ease-in-out">
+                    <option value="">請選擇章節</option>
+                </select>
+            </div>
+        </div>
+
+        <main class="flex-grow flex flex-col pt-4"> <div class="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg flex-grow scrollable-content leading-relaxed">
+                <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">章節內容</h2>
+                <div id="content-title" class="mt-2 mb-2 text-2xl font-bold text-gray-800 dark:text-gray-200"></div>
+                <p id="content-note" class="mt-1 text-sm text-gray-500 dark:text-gray-400"></p>
+                <div id="content-body"><p class="text-gray-500">請從上方選擇一個章節。</p></div>
+            </div>
+
+            <div class="mt-4 text-center text-xs text-gray-400 dark:text-gray-500 pb-2">
+                <p>&copy; 2024. All rights reserved.</p>
+>>>>>>> c2441bdbd9cbf77229e99e4e97d0844894f2f9d6
             </div>
         </main>
     </div>
 
+<<<<<<< HEAD
 <script>
         // --- 全域變數和 DOM 元素 ---
         let allNovels = [];
@@ -143,6 +209,20 @@
                 fixedHeaderBar.style.display = 'none';
             }
 
+=======
+    <script>
+        // --- 全域變數和 DOM 元素 ---
+        let allNovels = [];
+        const views = {
+            ageGate: document.getElementById('age-gate-view'),
+            bookList: document.getElementById('book-list-view'),
+            novel: document.getElementById('novel-view')
+        };
+        const chapterSelect = document.getElementById('chapter-select');
+
+        // --- 核心邏輯 ---
+        document.addEventListener('DOMContentLoaded', () => {
+>>>>>>> c2441bdbd9cbf77229e99e4e97d0844894f2f9d6
             // 檢查 sessionStorage 是否有年齡驗證狀態
             if (sessionStorage.getItem('isAgeVerified') === 'true') {
                 showView('bookList');
@@ -152,6 +232,10 @@
             }
             
             // 綁定年齡驗證按鈕的事件監聽器
+<<<<<<< HEAD
+=======
+            // 確保這些按鈕在 showView('ageGate') 之後可以被正確找到
+>>>>>>> c2441bdbd9cbf77229e99e4e97d0844894f2f9d6
             const btnYes = document.getElementById('btnYes');
             const btnNo = document.getElementById('btnNo');
             if (btnYes) btnYes.addEventListener('click', handleAgeGateYes);
@@ -166,8 +250,14 @@
                     const selectedIndex = event.target.value;
                     if (selectedIndex !== "") { // 確保不是預設的空選項
                         // 在此處需要找到當前顯示的小說數據
+<<<<<<< HEAD
                         const currentNovelTitle = document.getElementById('novel-title').textContent;
                         const currentNovel = allNovels.find(n => n.title === currentNovelTitle);
+=======
+                        // 最好的方法是在 renderNovelView 時將當前小說數據存儲在某處，或從 allNovels 中再次查找
+                        const currentNovelTitle = document.getElementById('novel-title').textContent;
+                        const currentNovel = allNovels.find(n => n.title === currentNovelTitle); 
+>>>>>>> c2441bdbd9cbf77229e99e4e97d0844894f2f9d6
                         
                         if (currentNovel && currentNovel.chapters[selectedIndex]) {
                             const chapter = currentNovel.chapters[selectedIndex];
@@ -195,6 +285,20 @@
                     fixedHeaderBar.style.display = 'none';
                 }
             }
+        }
+
+        // --- 年齡驗證的事件處理函式 ---
+        function handleAgeGateYes() {
+            sessionStorage.setItem('isAgeVerified', 'true');
+            showView('bookList');
+            loadLibrary();
+        }
+
+        function handleAgeGateNo() {
+            const ageGateView = views.ageGate;
+            ageGateView.querySelector('#age-gate-title').textContent = "存取限制";
+            ageGateView.querySelector('#age-gate-message').innerHTML = "抱歉，您必須年滿18歲才能瀏覽本網站。";
+            ageGateView.querySelector('#age-gate-buttons').style.display = 'none';
         }
 
         // --- 年齡驗證的事件處理函式 ---
