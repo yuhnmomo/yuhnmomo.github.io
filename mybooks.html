@@ -10,13 +10,6 @@
         body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
         .view { display: none; } /* 所有視圖預設隱藏 */
         .view.active { display: block; } /* 使用 .active 來顯示視圖 */
-        /* 移除 #chapter-list button.selected 的樣式，因為不再使用按鈕 */
-        /* #chapter-list button.selected { */
-        /* background-color: #6d28d9; */
-        /* color: white; */
-        /* font-weight: bold; */
-        /* } */
-        
         /* 針對 novel-view 內的滾動區域 */
         .scrollable-content {
             overflow-y: auto;
@@ -45,7 +38,7 @@
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
-    <div id="age-gate-view" class="view fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
+    <div id="age-gate-view" class="view active fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center max-w-sm w-full">
             <h2 id="age-gate-title" class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">年齡確認</h2>
             <p id="age-gate-message" class="text-gray-600 dark:text-gray-400 mb-8">本網站內容可能不適合未滿18歲的使用者，<br>您是否已年滿18歲？</p>
@@ -101,7 +94,7 @@
         // --- 全域變數和 DOM 元素 ---
         let allNovels = [];
         const views = {
-            ageGate: document.getElementById('age-gate-view'), // 重新加入 ageGate 視圖
+            ageGate: document.getElementById('age-gate-view'),
             bookList: document.getElementById('book-list-view'),
             novel: document.getElementById('novel-view')
         };
@@ -117,23 +110,33 @@
                 showView('ageGate'); // 如果未驗證，顯示年齡驗證頁面
             }
             
-            // 重新加入年齡驗證按鈕的事件監聽器
-            document.getElementById('btnYes').addEventListener('click', handleAgeGateYes);
-            document.getElementById('btnNo').addEventListener('click', handleAgeGateNo);
+            // 綁定年齡驗證按鈕的事件監聽器
+            // 確保這些按鈕在 showView('ageGate') 之後可以被正確找到
+            const btnYes = document.getElementById('btnYes');
+            const btnNo = document.getElementById('btnNo');
+            if (btnYes) btnYes.addEventListener('click', handleAgeGateYes);
+            if (btnNo) btnNo.addEventListener('click', handleAgeGateNo);
+
 
             document.getElementById('back-to-library').addEventListener('click', () => showView('bookList'));
             
             // 新增章節選單的事件監聽器
-            chapterSelect.addEventListener('change', (event) => {
-                const selectedIndex = event.target.value;
-                if (selectedIndex !== "") { // 確保不是預設的空選項
-                    const currentNovel = allNovels.find(n => n.title === document.getElementById('novel-title').textContent); // 根據標題找到當前小說
-                    if (currentNovel && currentNovel.chapters[selectedIndex]) {
-                        const chapter = currentNovel.chapters[selectedIndex];
-                        loadChapterContent(currentNovel.folder, chapter.file, chapter.title, chapter.note);
+            if (chapterSelect) { // 檢查 chapterSelect 是否存在
+                chapterSelect.addEventListener('change', (event) => {
+                    const selectedIndex = event.target.value;
+                    if (selectedIndex !== "") { // 確保不是預設的空選項
+                        // 在此處需要找到當前顯示的小說數據
+                        // 最好的方法是在 renderNovelView 時將當前小說數據存儲在某處，或從 allNovels 中再次查找
+                        const currentNovelTitle = document.getElementById('novel-title').textContent;
+                        const currentNovel = allNovels.find(n => n.title === currentNovelTitle); 
+                        
+                        if (currentNovel && currentNovel.chapters[selectedIndex]) {
+                            const chapter = currentNovel.chapters[selectedIndex];
+                            loadChapterContent(currentNovel.folder, chapter.file, chapter.title, chapter.note);
+                        }
                     }
-                }
-            });
+                });
+            }
         });
 
         // --- 視圖管理 ---
@@ -144,7 +147,7 @@
             }
         }
 
-        // --- 新增年齡驗證的事件處理函式 ---
+        // --- 年齡驗證的事件處理函式 ---
         function handleAgeGateYes() {
             sessionStorage.setItem('isAgeVerified', 'true');
             showView('bookList');
