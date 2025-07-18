@@ -10,11 +10,13 @@
         body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
         .view { display: none; } /* 所有視圖預設隱藏 */
         .view.active { display: block; } /* 使用 .active 來顯示視圖 */
-        #chapter-list button.selected {
-            background-color: #6d28d9;
-            color: white;
-            font-weight: bold;
-        }
+        /* 移除 #chapter-list button.selected 的樣式，因為不再使用按鈕 */
+        /* #chapter-list button.selected { */
+        /* background-color: #6d28d9; */
+        /* color: white; */
+        /* font-weight: bold; */
+        /* } */
+        
         /* 針對 novel-view 內的滾動區域 */
         .scrollable-content {
             overflow-y: auto;
@@ -28,11 +30,33 @@
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
         }
+
+        /* 新增：置頂固定導航欄樣式 */
+        .fixed-top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 100; /* 確保在其他內容之上 */
+            background-color: var(--tw-bg-opacity, #ffffff); /* 使用 Tailwind CSS 變數來適應暗色模式，提供一個預設值 */
+            /* 增加背景模糊效果，使其更像一個浮動的導航欄 */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px); /* 兼容 Safari */
+        }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
-    <div id="book-list-view" class="view active container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
+    <div id="age-gate-view" class="view fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center max-w-sm w-full">
+            <h2 id="age-gate-title" class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">年齡確認</h2>
+            <p id="age-gate-message" class="text-gray-600 dark:text-gray-400 mb-8">本網站內容可能不適合未滿18歲的使用者，<br>您是否已年滿18歲？</p>
+            <div id="age-gate-buttons" class="flex justify-center gap-4">
+                <button id="btnYes" class="bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105">是，我已滿18歲</button>
+                <button id="btnNo" class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-3 px-8 rounded-lg transition-transform transform hover:scale-105">否</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="book-list-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-5xl">
         <header class="text-center mb-8">
             <h1 class="text-3xl sm:text-4xl font-bold text-violet-600 dark:text-violet-400">線上書庫</h1>
             <p class="mt-4 text-lg text-gray-700 dark:text-gray-300">作者：法式草莓布丁</p>
@@ -43,46 +67,73 @@
     </div>
 
     <div id="novel-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl h-screen flex flex-col">
-        <header class="text-center mb-4 md:mb-8">
-            <h1 id="novel-title" class="text-3xl sm:text-4xl font-bold text-violet-600 dark:text-violet-400"></h1>
-            <p id="novel-author" class="mt-2 text-lg text-gray-700 dark:text-gray-300"></p>
-            <button id="back-to-library" class="text-violet-500 hover:underline mt-2 inline-block">&larr; 返回書庫</button>
-        </header>
-        <main class="flex-grow grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <div class="md:col-span-1 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg flex flex-col">
-                <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-4">章節列表</h2>
-                <div id="chapter-list" class="flex flex-col gap-2 scrollable-content flex-grow pr-2">
-                    </div>
+        <div class="fixed-top-bar bg-white dark:bg-gray-800 p-4 rounded-b-lg shadow-lg mb-4">
+            <div class="flex items-center justify-between mb-2">
+                <button id="back-to-library" class="text-violet-500 hover:underline inline-block">&larr; 返回書庫</button>
+                <h1 id="novel-title" class="text-2xl sm:text-3xl font-bold text-violet-600 dark:text-violet-400 text-center flex-grow mx-4"></h1>
+                <p id="novel-author" class="text-sm text-gray-700 dark:text-gray-300 hidden md:block"></p> 
             </div>
-            
-            <div class="md:col-span-2 bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg flex flex-col">
-                <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300">章節內容</h2>
-                <div id="content-title" class="mt-4 mb-2 text-2xl font-bold text-gray-800 dark:text-gray-200"></div>
+            <div class="text-center md:hidden mb-2">
+                 <p id="novel-author-mobile" class="text-sm text-gray-700 dark:text-gray-300"></p>
+            </div>
+            <div class="flex items-center justify-center">
+                <label for="chapter-select" class="sr-only">選擇章節</label>
+                <select id="chapter-select" class="block w-full max-w-md p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-violet-500 focus:border-violet-500 transition duration-150 ease-in-out">
+                    <option value="">請選擇章節</option>
+                </select>
+            </div>
+        </div>
+
+        <main class="flex-grow flex flex-col pt-4"> <div class="bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg flex-grow scrollable-content leading-relaxed">
+                <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">章節內容</h2>
+                <div id="content-title" class="mt-2 mb-2 text-2xl font-bold text-gray-800 dark:text-gray-200"></div>
                 <p id="content-note" class="mt-1 text-sm text-gray-500 dark:text-gray-400"></p>
-                <div class="mt-4 p-4 bg-gray-50 dark:bg-gray-700 rounded-lg flex-grow scrollable-content leading-relaxed">
-                    <div id="content-body"><p class="text-gray-500">請從上方選擇一個章節。</p></div>
-                </div>
+                <div id="content-body"><p class="text-gray-500">請從上方選擇一個章節。</p></div>
+            </div>
+
+            <div class="mt-4 text-center text-xs text-gray-400 dark:text-gray-500 pb-2">
+                <p>&copy; 2024. All rights reserved.</p>
             </div>
         </main>
     </div>
-
-    <footer class="text-center my-8 text-sm text-gray-500 dark:text-gray-400">
-        <p>&copy; 2024. All rights reserved.</p>
-    </footer>
 
     <script>
         // --- 全域變數和 DOM 元素 ---
         let allNovels = [];
         const views = {
+            ageGate: document.getElementById('age-gate-view'), // 重新加入 ageGate 視圖
             bookList: document.getElementById('book-list-view'),
             novel: document.getElementById('novel-view')
         };
+        const chapterSelect = document.getElementById('chapter-select');
 
         // --- 核心邏輯 ---
         document.addEventListener('DOMContentLoaded', () => {
-            showView('bookList');
-            loadLibrary();
+            // 檢查 sessionStorage 是否有年齡驗證狀態
+            if (sessionStorage.getItem('isAgeVerified') === 'true') {
+                showView('bookList');
+                loadLibrary();
+            } else {
+                showView('ageGate'); // 如果未驗證，顯示年齡驗證頁面
+            }
+            
+            // 重新加入年齡驗證按鈕的事件監聽器
+            document.getElementById('btnYes').addEventListener('click', handleAgeGateYes);
+            document.getElementById('btnNo').addEventListener('click', handleAgeGateNo);
+
             document.getElementById('back-to-library').addEventListener('click', () => showView('bookList'));
+            
+            // 新增章節選單的事件監聽器
+            chapterSelect.addEventListener('change', (event) => {
+                const selectedIndex = event.target.value;
+                if (selectedIndex !== "") { // 確保不是預設的空選項
+                    const currentNovel = allNovels.find(n => n.title === document.getElementById('novel-title').textContent); // 根據標題找到當前小說
+                    if (currentNovel && currentNovel.chapters[selectedIndex]) {
+                        const chapter = currentNovel.chapters[selectedIndex];
+                        loadChapterContent(currentNovel.folder, chapter.file, chapter.title, chapter.note);
+                    }
+                }
+            });
         });
 
         // --- 視圖管理 ---
@@ -91,6 +142,20 @@
             if (views[viewName]) {
                 views[viewName].classList.add('active');
             }
+        }
+
+        // --- 新增年齡驗證的事件處理函式 ---
+        function handleAgeGateYes() {
+            sessionStorage.setItem('isAgeVerified', 'true');
+            showView('bookList');
+            loadLibrary();
+        }
+
+        function handleAgeGateNo() {
+            const ageGateView = views.ageGate;
+            ageGateView.querySelector('#age-gate-title').textContent = "存取限制";
+            ageGateView.querySelector('#age-gate-message').innerHTML = "抱歉，您必須年滿18歲才能瀏覽本網站。";
+            ageGateView.querySelector('#age-gate-buttons').style.display = 'none';
         }
 
         // --- 資料載入與渲染 ---
@@ -149,20 +214,21 @@
         function renderNovelView(novel) {
             document.getElementById('novel-title').textContent = novel.title;
             document.getElementById('novel-author').textContent = `作者：${novel.author}`;
-            const chapterListContainer = document.getElementById('chapter-list');
-            chapterListContainer.innerHTML = '';
-            novel.chapters.forEach(chapter => {
-                const button = document.createElement('button');
-                // 將按鈕的 class 調整為 block 和 w-full 以佔滿整個寬度並垂直堆疊 [Inference]
-                button.textContent = chapter.title;
-                button.className = "p-3 bg-gray-200 dark:bg-gray-700 rounded-lg text-left hover:bg-violet-500 dark:hover:bg-violet-600 hover:text-white transition-all duration-200 truncate block w-full";
-                button.addEventListener('click', (event) => {
-                    document.querySelectorAll('#chapter-list button').forEach(btn => btn.classList.remove('selected'));
-                    event.currentTarget.classList.add('selected');
-                    loadChapterContent(novel.folder, chapter.file, chapter.title, chapter.note);
-                });
-                chapterListContainer.appendChild(button);
+            document.getElementById('novel-author-mobile').textContent = `作者：${novel.author}`;
+
+            // 清空舊選項，並添加預設選項
+            chapterSelect.innerHTML = '<option value="">請選擇章節</option>';
+            novel.chapters.forEach((chapter, index) => {
+                const option = document.createElement('option');
+                option.value = index; // 使用索引作為值
+                option.textContent = chapter.title;
+                chapterSelect.appendChild(option);
             });
+
+            // 重置選單選擇為預設值
+            chapterSelect.value = "";
+
+            // 清空內容，等待用戶選擇章節
             document.getElementById('content-title').textContent = '';
             document.getElementById('content-body').innerHTML = '<p class="text-gray-500">請從上方選擇一個章節。</p>';
             document.getElementById('content-note').textContent = '';
