@@ -44,6 +44,17 @@
     #novel-view.active .content-area { 
         padding-top: 100px; /* 根據 fixed-top-bar 的實際高度調整此值 */ 
     }
+    /* 調整 novel-author 在手機螢幕的間距 */
+    #fixed-header-bar #novel-author {
+        margin-top: 0.25rem; /* 預設間距 */
+    }
+    @media (min-width: 640px) { /* sm 螢幕以上 */
+        #fixed-header-bar #novel-author {
+            margin-top: 0; /* 在大螢幕上移除頂部間距，保持與標題對齊 */
+            margin-left: 0.5rem; /* 讓作者名在標題旁有間距 */
+        }
+    }
+
 
     /* R18 提示框樣式 */
     .r18-modal {
@@ -89,23 +100,24 @@
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
     <div id="fixed-header-bar" class="fixed-top-bar bg-white dark:bg-gray-800"> 
-        <div class="flex items-center justify-between gap-2 md:gap-4 px-2">
-            <button id="back-to-library" class="text-violet-500 hover:underline flex-shrink-0 whitespace-nowrap">&larr; 返回書庫</button>
-            
-            <div class="flex-grow text-center min-w-0">
-                <h1 id="novel-title" class="text-lg sm:text-xl font-bold text-violet-600 dark:text-violet-400 truncate"></h1>
-                <p id="novel-author" class="text-xs text-gray-700 dark:text-gray-300 truncate"></p>
+        <div class="flex flex-col gap-2 px-2"> <div class="flex items-center justify-between w-full">
+                <button id="back-to-library" class="text-violet-500 hover:underline flex-shrink-0 whitespace-nowrap">&larr; 返回書庫</button>
+                
+                <div class="flex items-baseline min-w-0 flex-grow justify-end"> <h1 id="novel-title" class="text-lg sm:text-xl font-bold text-violet-600 dark:text-violet-400 truncate"></h1>
+                    <p id="novel-author" class="text-xs text-gray-700 dark:text-gray-300 truncate sm:mt-0 sm:ml-2"></p>
                 </div>
+            </div>
             
-            <div class="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+            <div class="flex items-center justify-center sm:justify-between w-full">
                 <label for="chapter-select" class="sr-only">選擇章節</label>
-                <select id="chapter-select" class="block w-28 sm:w-36 md:w-48 p-1 sm:p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-violet-500 focus:border-violet-500 transition duration-150 ease-in-out text-xs sm:text-sm flex-shrink-0">
+                <select id="chapter-select" class="block flex-grow p-1 sm:p-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm focus:ring-violet-500 focus:border-violet-500 transition duration-150 ease-in-out text-xs sm:text-sm">
                     <option value="">請選擇章節</option>
                 </select>
-                <button id="first-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">⏮️</button>
-                <button id="prev-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">◀️</button>
-                <button id="next-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">▶️</button>
-                <button id="last-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">⏭️</button>
+                <div class="flex items-center space-x-1 sm:space-x-2 flex-shrink-0 ml-2"> <button id="first-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">⏮️</button>
+                    <button id="prev-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">◀️</button>
+                    <button id="next-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">▶️</button>
+                    <button id="last-chapter" class="p-1 sm:p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-200 text-base sm:text-lg">⏭️</button>
+                </div>
             </div>
         </div>
     </div>
