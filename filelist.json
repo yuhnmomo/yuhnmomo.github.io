@@ -1,0 +1,28 @@
+[
+  {
+    "title": "夢境邊界",
+    "folder": "shia-pian-zhou",
+    "author": "法式草莓布丁",
+    "chapters": [
+      { "file": "ch01.txt", "title": "第1章：囚禁與奇遇" },
+      { "file": "ch02.txt", "title": "第2章：虛假的戀人" },
+      { "file": "ch03.txt", "title": "第3章：崩壞的數據" },
+      { "file": "ch04.txt", "title": "第4章：潘朵拉的盒子" },
+      { "file": "ch05.txt", "title": "第5章：殊途同歸的努派" },
+      { "file": "ch06.txt", "title": "第6章：溫柔的避風港" },
+      { "file": "ch07.txt", "title": "第7章：忘記痛苦的孟婆湯" },
+      { "file": "ch08.txt", "title": "第8章：虛實的駭客" },
+      { "file": "ch09.txt", "title": "第9章：現實的殘酷" },
+      { "file": "ch10.txt", "title": "第10章：未盡的娛樂與觀者的凝視" },
+      { "file": "ch11.txt", "title": "第11章：永恆囚籠與欲望的原罪" },
+      { "file": "ch12.txt", "title": "第12章：失控的劇本" },
+      { "file": "ch13.txt", "title": "第13章：愛的伏立挺身", "note": "作者的話：本章內容較為特殊" },
+      { "file": "ch14.txt", "title": "第14章：愛的便利貼" },
+      { "file": "ch15.txt", "title": "第15章：野獸的溫柔" },
+      { "file": "ch16.txt", "title": "第16章：不能播的直播" },
+      { "file": "ch17.txt", "title": "第17章：妳都記得？" },
+      { "file": "ch18.txt", "title": "第18章：婚紗的葬禮" },
+      { "file": "ch19.txt", "title": "第19章" }
+    ]
+  }
+]
