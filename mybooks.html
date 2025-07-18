@@ -178,7 +178,7 @@
             contentBody.innerHTML = `<p class="text-gray-500">正在載入章節...</p>`;
             
             try {
-                const response = await fetch(`novels/${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`);
+                const response = await fetch(`${encodeURIComponent(folder)}/${encodeURIComponent(filename)}`);
                 if (!response.ok) throw new Error(`檔案讀取失敗 (${response.status})`);
                 const content = await response.text();
                 contentBody.innerHTML = content.replace(/\n/g, '<br>');
