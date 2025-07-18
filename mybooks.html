@@ -87,7 +87,6 @@
             </div>
         </div>
     </div>
-=======
     <style>
         body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
         .view { display: none; } /* 所有視圖預設隱藏 */
@@ -120,7 +119,6 @@
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
 
->>>>>>> c2441bdbd9cbf77229e99e4e97d0844894f2f9d6
     <div id="age-gate-view" class="view active fixed inset-0 bg-gray-900 bg-opacity-80 flex items-center justify-center z-50 p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center max-w-sm w-full">
             <h2 id="age-gate-title" class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">年齡確認</h2>
@@ -142,7 +140,7 @@
         </main>
     </div>
 
-<<<<<<< HEAD
+
     <div id="novel-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl"> 
         <main class="content-area bg-white dark:bg-gray-800 p-4 sm:p-6 rounded-2xl shadow-lg flex flex-col h-full scrollable-content"> 
             <h2 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">章節內容</h2>
@@ -152,7 +150,7 @@
 
             <div class="mt-4 text-center text-xs text-gray-400 dark:text-gray-500 pb-2 flex-shrink-0">
                 <p>&copy; 2025. All rights reserved.</p>
-=======
+
     <div id="novel-view" class="view container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl h-screen flex flex-col">
         <div class="fixed-top-bar bg-white dark:bg-gray-800 p-4 rounded-b-lg shadow-lg mb-4">
             <div class="flex items-center justify-between mb-2">
@@ -180,12 +178,12 @@
 
             <div class="mt-4 text-center text-xs text-gray-400 dark:text-gray-500 pb-2">
                 <p>&copy; 2024. All rights reserved.</p>
->>>>>>> c2441bdbd9cbf77229e99e4e97d0844894f2f9d6
+
             </div>
         </main>
     </div>
 
-<<<<<<< HEAD
+
 <script>
         // --- 全域變數和 DOM 元素 ---
         let allNovels = [];
@@ -209,8 +207,8 @@
                 fixedHeaderBar.style.display = 'none';
             }
 
-=======
-    <script>
+
+    
         // --- 全域變數和 DOM 元素 ---
         let allNovels = [];
         const views = {
@@ -222,7 +220,7 @@
 
         // --- 核心邏輯 ---
         document.addEventListener('DOMContentLoaded', () => {
->>>>>>> c2441bdbd9cbf77229e99e4e97d0844894f2f9d6
+
             // 檢查 sessionStorage 是否有年齡驗證狀態
             if (sessionStorage.getItem('isAgeVerified') === 'true') {
                 showView('bookList');
@@ -232,10 +230,9 @@
             }
             
             // 綁定年齡驗證按鈕的事件監聽器
-<<<<<<< HEAD
-=======
+
             // 確保這些按鈕在 showView('ageGate') 之後可以被正確找到
->>>>>>> c2441bdbd9cbf77229e99e4e97d0844894f2f9d6
+
             const btnYes = document.getElementById('btnYes');
             const btnNo = document.getElementById('btnNo');
             if (btnYes) btnYes.addEventListener('click', handleAgeGateYes);
@@ -250,14 +247,10 @@
                     const selectedIndex = event.target.value;
                     if (selectedIndex !== "") { // 確保不是預設的空選項
                         // 在此處需要找到當前顯示的小說數據
-<<<<<<< HEAD
+
                         const currentNovelTitle = document.getElementById('novel-title').textContent;
                         const currentNovel = allNovels.find(n => n.title === currentNovelTitle);
-=======
-                        // 最好的方法是在 renderNovelView 時將當前小說數據存儲在某處，或從 allNovels 中再次查找
-                        const currentNovelTitle = document.getElementById('novel-title').textContent;
-                        const currentNovel = allNovels.find(n => n.title === currentNovelTitle); 
->>>>>>> c2441bdbd9cbf77229e99e4e97d0844894f2f9d6
+
                         
                         if (currentNovel && currentNovel.chapters[selectedIndex]) {
                             const chapter = currentNovel.chapters[selectedIndex];
