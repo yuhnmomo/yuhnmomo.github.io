@@ -12,11 +12,7 @@
 
 ## 如何使用
 
-1.  **克隆儲存庫**：
-    ```bash
-    git clone https://github.com/yuhnmomo/yuhnmomo.github.io.git
-    cd yuhnmomo.github.io
-    ```
+
 2.  **開啟網頁**：
     直接在您的瀏覽器中開啟 `roles.html` 檔案即可。
 
