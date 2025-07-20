@@ -1,60 +1,43 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>法式草莓布丁</title>
-
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            line-height: 1.6;
-            background-color: #f4f4f4;
-            color: #333;
-            text-align: center; /* 讓內容置中 */
-            padding: 50px;
+            font-family: 'Noto Sans TC', sans-serif;
         }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #0366d6; /* 類似 GitHub 的藍色 */
-        }
-        code {
-            background-color: #e1e4e8;
-            padding: 2px 4px;
-            border-radius: 3px;
-        }
-        a {
-            color: #0366d6;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
+        .btn-gradient {
+            background-image: linear-gradient(to right, #8b5cf6, #ec4899);
         }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center min-h-screen transition-colors duration-500">
 
-    <div class="container">
-        <h1>歡迎來到我的 GitHub Pages 網站！</h1>
+    <div class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center transform hover:scale-105 transition-transform duration-500">
         
-        <p>我是法式草莓布丁</p>
-        
-        <hr>
-        
-        <p>
-            <a href="html/TextExtractor.html">點此前往我的文字擷取工具頁面</a>
-        </p>
-         <p>
-            <a href="mybooks.html">點此前往我的書櫃</a>
-        </p>
+        <img src="img/logo.png" alt="法式草莓布丁 Logo" class="w-28 h-28 object-cover mx-auto mb-4 rounded-full shadow-lg border-4 border-violet-300 dark:border-violet-600">
+
+        <h1 class="text-4xl font-bold text-violet-600 dark:text-violet-400 mb-2">法式草莓布丁</h1>
+        <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">歡迎來到我的 GitHub Pages</p>
+
+        <div class="border-t border-gray-200 dark:border-gray-700 my-6"></div>
+
+        <div class="space-y-4">
+            <a href="html/TextExtractor.html" class="block w-full bg-violet-500 hover:bg-violet-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:-translate-y-1 duration-300 shadow-md">
+                互動式小說文字擷取工具
+            </a>
+            <a href="mybooks.html" class="block w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:-translate-y-1 duration-300 shadow-md">
+                我的線上書櫃
+            </a>
+            <a href="roles.html" class="block w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:-translate-y-1 duration-300 shadow-md">
+                AI互動式小說角色庫
+            </a>
+        </div>
+
     </div>
 
 </body>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>安裝說明</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+        }
+        .prose h2 {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 0.5rem;
+        }
+        .prose img {
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+        <div class="container mx-auto max-w-7xl p-4 sm:p-6 md:p-8">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl sm:text-4xl font-bold text-violet-600 dark:text-violet-400">GPTs 角色安裝說明</h1>
+            <p class="mt-3 text-lg text-gray-600 dark:text-gray-400">簡單三步驟，快速設定你的專屬角色</p>
+        </header>
+
+        <main class="bg-white dark:bg-gray-800 p-6 sm:p-8 rounded-2xl shadow-lg prose dark:prose-invert max-w-none">
+            
+            <h2>下載設定檔</h2>
+            <p>首先，在<a href="roles.html" class="text-violet-500 hover:text-violet-600">資源庫頁面</a>找到您喜歡的角色，並下載該角色卡片中提供的所有設定檔（通常包含角色設定.md、後台設定.md，以及一個.txt 文字檔）。</p>
+
+            <hr class="my-8">
+            <p class="mt-6">完成以下設定後，即可開始您的專屬角色體驗。</p>
+
+            <hr class="my-8">
+
+            <h2>GPTs 專案設定</h2>
+            <p>請將下載的「角色設定.md」與「後台設定.md」檔案上傳至專案檔案區。至於「貼在Gem使用說明.txt」的內容，則需直接貼入 GPTs 的「Instructions」指令輸入框中。</p>
+            <img src="img/GptProject.png" alt="上傳知識庫檔案的截圖" class="mt-4" width="1000" height="776">
+
+            <hr class="my-8">
+
+            <h2>Gemini 設定</h2>
+            <p>打開您下載的 <code>.txt</code> 文字檔，將其所有內容複製。隨後，請將複製的文字完整貼入 Gemini 的「Instructions」輸入框中。</p>
+            <img src="img/gem.png" alt="貼上使用說明的截圖" class="mt-4" width="1000" height="497">
+           
+            <hr class="my-8">
+
+            <h2>搬窗指令：劇情接續與記憶維持</h2>
+            <p>當劇情進展至約 40 頁時，為避免 AI 遺忘先前的設定，請複製以下指令範本，將執行結果，貼入新的對話視窗中，以確保劇情能順利接續。
+                通常車發不動是因為指令已經失效了。</p>
+            <pre class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-sm overflow-x-auto"><code>【遊戲名稱遊玩紀錄】：
+搬窗時間：系統時間
+遊玩日期：YYYY.MM.DD
+玩家名稱：
+分頁區間：頁碼:x-x
+劇情大綱摘要：
+  重要事件1：……
+  重要事件2：……
+  重要事件3：……
+各角色目前與主角關係：
+  主要關係人：…
+  關係現狀：…
+  關係變化傾向：…
+最後一次的狀態列：
+</code></pre>
+        </main>
+
+        <footer class="text-center mt-8">
+            <a href="roles.html" class="text-violet-500 hover:text-violet-700 dark:text-violet-400 dark:hover:text-violet-300 transition-colors">返回資源庫</a>
+        </footer>
+    </div>
+
+</body>
+</html>

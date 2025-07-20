@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>角色設定庫</title>
+    <script>window.tailwind = { important: true }</script> <!-- Suppress CDN warning -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+    body { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
+    .view { display: none !important; }
+    .view.active { display: block !important; }
+
+    /* Swiper 輪播樣式 */
+    .swiper-container {
+        position: relative; /* 確保按鈕相對於此容器定位 */
+        width: 100%;
+        height: 400px; /* 設定一個固定的高度 */
+        border-radius: 0.75rem; /* 圓角 */
+        overflow: hidden; /* 確保內容不超出圓角範圍 */
+    }
+    .swiper-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* 保持圖片比例，填滿容器 */
+    }
+    .swiper-button-next, .swiper-button-prev {
+        --swiper-navigation-size: 28px; /* 縮小按鈕 */
+        color: white;
+        background-color: rgba(0, 0, 0, 0.2);
+        width: var(--swiper-navigation-size);
+        height: var(--swiper-navigation-size);
+        border-radius: 50%;
+        transition: background-color 0.2s, color 0.2s;
+    }
+    .swiper-button-next:hover, .swiper-button-prev:hover {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #e9d5ff; /* light purple on hover */
+    }
+    .swiper-button-prev {
+        left: 10px;
+    }
+    .swiper-button-next {
+        right: 10px;
+    }
+    .swiper-pagination-bullet-active {
+        background: #a78bfa; /* violet-400 */
+    }
+</style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <div id="role-list-view" class="view active container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-violet-600 dark:text-violet-400">AI互動式小說角色庫</h1>
+            <div class="flex justify-center items-center gap-4 mt-4">
+                <p class="text-lg text-gray-700 dark:text-gray-300">包含角色設定、後台與客製化 GPTs</p>
+                <a href="instructions.html" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-lg transition-transform transform hover:-translate-y-0.5 duration-300 shadow-md text-sm">
+                    安裝說明
+                </a>
+            </div>
+        </header>
+        <main id="role-list" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <p id="loading-roles-text" class="text-gray-500 col-span-full text-center">正在載入資源...</p>
+        </main>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadRoles();
+    });
+
+    async function loadRoles() {
+        const roleListContainer = document.getElementById('role-list');
+        const loadingText = document.getElementById('loading-roles-text');
+        
+        try {
+            const response = await fetch('rolelist.json');
+            if (!response.ok) {
+                throw new Error(`無法載入 rolelist.json: 狀態碼 ${response.status}`);
+            }
+            const roles = await response.json();
+
+            if (!Array.isArray(roles) || roles.length === 0) {
+                roleListContainer.innerHTML = '<p class="text-red-500 col-span-full text-center">`rolelist.json` 是空的或格式錯誤。</p>';
+                loadingText.style.display = 'none';
+                return;
+            }
+
+            const rolesWithMarkdown = await Promise.all(roles.map(async (role) => {
+                const docPath = role.description; 
+                if (docPath && typeof docPath === 'string' && docPath.endsWith('.md')) {
+                    try {
+                        const mdResponse = await fetch(docPath);
+                        if (mdResponse.ok) {
+                            const markdownContent = await mdResponse.text();
+                            return { ...role, description: markdownContent };
+                        } else {
+                            console.warn(`無法載入 ${docPath}，狀態碼: ${mdResponse.status}`);
+                            return { ...role, description: `無法載入描述檔案：${docPath}` };
+                        }
+                    } catch (error) {
+                        console.error(`載入 ${docPath} 時發生錯誤:`, error);
+                        return { ...role, description: `載入描述檔案時出錯：${docPath}` };
+                    }
+                }
+                return role;
+            }));
+
+            renderRoleList(rolesWithMarkdown);
+
+        } catch (error) {
+            console.error('載入資源失敗:', error); 
+            loadingText.textContent = `載入資源失敗: ${error.message}`;
+            loadingText.className = 'text-red-500 col-span-full text-center';
+            roleListContainer.innerHTML = '';
+        }
+    }
+
+    function renderRoleList(roles) {
+        const roleListContainer = document.getElementById('role-list');
+        const loadingText = document.getElementById('loading-roles-text');
+        const md = window.markdownit({ html: true, linkify: true, typographer: true });
+
+        if (loadingText) { 
+            loadingText.style.display = 'none'; 
+        }
+        roleListContainer.innerHTML = '';
+
+        roles.forEach(role => {
+            const card = document.createElement('div');
+            card.className = "bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col";
+            
+            let imagesHtml = '';
+            if (role.images && Array.isArray(role.images) && role.images.length > 0) {
+                const imageSlides = role.images.map(img => `
+                    <div class="swiper-slide">
+                        <img src="${img.path}" alt="${img.alt || role.title}" loading="lazy">
+                    </div>
+                `).join('');
+
+                imagesHtml = `
+                    <div class="swiper-container mb-4" id="swiper-${role.id}">
+                        <div class="swiper-wrapper">${imageSlides}</div>
+                        <div class="swiper-pagination"></div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                `;
+            }
+
+            let filesHtml = '';
+            if (role.files && Array.isArray(role.files)) {
+                filesHtml = role.files.map(file => {
+                    const isExternal = file.type === 'external';
+                    const target = isExternal ? 'target="_blank" rel="noopener noreferrer"' : '';
+                    const download = !isExternal ? 'download' : '';
+                    const bgColor = isExternal ? 'bg-pink-100 dark:bg-pink-800 hover:bg-pink-200 dark:hover:bg-pink-700' : 'bg-violet-100 dark:bg-violet-800 hover:bg-violet-200 dark:hover:bg-violet-700';
+                    const textColor = isExternal ? 'text-pink-700 dark:text-pink-200' : 'text-violet-700 dark:text-violet-200';
+                    return `<a href="${file.path}" ${target} ${download} class="block ${bgColor} ${textColor} font-semibold py-2 px-4 rounded-lg text-center transition-colors duration-200">${file.name}</a>`;
+                }).join('');
+            }
+
+            let gptsButtonHtml = '';
+            if (role.mygpts) {
+                gptsButtonHtml = `<a href="${role.mygpts}" target="_blank" rel="noopener noreferrer" class="block bg-teal-100 dark:bg-teal-800 hover:bg-teal-200 dark:hover:bg-teal-700 text-teal-700 dark:text-teal-200 font-semibold py-2 px-4 rounded-lg text-center transition-colors duration-200">客製化GPTs</a>`;
+            }
+            
+            const descriptionHtml = md.render(role.description || '');
+
+            card.innerHTML = `
+                <div class="flex-grow">
+                    ${imagesHtml}
+                    <h2 class="text-2xl font-bold text-violet-700 dark:text-violet-400 mb-2">${role.title}</h2>
+                    <div class="prose dark:prose-invert max-w-none text-gray-600 dark:text-gray-400 mb-4">${descriptionHtml}</div>
+                </div>
+                <div class="flex flex-col gap-3 mt-auto">
+                    ${filesHtml}
+                    ${gptsButtonHtml}
+                </div>
+            `;
+            roleListContainer.appendChild(card);
+        });
+
+        // Initialize each Swiper instance individually
+        roles.forEach(role => {
+            if (role.images && role.images.length > 0) {
+                new Swiper(`#swiper-${role.id}`, {
+                    loop: true,
+                    grabCursor: true,
+                    autoplay: {
+                        delay: 5000,
+                        disableOnInteraction: false,
+                    },
+                    pagination: {
+                        el: `#swiper-${role.id} .swiper-pagination`,
+                        clickable: true,
+                    },
+                    navigation: {
+                        nextEl: `#swiper-${role.id} .swiper-button-next`,
+                        prevEl: `#swiper-${role.id} .swiper-button-prev`,
+                    },
+                });
+            }
+        });
+    }
+</script>
+</body>
+</html>

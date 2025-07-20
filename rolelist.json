@@ -1,0 +1,222 @@
+[
+    {
+        "id": "Dream",
+        "title": "夢境邊界",
+        "description": "Role/Dream/doc.md",
+		"mygpts":"https://chatgpt.com/g/g-6873b5172e488191b7349f9518160608-meng-jing-bian-jie",
+        "files": [
+            {
+                "name": "角色設定",
+                "path": "Role/Dream/夢境邊界角色設定.md"
+            },
+            {
+                "name": "後台設定",
+                "path": "Role/Dream/夢境邊界後台設定.md"
+            },
+			{
+                "name": "貼在Gem使用說明.txt",
+                "path": "Role/Dream/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/Dream/img/dream01.png",
+                "alt": "夢境邊界圖片 1"
+            },
+            {
+                "path": "Role/Dream/img/dream02.png",
+                "alt": "夢境邊界圖片 2"
+            },
+            {
+                "path": "Role/Dream/img/dream03.png",
+                "alt": "夢境邊界圖片 3"
+            },
+            {
+                "path": "Role/Dream/img/dream04.png",
+                "alt": "夢境邊界圖片 4"
+            },
+            {
+                "path": "Role/Dream/img/dream05.png",
+                "alt": "夢境邊界圖片 5"
+            },
+            {
+                "path": "Role/Dream/img/dream06.png",
+                "alt": "夢境邊界圖片 6"
+            },
+            {
+                "path": "Role/Dream/img/dream07.png",
+                "alt": "夢境邊界圖片 7"
+            },
+            {
+                "path": "Role/Dream/img/dream08.png",
+                "alt": "夢境邊界圖片 8"
+            },
+            {
+                "path": "Role/Dream/img/dream09.png",
+                "alt": "夢境邊界圖片 9"
+            },
+            {
+                "path": "Role/Dream/img/dream10.png",
+                "alt": "夢境邊界圖片 10"
+            },
+            {
+                "path": "Role/Dream/img/dream11.png",
+                "alt": "夢境邊界圖片 11"
+            },
+            {
+                "path": "Role/Dream/img/dream12.png",
+                "alt": "夢境邊界圖片 12"
+            },
+            {
+                "path": "Role/Dream/img/dream13.png",
+                "alt": "夢境邊界圖片 13"
+            },
+            {
+                "path": "Role/Dream/img/dream14.png",
+                "alt": "夢境邊界圖片 14"
+            },
+            {
+                "path": "Role/Dream/img/dream15.png",
+                "alt": "夢境邊界圖片 15"
+            },
+            {
+                "path": "Role/Dream/img/dream16.png",
+                "alt": "夢境邊界圖片 16"
+            },
+            {
+                "path": "Role/Dream/img/dream17.png",
+                "alt": "夢境邊界圖片 17"
+            },
+            {
+                "path": "Role/Dream/img/dream18.png",
+                "alt": "夢境邊界圖片 18"
+            }
+        ]
+    },
+    {
+        "id": "Lotus",
+        "title": "逆命書",
+        "description": "Role/Lotus/doc.md",
+		"mygpts":"https://chatgpt.com/g/g-68681cb0ac08819194994ce6ec575232-ni-ming-shu",
+        "files": [
+            {
+                "name": "角色設定",
+                "path": "Role/Lotus/逆命書人物設定.md"
+            },
+            {
+                "name": "後台設定",
+                "path": "Role/Lotus/逆命書後台設定.md"
+            },
+			{
+                "name": "貼在Gem使用說明.txt",
+                "path": "Role/Lotus/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/Lotus/img/lotus01.png",
+                "alt": "逆命書圖片1",
+                "width": "400",
+                "height": "400"
+            },
+            {
+                "path": "Role/Lotus/img/lotus02.png",
+                "alt": "逆命書圖片2",
+                "width": "400",
+                "height": "300"
+            }
+        ]
+    },
+    {
+        "id": "Moon",
+        "title": "月光流影",
+        "description": "Role/Moon/doc.md",
+		"mygpts":"https://chatgpt.com/g/g-686d6e3603c48191865d6b3fb16fd161-yue-guang-liu-ying",
+        "files": [
+            {
+                "name": "角色設定",
+                "path": "Role/Moon/月光流影角色設定.md"
+            },
+            {
+                "name": "後台設定",
+                "path": "Role/Moon/月光流影遊戲後台.md"
+            },
+            {
+                "name": "時間軸",
+                "path": "Role/Moon/時間軸.md"
+            },
+			{
+                "name": "貼在Gem使用說明.txt",
+                "path": "Role/Moon/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/Moon/img/moon01.png",
+                "alt": "月光流影圖片1",
+                "width": "400",
+                "height": "400"
+            },
+            {
+                "path": "Role/Moon/img/moon02.png",
+                "alt": "月光流影圖片2",
+                "width": "400",
+                "height": "300"
+            }
+        ]
+    },
+    {
+        "id": "TestDrive",
+        "title": "試駕總裁",
+        "description": "Role/TestDrive/doc.md",
+		"mygpts":"https://chatgpt.com/g/g-686413100de48191ae71109bc215f73d-shi-jia-zong-cai",
+        "files": [
+            {
+                "name": "角色設定",
+                "path": "Role/TestDrive/試駕總裁角色設定.md"
+            },
+            {
+                "name": "後台設定",
+                "path": "Role/TestDrive/試駕總裁後台設定.md"
+            },
+            {
+                "name": "時間軸",
+                "path": "Role/TestDrive/時間軸.md"
+            },
+			{
+                "name": "貼在Gem使用說明.txt",
+                "path": "Role/TestDrive/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/TestDrive/img/testdrive01.png",
+                "alt": "試駕總裁圖片 1"
+            },
+            {
+                "path": "Role/TestDrive/img/testdrive02.png",
+                "alt": "試駕總裁圖片 2"
+            },
+            {
+                "path": "Role/TestDrive/img/testdrive03.png",
+                "alt": "試駕總裁圖片 3"
+            },
+            {
+                "path": "Role/TestDrive/img/testdrive04.png",
+                "alt": "試駕總裁圖片 4"
+            },
+            {
+                "path": "Role/TestDrive/img/testdrive05.png",
+                "alt": "試駕總裁圖片 5"
+            },
+            {
+                "path": "Role/TestDrive/img/testdrive06.png",
+                "alt": "試駕總裁圖片 6"
+            },
+            {
+                "path": "Role/TestDrive/img/testdrive07.png",
+                "alt": "試駕總裁圖片 7"
+            }
+        ]
+    }
+]
