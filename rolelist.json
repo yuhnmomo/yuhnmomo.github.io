@@ -114,13 +114,13 @@
         ],
         "images": [
             {
-                "path": "Role/Lotus/img/lotus01.png",
+                "path": "Role/Lotus/img/Lotus01.png",
                 "alt": "逆命書圖片1",
                 "width": "400",
                 "height": "400"
             },
             {
-                "path": "Role/Lotus/img/lotus02.png",
+                "path": "Role/Lotus/img/Lotus02.png",
                 "alt": "逆命書圖片2",
                 "width": "400",
                 "height": "300"
@@ -152,13 +152,13 @@
         ],
         "images": [
             {
-                "path": "Role/Moon/img/moon01.png",
+                "path": "Role/Moon/img/Moon01.png",
                 "alt": "月光流影圖片1",
                 "width": "400",
                 "height": "400"
             },
             {
-                "path": "Role/Moon/img/moon02.png",
+                "path": "Role/Moon/img/Moon02.png",
                 "alt": "月光流影圖片2",
                 "width": "400",
                 "height": "300"
