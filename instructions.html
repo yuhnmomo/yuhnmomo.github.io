@@ -53,7 +53,8 @@
             <h2>搬窗指令：劇情接續與記憶維持</h2>
             <p>當劇情進展至約 40 頁時，為避免 AI 遺忘先前的設定，請複製以下指令範本，將執行結果，貼入新的對話視窗中，以確保劇情能順利接續。
                 通常車發不動是因為指令已經失效了。</p>
-            <pre class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-sm overflow-x-auto"><code>【遊戲名稱遊玩紀錄】：
+            <div class="relative group">
+                <pre class="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-sm overflow-x-auto"><code>【遊戲名稱遊玩紀錄】：
 搬窗時間：系統時間
 遊玩日期：YYYY.MM.DD
 玩家名稱：
@@ -68,6 +69,10 @@
   關係變化傾向：…
 最後一次的狀態列：
 </code></pre>
+                <button onclick="copyRecordTemplate(this)" class="absolute top-2 right-2 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 font-bold py-1 px-2 rounded text-xs opacity-50 group-hover:opacity-100 transition-opacity">
+                    複製
+                </button>
+            </div>
         </main>
 
         <footer class="text-center mt-8">
@@ -75,5 +80,29 @@
         </footer>
     </div>
 
+    <script>
+        function copyRecordTemplate(button) {
+            const preElement = button.previousElementSibling;
+            const codeElement = preElement.querySelector('code');
+            if (!codeElement) {
+                console.error('Could not find the code element to copy.');
+                return;
+            }
+            const textToCopy = codeElement.innerText;
+
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                button.innerText = '已複製！';
+                setTimeout(() => {
+                    button.innerText = '複製';
+                }, 2000);
+            }).catch(err => {
+                console.error('無法複製文字: ', err);
+                button.innerText = '失敗';
+                 setTimeout(() => {
+                    button.innerText = '複製';
+                }, 2000);
+            });
+        }
+    </script>
 </body>
 </html>
