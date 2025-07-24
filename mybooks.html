@@ -467,11 +467,15 @@
         novel.chapters.forEach((chapter, index) => {
             const option = document.createElement('option');
             option.value = index; // 使用索引作為值
-            option.textContent = chapter.title;
-            // 如果章節是 R18，則添加紅色文字樣式
+            
+            // 如果章節是 R18，則在標題前加上 (R18) 標記並添加紅色樣式
             if (chapter.isR18) {
-                option.classList.add('text-red-500'); // Tailwind CSS 的紅色文字
+                option.textContent = `(R18) ${chapter.title}`;
+                option.classList.add('text-red-500'); // 繼續保留紅色樣式，在支援的瀏覽器上依然有效
+            } else {
+                option.textContent = chapter.title;
             }
+            
             chapterSelect.appendChild(option);
         });
 
