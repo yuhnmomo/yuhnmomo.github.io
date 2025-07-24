@@ -95,6 +95,14 @@
         background-color: rgba(17, 24, 39, 0.8) !important; /* bg-gray-900 bg-opacity-80 的 RGB 值 */ 
         padding: 1rem !important; /* p-4 的預設值 */ 
     }
+
+    /* 為 Markdown 渲染的段落添加間距 */
+    #content-body p {
+        margin-bottom: 1rem; /* 增加段落下邊距，模擬換行效果 */
+    }
+    #content-body p:last-child {
+        margin-bottom: 0; /* 最後一個段落不需要下邊距 */
+    }
 </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
@@ -527,7 +535,7 @@
                 }
             }
 
-            const htmlContent = marked.parse(markdownContent); 
+            const htmlContent = marked.parse(markdownContent, { gfm: true, breaks: true }); 
             
             // 如果有圖片，在內容上方顯示圖片
             if (img && chapterImageContainer) {
