@@ -454,6 +454,36 @@
     }
 
 
+    function chineseToArabic(chineseNumStr) {
+        const numMap = {
+            '一': 1, '二': 2, '三': 3, '四': 4, '五': 5,
+            '六': 6, '七': 7, '八': 8, '九': 9
+        };
+
+        if (chineseNumStr === '十') {
+            return 10;
+        }
+
+        if (chineseNumStr.startsWith('十')) { // e.g., "十一", "十七"
+            const unit = chineseNumStr.substring(1); // "一", "七"
+            return 10 + (numMap[unit] || 0);
+        }
+
+        if (chineseNumStr.includes('十')) { // e.g., "二十", "二十三"
+            const parts = chineseNumStr.split('十');
+            const tensDigit = numMap[parts[0]]; // "二" -> 2
+            const unitDigit = parts[1] ? numMap[parts[1]] : 0; // "三" -> 3, or 0 for "二十"
+            return tensDigit * 10 + unitDigit;
+        }
+
+        // Fallback for single digits (though not strictly needed as they are Arabic in JSON)
+        if (numMap[chineseNumStr] !== undefined) {
+            return numMap[chineseNumStr];
+        }
+
+        return chineseNumStr; // Return original if no match
+    }
+
     function renderNovelView(novel) {
         currentNovel = novel; // 儲存當前小說
         currentChapterIndex = 0; // 預設從第一章開始
@@ -468,12 +498,27 @@
             const option = document.createElement('option');
             option.value = index; // 使用索引作為值
             
-            // 如果章節是 R18，則在標題前加上 (R18) 標記並添加紅色樣式
+            let displayChapterTitle = chapter.title;
+
+            // Only apply conversion for "過眼雲煙" novel
+            if (novel.title === "過眼雲煙") {
+                const match = chapter.title.match(/第(.*?)(章.*)/);
+                if (match && match[1]) {
+                    const chineseNumPart = match[1]; // e.g., "十七", "二十"
+                    const arabicNum = chineseToArabic(chineseNumPart);
+                    // Only update if a conversion actually happened and it's different
+                    if (typeof arabicNum === 'number' && arabicNum.toString() !== chineseNumPart) {
+                        displayChapterTitle = `第${arabicNum}${match[2]}`;
+                    }
+                }
+            }
+
+            // 如果章節是 R18，則標記紅色，但不顯示 (R18) 標記
             if (chapter.isR18) {
-                option.textContent = `(R18) ${chapter.title}`;
-                option.classList.add('text-red-500'); // 繼續保留紅色樣式，在支援的瀏覽器上依然有效
+                option.textContent = displayChapterTitle; // 使用處理後的標題
+                option.classList.add('text-red-500'); // 繼續保留紅色樣式
             } else {
-                option.textContent = chapter.title;
+                option.textContent = displayChapterTitle;
             }
             
             chapterSelect.appendChild(option);
