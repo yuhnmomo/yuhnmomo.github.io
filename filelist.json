@@ -44,7 +44,10 @@
       { "file": "ch10.md", "title": "第10章 鳳胎驚瀾", "hasChapterTitleInContent": true, "isR18": false },
       { "file": "ch11.md", "title": "第11章 書庫迷局", "hasChapterTitleInContent": true, "isR18": false },
       { "file": "ch12.md", "title": "第12章 禁宮病起", "hasChapterTitleInContent": true, "isR18": true },
-      { "file": "ch13.md", "title": "第13章 三契命合", "hasChapterTitleInContent": true, "isR18": true }
+      { "file": "ch13.md", "title": "第13章 三契命合", "hasChapterTitleInContent": true, "isR18": true },
+      { "file": "ch14.md", "title": "第14章 命孕初成", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch15.md", "title": "第15章 假孕之局", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch16.md", "title": "第16章 魂息初融", "hasChapterTitleInContent": true, "isR18": true }
     ]
   }
 ]
