@@ -32,16 +32,19 @@
     "tags": "小說-古風-宮庭-R18",
     "chapters": [
       { "file": "ch00.md", "title": "序章 殘神紀元", "hasChapterTitleInContent": true, "isR18": false },
-      { "file": "ch01.md", "title": "第1章 穿越之初", "hasChapterTitleInContent": true, "isR18": false },
-      { "file": "ch02.md", "title": "第2章 暗慾潛流", "hasChapterTitleInContent": true, "isR18": true },
-      { "file": "ch03.md", "title": "第3章 選秀大典", "hasChapterTitleInContent": true, "isR18": false },
-      { "file": "ch04.md", "title": "第4章 寒梅傲雪", "hasChapterTitleInContent": true, "isR18": false },
-      { "file": "ch05.md", "title": "第5章 紙鳶誤飛", "hasChapterTitleInContent": true, "isR18": false },
-      { "file": "ch06.md", "title": "第6章 書閣初遇", "hasChapterTitleInContent": true, "isR18": false },
-      { "file": "ch07.md", "title": "第7章 月下知音", "hasChapterTitleInContent": true, "isR18": false },
-      { "file": "ch08.md", "title": "第8章 夢醒春宵", "hasChapterTitleInContent": true, "isR18": false },
-      { "file": "ch09.md", "title": "第9章 朝堂春色", "hasChapterTitleInContent": true, "isR18": true },
-      { "file": "ch10.md", "title": "第10章 鳳胎驚瀾", "hasChapterTitleInContent": true, "isR18": false }
+      { "file": "ch01.md", "title": "第1章  穿越之初", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch02.md", "title": "第2章  暗慾潛流", "hasChapterTitleInContent": true, "isR18": true },
+      { "file": "ch03.md", "title": "第3章  選秀大典", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch04.md", "title": "第4章  寒梅傲雪", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch05.md", "title": "第5章  紙鳶誤飛", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch06.md", "title": "第6章  書閣初遇", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch07.md", "title": "第7章  月下知音", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch08.md", "title": "第8章  夢醒春宵", "hasChapterTitleInContent": true, "isR18": true },
+      { "file": "ch09.md", "title": "第9章  朝堂春色", "hasChapterTitleInContent": true, "isR18": true },
+      { "file": "ch10.md", "title": "第10章 鳳胎驚瀾", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch11.md", "title": "第11章 書庫迷局", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch12.md", "title": "第12章 禁宮病起", "hasChapterTitleInContent": true, "isR18": true },
+      { "file": "ch13.md", "title": "第13章 三契命合", "hasChapterTitleInContent": true, "isR18": true }
     ]
   }
 ]
