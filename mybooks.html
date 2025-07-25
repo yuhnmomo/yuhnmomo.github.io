@@ -516,7 +516,7 @@
             // 如果章節是 R18，則標記紅色，但不顯示 (R18) 標記
             if (chapter.isR18) {
                 option.textContent = displayChapterTitle; // 使用處理後的標題
-				optionText += " (H)"; 
+				option.textContent += " (H)"; 
                 option.classList.add('text-red-500'); // 繼續保留紅色樣式
             } else {
                 option.textContent = displayChapterTitle;
