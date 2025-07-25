@@ -513,14 +513,18 @@
                 }
             }
 
-            // 如果章節是 R18，則標記紅色，但不顯示 (R18) 標記
+            // --- 修改開始 ---
+            let optionText = displayChapterTitle; // 先取得章節標題
+
             if (chapter.isR18) {
-                option.textContent = displayChapterTitle; // 使用處理後的標題
-				option.textContent += " (H)"; 
-                option.classList.add('text-red-500'); // 繼續保留紅色樣式
-            } else {
-                option.textContent = displayChapterTitle;
+                // 如果是 R18，在標題後面加上標記
+                optionText += " (R18)"; 
+                // 同時保留電腦版的紅色樣式
+                option.classList.add('text-red-500');
             }
+            
+            option.textContent = optionText; // 將最終的文字設定給 option
+            // --- 修改結束 ---
             
             chapterSelect.appendChild(option);
         });
