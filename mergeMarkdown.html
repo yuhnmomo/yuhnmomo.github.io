@@ -74,10 +74,17 @@
             <input type="text" id="filename-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="預設：第一個檔名+最後一個檔名.md">
         </div>
 
-        <!-- 合併按鈕 -->
-        <button id="merge-button" class="w-full bg-gradient-to-r from-violet-600 to-pink-500 text-white font-bold py-3 px-4 rounded-lg hover:from-violet-700 hover:to-pink-600 focus:outline-none focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-800 transition-all duration-300 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]">
-            合併並下載
-        </button>
+        <!-- 按鈕群組 -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- 重設按鈕 -->
+            <button id="reset-button" class="w-full bg-gray-200 text-gray-700 font-bold py-3 px-4 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-300 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-gray-500 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]">
+                重設
+            </button>
+            <!-- 合併按鈕 -->
+            <button id="merge-button" class="w-full bg-gradient-to-r from-violet-600 to-pink-500 text-white font-bold py-3 px-4 rounded-lg hover:from-violet-700 hover:to-pink-600 focus:outline-none focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-800 transition-all duration-300 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]">
+                合併並下載
+            </button>
+        </div>
 
         <!-- 回到首頁按鈕 -->
         <div class="text-center mt-6">
@@ -92,6 +99,7 @@
         // 獲取 DOM 元素
         const fileUpload = document.getElementById('file-upload');
         const mergeButton = document.getElementById('merge-button');
+        const resetButton = document.getElementById('reset-button'); // 新增
         const fileListContainer = document.getElementById('file-list-container');
         const fileList = document.getElementById('file-list');
         const messageBox = document.getElementById('message-box');
@@ -105,7 +113,7 @@
 
         // --- 拖曳功能 ---
         dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault(); // 防止瀏覽器預設開啟檔案
+            e.preventDefault();
             dropZone.classList.add('drag-over');
         });
 
@@ -119,7 +127,7 @@
             dropZone.classList.remove('drag-over');
             const files = e.dataTransfer.files;
             if (files.length) {
-                fileUpload.files = files; // 將拖曳的檔案賦給 input
+                fileUpload.files = files;
                 handleFiles(files);
             }
         });
@@ -128,6 +136,17 @@
         // 監聽檔案上傳的變化 (點擊選擇)
         fileUpload.addEventListener('change', (event) => {
             handleFiles(event.target.files);
+        });
+        
+        // 新增：重設按鈕的點擊事件
+        resetButton.addEventListener('click', () => {
+            selectedFiles = [];
+            fileUpload.value = ''; // 清空 input 的值，才能重新選擇同一個檔案
+            fileList.innerHTML = '';
+            fileListContainer.classList.add('hidden');
+            filenameInput.value = '';
+            mergeButton.disabled = true;
+            messageBox.classList.add('hidden');
         });
 
         // 統一處理檔案選擇的函式
@@ -201,20 +220,16 @@
                 let downloadFilename;
 
                 if (customFilename) {
-                    // 如果使用者提供了檔名，則使用它
                     downloadFilename = customFilename.endsWith('.md') ? customFilename : `${customFilename}.md`;
                 } else {
-                    // --- 更新：使用第一個和最後一個檔名作為預設值 ---
                     if (selectedFiles.length > 1) {
                         const firstFileName = selectedFiles[0].name.replace(/\.md$/i, '');
                         const lastFileName = selectedFiles[selectedFiles.length - 1].name.replace(/\.md$/i, '');
                         downloadFilename = `${firstFileName}+${lastFileName}.md`;
                     } else if (selectedFiles.length === 1) {
-                        // 如果只有一個檔案，則在檔名後加上 "-merged"
                         const singleFileName = selectedFiles[0].name.replace(/\.md$/i, '');
                         downloadFilename = `${singleFileName}-merged.md`;
                     } else {
-                        // 備用方案，理論上不會執行到這裡
                         const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
                         downloadFilename = `merged-${timestamp}.md`;
                     }
@@ -237,11 +252,6 @@
             }
         });
 
-        /**
-         * 使用 Promise 異步讀取單一檔案的內容
-         * @param {File} file - 要讀取的檔案物件
-         * @returns {Promise<string>} - 一個解析為檔案文字內容的 Promise
-         */
         function readFileAsText(file) {
             return new Promise((resolve, reject) => {
                 const reader = new FileReader();
