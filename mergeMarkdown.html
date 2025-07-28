@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown 檔案合併工具</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* 使用 Noto Sans TC 作為主要字體 */
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+        }
+        /* 自訂檔案輸入按鈕樣式 */
+        .file-input-button {
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+        }
+        /* 拖曳懸停時的樣式 */
+        .drag-over {
+            border-color: #8b5cf6; /* violet-500 */
+            background-color: #f5f3ff; /* violet-50 */
+        }
+        .dark .drag-over {
+            border-color: #a78bfa; /* violet-400 */
+            background-color: #3730a3; /* indigo-800 */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-50 to-pink-100 dark:from-gray-900 dark:to-violet-900/50 text-gray-800 dark:text-gray-200 flex items-center justify-center min-h-screen p-4 transition-colors duration-300">
+
+    <div class="w-full max-w-2xl bg-white dark:bg-gray-800/50 dark:backdrop-blur-sm rounded-2xl shadow-2xl p-6 md:p-8 border border-gray-200 dark:border-gray-700">
+        
+        <!-- 標題 -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-violet-600 to-pink-500">Markdown 檔案合併工具</h1>
+            <p class="mt-2 text-gray-600 dark:text-gray-400">上傳多個 .md 檔案，將它們合併成一個檔案。</p>
+        </div>
+
+        <!-- 檔案上傳區域 -->
+        <div class="mb-6">
+            <label id="drop-zone" for="file-upload" class="file-input-button w-full px-4 py-8 border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl hover:border-violet-500 dark:hover:border-violet-400 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-all duration-300">
+                <div class="flex flex-col items-center justify-center pointer-events-none">
+                    <svg class="w-12 h-12 text-gray-400 dark:text-gray-500 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0l-3.75 3.75M12 9.75l3.75 3.75M3 17.25V6.75A2.25 2.25 0 015.25 4.5h13.5A2.25 2.25 0 0121 6.75v10.5A2.25 2.25 0 0118.75 19.5H5.25A2.25 2.25 0 013 17.25z" />
+                    </svg>
+                    <span class="mt-2 font-medium text-gray-700 dark:text-gray-300">點擊此處或拖曳檔案至此</span>
+                    <span class="text-sm text-gray-500 dark:text-gray-400">選擇要合併的 .md 檔案</span>
+                </div>
+            </label>
+            <input id="file-upload" type="file" class="hidden" multiple accept=".md,.markdown">
+        </div>
+
+        <!-- 檔案列表 -->
+        <div id="file-list-container" class="mb-6 hidden">
+            <h2 class="text-lg font-semibold mb-2 text-gray-700 dark:text-gray-300">已選取的檔案：</h2>
+            <ul id="file-list" class="list-disc list-inside bg-gray-50 dark:bg-gray-700/50 p-4 rounded-md space-y-1 text-sm">
+                <!-- 檔案名稱將會動態插入此處 -->
+            </ul>
+        </div>
+        
+        <!-- 訊息提示框 -->
+        <div id="message-box" class="hidden p-4 mb-4 text-sm rounded-lg" role="alert">
+            <!-- 訊息將會動態插入此處 -->
+        </div>
+
+        <!-- 下載檔名設定 -->
+        <div class="mb-6">
+            <label for="filename-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">下載檔名 (可選)</label>
+            <input type="text" id="filename-input" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="預設：第一個檔名+最後一個檔名.md">
+        </div>
+
+        <!-- 合併按鈕 -->
+        <button id="merge-button" class="w-full bg-gradient-to-r from-violet-600 to-pink-500 text-white font-bold py-3 px-4 rounded-lg hover:from-violet-700 hover:to-pink-600 focus:outline-none focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-800 transition-all duration-300 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98]">
+            合併並下載
+        </button>
+
+        <!-- 回到首頁按鈕 -->
+        <div class="text-center mt-6">
+            <a href="index.html" class="text-sm text-gray-500 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors duration-200">
+                ← 回到首頁
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        // 獲取 DOM 元素
+        const fileUpload = document.getElementById('file-upload');
+        const mergeButton = document.getElementById('merge-button');
+        const fileListContainer = document.getElementById('file-list-container');
+        const fileList = document.getElementById('file-list');
+        const messageBox = document.getElementById('message-box');
+        const filenameInput = document.getElementById('filename-input');
+        const dropZone = document.getElementById('drop-zone');
+
+        let selectedFiles = [];
+
+        // 初始化時禁用合併按鈕
+        mergeButton.disabled = true;
+
+        // --- 拖曳功能 ---
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault(); // 防止瀏覽器預設開啟檔案
+            dropZone.classList.add('drag-over');
+        });
+
+        dropZone.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('drag-over');
+            const files = e.dataTransfer.files;
+            if (files.length) {
+                fileUpload.files = files; // 將拖曳的檔案賦給 input
+                handleFiles(files);
+            }
+        });
+        // --- 拖曳功能結束 ---
+
+        // 監聽檔案上傳的變化 (點擊選擇)
+        fileUpload.addEventListener('change', (event) => {
+            handleFiles(event.target.files);
+        });
+
+        // 統一處理檔案選擇的函式
+        function handleFiles(files) {
+            selectedFiles = Array.from(files);
+            updateFileList();
+            mergeButton.disabled = selectedFiles.length === 0;
+        }
+
+        // 更新顯示的檔案列表
+        function updateFileList() {
+            fileList.innerHTML = '';
+            if (selectedFiles.length > 0) {
+                fileListContainer.classList.remove('hidden');
+                selectedFiles.forEach(file => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = file.name;
+                    listItem.className = 'text-gray-800 dark:text-gray-300';
+                    fileList.appendChild(listItem);
+                });
+            } else {
+                fileListContainer.classList.add('hidden');
+            }
+        }
+        
+        // 顯示提示訊息
+        function showMessage(type, message) {
+            messageBox.textContent = message;
+            messageBox.className = 'p-4 mb-4 text-sm rounded-lg'; // Reset classes
+            
+            if (type === 'error') {
+                messageBox.classList.add('bg-red-100', 'dark:bg-red-900', 'text-red-700', 'dark:text-red-300');
+            } else if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'dark:bg-green-900', 'text-green-700', 'dark:text-green-300');
+            }
+            
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        // 監聽合併按鈕的點擊事件
+        mergeButton.addEventListener('click', async () => {
+            if (selectedFiles.length === 0) {
+                showMessage('error', '請先選擇至少一個 Markdown 檔案。');
+                return;
+            }
+
+            mergeButton.disabled = true;
+            mergeButton.textContent = '正在合併中...';
+
+            try {
+                const fileContents = await Promise.all(
+                    selectedFiles.map(file => readFileAsText(file))
+                );
+
+                const contentParts = [];
+                const separator = '\n\n---\n\n';
+                fileContents.forEach((content, index) => {
+                    contentParts.push(content);
+                    if (index < fileContents.length - 1) {
+                        contentParts.push(separator);
+                    }
+                });
+
+                const blob = new Blob(contentParts, { type: 'text/markdown;charset=utf-8' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                
+                let customFilename = filenameInput.value.trim();
+                let downloadFilename;
+
+                if (customFilename) {
+                    // 如果使用者提供了檔名，則使用它
+                    downloadFilename = customFilename.endsWith('.md') ? customFilename : `${customFilename}.md`;
+                } else {
+                    // --- 更新：使用第一個和最後一個檔名作為預設值 ---
+                    if (selectedFiles.length > 1) {
+                        const firstFileName = selectedFiles[0].name.replace(/\.md$/i, '');
+                        const lastFileName = selectedFiles[selectedFiles.length - 1].name.replace(/\.md$/i, '');
+                        downloadFilename = `${firstFileName}+${lastFileName}.md`;
+                    } else if (selectedFiles.length === 1) {
+                        // 如果只有一個檔案，則在檔名後加上 "-merged"
+                        const singleFileName = selectedFiles[0].name.replace(/\.md$/i, '');
+                        downloadFilename = `${singleFileName}-merged.md`;
+                    } else {
+                        // 備用方案，理論上不會執行到這裡
+                        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+                        downloadFilename = `merged-${timestamp}.md`;
+                    }
+                }
+                link.download = downloadFilename;
+                
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                URL.revokeObjectURL(link.href);
+                showMessage('success', '檔案合併成功！下載已開始。');
+
+            } catch (error) {
+                console.error('檔案讀取或合併時發生錯誤:', error);
+                showMessage('error', `發生錯誤: ${error.message}`);
+            } finally {
+                mergeButton.disabled = false;
+                mergeButton.textContent = '合併並下載';
+            }
+        });
+
+        /**
+         * 使用 Promise 異步讀取單一檔案的內容
+         * @param {File} file - 要讀取的檔案物件
+         * @returns {Promise<string>} - 一個解析為檔案文字內容的 Promise
+         */
+        function readFileAsText(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = () => reject(reader.error);
+                reader.readAsText(file, 'UTF-8');
+            });
+        }
+    </script>
+</body>
+</html>

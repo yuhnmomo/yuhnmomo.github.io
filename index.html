@@ -10,14 +10,37 @@
         body {
             font-family: 'Noto Sans TC', sans-serif;
         }
-        .btn-gradient {
-            background-image: linear-gradient(to right, #8b5cf6, #ec4899);
+        /* 光澤感按鈕樣式 */
+        .btn-glossy {
+            position: relative;
+            overflow: hidden; /* 隱藏超出範圍的光澤 */
+            transition: all 0.2s ease-out;
+            /* 增加內陰影來模擬頂部反光 */
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        /* 使用 ::before 偽元素製作更明顯的光澤效果 */
+        .btn-glossy::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -100%;
+            width: 80%;
+            height: 150%;
+            /* 增加光澤的亮度 */
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg); /* 傾斜光澤 */
+            transition: left 0.4s ease-in-out;
+            pointer-events: none; /* 讓滑鼠可以點擊按鈕本身 */
+        }
+        /* 滑鼠懸停時，讓光澤滑過 */
+        .btn-glossy:hover::before {
+            left: 120%;
         }
     </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center min-h-screen transition-colors duration-500">
 
-    <div class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center transform hover:scale-105 transition-transform duration-500">
+    <div class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center">
         
         <img src="img/logo.png" alt="法式草莓布丁 Logo" class="w-28 h-28 object-cover mx-auto mb-4 rounded-full shadow-lg border-4 border-violet-300 dark:border-violet-600">
 
@@ -26,14 +49,21 @@
 
         <div class="border-t border-gray-200 dark:border-gray-700 my-6"></div>
 
-        <div class="space-y-4">
-            <a href="html/TextExtractor.html" class="block w-full bg-violet-500 hover:bg-violet-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:-translate-y-1 duration-300 shadow-md">
+        <div class="space-y-5">
+            <!-- 互動式小說文字擷取工具 -->
+            <a href="html/TextExtractor.html" class="btn-glossy block w-full bg-gradient-to-r from-violet-500 to-purple-500 text-white font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95">
                 互動式小說文字擷取工具
             </a>
-            <a href="mybooks.html" class="block w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:-translate-y-1 duration-300 shadow-md">
+            <!-- Markdown 檔案合併工具 -->
+			<a href="mergeMarkdown.html" class="btn-glossy block w-full bg-gradient-to-r from-violet-600 to-pink-500 text-white font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95">
+                Markdown 檔案合併工具
+            </a>
+            <!-- 我的線上書櫃 -->
+            <a href="mybooks.html" class="btn-glossy block w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95">
                 我的線上書櫃
             </a>
-            <a href="roles.html" class="block w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:-translate-y-1 duration-300 shadow-md">
+            <!-- AI互動式小說角色庫 -->
+            <a href="roles.html" class="btn-glossy block w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95">
                 AI互動式小說角色庫
             </a>
         </div>
