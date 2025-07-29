@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "title": "陸伯言",
+        "promptPath": "prompts/prompt01.md",
+        "tags": ["古風", "男子", "君主", "霸氣"],
+        "imageVariants": [
+            { "model": "Gemini", "url": "https://lh3.googleusercontent.com/pw/AP1GczOHV3o_3qPZDk_O7BX2wrlNEmqvN0zOnagU2JeJ3dhafI2WZcjXduEcogsaBigmUSeL_TLH5WJBOFPTaqF_Vq6kGpHfuN56B3O3TwHSol99uhC0YQYGf0VGmAGHOf12qODcDDgmvIOfsur-boKABJg=w1280-h896-s-no-gm?authuser=0" },
+            { "model": "Niji", "url": "https://lh3.googleusercontent.com/pw/AP1GczMYFIX_Lez0Y0nHpzOzhmVYAfSUOwXj2uj-FF68kfURf7cnPbOjOG-KH6TJu-u_w-QRQ7YI82RR8StCEQQzO3wGWawHUgQOWwjbfFcndsVwWS7BpH7Fb160rSTTfy5GtTSEyO2hFgAJwpA0swm0gK4=w1646-h923-s-no-gm?authuser=0" },
+            { "model": "GPT-4o", "url": "https://lh3.googleusercontent.com/pw/AP1GczOkhoEI30ybzyzubrPA-jdS8iaaj39PGZseBzNB57TxsCJn60ZSXifMWC3kvhNpY3wm6Idd-Q61-pg4lYPozsGB2tmGewyXOG8LmIz9_dYwTY7JI-ox3hdMoFbNir99WyuDoZPGwY1V_zrK5lLmJk0=w1369-h913-s-no-gm?authuser=0" }
+        ]
+    },
+    {
+        "id": 2,
+        "title": "莫玄卿",
+        "promptPath": "prompts/prompt02.md",
+        "tags": ["古風", "男子", "國師", "占星"],
+        "imageVariants": [
+            { "model": "Gemini", "url": "https://lh3.googleusercontent.com/pw/AP1GczMT1MNQqoudFu7GnhMfivMpYkkcJhoQSwAi0L2BVx6bCKi6G3pFNpkGXTsiPhjXZHwQ7R1I7BYWOZo4WLgrQwBvF2gpq0lX9fZ95QatFHGDcPvwIuF9IZ1TZakeJuRUIyznoMwnwMDoY6xD2tM3mjs=w1280-h896-s-no-gm?authuser=0" },
+            { "model": "Niji", "url": "https://lh3.googleusercontent.com/pw/AP1GczMYFIX_Lez0Y0nHpzOzhmVYAfSUOwXj2uj-FF68kfURf7cnPbOjOG-KH6TJu-u_w-QRQ7YI82RR8StCEQQzO3wGWawHUgQOWwjbfFcndsVwWS7BpH7Fb160rSTTfy5GtTSEyO2hFgAJwpA0swm0gK4=w1646-h923-s-no-gm?authuser=0" },
+            { "model": "GPT-4o", "url": "https://lh3.googleusercontent.com/pw/AP1GczOAQBIB6laofd3CxP5GIf2SvOSOiRqWMKGtOAL4SJ9MotBq5EW6ZM4-Lab3Ho08QxBJ175rqoD5s7R9sAYQZKEWbDaJatnPcOfbrGW7fl4ji5hMI7YN9S5zbLV8o25fvZua3J8KU_VqUmlI2n4Vvg8=w1369-h913-s-no-gm?authuser=0" }
+        ]
+    }
+]

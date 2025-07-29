@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 詠唱集 / The AI Grimoire</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', 'Noto Sans TC', sans-serif; 
+            background-color: #f3f4f6; /* bg-gray-100 */
+        }
+        .dark body {
+            background-color: #1f2937; /* Adjusted from bg-gray-900 to a lighter dark gray */
+        }
+        .gallery-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        #modal {
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+        }
+        #modal.open {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+        #modal-content {
+        }
+        #modal.open #modal-content {
+        }
+        .modal-open {
+            overflow: hidden;
+        }
+        #copy-feedback {
+            transition: opacity 0.5s ease-out;
+        }
+        .pagination-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .prompt-content h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .prompt-content p { margin-bottom: 0.75rem; }
+        .prompt-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0.75rem; }
+        .prompt-content code { background-color: rgba(139, 92, 246, 0.1); color: #8b5cf6; padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.9em; }
+        .dark .prompt-content code { background-color: rgba(167, 139, 250, 0.2); color: #a78bfa; }
+        .swiper-button-next, .swiper-button-prev { color: #ffffff; }
+        .swiper-pagination-bullet-active { background: #a78bfa; }
+        .selected-gallery-item {
+            background-color: #e0e7ff; /* light blue for selected item */
+            box-shadow: 0 0 0 3px #8b5cf6; /* violet ring */
+        }
+        .dark .selected-gallery-item {
+            background-color: #4c1d95; /* darker blue for selected item in dark mode */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-7xl">
+        <nav class="flex justify-end items-center py-4 mb-4">
+            <a href="index.html" class="bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-bold py-2 px-4 rounded-lg transition-colors duration-300 text-sm flex items-center gap-2">
+                🏠 返回首頁
+            </a>
+        </nav>
+
+        <header class="text-center mb-8">
+            <h1 class="text-4xl sm:text-5xl font-bold tracking-tight bg-gradient-to-r from-purple-500 to-pink-500 bg-clip-text text-transparent">✨ The AI Grimoire ✨</h1>
+            <p class="mt-4 text-base text-violet-500 dark:text-violet-300">📖TEST AI 詠唱集丨探索由咒語詠唱出的視覺藝術</p>
+            <div class="mt-8 max-w-lg mx-auto">
+                <input type="text" id="search-input" placeholder="依標籤搜尋 (例如: fantasy, cat, city)..." class="w-full px-4 py-3 rounded-full border-2 border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent transition">
+            </div>
+            <div id="pagination-controls" class="mt-8 flex justify-center items-center gap-4"></div>
+        </header>
+
+        <main id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 min-h-[500px]">
+            <p class="text-center text-gray-500 dark:text-gray-400 col-span-full">正在載入詠唱成果...</p>
+        </main>
+        <p id="no-results" class="text-center text-gray-500 dark:text-gray-400 mt-8 hidden col-span-full">找不到符合條件的詠唱成果。</p>
+
+    </div>
+
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-2 sm:p-4 z-50" onclick="closeModal()">
+        <div id="modal-content" class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[98vh] flex flex-col overflow-hidden" onclick="event.stopPropagation()">
+            
+            <div class="w-full h-[40vh] bg-gray-900 flex items-center justify-center relative md:min-w-0 flex-shrink-0 overflow-hidden">
+                <div class="swiper-container h-full w-full">
+                    <div class="swiper-wrapper" id="modal-swiper-wrapper">
+                        <!-- Slides will be inserted here -->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+            
+            <div class="w-full flex flex-col p-6 overflow-y-auto flex-grow">
+                <div class="flex-shrink-0">
+                    <h3 class="text-2xl font-bold text-violet-700 dark:text-violet-300 mb-3">咒語 (Prompt)</h3>
+                    <div id="modal-tags" class="flex flex-wrap gap-2"></div>
+                </div>
+
+                <div class="flex-grow my-4 overflow-y-auto bg-gray-100 dark:bg-gray-900 p-4 rounded-lg border border-gray-200 dark:border-gray-700">
+                    <div id="modal-prompt" class="prompt-content text-gray-700 dark:text-gray-300 text-sm leading-relaxed whitespace-pre-wrap"></div>
+                    <div class="mt-4 p-3 bg-slate-100 dark:bg-slate-800/50 border-l-4 border-slate-500 text-slate-800 dark:text-slate-300 text-xs rounded-r-lg">
+                        <p>⚠️ **請注意**：相同的咒語在不同時間、模型版本或參數下，產生的結果可能會有所差異，此處僅供參考。</p>
+                    </div>
+                </div>
+
+                <div class="flex-shrink-0">
+                    <div class="mt-4 flex items-center gap-4">
+                        <button id="copy-button" class="w-full bg-violet-600 hover:bg-violet-700 text-white font-bold py-3 px-4 rounded-lg transition-transform transform hover:-translate-y-0.5 duration-300 shadow-md flex items-center justify-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            複製咒語 🪄
+                        </button>
+                        <button onclick="closeModal()" class="w-full bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-gray-800 dark:text-gray-200 font-bold py-3 px-4 rounded-lg transition-colors duration-300">
+                            關閉
+                        </button>
+                    </div>
+                    <div id="copy-feedback" class="text-center text-green-500 mt-2 font-semibold opacity-0">咒語已成功複製！</div>
+                </div>
+            </div>
+        </div>
+        <button class="absolute top-4 right-4 bg-black/30 hover:bg-black/50 rounded-full p-2 transition-colors duration-200 z-20" onclick="closeModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+
+<script>
+    let allGalleryData = [];
+    let modalSwiper = null;
+    let currentSelectedItem = null; // 新增變數來追蹤當前選中的項目
+    const md = window.markdownit();
+    const galleryGrid = document.getElementById('gallery-grid');
+    const searchInput = document.getElementById('search-input');
+    const noResults = document.getElementById('no-results');
+    const modal = document.getElementById('modal');
+    const modalSwiperWrapper = document.getElementById('modal-swiper-wrapper');
+    const modalPrompt = document.getElementById('modal-prompt');
+    const modalTags = document.getElementById('modal-tags');
+    const copyButton = document.getElementById('copy-button');
+    const copyFeedback = document.getElementById('copy-feedback');
+    const paginationControls = document.getElementById('pagination-controls');
+
+    let currentPage = 1;
+    const itemsPerPage = 8;
+    let currentFilteredData = [];
+
+    function displayCurrentPage() {
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        const itemsToShow = currentFilteredData.slice(startIndex, endIndex);
+        
+        galleryGrid.innerHTML = '';
+        noResults.classList.toggle('hidden', currentFilteredData.length > 0);
+        galleryGrid.classList.toggle('hidden', currentFilteredData.length === 0);
+
+        itemsToShow.forEach((item, index) => {
+            const itemNumber = startIndex + index + 1;
+            const card = document.createElement('div');
+            card.className = 'gallery-item bg-white dark:bg-gray-800 rounded-2xl shadow-md overflow-hidden cursor-pointer group self-start';
+            card.dataset.id = item.id;
+            card.onclick = () => openModal(item);
+            const cardContent = `
+                <div class="relative">
+                    <div class="absolute top-2 left-2 bg-black/60 text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full z-10 ring-2 ring-white/50">${itemNumber}</div>
+                    <img src="${item.imageVariants[0].url}" alt="${item.title}" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-110" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/400x400/ef4444/ffffff?text=Error';">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-4"><h3 class="text-white font-bold text-lg truncate">${item.title}</h3></div>
+                </div>
+                <div class="p-4"><div class="flex flex-wrap gap-2">${item.tags.map(tag => `<span class="bg-violet-100 dark:bg-violet-800 text-violet-700 dark:text-violet-200 text-xs font-semibold px-2.5 py-1 rounded-full">${tag}</span>`).join('')}</div></div>
+            `;
+            card.innerHTML = cardContent;
+            galleryGrid.appendChild(card);
+        });
+        renderPagination();
+    }
+    
+    function renderPagination() {
+        paginationControls.innerHTML = '';
+        const totalPages = Math.ceil(currentFilteredData.length / itemsPerPage);
+        if (totalPages <= 1) return;
+
+        const createButton = (text, onClick, disabled) => {
+            const button = document.createElement('button');
+            button.innerHTML = text;
+            button.className = 'pagination-button bg-white dark:bg-gray-800 hover:bg-violet-100 dark:hover:bg-violet-900 text-gray-800 dark:text-gray-200 font-bold py-2 px-4 rounded-lg transition-colors duration-300';
+            button.disabled = disabled;
+            button.onclick = onClick;
+            return button;
+        };
+
+        const prevButton = createButton('&larr; 上一頁', () => { currentPage--; displayCurrentPage(); }, currentPage === 1);
+        const pageInfo = document.createElement('span');
+        pageInfo.className = 'text-gray-700 dark:text-gray-300 font-medium';
+        pageInfo.textContent = `第 ${currentPage} / ${totalPages} 頁`;
+        const nextButton = createButton('下一頁 &rarr;', () => { currentPage++; displayCurrentPage(); }, currentPage === totalPages);
+        
+        paginationControls.append(prevButton, pageInfo, nextButton);
+    }
+
+    async function openModal(item) {
+        // 移除之前選中項目的樣式
+        if (currentSelectedItem) {
+            const prevSelectedCard = document.querySelector(`.gallery-item[data-id="${currentSelectedItem.id}"]`);
+            if (prevSelectedCard) {
+                prevSelectedCard.classList.remove('selected-gallery-item');
+            }
+        }
+
+        // 為當前選中項目添加樣式
+        const currentCard = document.querySelector(`.gallery-item[data-id="${item.id}"]`);
+        if (currentCard) {
+            currentCard.classList.add('selected-gallery-item');
+        }
+        currentSelectedItem = item;
+
+        modalSwiperWrapper.innerHTML = '';
+        item.imageVariants.forEach(variant => {
+            const slide = document.createElement('div');
+            slide.className = 'swiper-slide h-full w-full relative';
+            slide.innerHTML = `
+                <a href="${variant.url}" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
+                    <img src="${variant.url}" alt="${item.title} - ${variant.model}" class="max-h-full max-w-full object-contain">
+                </a>
+                <div class="absolute bottom-2 left-2 bg-black/50 text-white text-sm px-2 py-1 rounded z-10">${variant.model}</div>
+            `;
+            modalSwiperWrapper.appendChild(slide);
+        });
+
+        if (modalSwiper) {
+            modalSwiper.destroy(true, true);
+        }
+        
+        const swiperOptions = {
+            slidesPerView: 1,
+            grabCursor: true,
+            pagination: { el: '.swiper-pagination', clickable: true },
+            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        };
+
+        if (item.imageVariants.length > 1) {
+            swiperOptions.loop = true;
+            swiperOptions.autoplay = {
+                delay: 3000,
+                disableOnInteraction: false,
+            };
+        }
+
+        modalSwiper = new Swiper('.swiper-container', swiperOptions);
+        
+        modalPrompt.innerHTML = '正在載入咒語...';
+        copyButton.onclick = null;
+        copyButton.disabled = true;
+
+        const promptPath = item.promptPath;
+
+        try {
+            const response = await fetch(promptPath);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const markdownText = await response.text();
+            
+            modalPrompt.innerHTML = md.render(markdownText);
+            copyButton.onclick = () => copyToClipboard(markdownText);
+            copyButton.disabled = false;
+
+        } catch (error) {
+            console.error('無法載入咒語檔案:', error);
+            const errorText = `無法載入咒語檔案: \`${promptPath}\`\n\n請檢查檔案路徑是否正確。`;
+            modalPrompt.innerHTML = md.render(errorText);
+            copyButton.onclick = () => copyToClipboard(errorText);
+            copyButton.disabled = false;
+        }
+
+        modalTags.innerHTML = item.tags.map(tag => `<span class="bg-gray-200 dark:bg-violet-800 text-gray-800 dark:text-violet-200 text-sm font-medium px-3 py-1.5 rounded-full">${tag}</span>`).join('');
+
+        document.body.classList.add('modal-open');
+        modal.classList.add('open');
+        
+        setTimeout(() => {
+            if (modalSwiper) {
+                modalSwiper.update();
+            }
+        }, 350);
+    }
+
+    function closeModal() {
+        modal.classList.remove('open');
+        document.body.classList.remove('modal-open');
+        // 移除選中項目的樣式
+        if (currentSelectedItem) {
+            const selectedCard = document.querySelector(`.gallery-item[data-id="${currentSelectedItem.id}"]`);
+            if (selectedCard) {
+                selectedCard.classList.remove('selected-gallery-item');
+            }
+            currentSelectedItem = null;
+        }
+    }
+
+    function copyToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.top = "-9999px";
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            copyFeedback.classList.remove('opacity-0');
+            setTimeout(() => copyFeedback.classList.add('opacity-0'), 2000);
+        } catch (err) {
+            console.error('無法複製咒語: ', err);
+        }
+        document.body.removeChild(textArea);
+    }
+    
+    function setupEventListeners() {
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase().trim();
+            currentFilteredData = allGalleryData.filter(item => item.tags.some(tag => tag.toLowerCase().includes(searchTerm)));
+            currentPage = 1;
+            displayCurrentPage();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+        });
+    }
+
+    async function initializeGallery() {
+        try {
+            const response = await fetch('gallery.json');
+            if (!response.ok) throw new Error(`HTTP 錯誤！ 狀態: ${response.status}`);
+            allGalleryData = await response.json();
+        } catch (error) {
+            console.error("無法讀取 gallery.json:", error);
+            console.warn("找不到 gallery.json，將使用預設的空資料集。");
+            allGalleryData = [];
+        }
+
+        currentFilteredData = [...allGalleryData];
+        displayCurrentPage();
+        setupEventListeners();
+
+        try {
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('id');
+            if (itemId) {
+                const numericId = parseInt(itemId, 10);
+                if (!isNaN(numericId)) {
+                    const itemToOpen = allGalleryData.find(item => item.id === numericId);
+                    if (itemToOpen) {
+                        const itemIndex = allGalleryData.findIndex(item => item.id === numericId);
+                        if (itemIndex > -1) {
+                            currentPage = Math.floor(itemIndex / itemsPerPage) + 1;
+                            displayCurrentPage(); 
+                        }
+                        setTimeout(() => {
+                            openModal(itemToOpen);
+                        }, 100); 
+                    }
+                }
+            }
+        } catch(e) {
+            console.error("處理 URL 參數時發生錯誤:", e);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', initializeGallery);
+</script>
+</body>
+</html>
