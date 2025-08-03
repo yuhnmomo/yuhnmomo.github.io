@@ -1,1 +1,8 @@
+![Gemini](https://lh3.googleusercontent.com/pw/AP1GczM9rX3pNDkdV-8aNZAvUvWN_mPzLEdGo7YSuofpHPWf061if48_7q4DFB0avi72hJan9rO8iJ4WZ7kvgKPBJ4LhCxK0K162swCriXbROJerdFsIYxVIuEJzcUebqtOTMpDqWgB9tfroR9PDqftl5V0=w1408-h768-s-no-gm?authuser=0)
+![Niji](https://lh3.googleusercontent.com/pw/AP1GczPVgupf3-gdKxE15FgLOZsvKKzXe8quUk41Y9i2MwZqJ8-mTa--CHDxO5PzHNDaSOVCRRJCDXGxWY4JiRoN9L21bpxN4yU1uI-sqpibEWxjpOXi66CFzp5GGCk40seZ1eoTiET1QaCZ8p-ZrXfbtbM=w1456-h816-s-no-gm?authuser=0)
+![GPT-4o](https://lh3.googleusercontent.com/pw/AP1GczOd4Gc070p68TT_SvlMABaNE_2jyQDXjmiQg6x9QgZRFkPdM83QzZtx2KIXKDp26Pr0oUX0vYWICMoKLYMaWzXD-6OTpdtAP1FP6929qRN3E_OxuKc8JxQu3diSS2ZM4x8nZREhwiij9rM4xUKGqfo=w1369-h913-s-no-gm?authuser=0)
+
+---
+## 詠唱咒文
+
 A strikingly handsome, refined male chief editor embodying eternal night, standing with effortless elegance and authority. He wears a tailored midnight blue velvet suit over a black shirt, collar open to reveal a designer necklace. Fair skin, medium-length side-parted bangs, sharp and youthful features, delicate thin-rimmed glasses. Calm, aloof expression with lips slightly upturned in a cold, scrutinizing smile. One hand gently tapping knuckles on the desk, the other lightly folded in front. 2/3 frontal view, body slightly turned, face toward camera, slightly top-down angle, positioned slightly above center. Modern night office, large floor-to-ceiling windows, deep blue starless night sky, sparse city lights, warm subdued indoor lighting, minimalist background. Japanese semi-realistic anime style, ultra-detailed, realistic textures, soft highlights, cool color palette, cinematic. Mood: silent, rational, overwhelming authority, elegant and trustworthy

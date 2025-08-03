@@ -12,55 +12,12 @@
     <style>
         body { 
             font-family: 'Inter', 'Noto Sans TC', sans-serif; 
-            background-color: #f3f4f6; /* bg-gray-100 */
-        }
-        .dark body {
-            background-color: #1f2937; /* Adjusted from bg-gray-900 to a lighter dark gray */
-        }
-        .gallery-item {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .gallery-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        #modal {
-            visibility: hidden;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
-        }
-        #modal.open {
-            visibility: visible;
-            opacity: 1;
-            transition: opacity 0.3s ease-in-out;
-        }
-        #modal-content {
-        }
-        #modal.open #modal-content {
         }
         .modal-open {
             overflow: hidden;
         }
-        #copy-feedback {
-            transition: opacity 0.5s ease-out;
-        }
-        .pagination-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        .prompt-content h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .prompt-content p { margin-bottom: 0.75rem; }
-        .prompt-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 0.75rem; }
-        .prompt-content code { background-color: rgba(139, 92, 246, 0.1); color: #8b5cf6; padding: 0.2em 0.4em; border-radius: 0.25rem; font-size: 0.9em; }
-        .dark .prompt-content code { background-color: rgba(167, 139, 250, 0.2); color: #a78bfa; }
-        .swiper-button-next, .swiper-button-prev { color: #ffffff; }
-        .swiper-pagination-bullet-active { background: #a78bfa; }
-        .selected-gallery-item {
-            background-color: #e0e7ff; /* light blue for selected item */
-            box-shadow: 0 0 0 3px #8b5cf6; /* violet ring */
-        }
-        .dark .selected-gallery-item {
-            background-color: #4c1d95; /* darker blue for selected item in dark mode */
+        #modal.hidden {
+            display: none;
         }
     </style>
 </head>
@@ -89,7 +46,7 @@
 
     </div>
 
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-2 sm:p-4 z-50" onclick="closeModal()">
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-2 sm:p-4 z-50 hidden">
         <div id="modal-content" class="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[98vh] flex flex-col overflow-hidden" onclick="event.stopPropagation()">
             
             <div class="w-full h-[40vh] bg-gray-900 flex items-center justify-center relative md:min-w-0 flex-shrink-0 overflow-hidden">
@@ -140,7 +97,6 @@
 <script>
     let allGalleryData = [];
     let modalSwiper = null;
-    let currentSelectedItem = null; // 新增變數來追蹤當前選中的項目
     const md = window.markdownit();
     const galleryGrid = document.getElementById('gallery-grid');
     const searchInput = document.getElementById('search-input');
@@ -175,7 +131,7 @@
             const cardContent = `
                 <div class="relative">
                     <div class="absolute top-2 left-2 bg-black/60 text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full z-10 ring-2 ring-white/50">${itemNumber}</div>
-                    <img src="${item.imageVariants[0].url}" alt="${item.title}" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-110" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/400x400/ef4444/ffffff?text=Error';">
+                    <img src="${item.thumbnail}" alt="${item.title}" class="w-full h-60 object-cover transition-transform duration-300 group-hover:scale-110" loading="lazy" onerror="this.onerror=null;this.src='https://placehold.co/400x300/ef4444/ffffff?text=Error';">
                     <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 p-4"><h3 class="text-white font-bold text-lg truncate">${item.title}</h3></div>
                 </div>
@@ -211,118 +167,79 @@
     }
 
     async function openModal(item) {
-        // 移除之前選中項目的樣式
-        if (currentSelectedItem) {
-            const prevSelectedCard = document.querySelector(`.gallery-item[data-id="${currentSelectedItem.id}"]`);
-            if (prevSelectedCard) {
-                prevSelectedCard.classList.remove('selected-gallery-item');
-            }
-        }
+        modal.classList.remove('hidden');
+        document.body.classList.add('modal-open');
 
-        // 為當前選中項目添加樣式
-        const currentCard = document.querySelector(`.gallery-item[data-id="${item.id}"]`);
-        if (currentCard) {
-            currentCard.classList.add('selected-gallery-item');
-        }
-        currentSelectedItem = item;
-
-        modalSwiperWrapper.innerHTML = '';
-        item.imageVariants.forEach(variant => {
-            const slide = document.createElement('div');
-            slide.className = 'swiper-slide h-full w-full relative';
-            slide.innerHTML = `
-                <a href="${variant.url}" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
-                    <img src="${variant.url}" alt="${item.title} - ${variant.model}" class="max-h-full max-w-full object-contain">
-                </a>
-                <div class="absolute bottom-2 left-2 bg-black/50 text-white text-sm px-2 py-1 rounded z-10">${variant.model}</div>
-            `;
-            modalSwiperWrapper.appendChild(slide);
-        });
-
-        if (modalSwiper) {
-            modalSwiper.destroy(true, true);
-        }
-        
-        const swiperOptions = {
-            slidesPerView: 1,
-            grabCursor: true,
-            pagination: { el: '.swiper-pagination', clickable: true },
-            navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-        };
-
-        if (item.imageVariants.length > 1) {
-            swiperOptions.loop = true;
-            swiperOptions.autoplay = {
-                delay: 3000,
-                disableOnInteraction: false,
-            };
-        }
-
-        modalSwiper = new Swiper('.swiper-container', swiperOptions);
-        
         modalPrompt.innerHTML = '正在載入咒語...';
         copyButton.onclick = null;
         copyButton.disabled = true;
 
-        const promptPath = item.promptPath;
-
         try {
-            const response = await fetch(promptPath);
+            const response = await fetch(item.promptPath);
             if (!response.ok) throw new Error('Network response was not ok');
             const markdownText = await response.text();
             
-            modalPrompt.innerHTML = md.render(markdownText);
-            copyButton.onclick = () => copyToClipboard(markdownText);
+            const parts = markdownText.split(/\n*---\n*## 詠唱咒文/);
+            const imagePart = parts[0];
+            const promptPart = parts.length > 1 ? parts[1].trim() : '';
+
+            const imageUrls = Array.from(imagePart.matchAll(/!\[(.*?)\]\((.*?)\)/g)).map(match => ({ model: match[1], url: match[2] }));
+
+            modalSwiperWrapper.innerHTML = '';
+            imageUrls.forEach(variant => {
+                const slide = document.createElement('div');
+                slide.className = 'swiper-slide h-full w-full relative';
+                slide.innerHTML = `
+                    <a href="${variant.url}" target="_blank" rel="noopener noreferrer" class="w-full h-full flex items-center justify-center">
+                        <img src="${variant.url}" alt="${item.title} - ${variant.model}" class="max-h-full max-w-full object-contain">
+                    </a>
+                    <div class="absolute bottom-2 left-2 bg-black/50 text-white text-sm px-2 py-1 rounded z-10">${variant.model}</div>
+                `;
+                modalSwiperWrapper.appendChild(slide);
+            });
+
+            if (modalSwiper) {
+                modalSwiper.destroy(true, true);
+            }
+            
+            modalSwiper = new Swiper('.swiper-container', {
+                loop: imageUrls.length > 1,
+                slidesPerView: 1,
+                grabCursor: true,
+                pagination: { el: '.swiper-pagination', clickable: true },
+                navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+                autoplay: imageUrls.length > 1 ? { delay: 3000, disableOnInteraction: false } : false,
+            });
+
+            modalPrompt.innerHTML = md.render(promptPart);
+            copyButton.onclick = () => copyToClipboard(promptPart);
             copyButton.disabled = false;
 
         } catch (error) {
             console.error('無法載入咒語檔案:', error);
-            const errorText = `無法載入咒語檔案: \`${promptPath}\`\n\n請檢查檔案路徑是否正確。`;
+            const errorText = `無法載入咒語檔案: \
+${item.promptPath}\
+\n請檢查檔案路徑是否正確。`;
             modalPrompt.innerHTML = md.render(errorText);
             copyButton.onclick = () => copyToClipboard(errorText);
             copyButton.disabled = false;
         }
 
         modalTags.innerHTML = item.tags.map(tag => `<span class="bg-gray-200 dark:bg-violet-800 text-gray-800 dark:text-violet-200 text-sm font-medium px-3 py-1.5 rounded-full">${tag}</span>`).join('');
-
-        document.body.classList.add('modal-open');
-        modal.classList.add('open');
-        
-        setTimeout(() => {
-            if (modalSwiper) {
-                modalSwiper.update();
-            }
-        }, 350);
     }
 
     function closeModal() {
-        modal.classList.remove('open');
+        modal.classList.add('hidden');
         document.body.classList.remove('modal-open');
-        // 移除選中項目的樣式
-        if (currentSelectedItem) {
-            const selectedCard = document.querySelector(`.gallery-item[data-id="${currentSelectedItem.id}"]`);
-            if (selectedCard) {
-                selectedCard.classList.remove('selected-gallery-item');
-            }
-            currentSelectedItem = null;
-        }
     }
 
     function copyToClipboard(text) {
-        const textArea = document.createElement("textarea");
-        textArea.value = text;
-        textArea.style.position = "fixed";
-        textArea.style.top = "-9999px";
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-            document.execCommand('copy');
+        navigator.clipboard.writeText(text).then(() => {
             copyFeedback.classList.remove('opacity-0');
             setTimeout(() => copyFeedback.classList.add('opacity-0'), 2000);
-        } catch (err) {
+        }, (err) => {
             console.error('無法複製咒語: ', err);
-        }
-        document.body.removeChild(textArea);
+        });
     }
     
     function setupEventListeners() {
@@ -333,7 +250,7 @@
             displayCurrentPage();
         });
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
         });
     }
 
@@ -344,36 +261,13 @@
             allGalleryData = await response.json();
         } catch (error) {
             console.error("無法讀取 gallery.json:", error);
-            console.warn("找不到 gallery.json，將使用預設的空資料集。");
+            galleryGrid.innerHTML = `<p class="text-center text-red-500 col-span-full">無法載入 gallery.json，請檢查檔案是否存在且格式正確。</p>`;
             allGalleryData = [];
         }
 
         currentFilteredData = [...allGalleryData];
         displayCurrentPage();
         setupEventListeners();
-
-        try {
-            const urlParams = new URLSearchParams(window.location.search);
-            const itemId = urlParams.get('id');
-            if (itemId) {
-                const numericId = parseInt(itemId, 10);
-                if (!isNaN(numericId)) {
-                    const itemToOpen = allGalleryData.find(item => item.id === numericId);
-                    if (itemToOpen) {
-                        const itemIndex = allGalleryData.findIndex(item => item.id === numericId);
-                        if (itemIndex > -1) {
-                            currentPage = Math.floor(itemIndex / itemsPerPage) + 1;
-                            displayCurrentPage(); 
-                        }
-                        setTimeout(() => {
-                            openModal(itemToOpen);
-                        }, 100); 
-                    }
-                }
-            }
-        } catch(e) {
-            console.error("處理 URL 參數時發生錯誤:", e);
-        }
     }
 
     document.addEventListener('DOMContentLoaded', initializeGallery);

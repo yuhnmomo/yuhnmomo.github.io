@@ -1,1 +1,7 @@
+![Gemini](https://lh3.googleusercontent.com/pw/AP1GczMT1MNQqoudFu7GnhMfivMpYkkcJhoQSwAi0L2BVx6bCKi6G3pFNpkGXTsiPhjXZHwQ7R1I7BYWOZo4WLgrQwBvF2gpq0lX9fZ95QatFHGDcPvwIuF9IZ1TZakeJuRUIyznoMwnwMDoY6xD2tM3mjs=w1280-h896-s-no-gm?authuser=0)
+![GPT-4o](https://lh3.googleusercontent.com/pw/AP1GczOAQBIB6laofd3CxP5GIf2SvOSOiRqWMKGtOAL4SJ9MotBq5EW6ZM4-Lab3Ho08QxBJ175rqoD5s7R9sAYQZKEWbDaJatnPcOfbrGW7fl4ji5hMI7YN9S5zbLV8o25fvZua3J8KU_VqUmlI2n4Vvg8=w1369-h913-s-no-gm?authuser=0)
+
+---
+## 詠唱咒文
+
 A mysterious and elegant male figure with long flowing silver-white hair, wearing a dark indigo Taoist robe embroidered with intricate silver celestial patterns. He stands solemnly on an ancient astrological platform under a starry night sky, bathed in soft moonlight. His expression is calm and distant, his silver eyes reflecting the glow of the stars. In his left hand, he gently holds a jade flute, while his right fingers trace glowing constellations in the air. The floor beneath him is a glowing ancient star map etched with arcane runes and astrological symbols. Background features swirling galaxies, full moon, and ornate celestial architecture. Highly detailed, anime semi-realistic style, ultra-high resolution, dramatic lighting, ethereal and dreamlike mood, elegant composition with a slight low-angle perspective
