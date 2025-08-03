@@ -1,78 +1,80 @@
 <!DOCTYPE html>
 <html lang="zh-TW" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>法式草莓布丁</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-        }
-        /* 光澤感按鈕樣式 */
-        .btn-glossy {
-            position: relative;
-            overflow: hidden; /* 隱藏超出範圍的光澤 */
-            transition: all 0.2s ease-out;
-            /* 增加內陰影來模擬頂部反光 */
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        /* 使用 ::before 偽元素製作更明顯的光澤效果 */
-        .btn-glossy::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            left: -100%;
-            width: 80%;
-            height: 150%;
-            /* 增加光澤的亮度 */
-            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 100%);
-            transform: skewX(-25deg); /* 傾斜光澤 */
-            transition: left 0.4s ease-in-out;
-            pointer-events: none; /* 讓滑鼠可以點擊按鈕本身 */
-        }
-        /* 滑鼠懸停時，讓光澤滑過 */
-        .btn-glossy:hover::before {
-            left: 120%;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>法式草莓布丁</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+    }
+    .btn-glossy {
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s ease-out;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .btn-glossy::before {
+      content: '';
+      position: absolute;
+      top: -20%;
+      left: -100%;
+      width: 80%;
+      height: 150%;
+      background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 100%);
+      transform: skewX(-25deg);
+      transition: left 0.4s ease-in-out;
+      pointer-events: none;
+    }
+    .btn-glossy:hover::before {
+      left: 120%;
+    }
+    .text-shadow {
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+    }
+  </style>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 flex items-center justify-center min-h-screen transition-colors duration-500">
 
-    <div class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center">
-        
-        <img src="img/logo.png" alt="法式草莓布丁 Logo" class="w-28 h-28 object-cover mx-auto mb-4 rounded-full shadow-lg border-4 border-violet-300 dark:border-violet-600" onerror="this.onerror=null;this.src='https://placehold.co/112x112/a78bfa/ffffff?text=Logo';">
+  <div class="w-full max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 text-center">
+    
+    <img src="img/logo.png" alt="法式草莓布丁 Logo" class="w-28 h-28 object-cover mx-auto mb-4 rounded-full shadow-lg border-4 border-rose-300 dark:border-rose-500" onerror="this.onerror=null;this.src='https://placehold.co/112x112/ebb5aa/ffffff?text=Logo';">
 
-        <h1 class="text-4xl font-bold text-violet-600 dark:text-violet-400 mb-2">法式草莓布丁</h1>
-        <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">歡迎來到我的 GitHub Pages</p>
+    <h1 class="text-4xl font-bold text-rose-600 dark:text-rose-300 mb-2">法式草莓布丁</h1>
+    <p class="text-lg text-gray-600 dark:text-gray-300 mb-6">歡迎來到我的 GitHub Pages</p>
 
-        <div class="border-t border-gray-200 dark:border-gray-700 my-6"></div>
+    <div class="border-t border-gray-200 dark:border-gray-700 my-6"></div>
 
-        <div class="space-y-5">
-            <!-- 互動式小說文字擷取工具 -->
-            <a href="html/TextExtractor.html" class="btn-glossy block w-full bg-gradient-to-r from-violet-500 to-purple-500 text-white font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95">
-                互動式小說文字擷取工具
-            </a>
-            <!-- Markdown 檔案合併工具 -->
-			<a href="mergeMarkdown.html" class="btn-glossy block w-full bg-gradient-to-r from-violet-600 to-pink-500 text-white font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95">
-                Markdown 檔案合併工具
-            </a>
-            <!-- 我的線上書櫃 -->
-            <a href="mybooks.html" class="btn-glossy block w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95">
-                我的線上書櫃
-            </a>
-            <!-- AI互動式小說角色庫 -->
-            <a href="roles.html" class="btn-glossy block w-full bg-gradient-to-r from-teal-500 to-cyan-500 text-white font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95">
-                AI互動式小說角色庫
-            </a>
-            <!-- The AI Grimoire 詠唱集 -->
-            <a href="gallery.html" class="btn-glossy block w-full bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95">
-                The AI Grimoire 詠唱集
-            </a>
-        </div>
+    <div class="space-y-5">
+      <a href="html/TextExtractor.html"
+         class="btn-glossy block w-full bg-gradient-to-r from-[#eac2aa] to-[#a86c5e] text-white text-shadow font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95 border border-[#5f3a35]">
+         互動式小說文字擷取工具
+      </a>
 
+      <a href="mergeMarkdown.html"
+         class="btn-glossy block w-full bg-gradient-to-r from-[#e6bfa8] to-[#b2735c] text-white text-shadow font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95 border border-[#603932]">
+         Markdown 檔案合併工具
+      </a>
+
+      <a href="mybooks.html"
+         class="btn-glossy block w-full bg-gradient-to-r from-[#f1cdbc] to-[#bb7a5e] text-white text-shadow font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95 border border-[#68433c]">
+         我的線上書櫃
+      </a>
+
+      <a href="roles.html"
+         class="btn-glossy block w-full bg-gradient-to-r from-[#f3d1be] to-[#bf8975] text-white text-shadow font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95 border border-[#6e483f]">
+         AI互動式小說角色庫
+      </a>
+
+      <a href="gallery.html"
+         class="btn-glossy block w-full bg-gradient-to-r from-[#f2d4c3] to-[#b77d68] text-white text-shadow font-bold py-3 px-4 rounded-lg transform hover:-translate-y-1 active:scale-95 border border-[#6b3f35]">
+         The AI Grimoire 詠唱集
+      </a>
     </div>
+
+  </div>
 
 </body>
 </html>

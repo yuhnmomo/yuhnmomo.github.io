@@ -1,0 +1,148 @@
+/* ========== 全站背景與字體 ========== */
+body {
+  background: radial-gradient(ellipse at top, #1c1b1a 0%, #0f0f10 100%);
+  color: #f3e9e4;
+  font-family: 'Inter', 'Noto Sans TC', sans-serif;
+}
+
+/* ========== 頁面主標題（如 h1） ========== */
+header h1,
+h1 {
+  background: linear-gradient(to right, #ffe9b4, #ffd59a) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.22);
+}
+/* ========== 搜尋框 ========== */
+input[type="text"] {
+  background-color: #fffaf7;
+  color: #6e4a43;
+  border-radius: 9999px;
+  border: 2px solid #e5cbbd;
+  padding: 0.75rem 1.25rem;
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:hover,
+input[type="text"]:focus {
+  border-color: #d4af7f !important;
+  box-shadow: 0 0 0 3px rgba(212, 175, 127, 0.4);
+  outline: none;
+}
+/* 複製咒語按鈕（玫瑰金漸層＋白字＋陰影） */
+#copy-button {
+  background: linear-gradient(to right, #eac2aa, #a86c5e) !important;
+  color: #fffaf7 !important;
+  border: 1px solid #a86c5e !important;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.16);
+  transition: background 0.23s;
+}
+#copy-button:hover {
+  background: linear-gradient(to right, #f1d1c0, #bb7a5e) !important;
+}
+
+/* 關閉按鈕也能一起金邊 */
+#modal-content button:not(#copy-button) {
+  border: 1px solid #d4af7f !important;
+}
+
+#modal-tags span {
+  background-color: #f5e2d6 !important; /* 玫瑰金裸膚粉底 */
+  color: #a86c5e !important;           /* 玫瑰金深字 */
+  font-weight: 500;
+  border-radius: 9999px;
+  font-size: 0.94em;
+  padding: 0.23em 1em;
+}
+
+/* ========== 按鈕 ========== */
+button,
+a.button,
+.btn-glossy {
+  background: linear-gradient(to right, #eac2aa, #a86c5e);
+  color: white;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  border: 1px solid #5f3a35;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* ========== 卡片 ========== */
+.gallery-item {
+  background: linear-gradient(to bottom right, #fdf8f6, #f0e6e0);
+  border: 1px solid #d4af7f;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 浮出感底部光澤 */
+.gallery-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 6px;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+  border-radius: 0 0 1rem 1rem;
+}
+
+/* 卡片標題字 */
+.gallery-item h3 {
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+/* 卡片標籤 */
+.gallery-item span,
+.gallery-item .tag {
+  background-color: #f0ddd2 !important;
+  color: #6e4a43 !important;
+  font-weight: 500;
+  font-size: 0.75rem;
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+}
+
+/* 編號角標 */
+.gallery-item .absolute.top-2.left-2 {
+  background: #fffaf7 !important;
+  color: #a86c5e !important;
+  border: 1px solid #d4af7f;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* 分頁控制 */
+.pagination-button {
+  background: #fdf8f6;
+  border: 1px solid #d4af7f;
+  color: #6e4a43;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background-color: #e8d4c4;
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* modal prompt 標題 */
+#modal h3 {
+  color: #a86c5e;
+}
+
+/* swiper arrow */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #d4af7f !important;
+}
