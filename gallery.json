@@ -19,5 +19,16 @@
             { "model": "Gemini", "url": "https://lh3.googleusercontent.com/pw/AP1GczMT1MNQqoudFu7GnhMfivMpYkkcJhoQSwAi0L2BVx6bCKi6G3pFNpkGXTsiPhjXZHwQ7R1I7BYWOZo4WLgrQwBvF2gpq0lX9fZ95QatFHGDcPvwIuF9IZ1TZakeJuRUIyznoMwnwMDoY6xD2tM3mjs=w1280-h896-s-no-gm?authuser=0" },
             { "model": "GPT-4o", "url": "https://lh3.googleusercontent.com/pw/AP1GczOAQBIB6laofd3CxP5GIf2SvOSOiRqWMKGtOAL4SJ9MotBq5EW6ZM4-Lab3Ho08QxBJ175rqoD5s7R9sAYQZKEWbDaJatnPcOfbrGW7fl4ji5hMI7YN9S5zbLV8o25fvZua3J8KU_VqUmlI2n4Vvg8=w1369-h913-s-no-gm?authuser=0" }
         ]
+    },
+	    {
+        "id": 3,
+        "title": "永夜",
+        "promptPath": "prompts/prompt03.md",
+        "tags": ["西裝", "男子", "壓迫感", "辦公室"],
+        "imageVariants": [
+            { "model": "Gemini", "url": "https://lh3.googleusercontent.com/pw/AP1GczM9rX3pNDkdV-8aNZAvUvWN_mPzLEdGo7YSuofpHPWf061if48_7q4DFB0avi72hJan9rO8iJ4WZ7kvgKPBJ4LhCxK0K162swCriXbROJerdFsIYxVIuEJzcUebqtOTMpDqWgB9tfroR9PDqftl5V0=w1408-h768-s-no-gm?authuser=0" },
+			{ "model": "Niji", "url": "https://lh3.googleusercontent.com/pw/AP1GczPVgupf3-gdKxE15FgLOZsvKKzXe8quUk41Y9i2MwZqJ8-mTa--CHDxO5PzHNDaSOVCRRJCDXGxWY4JiRoN9L21bpxN4yU1uI-sqpibEWxjpOXi66CFzp5GGCk40seZ1eoTiET1QaCZ8p-ZrXfbtbM=w1456-h816-s-no-gm?authuser=0" },
+            { "model": "GPT-4o", "url": "https://lh3.googleusercontent.com/pw/AP1GczOd4Gc070p68TT_SvlMABaNE_2jyQDXjmiQg6x9QgZRFkPdM83QzZtx2KIXKDp26Pr0oUX0vYWICMoKLYMaWzXD-6OTpdtAP1FP6929qRN3E_OxuKc8JxQu3diSS2ZM4x8nZREhwiij9rM4xUKGqfo=w1369-h913-s-no-gm?authuser=0" }
+        ]
     }
 ]
