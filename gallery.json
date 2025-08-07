@@ -19,5 +19,12 @@
         "promptPath": "prompts/prompt03.md",
         "tags": ["西裝", "男子", "壓迫感", "辦公室"],
         "thumbnail": "img/gallery/thumb_3.png"
+    },
+	{
+        "id": 4,
+        "title": "神聖華麗的中性天使",
+        "promptPath": "prompts/prompt04.md",
+        "tags": ["天使", "華麗", "中性", "神聖"],
+        "thumbnail": "img/gallery/thumb_4.png"
     }
 ]
