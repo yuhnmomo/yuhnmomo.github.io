@@ -275,6 +275,15 @@ ${item.promptPath}\
         currentFilteredData = [...allGalleryData];
         displayCurrentPage();
         setupEventListeners();
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const itemId = urlParams.get('id');
+        if (itemId) {
+            const itemToOpen = allGalleryData.find(item => item.id == itemId);
+            if (itemToOpen) {
+                openModal(itemToOpen);
+            }
+        }
     }
 
     document.addEventListener('DOMContentLoaded', initializeGallery);
