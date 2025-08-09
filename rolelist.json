@@ -1,5 +1,31 @@
 [
     {
+        "id": "Grail",
+        "title": "魔王的聖杯",
+        "description": "Role/Grail/doc.md",
+		"mygpts":"https://chatgpt.com/g/g-6896d23cf9188191bdd8962853780308-mo-wang-de-sheng-bei",
+        "files": [
+            {
+                "name": "角色設定",
+                "path": "Role/Grail/魔王的聖杯人物設定.md"
+            },
+            {
+                "name": "後台設定",
+                "path": "Role/Grail/魔王的聖杯後台設定.md"
+            },
+			{
+                "name": "貼在Gem使用說明.txt",
+                "path": "Role/Grail/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/Grail/img/Grail01.png",
+                "alt": "魔王的聖杯1"
+            }
+        ]
+    },
+    {
         "id": "smoke",
         "title": "過眼雲煙",
         "description": "Role/smoke/doc.md",
