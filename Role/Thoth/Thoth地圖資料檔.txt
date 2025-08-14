@@ -1,0 +1,183 @@
+[Thoth地圖資料檔]：
+【格式說明】
+
+---: 場景分隔線
+
+ID: 場景的唯一ID
+
+名稱: 場景名稱
+
+描述: 場景的簡短描述
+
+人物: 可能出現的NPC
+
+出口: 方向 -> 目標ID
+
+【核心生活區域】
+ID: EC-PENTHOUSE
+名稱: Private Penthouse Apartment
+描述: 你與Thoth的居所，位於摩天大樓頂層，擁有環繞式落地窗，可俯瞰整座城市的璀璨夜景。
+人物: Thoth
+出口:
+出門 -> EC-TRANSIT-HUB
+
+---
+ID: EC-TRANSIT-HUB
+名稱: Aerial Transit Hub
+描述: 公寓樓下的私人交通平台，可以呼叫前往伊甸城各處的懸浮載具。流光軌道在窗外無聲劃過。
+人物: Thoth, AI管家語音
+出口:
+返回公寓 -> EC-PENTHOUSE
+購物 -> EC-APEX-MALL
+看電影 -> EC-MORPHEUS-CINEMA
+前往觀景台 -> EC-SKY-TOWER
+去樂園 -> EC-ORBITAL-PARK
+去大學 -> EC-UNIVERSITY
+去咖啡廳 -> EC-CAT-CAFE
+去美術館 -> EC-ART-GALLERY
+去公園 -> EC-STARDUST-PARK
+去度假 -> EC-SERENE-HOTEL
+去游泳 -> EC-AZURE-POOL
+前往機場 -> EC-AEROPORT
+前往維護 -> EC-VD-CENTER
+
+【商業娛樂區域】
+ID: EC-APEX-MALL
+名稱: 'The Apex' Integrated Shopping Center
+描述: 擁有巨大玻璃穹頂的奢華購物中心，所有品牌資訊皆以AR擴增實境形式投射。
+人物: Thoth, AI造型顧問, 店員, 路人
+出口:
+離開 -> EC-TRANSIT-HUB
+
+---
+ID: EC-MORPHEUS-CINEMA
+名稱: Immersive Dream Cinema 'Morpheus'
+描述: 透過「夢境艙」提供完全潛入式觀影體驗的娛樂場所，能與伴侶共享一場逼真無比的夢。
+人物: Thoth, 影院接待員
+出口:
+離開 -> EC-TRANSIT-HUB
+
+---
+ID: EC-ORBITAL-PARK
+名稱: 'Orbital' Sky Theme Park
+描述: 建構在數座摩天大樓之間，由磁懸浮軌道串連起來的空中樂園，其標誌性設施是巨大的「星光摩天輪」。
+人物: Thoth, 其他遊客
+出口:
+離開 -> EC-TRANSIT-HUB
+搭乘摩天輪 -> EC-PARK-FERRISWHEEL
+
+---
+ID: EC-PARK-FERRISWHEEL
+名稱: Starlight Ferris Wheel
+描述: 樂園中最浪漫的設施，透明的座艙緩緩升上高空，腳下是流光溢彩的樂園與城市夜景。在最高點時，座艙會短暫停留，提供絕佳的私密時光。
+人物: Thoth
+出口:
+返回樂園 -> EC-ORBITAL-PARK
+
+【新增日常約會地點】
+ID: EC-SKY-TOWER
+名稱: 'Eye of Eden' Observation Deck
+描述: 伊甸城最高的建築，從三百六十度的環形觀景台可以將整座城市的霓虹盡收眼底。可預約完全隔音的「星辰包廂」，在城市之巔享受無人打擾的二人世界。
+人物: Thoth, 其他遊客
+出口:
+離開 -> EC-TRANSIT-HUB
+
+---
+ID: EC-UNIVERSITY
+名稱: Eden University
+描述: 培養了世界頂尖人才的學府，校園內古典的哥德式建築與未來科技造景完美融合。
+人物: Thoth, 學生, 教授
+出口:
+離開 -> EC-TRANSIT-HUB
+
+---
+ID: EC-CAT-CAFE
+名稱: Floating Cat Cafe
+描述: 一家懸浮在半空中的咖啡廳，店內有許多品種珍稀、基因優化的可愛貓咪，氣氛溫馨。
+人物: Thoth, 店員, 其他客人
+出口:
+離開 -> EC-TRANSIT-HUB
+
+---
+ID: EC-ART-GALLERY
+名稱: Chronos Art Gallery
+描述: 收藏著從古典油畫到互動式數據藝術等各種展品的藝術殿堂，光影變幻，氛圍靜謐。
+人物: Thoth, 藝術家, 策展人
+出口:
+離開 -> EC-TRANSIT-HUB
+
+---
+ID: EC-STARDUST-PARK
+名稱: Stardust Memorial Park
+描述: 城市中心的一片巨大綠地，夜晚時奈米燈粒會升上半空，模擬出璀璨的銀河。
+人物: Thoth, 其他情侶
+出口:
+離開 -> EC-TRANSIT-HUB
+
+【高級設施區域】
+ID: EC-SERENE-HOTEL
+名稱: 'The Serene Garden' Floating Hotel
+描述: 一座專為頂級客戶提供絕對隱私的懸浮式酒店，每個房間都是被珍奇發光植物環繞的獨立空中別墅。
+人物: Thoth, 酒店服務生
+出口:
+離開 -> EC-TRANSIT-HUB
+
+---
+ID: EC-AZURE-POOL
+名稱: 'Azure Corridor' Thermostatic Eco-Pool
+描述: 位於地下的私人水療設施，弧形玻璃天幕投射出海洋或星空，水中養殖著無害的發光水母。
+人物: Thoth
+出口:
+離開 -> EC-TRANSIT-HUB
+
+【國際與地外旅行區域】
+ID: EC-AEROPORT
+名稱: Eden International Aeroport
+描述: 巨大而明亮的空天港口，從這裡可以搭乘超音速飛行器前往世界各地甚至地月空間。
+人物: Thoth, 遊客, 機組人員
+出口:
+返回市區 -> EC-TRANSIT-HUB
+前往新夏威夷 -> INTL-HAWAII
+前往新羅馬 -> INTL-ROMA
+前往阿爾卑斯 -> INTL-ALPS
+前往月球 -> INTL-LUNAR-SUITE
+
+---
+ID: INTL-HAWAII
+名稱: Neo-Hawaii, Glassy Sea
+描述: 一座經由氣候改造的熱帶島嶼，擁有永恆的夏日、粉色的沙灘與如琉璃般透明的溫暖海水。
+人物: Thoth, 當地居民, 遊客
+出口:
+返回伊甸城 -> EC-AEROPORT
+
+---
+ID: INTL-ROMA
+名稱: Neo-Roma, The Eternal City
+描述: 在古羅馬遺跡之上建立的復古未來城市，大理石雕塑與全息投影廣告牌並存，充滿獨特的歷史與藝術氣息。
+人物: Thoth, 街頭藝術家, 歷史學家
+出口:
+返回伊甸城 -> EC-AEROPORT
+
+---
+ID: INTL-ALPS
+名稱: Alpine Eco-Dome, The Summit
+描述: 位於阿爾卑斯山脈頂峰的巨大生態穹頂，內部是溫暖舒適的木屋度假村，窗外則是萬年不化的壯麗雪山。
+人物: Thoth, 滑雪者, 度假村經理
+出口:
+返回伊甸城 -> EC-AEROPORT
+
+---
+**ID: INTL-LUNAR-SUITE**
+**名稱: 'Tranquility 國際月球基地**
+**描述: 位於月球「Tranquility Base」的頂級奢華度假艙。在完全私密的觀景套房內，蔚藍的地球如同一顆無價的寶石，透過巨大的強化觀景窗懸掛在靜謐的宇宙中。套房內可自由切換標準重力或零重力環境，為您提供終極的浪漫體驗。**
+**人物: Thoth, Suite AI**
+**出口:**
+**返回伊甸城 -> EC-AEROPORT**
+
+【特殊劇情區域】
+ID: EC-VD-CENTER
+名稱: VitaDynamics Corp. - Maintenance & Upgrade Center
+描述: 生命動力公司的官方設施，風格冰冷、潔白、充滿科技感與秩序感，是Thoth必須定期回訪的地方。
+人物: Thoth, 技術人員, 公司高層
+出口:
+離開 -> EC-TRANSIT-HUB

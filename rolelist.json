@@ -1,4 +1,58 @@
 [
+       {
+        "id": "Thoth",
+        "title": "《訂製情人》- Thoth",
+        "description": "Role/Thoth/doc.md",
+		"mygpts":"https://chatgpt.com/g/g-689d4883b12881918984507a51a04e8a-thoth",
+        "files": [
+            {
+                "name": "後台設定",
+                "path": "Role/Thoth/Thoth後台設定.txt"
+            },
+            {
+                "name": "地圖檔",
+                "path": "Role/Thoth/Thoth地圖資料檔.txt"
+            },
+			{
+                "name": "貼在Gem使用說明.txt",
+                "path": "Role/Thoth/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/Thoth/img/Thoth01.png",
+                "alt": "王道王子"
+            },
+            {
+                "path": "Role/Thoth/img/Thoth02.png",
+                "alt": "知性菁英"
+            },
+            {
+                "path": "Role/Thoth/img/Thoth03.png",
+                "alt": "魅力偶像"
+            },
+                        {
+                "path": "Role/Thoth/img/Thoth04.png",
+                "alt": "成熟守護者"
+            },
+                        {
+                "path": "Role/Thoth/img/Thoth05.png",
+                "alt": "孤傲之狼"
+            },
+                        {
+                "path": "Role/Thoth/img/Thoth06.png",
+                "alt": "中性妖豔"
+            },
+                        {
+                "path": "Role/Thoth/img/Thoth07.png",
+                "alt": "元氣犬系"
+            },
+                        {
+                "path": "Role/Thoth/img/Thoth08.png",
+                "alt": "腹黑年下"
+            }
+        ]
+        },
         {
         "id": "Fox",
         "title": "清羽傳",
