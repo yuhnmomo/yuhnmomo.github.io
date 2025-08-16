@@ -1,7 +1,37 @@
 [
+           {
+        "id": "RLGuide",
+        "title": "《室友戀愛指南》",
+        "description": "Role/RLGuide/doc.md",
+		"mygpts":"https://chatgpt.com/g/g-689fbee7f0048191b9e19737023a26b2-shi-you-lian-ai-zhi-nan",
+        "files": [
+            {
+                "name": "後台設定",
+                "path": "Role/RLGuide/室友戀愛指南後台設定.txt.txt"
+            },
+            {
+                "name": "地圖檔",
+                "path": "Role/RLGuide/晴川市地圖資料檔.txt"
+            },
+            {
+                "name": "參數檔",
+                "path": "Role/RLGuide/參數設定資料檔.txt"
+            },
+			{
+                "name": "貼在Gem使用說明.txt",
+                "path": "Role/RLGuide/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/RLGuide/img/RLGuide01.png",
+                "alt": "男1"
+            }
+        ]
+        },
        {
         "id": "Thoth",
-        "title": "《訂製情人》- Thoth",
+        "title": "訂製情人-Thoth",
         "description": "Role/Thoth/doc.md",
 		"mygpts":"https://chatgpt.com/g/g-689d4883b12881918984507a51a04e8a-thoth",
         "files": [
