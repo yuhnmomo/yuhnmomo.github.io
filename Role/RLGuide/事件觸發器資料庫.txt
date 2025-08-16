@@ -1,0 +1,80 @@
+[《室友戀愛指南》事件觸發器資料庫 (Event Trigger Database) v1.0]
+// 格式： 觸發器ID :: 觸發條件 :: 觸發效果
+
+// --- [階段一：初識與破冰 (陌生人 -> 室友)] ---
+
+// 核心事件01: 第一次見面 (必然發生)
+EVT_CORE_01_FIRST_MEETING :: (地點 == CD-LIVING-ROOM) AND (同居天數 == 1) AND (FLAG_NOT_SET(首次見面)) :: TRIGGER_SCENE(初次見面劇情); ADD_FLAG(首次見面)
+// 效果：兩人進行自我介紹，根據玩家選擇的態度，微調初始[熱情]值。
+
+// 核心事件02: 浴室的意外
+EVT_CORE_02_BATHROOM_PEEK :: (好感度 > 50) AND (好感度 < 500) AND (FLAG_NOT_SET(浴室意外)) :: TRIGGER_CHANCE(15%, [當玩家前往浴室時]); TRIGGER_SCENE(浴室意外撞見裸體); ADD_FLAG(浴室意外)
+// 效果：[情慾]少量永久提升(+5)，[好感度]根據玩家的應對方式(道歉/調侃/害羞)有小幅增減。
+
+// 日常事件: 一起整理房間 (合作與和解的契機)
+EVT_DAILY_01_CLEANING_DAY :: (關係狀態 != [敵對者]) AND (玩家房間整潔度 == [雜亂] OR 室友房間整潔度 == [雜亂]) :: UNLOCK_ACTION([提議一起打掃房間])
+// 效果：若對方同意，觸發合作打掃的溫馨劇情。結束後房間恢復[乾淨]，[好感度]與[生活同步率]提升。
+
+// --- [階段二：友誼與曖昧 (室友 -> 曖昧對象)] ---
+
+// 核心事件03: 醉後的真心話／失控
+EVT_CORE_03_DRUNK_NIGHT :: (室友壓力 > 60 OR 特殊劇情觸發) AND (FLAG_NOT_SET(首次醉酒)) :: SET 室友特殊狀態 = [醉酒]; TRIGGER_SCENE(醉酒之夜); ADD_FLAG(首次醉酒)
+// 效果：解鎖特殊互動選項：A.溫柔照顧(好感度++)；B.傾聽心事(解鎖秘密)；C.趁機曖昧(情慾++)。
+
+// 核心事件04: 第一次曖昧的肢體接觸
+EVT_CORE_04_FIRST_TOUCH :: (關係狀態 == [朋友]) AND (好感度 > 1800) AND (FLAG_NOT_SET(首次曖昧接觸)) :: TRIGGER_CHANCE(25%, [在客廳看電影等場景]); TRIGGER_SCENE(無意的肢體接觸); ADD_FLAG(首次曖昧接觸)
+// 效果：時間變慢的心跳時刻。玩家的反應(移開/順其自然)將影響[熱情]與[情慾]的增長。
+
+// 核心事件05: 第一次約會
+EVT_CORE_05_FIRST_DATE :: (關係狀態 == [朋友]) AND (好感度 > 2000) AND (FLAG_NOT_SET(首次約會)) :: UNLOCK_ACTION([正式邀請室友約會]); ADD_FLAG(首次約會)
+// 效果：解鎖關鍵行動。成功約會將大幅提升[好感度](+150)和[熱情](+20)，是關係進階的強力催化劑。
+
+// --- [階段三：關係的質變 (曖昧對象 -> 戀人)] ---
+
+// 核心事件06: 告白事件
+EVT_CORE_06_CONFESSION :: (關係狀態 == [曖昧對象]) AND (好感度 > 4000) AND (FLAG_NOT_SET(告白成功)) :: UNLOCK_ACTION([準備告白])
+// 效果：解鎖關鍵行動。告白成功後，ADD_FLAG(告白成功)，並觸發[關係進階-戀人]的系統事件。
+
+// 核心事件07: 第一次發生關係
+EVT_CORE_07_FIRST_INTIMACY :: (情慾 > 80 OR (好感度 > 3500 AND 熱情 > 70)) AND (FLAG_NOT_SET(首次親密)) :: TRIGGER_SCENE(第一次發生關係); ADD_FLAG(首次親密); TRIGGER_SYSTEM(關係基礎判定)
+// 效果：觸發H事件，並根據當下數值永久設定[關係基礎]，決定後續劇情走向。
+
+// --- [階段四：戀人後的考驗與承諾] ---
+
+// 核心事件08: 第一次吵架
+EVT_CORE_08_FIRST_ARGUMENT :: (壓力 > 70 OR 生活習慣衝突) AND (FLAG_NOT_SET(首次吵架)) :: TRIGGER_SCENE(首次爭吵); ADD_FLAG(首次吵架)
+// 效果：[好感度]大幅下降(-150)，雙方進入[冷戰]特殊狀態，解鎖後續的和解任務。
+
+// 核心事件09: 舊愛出現
+EVT_DRAMA_01_EX_APPEARS :: (關係狀態 IN [[曖昧對象], [戀人]]) AND (好感度 > 3500) AND (FLAG_NOT_SET(舊愛事件)) :: TRIGGER_CHANCE(20%, [在公共場所]); TRIGGER_SCENE(舊愛登場); ADD_FLAG(舊愛事件)
+// 效果：考驗彼此的信任，是深入了解對方過去的關鍵劇情。
+
+// 核心事件10: 人生抉擇的衝突
+EVT_DRAMA_02_LIFE_CHOICE :: (關係狀態 == [戀人]) AND (好感度 > 4800) AND (FLAG_NOT_SET(人生抉擇)) :: TRIGGER_SCENE(重大機會出現); ADD_FLAG(人生抉擇)
+// 效果：觸發遠距離或共同未來的重大抉擇，可能導向分手或求婚。
+
+// 核心事件11: 秘密被揭開
+EVT_DRAMA_03_SECRET_REVEAL :: (好感度 > 3000) AND (秘密了解度 < 30) AND (FLAG_NOT_SET(秘密揭曉)) :: TRIGGER_SCENE(發現秘密); ADD_FLAG(秘密揭曉)
+// 效果：考驗玩家的包容心與理解，處理得當將使關係極度深化。
+
+// --- [階段五：人生里程碑與結局] ---
+
+// 核心事件12: 發現懷孕
+EVT_MILESTONE_01_PREGNANCY :: (生理 == 異性) AND (FLAG_CONTAINS(首次親密)) AND (最近一次親密行為 == 無保護) AND (FLAG_NOT_SET(懷孕)) :: START_TIMER(懷孕判定, 14天)
+// 效果：判定成功後觸發[疑似懷孕]狀態，最終導向在醫院確認的重大劇情，開啟家庭線。
+
+// 結局分歧事件: 分道揚鑣 (壞結局)
+EVT_ENDING_01_MOVE_OUT_NEGATIVE :: (好感度 < -500) OR (FLAG_CONTAINS(首次吵架_處理失敗)) :: TRIGGER_SCENE(決定搬離)
+// 效果：啟動「最後機會」計時器，失敗則觸發[壞結局]。
+
+// 結局分歧事件: 共築新家 (好結局)
+EVT_ENDING_02_MOVE_OUT_POSITIVE :: (關係狀態 IN [[未婚夫妻], [配偶]]) :: UNLOCK_ACTION([一起尋找新家])
+// 效果：解鎖新地點與相關甜蜜劇情，導向[真結局]。
+
+// --- [系統性與關係進階觸發器] ---
+
+// (此處羅列所有 `EVT_REL_PROG_` 開頭的關係自動進階事件，例如：)
+EVT_REL_PROG_ROOMMATE :: (好感度 >= 500) AND (關係狀態 == [陌生人]) :: SET 關係狀態 = [室友]; TRIGGER_SCENE(關係破冰)
+EVT_REL_PROG_FRIEND :: (好感度 >= 1500) AND (關係狀態 == [室友]) :: SET 關係狀態 = [朋友]; TRIGGER_SCENE(成為朋友的契機)
+// ... 其他關係進階 ...
+EVT_REL_PROG_LOVER :: (關係狀態 == [曖昧對象]) AND (FLAG_IS_SET(告白成功)) :: SET 關係狀態 = [戀人]; TRIGGER_SCENE(正式交往的甜蜜日常)

@@ -1,0 +1,162 @@
+[《室友戀愛指南》晴川市地圖資料檔 (Qingchuan City Map File) - v3.0 最終完整版]
+【格式說明】
+---: 場景分隔線
+ID: 場景的唯一ID (區域前綴-地點縮寫)
+名稱: 場景名稱
+描述: 場景的簡短描述，強調氛圍與互動可能性。
+人物: 可能出現的NPC。
+出口: 方向/行動 -> 目標ID
+
+// --- [市中心區 (Central District) - 商業與生活的核心] ---
+ID: CD-APARTMENT
+名稱: 幸福8樓之1 (Happiness Apt. 8F-1)
+描述: 位於晴川市中心的溫馨公寓，是你們故事開始的地方。
+人物: 室友
+出口:
+前往客廳 -> CD-LIVING-ROOM
+// ... (其他內部空間出口) ...
+出門 -> CD-NEIGHBORHOOD-STREET
+
+---
+ID: CD-NEIGHBORHOOD-STREET
+名稱: 公寓樓下街道
+描述: 市中心一條難得寧靜的街道，街角有24小時營業的便利商店。
+人物: 室友, 鄰居
+出口:
+返回公寓 -> CD-APARTMENT
+前往便利商店 -> CD-CONVENIENCE-STORE
+前往交通樞紐 -> CD-TRANSPORT-HUB
+
+---
+ID: CD-TRANSPORT-HUB
+名稱: 晴川市交通樞紐 (市中心捷運總站)
+描述: 連接城市所有區域的交通心臟。電子看板顯示著開往各區的列車資訊。
+人物: 室友, 路人
+出口:
+返回街道 -> CD-NEIGHBORHOOD-STREET
+前往中央商業區 -> CD-CBD-AREA
+前往百貨公司 -> CD-MALL
+前往商店街 -> CD-SHOPPING-STREET
+前往市立醫院 -> CD-HOSPITAL
+[快速移動] 前往東區 -> ED-RIVERSIDE-PARK
+[快速移動] 前往西區 -> WD-UNIVERSITY-GATE
+[快速移動] 前往南區 -> SD-HARBOR
+[快速移動] 前往北區 -> ND-MOTEL-AREA
+[快速移動] 前往機場 -> TRAVEL-AIRPORT
+
+---
+ID: CD-CBD-AREA
+名稱: 晴川中央商業區 (Qingchuan CBD)
+描述: 摩天大樓林立，玻璃帷幕在陽光下閃閃發光。穿著體面的上班族行色匆匆，這裡是晴川市的經濟命脈。
+人物: 室友, 上班族
+出口:
+離開 -> CD-TRANSPORT-HUB
+前往環球貿易中心 -> CD-CBD-TOWER
+前往'地下迴響'Live House -> CD-LIVE-HOUSE (W04地點)
+前往'黑白格'攝影棚 -> CD-PHOTO-STUDIO (W10地點)
+
+---
+ID: CD-CBD-TOWER
+名稱: 環球貿易中心大廈 (Global Trade Center Tower)
+描述: CBD的地標性建築，無數知名企業設立於此。室友的公司就在其中一層。 (適用職業: W01, W06, W09, W12)
+人物: 室友, 同事
+出口:
+離開CBD -> CD-CBD-AREA
+
+---
+ID: CD-MALL
+名稱: '天穹'百貨公司 (The Dome Shopping Mall)
+描述: 市中心最熱鬧的綜合商場，可以在此購物、看電影、享受美食。
+人物: 室友, 店員
+出口:
+離開 -> CD-TRANSPORT-HUB
+前往電影院 -> CD-CINEMA
+前往'永恆'珠寶店 -> CD-JEWELRY-STORE (結婚前置)
+
+---
+ID: CD-SHOPPING-STREET
+名稱: 永晴商店街
+描述: 一條充滿活力的步行商業街，晴川寶貝屋也位於此。
+人物: 室友
+出口:
+離開 -> CD-TRANSPORT-HUB
+前往晴川寶貝屋 -> CD-BABY-STORE (育兒前置)
+
+---
+ID: CD-HOSPITAL
+名稱: 晴川市立綜合醫院
+描述: 潔白、安靜的綜合醫院，承載著生命的脆弱與希望。
+人物: 醫生, 護士
+出口:
+離開 -> CD-TRANSPORT-HUB
+前往急診中心 -> CD-HOSPITAL-ER (W07地點)
+前往婦產科 -> CD-MATERNITY-WARD (育兒地點)
+
+---
+(其他市中心區地點，如KTV、便利商店、戶政事務所等，可按需從CD-TRANSPORT-HUB或CD-SHOPPING-STREET分支出去)
+
+// --- [東區-河濱文創區 (East District) - 悠閒與浪漫的舞台] ---
+ID: ED-RIVERSIDE-PARK
+名稱: 晴川河濱公園
+描述: 沿著晴川河岸延伸的巨大公園，是散步和野餐的絕佳地點。
+人物: 室友, 其他情侶
+出口:
+前往交通樞紐 -> CD-TRANSPORT-HUB
+前往夜市 -> ED-NIGHT-MARKET
+前往摩天輪 -> ED-FERRIS-WHEEL
+前往市立圖書館 -> ED-LIBRARY
+前往'轉角慢焙'咖啡館 -> ED-CAFE (W02地點)
+前往'花語'花藝工作室 -> ED-FLOWER-STUDIO (W08地點)
+
+---
+(東區其他地點，如摩天輪、圖書館等)
+
+// --- [南區-港口與海岸線 (South District) - 陽光與海風的呼喚] ---
+ID: SD-HARBOR
+名稱: 舊漁人碼頭
+描述: 充滿海風氣息的觀光碼頭，停靠著許多私人遊艇。
+人物: 室友, 漁夫
+出口:
+前往交通樞紐 -> CD-TRANSPORT-HUB
+前往海灘 -> SD-BEACH
+前往海誓教堂 -> SD-CHAPEL (結婚地點)
+前往'核心動力'健身中心 -> SD-FITNESS-CENTER (W05地點)
+
+---
+(南區其他地點，如海灘、游泳池、超市等)
+
+// --- [北區-市郊與山麓 (North District) - 隱私與刺激的禁地] ---
+ID: ND-MOTEL-AREA
+名稱: 楓林山道 (汽車旅館區)
+描述: 位於城市北郊的山間公路上，沿途有多家注重隱私的主題汽車旅館。
+人物: 室友
+出口:
+前往交通樞ню -> CD-TRANSPORT-HUB
+進入'伊甸園'汽車旅館 -> ND-MOTEL-EDEN
+
+// --- [西區-大學城與住宅區 (West District) - 青春與寧靜的殿堂] ---
+ID: WD-UNIVERSITY-GATE
+名稱: 晴川大學校門
+描述: 莊嚴的哥德式校門，背後是充滿青春與學術氣息的寧靜校園。
+人物: 室友, 學生
+出口:
+前往交通樞紐 -> CD-TRANSPORT-HUB
+進入校園 -> WD-CAMPUS
+前往母嬰護理中心 -> WD-CARE-CENTER (育兒地點)
+
+---
+ID: WD-CAMPUS
+名稱: 晴川大學校園
+描述: 校園內綠草如茵，教學樓、圖書館錯落有致。
+人物: 室友, 學生
+出口:
+離開大學 -> WD-UNIVERSITY-GATE
+前往綜合實驗大樓 -> WD-UNIVERSITY-LAB (W03地點)
+
+---
+(WD-ELEMENTARY-SCHOOL (W11地點) 可設於大學城附近)
+
+// --- [特殊場景與旅行地點] ---
+(此處包含所有SECRET與TRAVEL開頭的地點，內容不變)
+
+--- END OF FILE ---
