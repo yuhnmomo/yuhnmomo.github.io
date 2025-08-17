@@ -4,6 +4,7 @@
         "title": "室友戀愛指南",
         "description": "Role/RLGuide/doc.md",
 		"mygpts":"https://chatgpt.com/g/g-689fbee7f0048191b9e19737023a26b2-shi-you-lian-ai-zhi-nan",
+        "initRole":"Role/RLGuide/intRLGuide.html",
         "files": [
             {
                 "name": "後台設定",
@@ -21,6 +22,7 @@
                 "name": "貼在Gem使用說明.txt",
                 "path": "Role/RLGuide/貼在Gem使用說明.txt"
             }
+
         ],
         "images": [
             {

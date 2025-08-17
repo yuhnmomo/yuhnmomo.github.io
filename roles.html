@@ -172,6 +172,12 @@
             if (role.mygpts) {
                 gptsButtonHtml = `<a href="${role.mygpts}" target="_blank" rel="noopener noreferrer" class="block bg-teal-100 dark:bg-teal-800 hover:bg-teal-200 dark:hover:bg-teal-700 text-teal-700 dark:text-teal-200 font-semibold py-2 px-4 rounded-lg text-center transition-colors duration-200">客製化GPTs</a>`;
             }
+
+            // 新增：處理 initRole 連結
+            let initRoleButtonHtml = '';
+            if (role.initRole) {
+                initRoleButtonHtml = `<a href="${role.initRole}" target="" rel="noopener noreferrer" class="block bg-indigo-100 dark:bg-indigo-800 hover:bg-indigo-200 dark:hover:bg-indigo-700 text-indigo-700 dark:text-indigo-200 font-semibold py-2 px-4 rounded-lg text-center transition-colors duration-200">協助角色設定頁</a>`;
+            }
             
             const descriptionHtml = md.render(role.description || '');
 
@@ -184,6 +190,7 @@
                 <div class="flex flex-col gap-3 mt-auto">
                     ${filesHtml}
                     ${gptsButtonHtml}
+                    ${initRoleButtonHtml}
                 </div>
             `;
             roleListContainer.appendChild(card);

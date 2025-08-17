@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《室友戀愛指南》遊戲開場設定</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Rose Gold Color Palette */
+        :root {
+            --rose-gold-light: #E6C2C2;
+            --rose-gold-main: #D9A0A0;
+            --rose-gold-dark: #C48A8A;
+            --dark-bg: #1a1a1a;
+            --dark-card: #2a2a2a;
+            --dark-border: #444444;
+            --dark-input: #333333;
+            --text-light: #EAEAEA;
+            --text-muted: #A0A0A0;
+            --text-dark: #000000;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+        .step-card {
+            background-color: var(--dark-card);
+            border: 1px solid var(--dark-border);
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        }
+        .form-input {
+            background-color: var(--dark-input);
+            border: 2px solid var(--dark-border);
+            color: var(--text-light);
+            transition: border-color 0.2s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: var(--rose-gold-main);
+        }
+        .form-input.invalid {
+            border-color: #F87171;
+        }
+        .btn-primary {
+            background-color: var(--rose-gold-main);
+            color: var(--dark-bg);
+            transition: background-color 0.3s;
+        }
+        .btn-primary:hover {
+            background-color: var(--rose-gold-dark);
+        }
+        .btn-secondary {
+            background-color: #4B5563;
+            transition: background-color 0.3s;
+        }
+        .btn-secondary:hover {
+            background-color: #6B7280;
+        }
+        .step {
+            display: none;
+        }
+        .step.active {
+            display: block;
+        }
+        
+        /* Text Card Radio Button Styles */
+        .text-card-label { display: block; border-radius: 0.5rem; cursor: pointer; transition: all 0.2s; }
+        .text-card-content { background-color: var(--dark-input); border: 2px solid var(--dark-border); border-radius: 0.5rem; padding: 0.75rem 1rem; transition: all 0.2s; text-align: center; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .text-card-label:hover .text-card-content { border-color: #6B7280; }
+        .text-card-text { color: var(--text-light); transition: color 0.2s ease-in-out; }
+        .text-card-label input[type="radio"]:checked + .text-card-content { border-color: var(--rose-gold-dark); background-color: var(--rose-gold-main); }
+        .text-card-label input[type="radio"]:checked + .text-card-content .text-card-text { color: var(--text-dark); font-weight: 500; }
+        
+        /* Card Grid Styles */
+        .card-grid {
+            display: grid;
+            gap: 1rem;
+            padding: 4px;
+        }
+        .appearance-grid {
+             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        }
+        .zodiac-grid {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        }
+        .icon-grid {
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        }
+        .text-card-grid {
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        }
+
+        .card-label { cursor: pointer; }
+        .card { background-color: var(--dark-input); border: 2px solid var(--dark-border); border-radius: 0.5rem; overflow: hidden; transition: all 0.2s ease-in-out; position: relative; }
+        .card:hover { border-color: var(--rose-gold-main); transform: translateY(-4px); }
+        .card img { width: 100%; height: 160px; object-fit: cover; }
+        .card-content { padding: 0.75rem; text-align: center; }
+        .card-title { font-weight: 600; color: var(--text-light); margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .card-desc { font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; }
+        .card-label input:checked + .card { border-color: var(--rose-gold-dark); box-shadow: 0 0 15px rgba(217, 160, 160, 0.4); }
+        .check-icon { position: absolute; top: 0.5rem; right: 0.5rem; width: 1.5rem; height: 1.5rem; background-color: var(--rose-gold-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.5); transition: all 0.2s ease-in-out; }
+        .card-label input:checked + .card .check-icon { opacity: 1; transform: scale(1); }
+        
+        .zodiac-emoji { font-size: 3rem; height: 120px; display: flex; align-items: center; justify-content: center; }
+        .icon-emoji { font-size: 2.5rem; height: 80px; display: flex; align-items: center; justify-content: center; }
+
+        /* Summary Page Styles */
+        .summary-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
+        @media (min-width: 640px) { .summary-grid { grid-template-columns: 1fr 1fr; } }
+        .summary-card { background-color: var(--dark-input); border-radius: 0.5rem; padding: 1rem; border: 1px solid var(--dark-border); }
+        .summary-card img { 
+            width: 100%; 
+            aspect-ratio: 1 / 1; 
+            object-fit: cover; 
+            border-radius: 0.25rem; 
+            margin-bottom: 1rem; 
+        }
+        .summary-title { font-size: 1.25rem; font-weight: bold; color: var(--rose-gold-light); margin-bottom: 1rem; }
+        .summary-details p { font-size: 0.875rem; margin-bottom: 0.5rem; }
+        .summary-details span { color: var(--text-muted); margin-right: 0.5rem; }
+
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto p-4 sm:p-6 md:p-8 max-w-4xl">
+        <header class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-4">
+            <div class="w-full md:w-auto order-2 md:order-1">
+                 <a href="/roles.html" class="btn-secondary text-white font-bold py-2 px-4 rounded-lg text-sm w-full block text-center md:w-auto">
+                    返回角色頁
+                </a>
+            </div>
+            <div class="text-center order-1 md:order-2">
+                <h1 class="text-3xl sm:text-4xl font-bold" style="color: var(--rose-gold-light);">《室友戀愛指南》</h1>
+                <p style="color: var(--text-muted);" class="mt-2">遊戲開場與角色生成</p>
+            </div>
+            <div class="hidden md:block order-3" style="width: 120px;"></div>
+        </header>
+
+        <main id="game-setup-container">
+            <!-- Step 1: Player Info -->
+            <div id="step-1" class="step active">
+                <div class="step-card rounded-lg p-6 sm:p-8 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-6" style="color: var(--rose-gold-light);">1. 玩家身份設定</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">性別</label>
+                            <div id="playerGender" class="card-grid icon-grid"></div>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">性向</label>
+                            <div id="playerSexuality" class="card-grid icon-grid"></div>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">星座</label>
+                            <div id="playerZodiac" class="card-grid zodiac-grid"></div>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">血型</label>
+                            <div id="playerBloodType" class="card-grid icon-grid"></div>
+                        </div>
+                        <p class="text-sm pt-2" style="color: var(--text-muted);">你的職業預設為：數位遊牧 (以筆電遠端工作，作息彈性)。</p>
+                    </div>
+                    <div class="mt-8 flex justify-end items-center gap-4">
+                        <button onclick="nextStep()" class="btn-primary font-bold py-2 px-6 rounded-lg">下一步</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Player Appearance -->
+            <div id="step-2" class="step">
+                <div class="step-card rounded-lg p-6 sm:p-8 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-6" style="color: var(--rose-gold-light);">2. 玩家外觀設定</h2>
+                    <div id="playerAppearance" class="card-grid appearance-grid"></div>
+                    <div class="mt-8 flex justify-between">
+                        <button onclick="prevStep()" class="btn-secondary text-white font-bold py-2 px-6 rounded-lg">返回</button>
+                        <button onclick="nextStep()" class="btn-primary font-bold py-2 px-6 rounded-lg">下一步</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 3: Roommate Info -->
+            <div id="step-3" class="step">
+                <div class="step-card rounded-lg p-6 sm:p-8 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-6" style="color: var(--rose-gold-light);">3. 室友訂製</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">性別</label>
+                            <div id="roommateGender" class="card-grid icon-grid"></div>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">星座</label>
+                            <div id="roommateZodiac" class="card-grid zodiac-grid"></div>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">血型</label>
+                            <div id="roommateBloodType" class="card-grid icon-grid"></div>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">職業</label>
+                            <div id="roommateProfession" class="card-grid icon-grid"></div>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-between items-center">
+                        <button onclick="prevStep()" class="btn-secondary text-white font-bold py-2 px-6 rounded-lg">返回</button>
+                        <button onclick="nextStep()" class="btn-primary font-bold py-2 px-6 rounded-lg">下一步</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Roommate Appearance -->
+            <div id="step-4" class="step">
+                <div class="step-card rounded-lg p-6 sm:p-8 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-6" style="color: var(--rose-gold-light);">4. 室友外觀設定</h2>
+                    <div id="roommateAppearance" class="card-grid appearance-grid"></div>
+                    <div class="mt-8 flex justify-between">
+                        <button onclick="prevStep()" class="btn-secondary text-white font-bold py-2 px-6 rounded-lg">返回</button>
+                        <button onclick="nextStep()" class="btn-primary font-bold py-2 px-6 rounded-lg">下一步</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Relationship, Names & Nickname -->
+            <div id="step-5" class="step">
+                <div class="step-card rounded-lg p-6 sm:p-8 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-6" style="color: var(--rose-gold-light);">5. 關係與命名</h2>
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">初始關係</label>
+                            <p class="text-xs mb-2" style="color: var(--text-muted);">在這次合租之前，你和這位即將到來的室友是什麼關係呢？</p>
+                            <div id="initialRelationship" class="card-grid text-card-grid"></div>
+                        </div>
+                        <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">親密行為風格</label>
+                            <div id="roommateIntimacy" class="card-grid icon-grid"></div>
+                        </div>
+                        <div>
+                            <label for="playerName" class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">你的名字</label>
+                            <input type="text" id="playerName" class="form-input w-full rounded-lg p-2.5" placeholder="請輸入姓名" maxlength="6">
+                            <p class="text-xs mt-1" style="color: var(--text-muted);">最多6個字</p>
+                        </div>
+                        <div>
+                            <label for="roommateName" class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">室友的名字</label>
+                            <input type="text" id="roommateName" class="form-input w-full rounded-lg p-2.5" placeholder="請輸入姓名" maxlength="6">
+                             <p class="text-xs mt-1" style="color: var(--text-muted);">最多6個字</p>
+                        </div>
+                        <div>
+                            <label for="roommateNickname" class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">室友對你的稱呼</label>
+                            <input type="text" id="roommateNickname" class="form-input w-full rounded-lg p-2.5" placeholder="例如：你的名字、小名等" maxlength="6">
+                             <p class="text-xs mt-1" style="color: var(--text-muted);">最多6個字</p>
+                        </div>
+                    </div>
+                    <div class="mt-8 flex justify-between items-center">
+                        <button onclick="prevStep()" class="btn-secondary text-white font-bold py-2 px-6 rounded-lg">返回</button>
+                        <div class="flex items-center gap-4">
+                            <p class="error-message text-red-400 text-sm h-5"></p>
+                            <button onclick="showSummary()" class="btn-primary font-bold py-2 px-6 rounded-lg">完成設定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 6: Summary & Download -->
+            <div id="step-6" class="step">
+                <div class="step-card rounded-lg p-6 sm:p-8 shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-6" style="color: var(--rose-gold-light);">最終確認</h2>
+                    <div id="summary-visual" class="summary-grid mb-6">
+                        <!-- Visual summary will be injected here -->
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2" style="color: var(--rose-gold-light);">數據彙總 (出圖用)</h3>
+                    <div class="rounded-lg p-4 text-sm leading-relaxed whitespace-pre-wrap" id="summary-output" style="background-color: var(--dark-bg); color: var(--text-light);">
+                        <!-- Text summary will be injected here -->
+                    </div>
+                    <div class="mt-8 flex flex-col sm:flex-row justify-between gap-4">
+                        <div class="flex flex-wrap gap-2">
+                            <button onclick="goToStep(1)" class="btn-secondary text-white text-sm font-bold py-2 px-4 rounded-lg">修改玩家資料</button>
+                            <button onclick="goToStep(2)" class="btn-secondary text-white text-sm font-bold py-2 px-4 rounded-lg">修改玩家外觀</button>
+                            <button onclick="goToStep(3)" class="btn-secondary text-white text-sm font-bold py-2 px-4 rounded-lg">修改室友資料</button>
+                            <button onclick="goToStep(4)" class="btn-secondary text-white text-sm font-bold py-2 px-4 rounded-lg">修改室友外觀</button>
+                            <button onclick="goToStep(5)" class="btn-secondary text-white text-sm font-bold py-2 px-4 rounded-lg">修改關係與命名</button>
+                        </div>
+                        <button onclick="downloadTxt()" class="btn-primary font-bold py-2 px-6 rounded-lg w-full sm:w-auto mt-4 sm:mt-0">下載設定檔 (.txt)</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <script>
+        // --- DATA FROM 參數設定資料檔.txt ---
+        const gameData = {
+            gender: [ { code: 'G01', text: '男', symbol: '♂️' }, { code: 'G02', text: '女', symbol: '♀️' } ],
+            sexuality: [ { code: 'X01', text: '僅喜歡男性', symbol: '♂️' }, { code: 'X02', text: '僅喜歡女性', symbol: '♀️' }, { code: 'X03', text: '不限', symbol: '🌈' } ],
+            appearance: {
+                female: [
+                    { code: 'F01', text: '輕奢名媛系(髮型:波浪捲 服裝:剪裁得體的連身裙 氣質:優雅大方、談吐從容)' }, { code: 'F02', text: '鄰家女孩系(髮型:及肩直髮 服裝:簡約T恤配牛仔褲 氣質:親切隨和、笑容甜美)' }, { code: 'F03', text: '知性通勤系(髮型:長直髮 服裝:襯衫配窄裙 氣質:沉穩幹練、理性柔和)' }, { code: 'F04', text: '甜美少女系(髮型:雙馬尾 服裝:短裙配蝴蝶結上衣 氣質:活潑可愛、充滿元氣)' }, { code: 'F05', text: '運動活力系(髮型:高馬尾 服裝:運動外套與短褲 氣質:健康陽光、朝氣十足)' }, { code: 'F06', text: '學院文青系(髮型:齊瀏海短髮 服裝:針織外套配百褶裙 氣質:安靜內斂、書卷氣濃)' }, { code: 'F07', text: '簡約清新系(髮型:中長直髮 服裝:素色上衣配長褲 氣質:自然隨性、乾淨俐落)' }, { code: 'F08', text: '輕熟溫柔系(髮型:中長微捲 服裝:針織衫配長裙 氣質:體貼溫暖、笑容柔和)' }, { code: 'F09', text: '街頭休閒系(髮型:蓬鬆短髮 服裝:寬鬆T恤配工裝褲 氣質:自信灑脫、活潑爽朗)' }, { code: 'F10', text: '日系森女系(髮型:中長捲髮 服裝:寬鬆連衣裙配草帽 氣質:恬靜文雅、溫婉可親)' }, { code: 'F11', text: '時尚白領系(髮型:側分直髮 服裝:西裝外套配長褲 氣質:幹練利落、品味出眾)' }, { code: 'F12', text: '文藝創作系(髮型:自然亂髮 服裝:圍裙配休閒褲 氣質:專注細膩、略帶文藝氣息)' }
+                ],
+                male: [
+                    { code: 'M01', text: '商務精英系(髮型:短側分 服裝:剪裁合身西裝 氣質:沉穩自信、談吐得體)' }, { code: 'M02', text: '溫柔貴公子系(髮型:中長微捲 服裝:淺色襯衫配卡其長褲 氣質:笑容溫暖、舉止優雅)' }, { code: 'M03', text: '輕奢雅痞系(髮型:後梳油頭 服裝:針織外套配絲質襯衫 氣質:風度翩翩、帶點不羈)' }, { code: 'M04', text: '低調名品系(髮型:微捲短髮 服裝:品牌Polo衫配修身休閒褲 氣質:內斂穩重、衣著考究)' }, { code: 'M05', text: '輕奢休閒系(髮型:自然蓬鬆髮 服裝:高質感針織衫配修身長褲 氣質:隨和溫暖、品味不張揚)' }, { code: 'M06', text: '文青咖啡系(髮型:微捲中長髮 服裝:寬鬆襯衫配長褲 氣質:安靜溫和、帶書卷氣)' }, { code: 'M07', text: '藝術收藏系(髮型:柔順長劉海 服裝:簡約襯衫配羊絨圍巾 氣質:細膩浪漫、略帶神秘)' }, { code: 'M08', text: '清爽學生系(髮型:短蓬鬆髮 服裝:連帽衛衣配牛仔褲 氣質:活潑開朗、隨和好相處)' }, { code: 'M09', text: '鄰家暖男系(髮型:自然短髮 服裝:針織衫配卡其褲 氣質:溫暖體貼、笑容柔和)' }, { code: 'M10', text: '輕熟休閒系(髮型:中短直髮 服裝:POLO衫配休閒褲 氣質:成熟穩重、親切隨和)' }, { code: 'M11', text: '日系簡約系(髮型:順直短髮 服裝:寬鬆毛衣配九分褲 氣質:乾淨清爽、自然隨性)' }, { code: 'M12', text: '街頭潮流系(髮型:抓蓬短髮 服裝:寬鬆T恤配工裝褲 氣質:自信活潑、帶點俏皮)' }
+                ]
+            },
+            zodiac: [
+                { code: 'Z01', text: '白羊座 (陽光、衝動，愛得直接熱烈)', symbol: '♈' }, { code: 'Z02', text: '金牛座 (成熟、固執，感情專一但佔有慾強)', symbol: '♉' }, { code: 'Z03', text: '雙子座 (腹黑、機靈，戀愛時喜歡試探對方)', symbol: '♊' }, { code: 'Z04', text: '巨蟹座 (病嬌、依戀，對愛極度依賴)', symbol: '♋' }, { code: 'Z05', text: '獅子座 (陽光、霸氣，愛時高調張揚)', symbol: '♌' }, { code: 'Z06', text: '處女座 (成熟、挑剔，對感情謹慎觀望)', symbol: '♍' }, { code: 'Z07', text: '天秤座 (腹黑、優雅，戀愛中外表溫柔體貼)', symbol: '♎' }, { code: 'Z08', text: '天蠍座 (病嬌、佔有慾強，愛得深沉極端)', symbol: '♏' }, { code: 'Z09', text: '射手座 (陽光、灑脫，愛得自由隨性)', symbol: '♐' }, { code: 'Z10', text: '摩羯座 (成熟、理智，感情表達內斂)', symbol: '♑' }, { code: 'Z11', text: '水瓶座 (腹黑、古怪，感情中忽冷忽熱)', symbol: '♒' }, { code: 'Z12', text: '雙魚座 (病嬌、感性，愛時極度浪漫依戀)', symbol: '♓' }
+            ],
+            bloodType: [
+                { code: 'B01', text: '血型A (謹慎細心、責任感強)', symbol: '🅰️' }, { code: 'B02', text: '血型B (隨性樂觀、創意多變)', symbol: '🅱️' }, { code: 'B03', text: '血型O (開朗外向、行動力強)', symbol: '🅾️' }, { code: 'B04', text: '血型AB (理性敏感、思維跳躍)', symbol: '🆎' }
+            ],
+            intimacy: [
+                { code: 'P01', text: '溫柔慢熱型 (重視情感交流)', symbol: '🥰' }, { code: 'P02', text: '主導掌控型 (掌握節奏)', symbol: '👑' }, { code: 'P03', text: '熱情主動型 (充滿渴望)', symbol: '🔥' }, { code: 'P04', text: '挑逗遊戲型 (善於撩撥)', symbol: '😏' }, { code: 'P05', text: '深情纏綿型 (長時間擁抱親吻)', symbol: '💞' }, { code: 'P06', text: '反差驚喜型 (平時沉穩，親密時強烈)', symbol: '🎭' }, { code: 'P07', text: '體貼順應型 (配合對方)', symbol: '🤗' }, { code: 'P08', text: '探索變化型 (嘗試新事物)', symbol: '🌍' }, { code: 'P09', text: '情緒主導型 (感性派)', symbol: '🌊' }, { code: 'P10', text: '強烈佔有型 (喜歡壓制)', symbol: '⛓️' }
+            ],
+            profession: [
+                { code: 'W01', text: 'IT工程師 (常在家工作，作息日夜顛倒)', symbol: '💻' }, { code: 'W02', text: '咖啡師 (早睡早起，長時間待在廚房)', symbol: '☕' }, { code: 'W03', text: '研究生 (多數時間在學校或實驗室)', symbol: '🎓' }, { code: 'W04', text: '吉他手 (作息偏晚，深夜創作)', symbol: '🎸' }, { code: 'W05', text: '健身教練 (規律作息，長時間在健身房)', symbol: '💪' }, { code: 'W06', text: '作家 (大部分時間在家，作息不固定)', symbol: '✍️' }, { code: 'W07', text: '醫生 (作息混亂，隨時可能臨時外出)', symbol: '🩺' }, { code: 'W08', text: '花藝師 (早起工作，經常接觸植物)', symbol: '💐' }, { code: 'W09', text: '設計師 (常在家或工作室加班)', symbol: '🎨' }, { code: 'W10', text: '攝影師 (外出拍攝頻繁，日夜作息不固定)', symbol: '📷' }, { code: 'W11', text: '國小老師 (早睡早起，作息穩定)', symbol: '🏫' }, { code: 'W12', text: '業務 (外勤時間多，經常需要與客戶應酬)', symbol: '👔' }
+            ],
+            initialRelationship: [
+                { code: 'S01', text: '完全的陌生人 (好感度:50 / 速度:+15)' }, 
+                { code: 'S02', text: '朋友的朋友 (好感度:150 / 速度:+30)' }, 
+                { code: 'S03', text: '學生時代的學長學姊 (好感度:200 / 速度:+15)' }, 
+                { code: 'S04', text: '以前的同事 (好感度:180 / 速度:+15)' }, 
+                { code: 'S05', text: '許久未見的遠房親戚 (好感度:100 / 速度:+5)' }, 
+                { code: 'S06', text: '交友網站的網友 (好感度:250 / 速度:+30)' }, 
+                { code: 'S07', text: '分手不久的前任 (好感度:-150 / 速度:+5)' }, 
+                { code: 'S08', text: '你曾經暗戀的對象 (好感度:150 / 速度:+15)' }, 
+                { code: 'S09', text: '死敵 (好感度:-1500 / 速度:+3)' }, 
+                { code: 'S10', text: '商業競爭對手 (好感度:-1000 / 速度:+5)' }, 
+                { code: 'S11', text: '曾經一夜情 (好感度:200 / 速度:+30)' }
+            ]
+        };
+
+        // --- SCRIPT LOGIC ---
+        let currentStep = 1;
+        const totalSteps = 6; 
+
+        function populateTextCards(containerId, data, name, isCheckedFirst = false) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, index) => {
+                const label = document.createElement('label');
+                label.className = 'text-card-label';
+                const checked = (isCheckedFirst && index === 0) ? 'checked' : '';
+                label.innerHTML = `
+                    <input type="radio" name="${name}" value="${item.code}" class="hidden" ${checked}>
+                    <div class="text-card-content">
+                        <span class="text-sm text-card-text">${item.text}</span>
+                    </div>
+                `;
+                container.appendChild(label);
+            });
+        }
+        
+        function populateCards(containerId, data, name, isCheckedFirst = false, cardType = 'appearance') {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
+            data.forEach((item, index) => {
+                const label = document.createElement('label');
+                label.className = 'card-label';
+                const checked = (isCheckedFirst && index === 0) ? 'checked' : '';
+                const title = item.text.split('(')[0].trim();
+                const desc = item.text.includes('(') ? item.text.substring(item.text.indexOf('(') + 1, item.text.lastIndexOf(')')) : '';
+                
+                let visualElement = '';
+                if (cardType === 'zodiac') {
+                    visualElement = `<div class="zodiac-emoji">${item.symbol || '?'}</div>`;
+                } else if (cardType === 'icon') {
+                    visualElement = `<div class="icon-emoji">${item.symbol || '?'}</div>`;
+                } else { // appearance
+                    const imagePath = `images/${item.code}.png`;
+                    const fallbackImage = `https://placehold.co/400x400/2a2a2a/EAEAEA?text=${encodeURIComponent(title)}`;
+                    visualElement = `<img src="${imagePath}" alt="${title}" onerror="this.onerror=null;this.src='${fallbackImage}';">`;
+                }
+
+                label.innerHTML = `
+                    <input type="radio" name="${name}" value="${item.code}" class="hidden" ${checked}>
+                    <div class="card">
+                        ${visualElement}
+                        <div class="card-content">
+                            <p class="card-title">${title}</p>
+                            ${desc ? `<p class="card-desc">${desc.replace(/ /g, '<br>')}</p>` : ''}
+                        </div>
+                        <div class="check-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16" style="color: var(--text-dark);">
+                                <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                            </svg>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(label);
+            });
+        }
+
+        function updateAppearanceOptions(genderRadioName, appearanceContainerId) {
+            const genderRadio = document.querySelector(`input[name="${genderRadioName}"]:checked`);
+            if (!genderRadio) return;
+            const gender = genderRadio.value;
+            const appearanceOptions = gender === 'G01' ? gameData.appearance.male : gameData.appearance.female;
+            populateCards(appearanceContainerId, appearanceOptions, appearanceContainerId, true, 'appearance');
+        }
+
+        function updateRoommateGenderOptions() {
+            const playerSexuality = getRadioValue('playerSexuality');
+            let filteredGenders = gameData.gender;
+            if (playerSexuality === 'X01') {
+                filteredGenders = gameData.gender.filter(g => g.code === 'G01');
+            } else if (playerSexuality === 'X02') {
+                filteredGenders = gameData.gender.filter(g => g.code === 'G02');
+            }
+            populateCards('roommateGender', filteredGenders, 'roommateGender', true, 'icon');
+            updateAppearanceOptions('roommateGender', 'roommateAppearance');
+        }
+
+        function initializeForm() {
+            populateCards('playerGender', gameData.gender, 'playerGender', true, 'icon');
+            populateCards('playerSexuality', gameData.sexuality, 'playerSexuality', true, 'icon');
+            populateCards('playerZodiac', gameData.zodiac, 'playerZodiac', true, 'zodiac');
+            populateCards('playerBloodType', gameData.bloodType, 'playerBloodType', true, 'icon');
+            updateAppearanceOptions('playerGender', 'playerAppearance');
+            
+            populateCards('roommateZodiac', gameData.zodiac, 'roommateZodiac', true, 'zodiac');
+            populateCards('roommateBloodType', gameData.bloodType, 'roommateBloodType', true, 'icon');
+            populateCards('roommateProfession', gameData.profession, 'roommateProfession', true, 'icon');
+            populateCards('roommateIntimacy', gameData.intimacy, 'roommateIntimacy', true, 'icon');
+            populateTextCards('initialRelationship', gameData.initialRelationship, 'initialRelationship', true);
+            
+            updateRoommateGenderOptions();
+
+            document.getElementById('playerGender').addEventListener('change', () => updateAppearanceOptions('playerGender', 'playerAppearance'));
+            document.getElementById('playerSexuality').addEventListener('change', updateRoommateGenderOptions);
+            document.getElementById('roommateGender').addEventListener('change', () => updateAppearanceOptions('roommateGender', 'roommateAppearance'));
+        }
+        
+        function showStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+            document.getElementById(`step-${stepNumber}`).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function goToStep(stepNumber) {
+            currentStep = stepNumber;
+            showStep(currentStep);
+        }
+
+        function validateStep(stepNumber) {
+            const stepElement = document.getElementById(`step-${stepNumber}`);
+            const errorMessageElement = stepElement.querySelector('.error-message');
+            
+            if (errorMessageElement) errorMessageElement.textContent = '';
+            
+            stepElement.querySelectorAll('input.invalid').forEach(input => {
+                input.classList.remove('invalid');
+            });
+
+            const textInputs = stepElement.querySelectorAll('input[type="text"]');
+            for (const input of textInputs) {
+                if (!input.value.trim()) {
+                    input.classList.add('invalid');
+                    if (errorMessageElement) {
+                        const label = document.querySelector(`label[for="${input.id}"]`);
+                        const fieldName = label ? label.textContent : '必填欄位';
+                        errorMessageElement.textContent = `請填寫「${fieldName}」！`;
+                    }
+                    return false; 
+                }
+            }
+            return true;
+        }
+
+        function nextStep() {
+            if (!validateStep(currentStep)) return;
+
+            if (currentStep < totalSteps) {
+                currentStep++;
+                showStep(currentStep);
+            }
+        }
+        
+        function showSummary() {
+            if (!validateStep(currentStep)) return;
+            updateSummaryPage();
+            const output = generateFinalOutput();
+            document.getElementById('summary-output').textContent = output;
+            nextStep();
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
+
+        function getRadioValue(name) {
+            const checkedRadio = document.querySelector(`input[name="${name}"]:checked`);
+            return checkedRadio ? checkedRadio.value : '';
+        }
+
+        function findDataItem(dataArray, code) {
+            return dataArray.find(item => item.code === code) || { text: 'N/A' };
+        }
+
+        function updateSummaryPage() {
+            const data = getAllSelections();
+            const container = document.getElementById('summary-visual');
+
+            const playerApp = data.playerGender.code === 'G01' 
+                ? findDataItem(gameData.appearance.male, data.playerAppearance.code) 
+                : findDataItem(gameData.appearance.female, data.playerAppearance.code);
+
+            const roommateApp = data.roommateGender.code === 'G01'
+                ? findDataItem(gameData.appearance.male, data.roommateAppearance.code)
+                : findDataItem(gameData.appearance.female, data.roommateAppearance.code);
+
+            container.innerHTML = `
+                <div class="summary-card">
+                    <h3 class="summary-title">玩家</h3>
+                    <img src="images/${data.playerAppearance.code}.png" alt="${playerApp.text.split('(')[0]}" onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a2a2a/EAEAEA?text=Player';">
+                    <div class="summary-details">
+                        <p><span>姓名:</span> ${data.playerName}</p>
+                        <p><span>性別:</span> ${data.playerGender.text}</p>
+                        <p><span>性向:</span> ${data.playerSexuality.text}</p>
+                        <p><span>外觀:</span> ${playerApp.text.split('(')[0]}</p>
+                        <p><span>星座:</span> ${data.playerZodiac.text.split('(')[0]}</p>
+                        <p><span>血型:</span> ${data.playerBloodType.text.split('(')[0]}</p>
+                    </div>
+                </div>
+                <div class="summary-card">
+                    <h3 class="summary-title">室友</h3>
+                    <img src="images/${data.roommateAppearance.code}.png" alt="${roommateApp.text.split('(')[0]}" onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a2a2a/EAEAEA?text=Roommate';">
+                    <div class="summary-details">
+                        <p><span>姓名:</span> ${data.roommateName}</p>
+                        <p><span>性別:</span> ${data.roommateGender.text}</p>
+                        <p><span>職業:</span> ${data.roommateProfession.text.split('(')[0]}</p>
+                        <p><span>外觀:</span> ${roommateApp.text.split('(')[0]}</p>
+                        <p><span>星座:</span> ${data.roommateZodiac.text.split('(')[0]}</p>
+                        <p><span>血型:</span> ${data.roommateBloodType.text.split('(')[0]}</p>
+                    </div>
+                </div>
+            `;
+        }
+        
+        function getAllSelections() {
+             return {
+                playerName: document.getElementById('playerName').value,
+                playerGender: findDataItem(gameData.gender, getRadioValue('playerGender')),
+                playerSexuality: findDataItem(gameData.sexuality, getRadioValue('playerSexuality')),
+                playerZodiac: findDataItem(gameData.zodiac, getRadioValue('playerZodiac')),
+                playerBloodType: findDataItem(gameData.bloodType, getRadioValue('playerBloodType')),
+                playerAppearance: { code: getRadioValue('playerAppearance') },
+                roommateName: document.getElementById('roommateName').value,
+                roommateGender: findDataItem(gameData.gender, getRadioValue('roommateGender')),
+                roommateZodiac: findDataItem(gameData.zodiac, getRadioValue('roommateZodiac')),
+                roommateBloodType: findDataItem(gameData.bloodType, getRadioValue('roommateBloodType')),
+                roommateProfession: findDataItem(gameData.profession, getRadioValue('roommateProfession')),
+                roommateAppearance: { code: getRadioValue('roommateAppearance') },
+                roommateIntimacy: findDataItem(gameData.intimacy, getRadioValue('roommateIntimacy')),
+                initialRelationship: findDataItem(gameData.initialRelationship, getRadioValue('initialRelationship')),
+                roommateNickname: document.getElementById('roommateNickname').value,
+            };
+        }
+
+        function generateFinalOutput() {
+            const data = getAllSelections();
+
+            const playerApp = data.playerGender.code === 'G01' 
+                ? findDataItem(gameData.appearance.male, data.playerAppearance.code) 
+                : findDataItem(gameData.appearance.female, data.playerAppearance.code);
+
+            const roommateApp = data.roommateGender.code === 'G01'
+                ? findDataItem(gameData.appearance.male, data.roommateAppearance.code)
+                : findDataItem(gameData.appearance.female, data.roommateAppearance.code);
+
+            const playerID = `UR-${data.playerGender.code}${data.playerAppearance.code}${data.playerZodiac.code}${data.playerBloodType.code}-${data.playerSexuality.code}W13`;
+            const roommateID = `PL-${data.roommateGender.code}${data.roommateAppearance.code}${data.roommateZodiac.code}${data.roommateBloodType.code}-${data.roommateIntimacy.code}${data.roommateProfession.code}${data.initialRelationship.code}`;
+
+            const output = `--- 玩家設定 ---
+姓名: ${data.playerName}
+稱呼: ${data.roommateNickname}
+身份號: ${playerID}
+性別: ${data.playerGender.text}
+性向: ${data.playerSexuality.text}
+外觀: ${playerApp.text}
+星座: ${data.playerZodiac.text}
+血型: ${data.playerBloodType.text}
+
+--- 室友設定 ---
+姓名: ${data.roommateName}
+身份號: ${roommateID}
+性別: ${data.roommateGender.text}
+外觀: ${roommateApp.text}
+星座: ${data.roommateZodiac.text}
+血型: ${data.roommateBloodType.text}
+職業: ${data.roommateProfession.text}
+初始關係: ${data.initialRelationship.text}
+親密行為風格: ${data.roommateIntimacy.text}`;
+            
+            return output.trim();
+        }
+
+        function downloadTxt() {
+            const text = document.getElementById('summary-output').textContent;
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'RoommateLoveGuide_Settings.txt';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeForm);
+    </script>
+
+</body>
+</html>
