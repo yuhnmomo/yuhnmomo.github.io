@@ -18,6 +18,10 @@
                 "name": "參數檔",
                 "path": "Role/RLGuide/參數設定資料檔.txt"
             },
+            {
+                "name": "親密情境指南",
+                "path": "Role/RLGuide/AI親密情境指南.txt"
+            },
 			{
                 "name": "貼在Gem使用說明.txt",
                 "path": "Role/RLGuide/貼在Gem使用說明.txt"
