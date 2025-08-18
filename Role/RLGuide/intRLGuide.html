@@ -123,6 +123,7 @@
         .summary-details span { color: var(--text-muted); margin-right: 0.5rem; }
 
     </style>
+    <script src="gameData.js"></script>
 </head>
 <body>
 
@@ -294,45 +295,6 @@
     </div>
 
     <script>
-        // --- DATA FROM 參數設定資料檔.txt ---
-        const gameData = {
-            gender: [ { code: 'G01', text: '男', symbol: '♂️' }, { code: 'G02', text: '女', symbol: '♀️' } ],
-            sexuality: [ { code: 'X01', text: '僅喜歡男性', symbol: '♂️' }, { code: 'X02', text: '僅喜歡女性', symbol: '♀️' }, { code: 'X03', text: '不限', symbol: '🌈' } ],
-            appearance: {
-                female: [
-                    { code: 'F01', text: '輕奢名媛系(髮型:波浪捲 服裝:剪裁得體的連身裙 氣質:優雅大方、談吐從容)' }, { code: 'F02', text: '鄰家女孩系(髮型:及肩直髮 服裝:簡約T恤配牛仔褲 氣質:親切隨和、笑容甜美)' }, { code: 'F03', text: '知性通勤系(髮型:長直髮 服裝:襯衫配窄裙 氣質:沉穩幹練、理性柔和)' }, { code: 'F04', text: '甜美少女系(髮型:雙馬尾 服裝:短裙配蝴蝶結上衣 氣質:活潑可愛、充滿元氣)' }, { code: 'F05', text: '運動活力系(髮型:高馬尾 服裝:運動外套與短褲 氣質:健康陽光、朝氣十足)' }, { code: 'F06', text: '學院文青系(髮型:齊瀏海短髮 服裝:針織外套配百褶裙 氣質:安靜內斂、書卷氣濃)' }, { code: 'F07', text: '簡約清新系(髮型:中長直髮 服裝:素色上衣配長褲 氣質:自然隨性、乾淨俐落)' }, { code: 'F08', text: '輕熟溫柔系(髮型:中長微捲 服裝:針織衫配長裙 氣質:體貼溫暖、笑容柔和)' }, { code: 'F09', text: '街頭休閒系(髮型:蓬鬆短髮 服裝:寬鬆T恤配工裝褲 氣質:自信灑脫、活潑爽朗)' }, { code: 'F10', text: '日系森女系(髮型:中長捲髮 服裝:寬鬆連衣裙配草帽 氣質:恬靜文雅、溫婉可親)' }, { code: 'F11', text: '時尚白領系(髮型:側分直髮 服裝:西裝外套配長褲 氣質:幹練利落、品味出眾)' }, { code: 'F12', text: '文藝創作系(髮型:自然亂髮 服裝:圍裙配休閒褲 氣質:專注細膩、略帶文藝氣息)' }
-                ],
-                male: [
-                    { code: 'M01', text: '商務精英系(髮型:短側分 服裝:剪裁合身西裝 氣質:沉穩自信、談吐得體)' }, { code: 'M02', text: '溫柔貴公子系(髮型:中長微捲 服裝:淺色襯衫配卡其長褲 氣質:笑容溫暖、舉止優雅)' }, { code: 'M03', text: '輕奢雅痞系(髮型:後梳油頭 服裝:針織外套配絲質襯衫 氣質:風度翩翩、帶點不羈)' }, { code: 'M04', text: '低調名品系(髮型:微捲短髮 服裝:品牌Polo衫配修身休閒褲 氣質:內斂穩重、衣著考究)' }, { code: 'M05', text: '輕奢休閒系(髮型:自然蓬鬆髮 服裝:高質感針織衫配修身長褲 氣質:隨和溫暖、品味不張揚)' }, { code: 'M06', text: '文青咖啡系(髮型:微捲中長髮 服裝:寬鬆襯衫配長褲 氣質:安靜溫和、帶書卷氣)' }, { code: 'M07', text: '藝術收藏系(髮型:柔順長劉海 服裝:簡約襯衫配羊絨圍巾 氣質:細膩浪漫、略帶神秘)' }, { code: 'M08', text: '清爽學生系(髮型:短蓬鬆髮 服裝:連帽衛衣配牛仔褲 氣質:活潑開朗、隨和好相處)' }, { code: 'M09', text: '鄰家暖男系(髮型:自然短髮 服裝:針織衫配卡其褲 氣質:溫暖體貼、笑容柔和)' }, { code: 'M10', text: '輕熟休閒系(髮型:中短直髮 服裝:POLO衫配休閒褲 氣質:成熟穩重、親切隨和)' }, { code: 'M11', text: '日系簡約系(髮型:順直短髮 服裝:寬鬆毛衣配九分褲 氣質:乾淨清爽、自然隨性)' }, { code: 'M12', text: '街頭潮流系(髮型:抓蓬短髮 服裝:寬鬆T恤配工裝褲 氣質:自信活潑、帶點俏皮)' }
-                ]
-            },
-            zodiac: [
-                { code: 'Z01', text: '白羊座 (陽光、衝動，愛得直接熱烈)', symbol: '♈' }, { code: 'Z02', text: '金牛座 (成熟、固執，感情專一但佔有慾強)', symbol: '♉' }, { code: 'Z03', text: '雙子座 (腹黑、機靈，戀愛時喜歡試探對方)', symbol: '♊' }, { code: 'Z04', text: '巨蟹座 (病嬌、依戀，對愛極度依賴)', symbol: '♋' }, { code: 'Z05', text: '獅子座 (陽光、霸氣，愛時高調張揚)', symbol: '♌' }, { code: 'Z06', text: '處女座 (成熟、挑剔，對感情謹慎觀望)', symbol: '♍' }, { code: 'Z07', text: '天秤座 (腹黑、優雅，戀愛中外表溫柔體貼)', symbol: '♎' }, { code: 'Z08', text: '天蠍座 (病嬌、佔有慾強，愛得深沉極端)', symbol: '♏' }, { code: 'Z09', text: '射手座 (陽光、灑脫，愛得自由隨性)', symbol: '♐' }, { code: 'Z10', text: '摩羯座 (成熟、理智，感情表達內斂)', symbol: '♑' }, { code: 'Z11', text: '水瓶座 (腹黑、古怪，感情中忽冷忽熱)', symbol: '♒' }, { code: 'Z12', text: '雙魚座 (病嬌、感性，愛時極度浪漫依戀)', symbol: '♓' }
-            ],
-            bloodType: [
-                { code: 'B01', text: '血型A (謹慎細心、責任感強)', symbol: '🅰️' }, { code: 'B02', text: '血型B (隨性樂觀、創意多變)', symbol: '🅱️' }, { code: 'B03', text: '血型O (開朗外向、行動力強)', symbol: '🅾️' }, { code: 'B04', text: '血型AB (理性敏感、思維跳躍)', symbol: '🆎' }
-            ],
-            intimacy: [
-                { code: 'P01', text: '溫柔慢熱型 (重視情感交流)', symbol: '🥰' }, { code: 'P02', text: '主導掌控型 (掌握節奏)', symbol: '👑' }, { code: 'P03', text: '熱情主動型 (充滿渴望)', symbol: '🔥' }, { code: 'P04', text: '挑逗遊戲型 (善於撩撥)', symbol: '😏' }, { code: 'P05', text: '深情纏綿型 (長時間擁抱親吻)', symbol: '💞' }, { code: 'P06', text: '反差驚喜型 (平時沉穩，親密時強烈)', symbol: '🎭' }, { code: 'P07', text: '體貼順應型 (配合對方)', symbol: '🤗' }, { code: 'P08', text: '探索變化型 (嘗試新事物)', symbol: '🌍' }, { code: 'P09', text: '情緒主導型 (感性派)', symbol: '🌊' }, { code: 'P10', text: '強烈佔有型 (喜歡壓制)', symbol: '⛓️' }
-            ],
-            profession: [
-                { code: 'W01', text: 'IT工程師 (常在家工作，作息日夜顛倒)', symbol: '💻' }, { code: 'W02', text: '咖啡師 (早睡早起，長時間待在廚房)', symbol: '☕' }, { code: 'W03', text: '研究生 (多數時間在學校或實驗室)', symbol: '🎓' }, { code: 'W04', text: '吉他手 (作息偏晚，深夜創作)', symbol: '🎸' }, { code: 'W05', text: '健身教練 (規律作息，長時間在健身房)', symbol: '💪' }, { code: 'W06', text: '作家 (大部分時間在家，作息不固定)', symbol: '✍️' }, { code: 'W07', text: '醫生 (作息混亂，隨時可能臨時外出)', symbol: '🩺' }, { code: 'W08', text: '花藝師 (早起工作，經常接觸植物)', symbol: '💐' }, { code: 'W09', text: '設計師 (常在家或工作室加班)', symbol: '🎨' }, { code: 'W10', text: '攝影師 (外出拍攝頻繁，日夜作息不固定)', symbol: '📷' }, { code: 'W11', text: '國小老師 (早睡早起，作息穩定)', symbol: '🏫' }, { code: 'W12', text: '業務 (外勤時間多，經常需要與客戶應酬)', symbol: '👔' }
-            ],
-            initialRelationship: [
-                { code: 'S01', text: '完全的陌生人 (好感度:50 / 速度:+15)' }, 
-                { code: 'S02', text: '朋友的朋友 (好感度:150 / 速度:+30)' }, 
-                { code: 'S03', text: '學生時代的學長學姊 (好感度:200 / 速度:+15)' }, 
-                { code: 'S04', text: '以前的同事 (好感度:180 / 速度:+15)' }, 
-                { code: 'S05', text: '許久未見的遠房親戚 (好感度:100 / 速度:+5)' }, 
-                { code: 'S06', text: '交友網站的網友 (好感度:250 / 速度:+30)' }, 
-                { code: 'S07', text: '分手不久的前任 (好感度:-150 / 速度:+5)' }, 
-                { code: 'S08', text: '你曾經暗戀的對象 (好感度:150 / 速度:+15)' }, 
-                { code: 'S09', text: '死敵 (好感度:-1500 / 速度:+3)' }, 
-                { code: 'S10', text: '商業競爭對手 (好感度:-1000 / 速度:+5)' }, 
-                { code: 'S11', text: '曾經一夜情 (好感度:200 / 速度:+30)' }
-            ]
-        };
-
         // --- SCRIPT LOGIC ---
         let currentStep = 1;
         const totalSteps = 6; 
@@ -344,10 +306,11 @@
                 const label = document.createElement('label');
                 label.className = 'text-card-label';
                 const checked = (isCheckedFirst && index === 0) ? 'checked' : '';
+                const displayText = `${item.title} (${item.desc})`;
                 label.innerHTML = `
                     <input type="radio" name="${name}" value="${item.code}" class="hidden" ${checked}>
                     <div class="text-card-content">
-                        <span class="text-sm text-card-text">${item.text}</span>
+                        <span class="text-sm text-card-text">${displayText}</span>
                     </div>
                 `;
                 container.appendChild(label);
@@ -361,8 +324,6 @@
                 const label = document.createElement('label');
                 label.className = 'card-label';
                 const checked = (isCheckedFirst && index === 0) ? 'checked' : '';
-                const title = item.text.split('(')[0].trim();
-                const desc = item.text.includes('(') ? item.text.substring(item.text.indexOf('(') + 1, item.text.lastIndexOf(')')) : '';
                 
                 let visualElement = '';
                 if (cardType === 'zodiac') {
@@ -371,8 +332,8 @@
                     visualElement = `<div class="icon-emoji">${item.symbol || '?'}</div>`;
                 } else { // appearance
                     const imagePath = `images/${item.code}.png`;
-                    const fallbackImage = `https://placehold.co/400x400/2a2a2a/EAEAEA?text=${encodeURIComponent(title)}`;
-                    visualElement = `<img src="${imagePath}" alt="${title}" onerror="this.onerror=null;this.src='${fallbackImage}';">`;
+                    const fallbackImage = `https://placehold.co/400x400/2a2a2a/EAEAEA?text=${encodeURIComponent(item.title)}`;
+                    visualElement = `<img src="${imagePath}" alt="${item.title}" onerror="this.onerror=null;this.src='${fallbackImage}';">`;
                 }
 
                 label.innerHTML = `
@@ -380,8 +341,8 @@
                     <div class="card">
                         ${visualElement}
                         <div class="card-content">
-                            <p class="card-title">${title}</p>
-                            ${desc ? `<p class="card-desc">${desc.replace(/ /g, '<br>')}</p>` : ''}
+                            <p class="card-title">${item.title}</p>
+                            ${item.desc ? `<p class="card-desc">${item.desc.replace(/\s*,\s*/g, ' ')}</p>` : ''}
                         </div>
                         <div class="check-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check" viewBox="0 0 16 16" style="color: var(--text-dark);">
@@ -415,6 +376,12 @@
         }
 
         function initializeForm() {
+            if (typeof gameData === 'undefined') {
+                const container = document.getElementById('game-setup-container');
+                container.innerHTML = `<div class="text-center text-red-400">錯誤：無法載入遊戲設定檔 (gameData.js)。<br>請確認檔案存在且格式正確。</div>`;
+                return;
+            }
+
             populateCards('playerGender', gameData.gender, 'playerGender', true, 'icon');
             populateCards('playerSexuality', gameData.sexuality, 'playerSexuality', true, 'icon');
             populateCards('playerZodiac', gameData.zodiac, 'playerZodiac', true, 'zodiac');
@@ -500,7 +467,7 @@
         }
 
         function findDataItem(dataArray, code) {
-            return dataArray.find(item => item.code === code) || { text: 'N/A' };
+            return dataArray.find(item => item.code === code) || { text: 'N/A', title: 'N/A', full_text: 'N/A' };
         }
 
         function updateSummaryPage() {
@@ -518,26 +485,26 @@
             container.innerHTML = `
                 <div class="summary-card">
                     <h3 class="summary-title">玩家</h3>
-                    <img src="images/${data.playerAppearance.code}.png" alt="${playerApp.text.split('(')[0]}" onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a2a2a/EAEAEA?text=Player';">
+                    <img src="images/${data.playerAppearance.code}.png" alt="${playerApp.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a2a2a/EAEAEA?text=Player';">
                     <div class="summary-details">
                         <p><span>姓名:</span> ${data.playerName}</p>
                         <p><span>性別:</span> ${data.playerGender.text}</p>
                         <p><span>性向:</span> ${data.playerSexuality.text}</p>
-                        <p><span>外觀:</span> ${playerApp.text.split('(')[0]}</p>
-                        <p><span>星座:</span> ${data.playerZodiac.text.split('(')[0]}</p>
-                        <p><span>血型:</span> ${data.playerBloodType.text.split('(')[0]}</p>
+                        <p><span>外觀:</span> ${playerApp.title}</p>
+                        <p><span>星座:</span> ${data.playerZodiac.title}</p>
+                        <p><span>血型:</span> ${data.playerBloodType.title}</p>
                     </div>
                 </div>
                 <div class="summary-card">
                     <h3 class="summary-title">室友</h3>
-                    <img src="images/${data.roommateAppearance.code}.png" alt="${roommateApp.text.split('(')[0]}" onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a2a2a/EAEAEA?text=Roommate';">
+                    <img src="images/${data.roommateAppearance.code}.png" alt="${roommateApp.title}" onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a2a2a/EAEAEA?text=Roommate';">
                     <div class="summary-details">
                         <p><span>姓名:</span> ${data.roommateName}</p>
                         <p><span>性別:</span> ${data.roommateGender.text}</p>
-                        <p><span>職業:</span> ${data.roommateProfession.text.split('(')[0]}</p>
-                        <p><span>外觀:</span> ${roommateApp.text.split('(')[0]}</p>
-                        <p><span>星座:</span> ${data.roommateZodiac.text.split('(')[0]}</p>
-                        <p><span>血型:</span> ${data.roommateBloodType.text.split('(')[0]}</p>
+                        <p><span>職業:</span> ${data.roommateProfession.title}</p>
+                        <p><span>外觀:</span> ${roommateApp.title}</p>
+                        <p><span>星座:</span> ${data.roommateZodiac.title}</p>
+                        <p><span>血型:</span> ${data.roommateBloodType.title}</p>
                     </div>
                 </div>
             `;
@@ -583,20 +550,20 @@
 身份號: ${playerID}
 性別: ${data.playerGender.text}
 性向: ${data.playerSexuality.text}
-外觀: ${playerApp.text}
-星座: ${data.playerZodiac.text}
-血型: ${data.playerBloodType.text}
+外觀: ${playerApp.full_text}
+星座: ${data.playerZodiac.full_text}
+血型: ${data.playerBloodType.full_text}
 
 --- 室友設定 ---
 姓名: ${data.roommateName}
 身份號: ${roommateID}
 性別: ${data.roommateGender.text}
-外觀: ${roommateApp.text}
-星座: ${data.roommateZodiac.text}
-血型: ${data.roommateBloodType.text}
-職業: ${data.roommateProfession.text}
-初始關係: ${data.initialRelationship.text}
-親密行為風格: ${data.roommateIntimacy.text}`;
+外觀: ${roommateApp.full_text}
+星座: ${data.roommateZodiac.full_text}
+血型: ${data.roommateBloodType.full_text}
+職業: ${data.roommateProfession.full_text}
+初始關係: ${data.initialRelationship.full_text}
+親密行為風格: ${data.roommateIntimacy.full_text}`;
             
             return output.trim();
         }
@@ -616,19 +583,15 @@
             const textToCopy = document.getElementById('summary-output').textContent;
             const copyButton = document.getElementById('copy-btn');
             
-            // Create a temporary textarea element to hold the text
             const textArea = document.createElement('textarea');
             textArea.value = textToCopy;
             document.body.appendChild(textArea);
             
-            // Select and copy the text
             textArea.select();
             document.execCommand('copy');
             
-            // Remove the temporary element
             document.body.removeChild(textArea);
 
-            // Provide visual feedback
             const originalText = copyButton.textContent;
             copyButton.textContent = '已複製！';
             setTimeout(() => {
