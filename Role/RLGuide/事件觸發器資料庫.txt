@@ -1,80 +1,523 @@
-[《室友戀愛指南》事件觸發器資料庫 (Event Trigger Database) v1.0]
-// 格式： 觸發器ID :: 觸發條件 :: 觸發效果
+# ======================================================================
+# 《室友戀愛指南》事件觸發器資料庫 (Event Trigger Database)
+# 版本: 4.1 (新增後果事件鏈)
+# 格式: YAML-like (專為LLM設計的輕量化結構)
+# ======================================================================
+#
+# 【格式完全說明】
+#
+# 1. `---` 分隔線
+#    - 這就像書本的分頁線，用來清楚地隔開每一個獨立的事件。
+#
+# 2. `event:` 事件區塊
+#    - 代表一個獨立事件的開始。
+#    - `id`: 事件的內部代號，獨一無二，方便系統追蹤。
+#    - `phase`: 這個事件主要發生在遊戲的哪個**階段** (`early`初期, `mid`中期, `late`晚期, `any`任何時期)。
+#    - `rpt`: 這個事件是否可以**重複** (`repeatable`) 發生 (`true`或`false`)。
+#    - `desc`: 對這個事件的**描述**，方便人類閱讀。
+#
+# 3. `trigger:` 觸發條件區塊
+#    - 是一個列表，底下所有 `- cond` (condition) 的條件**都必須同時滿足**，這個事件才會發生。
+#    - `- cond:` 代表一條條件。
+#        - `rel`: 關係 (relationship) 條件。
+#        - `stat`: 數值 (statistic) 條件 (如好感度)。
+#        - `loc`: 地點 (location) 條件。
+#        - `loc_type`: 地點類型條件 (如公共場所)。
+#        - `flag`: 檢查某個劇情**旗標**是否被設定。
+#        - `trait`: 檢查玩家或NPC的**特質** (如星座、職業)。
+#        - `action`: 玩家執行的特定**動作**。
+#        - `world`: 遊戲**世界狀態** (如天氣、時間、某物品狀態)。
+#        - `chance`: **機率**。
+#        - `or`/`and`: 用於組合複雜的邏輯條件。
+#
+# 4. `effects:` 觸發效果區塊
+#    - 是一個列表，一旦觸發成功，遊戲會執行這裡的所有效果。
+#    - `- eff:` 代表一個效果。
+#        - `scene`: 觸發一段**場景** (scene)。
+#        - `stat`: **改變**一個數值 (好感度、情慾等)。
+#        - `flag`: **設定**一個劇情旗標 (表示某事已發生)。
+#        - `unlock_act`: **解鎖**一個玩家可執行的動作。
+#        - `state`: 賦予角色一個特殊**狀態** (如生病、醉酒)。
+#        - `timer`: 啟動一個**計時器**。
+#        - `syscall`: 呼叫一個**系統底層功能** (如關係判定)。
+#
+# ======================================================================
 
-// --- [階段一：初識與破冰 (陌生人 -> 室友)] ---
-
-// 核心事件01: 第一次見面 (必然發生)
-EVT_CORE_01_FIRST_MEETING :: (地點 == CD-LIVING-ROOM) AND (同居天數 == 1) AND (FLAG_NOT_SET(首次見面)) :: TRIGGER_SCENE(初次見面劇情); ADD_FLAG(首次見面)
-// 效果：兩人進行自我介紹，根據玩家選擇的態度，微調初始[熱情]值。
-
-// 核心事件02: 浴室的意外
-EVT_CORE_02_BATHROOM_PEEK :: (好感度 > 50) AND (好感度 < 500) AND (FLAG_NOT_SET(浴室意外)) :: TRIGGER_CHANCE(15%, [當玩家前往浴室時]); TRIGGER_SCENE(浴室意外撞見裸體); ADD_FLAG(浴室意外)
-// 效果：[情慾]少量永久提升(+5)，[好感度]根據玩家的應對方式(道歉/調侃/害羞)有小幅增減。
-
-// 日常事件: 一起整理房間 (合作與和解的契機)
-EVT_DAILY_01_CLEANING_DAY :: (關係狀態 != [敵對者]) AND (玩家房間整潔度 == [雜亂] OR 室友房間整潔度 == [雜亂]) :: UNLOCK_ACTION([提議一起打掃房間])
-// 效果：若對方同意，觸發合作打掃的溫馨劇情。結束後房間恢復[乾淨]，[好感度]與[生活同步率]提升。
-
-// --- [階段二：友誼與曖昧 (室友 -> 曖昧對象)] ---
-
-// 核心事件03: 醉後的真心話／失控
-EVT_CORE_03_DRUNK_NIGHT :: (室友壓力 > 60 OR 特殊劇情觸發) AND (FLAG_NOT_SET(首次醉酒)) :: SET 室友特殊狀態 = [醉酒]; TRIGGER_SCENE(醉酒之夜); ADD_FLAG(首次醉酒)
-// 效果：解鎖特殊互動選項：A.溫柔照顧(好感度++)；B.傾聽心事(解鎖秘密)；C.趁機曖昧(情慾++)。
-
-// 核心事件04: 第一次曖昧的肢體接觸
-EVT_CORE_04_FIRST_TOUCH :: (關係狀態 == [朋友]) AND (好感度 > 1800) AND (FLAG_NOT_SET(首次曖昧接觸)) :: TRIGGER_CHANCE(25%, [在客廳看電影等場景]); TRIGGER_SCENE(無意的肢體接觸); ADD_FLAG(首次曖昧接觸)
-// 效果：時間變慢的心跳時刻。玩家的反應(移開/順其自然)將影響[熱情]與[情慾]的增長。
-
-// 核心事件05: 第一次約會
-EVT_CORE_05_FIRST_DATE :: (關係狀態 == [朋友]) AND (好感度 > 2000) AND (FLAG_NOT_SET(首次約會)) :: UNLOCK_ACTION([正式邀請室友約會]); ADD_FLAG(首次約會)
-// 效果：解鎖關鍵行動。成功約會將大幅提升[好感度](+150)和[熱情](+20)，是關係進階的強力催化劑。
-
-// --- [階段三：關係的質變 (曖昧對象 -> 戀人)] ---
-
-// 核心事件06: 告白事件
-EVT_CORE_06_CONFESSION :: (關係狀態 == [曖昧對象]) AND (好感度 > 4000) AND (FLAG_NOT_SET(告白成功)) :: UNLOCK_ACTION([準備告白])
-// 效果：解鎖關鍵行動。告白成功後，ADD_FLAG(告白成功)，並觸發[關係進階-戀人]的系統事件。
-
-// 核心事件07: 第一次發生關係
-EVT_CORE_07_FIRST_INTIMACY :: (情慾 > 80 OR (好感度 > 3500 AND 熱情 > 70)) AND (FLAG_NOT_SET(首次親密)) :: TRIGGER_SCENE(第一次發生關係); ADD_FLAG(首次親密); TRIGGER_SYSTEM(關係基礎判定)
-// 效果：觸發H事件，並根據當下數值永久設定[關係基礎]，決定後續劇情走向。
-
-// --- [階段四：戀人後的考驗與承諾] ---
-
-// 核心事件08: 第一次吵架
-EVT_CORE_08_FIRST_ARGUMENT :: (壓力 > 70 OR 生活習慣衝突) AND (FLAG_NOT_SET(首次吵架)) :: TRIGGER_SCENE(首次爭吵); ADD_FLAG(首次吵架)
-// 效果：[好感度]大幅下降(-150)，雙方進入[冷戰]特殊狀態，解鎖後續的和解任務。
-
-// 核心事件09: 舊愛出現
-EVT_DRAMA_01_EX_APPEARS :: (關係狀態 IN [[曖昧對象], [戀人]]) AND (好感度 > 3500) AND (FLAG_NOT_SET(舊愛事件)) :: TRIGGER_CHANCE(20%, [在公共場所]); TRIGGER_SCENE(舊愛登場); ADD_FLAG(舊愛事件)
-// 效果：考驗彼此的信任，是深入了解對方過去的關鍵劇情。
-
-// 核心事件10: 人生抉擇的衝突
-EVT_DRAMA_02_LIFE_CHOICE :: (關係狀態 == [戀人]) AND (好感度 > 4800) AND (FLAG_NOT_SET(人生抉擇)) :: TRIGGER_SCENE(重大機會出現); ADD_FLAG(人生抉擇)
-// 效果：觸發遠距離或共同未來的重大抉擇，可能導向分手或求婚。
-
-// 核心事件11: 秘密被揭開
-EVT_DRAMA_03_SECRET_REVEAL :: (好感度 > 3000) AND (秘密了解度 < 30) AND (FLAG_NOT_SET(秘密揭曉)) :: TRIGGER_SCENE(發現秘密); ADD_FLAG(秘密揭曉)
-// 效果：考驗玩家的包容心與理解，處理得當將使關係極度深化。
-
-// --- [階段五：人生里程碑與結局] ---
-
-// 核心事件12: 發現懷孕
-EVT_MILESTONE_01_PREGNANCY :: (生理 == 異性) AND (FLAG_CONTAINS(首次親密)) AND (最近一次親密行為 == 無保護) AND (FLAG_NOT_SET(懷孕)) :: START_TIMER(懷孕判定, 14天)
-// 效果：判定成功後觸發[疑似懷孕]狀態，最終導向在醫院確認的重大劇情，開啟家庭線。
-
-// 結局分歧事件: 分道揚鑣 (壞結局)
-EVT_ENDING_01_MOVE_OUT_NEGATIVE :: (好感度 < -500) OR (FLAG_CONTAINS(首次吵架_處理失敗)) :: TRIGGER_SCENE(決定搬離)
-// 效果：啟動「最後機會」計時器，失敗則觸發[壞結局]。
-
-// 結局分歧事件: 共築新家 (好結局)
-EVT_ENDING_02_MOVE_OUT_POSITIVE :: (關係狀態 IN [[未婚夫妻], [配偶]]) :: UNLOCK_ACTION([一起尋找新家])
-// 效果：解鎖新地點與相關甜蜜劇情，導向[真結局]。
-
-// --- [系統性與關係進階觸發器] ---
-
-// (此處羅列所有 `EVT_REL_PROG_` 開頭的關係自動進階事件，例如：)
-EVT_REL_PROG_ROOMMATE :: (好感度 >= 500) AND (關係狀態 == [陌生人]) :: SET 關係狀態 = [室友]; TRIGGER_SCENE(關係破冰)
-EVT_REL_PROG_FRIEND :: (好感度 >= 1500) AND (關係狀態 == [室友]) :: SET 關係狀態 = [朋友]; TRIGGER_SCENE(成為朋友的契機)
-// ... 其他關係進階 ...
-EVT_REL_PROG_LOVER :: (關係狀態 == [曖昧對象]) AND (FLAG_IS_SET(告白成功)) :: SET 關係狀態 = [戀人]; TRIGGER_SCENE(正式交往的甜蜜日常)
+# EventDatabase v4.0 | Format: YAML-like for LLM
+---
+# ======================================================================
+# 階段一：初識與破冰 (Phase: Early)
+# ======================================================================
+event:
+  id: EVT_CORE_01_FIRST_MEETING
+  phase: early
+  rpt: false
+  desc: 第一次見面 (必然發生)
+  trigger:
+    - cond: loc
+      id: CD-LIVING-ROOM
+    - cond: days
+      op: eq
+      val: 1
+  effects:
+    - eff: scene
+      id: SCN_FIRST_MEETING
+---
+event:
+  id: EVT_CORE_02_BATHROOM_PEEK
+  phase: early
+  rpt: false
+  desc: 浴室的意外
+  trigger:
+    - cond: stat
+      name: 好感度
+      op: ">"
+      val: 50
+    - cond: action
+      id: ACT_GOTO_BATHROOM
+    - cond: flag
+      name: 浴室意外
+      is: not_set
+    - cond: chance
+      val: 15%
+  effects:
+    - eff: scene
+      id: SCN_BATHROOM_PEEK
+    - eff: stat
+      name: 情慾
+      op: +
+      val: 5
+      perm: true
+---
+event:
+  id: EVT_DAILY_01_CLEANING_DAY
+  phase: early-mid
+  rpt: true
+  desc: 提議一起整理房間
+  trigger:
+    - cond: rel
+      not_in: [死敵, 商業競爭對手]
+    - cond: or
+      clauses:
+        - cond: world
+          name: 玩家房間整潔度
+          is: 雜亂
+        - cond: world
+          name: 室友房間整潔度
+          is: 雜亂
+  effects:
+    - eff: unlock_act
+      id: ACT_PROPOSE_CLEANING
+---
+# ======================================================================
+# 階段二：友誼與曖昧 (Phase: Mid)
+# ======================================================================
+event:
+  id: EVT_CORE_03_DRUNK_NIGHT
+  phase: mid
+  rpt: false
+  desc: 醉後的真心話／失控
+  trigger:
+    - cond: flag
+      name: 首次醉酒
+      is: not_set
+    - cond: or
+      clauses:
+        - cond: stat
+          name: 室友壓力
+          op: ">"
+          val: 60
+        - cond: trait
+          type: 職業
+          in: [W12, W07] # 業務, 醫生
+          mod: 1.5
+  effects:
+    - eff: state
+      name: 醉酒
+      dur: 12h
+    - eff: scene
+      id: SCN_DRUNK_NIGHT
+---
+event:
+  id: EVT_AMBIGUOUS_01_KITCHEN_TOUCH
+  phase: mid
+  rpt: true
+  desc: (新)廚房的無意觸碰
+  trigger:
+    - cond: rel
+      in: [朋友, 曖昧對象]
+    - cond: stat
+      name: 好感度
+      op: ">"
+      val: 1000
+    - cond: loc
+      id: CD-KITCHEN
+    - cond: world
+      name: 雙方距離
+      is: 相近
+    - cond: chance
+      val: 20%
+  effects:
+    - eff: scene
+      id: SCN_KITCHEN_TOUCH
+      note: 根據玩家選擇(縮手/停留/開玩笑)影響熱情與情慾
+---
+event:
+  id: EVT_AMBIGUOUS_02_SICK_DAY
+  phase: mid
+  rpt: true
+  desc: (新)生病時的照顧
+  trigger:
+    - cond: or
+      clauses:
+        - cond: player_state
+          is: 生病
+        - cond: npc_state
+          is: 生病
+    - cond: flag
+      name: 已發生過照顧事件
+      is: not_set
+  effects:
+    - eff: scene
+      id: SCN_SICK_DAY_CARE
+    - eff: unlock_act
+      id: [ACT_COOK_SOUP, ACT_BUY_MEDICINE, ACT_TELL_JOKES]
+    - eff: stat
+      name: 好感度
+      op: +
+      val: 50
+    - eff: flag
+      name: 已發生過照顧事件
+      is: set
+---
+event:
+  id: EVT_CORE_04_FIRST_TOUCH
+  phase: mid
+  rpt: false
+  desc: 第一次曖昧的肢體接觸
+  trigger:
+    - cond: rel
+      is: 朋友
+    - cond: stat
+      name: 好感度
+      op: ">"
+      val: 1800
+    - cond: flag
+      name: 首次曖昧接觸
+      is: not_set
+    - cond: loc
+      id: CD-LIVING-ROOM
+    - cond: world
+      name: 活動
+      is: 看電影
+    - cond: chance
+      val: 25%
+  effects:
+    - eff: scene
+      id: SCN_FIRST_TOUCH
+---
+event:
+  id: EVT_CORE_05_FIRST_DATE
+  phase: mid
+  rpt: true
+  desc: 第一次約會
+  trigger:
+    - cond: rel
+      is: 朋友
+    - cond: stat
+      name: 好感度
+      op: ">"
+      val: 2000
+  effects:
+    - eff: unlock_act
+      id: ACT_ASK_FOR_DATE
+---
+# ======================================================================
+# 階段三：關係的質變 (Phase: Mid-Late)
+# ======================================================================
+event:
+  id: EVT_AMBIGUOUS_03_JEALOUSY
+  phase: mid-late
+  rpt: true
+  desc: (新)深夜的訊息與猜疑
+  trigger:
+    - cond: rel
+      is: 曖昧對象
+    - cond: stat
+      name: 好感度
+      op: ">"
+      val: 3000
+    - cond: world
+      name: 時間
+      is: 深夜
+    - cond: trait
+      type: 星座
+      in: [Z02, Z04, Z08] # 金牛, 巨蟹, 天蠍
+      mod: 1.5
+    - cond: chance
+      val: 30%
+  effects:
+    - eff: scene
+      id: SCN_LATE_NIGHT_MESSAGE
+      note: 玩家的回答(坦誠/迴避/反問)將影響好感度與信任度
+---
+event:
+  id: EVT_CORE_06_CONFESSION
+  phase: mid-late
+  rpt: true
+  desc: 告白事件
+  trigger:
+    - cond: rel
+      is: 曖昧對象
+    - cond: stat
+      name: 好感度
+      op: ">"
+      val: 4000
+    - cond: flag
+      name: 告白成功
+      is: not_set
+  effects:
+    - eff: unlock_act
+      id: ACT_CONFESS
+---
+event:
+  id: EVT_CORE_07_FIRST_INTIMACY
+  phase: mid-late
+  rpt: false
+  desc: 第一次發生關係
+  trigger:
+    - cond: flag
+      name: 首次親密
+      is: not_set
+    - cond: or
+      clauses:
+        - cond: stat
+          name: 情慾
+          op: ">"
+          val: 80
+        - cond: and
+          clauses:
+            - cond: stat
+              name: 好感度
+              op: ">"
+              val: 3500
+            - cond: stat
+              name: 熱情
+              op: ">"
+              val: 70
+        - cond: trait
+          type: 親密行為
+          in: [P03, P10]
+          mod: -10 # 需求降低
+  effects:
+    - eff: scene
+      id: SCN_FIRST_INTIMACY
+    - eff: syscall
+      func: CalculateRelationshipFoundation
+      note: 此系統功能會判定好感度與情慾的比例，可能設定[肉體先行]的隱藏狀態
+---
+# ======================================================================
+# 階段四：戀人後的考驗與承諾 (Phase: Late)
+# ======================================================================
+event:
+  id: EVT_CORE_08_FIRST_ARGUMENT
+  phase: late
+  rpt: false
+  desc: 第一次吵架
+  trigger:
+    - cond: rel
+      is: 戀人
+    - cond: flag
+      name: 首次吵架
+      is: not_set
+    - cond: or
+      clauses:
+        - cond: stat
+          name: 雙方總壓力
+          op: ">"
+          val: 150
+        - cond: world
+          name: 生活習慣衝突
+          op: ">"
+          val: 3
+  effects:
+    - eff: scene
+      id: SCN_FIRST_ARGUMENT
+    - eff: stat
+      name: 好感度
+      op: -
+      val: 150
+    - eff: state
+      name: 冷戰
+      dur: 72h
+---
+event:
+  id: EVT_DRAMA_01_EX_APPEARS
+  phase: mid-late
+  rpt: false
+  desc: 舊愛出現
+  trigger:
+    - cond: rel
+      in: [曖昧對象, 戀人]
+    - cond: stat
+      name: 好感度
+      op: ">"
+      val: 3500
+    - cond: loc_type
+      is: 公共場所
+      note: 例如晴川購物中心(LC-SHOPPING-MALL)
+    - cond: chance
+      val: 20%
+  effects:
+    - eff: scene
+      id: SCN_EX_APPEARS
+---
+# ======================================================================
+# 特殊後果事件 (Special Consequence Events)
+# ======================================================================
+event:
+  id: EVT_CONSEQUENCE_01_AWKWARD_MORNING
+  phase: mid-late
+  rpt: false
+  desc: (新)尷尬的清晨
+  trigger:
+    - cond: flag
+      name: 首次親密
+      is: set
+    - cond: flag
+      name: 尷尬的清晨
+      is: not_set
+    - cond: world
+      name: 關係基礎
+      is: 肉體先行
+  effects:
+    - eff: scene
+      id: SCN_AWKWARD_MORNING
+      note: "氣氛微妙，對話選項將影響熱情值的增減"
+    - eff: flag
+      name: 尷尬的清晨
+      is: set
+---
+event:
+  id: EVT_CONSEQUENCE_02_WHAT_ARE_WE
+  phase: mid-late
+  rpt: false
+  desc: (新)我們現在算什麼？
+  trigger:
+    - cond: flag
+      name: 尷尬的清晨
+      is: set
+    - cond: days_since_flag
+      name: 尷尬的清晨
+      op: ">"
+      val: 3
+    - cond: trait
+      type: 星座
+      in: [Z02, Z04, Z08] # 金牛, 巨蟹, 天蠍 (需要安全感的星座)
+      mod: 1.5 # 觸發機率提升
+  effects:
+    - eff: scene
+      id: SCN_WHAT_ARE_WE
+      note: "關鍵對話，導向關係分歧：純肉體關係、嘗試發展感情、或關係破裂"
+---
+# ======================================================================
+# 階段五：人生里程碑與結局 (Phase: Endgame)
+# ======================================================================
+event:
+  id: EVT_MILESTONE_01_PREGNANCY
+  phase: endgame
+  rpt: false
+  desc: 發現懷孕
+  trigger:
+    - cond: rel
+      is: 戀人
+    - cond: player_trait
+      type: 性別
+      is_not: G01
+    - cond: npc_trait
+      type: 性別
+      is: G01
+    - cond: flag
+      name: 首次親密
+      is: set
+    - cond: world
+      name: 最近一次親密行為
+      is: 無保護
+  effects:
+    - eff: timer
+      name: 懷孕判定
+      dur: 14d
+---
+event:
+  id: EVT_ENDING_01_MOVE_OUT_NEGATIVE
+  phase: any
+  rpt: false
+  desc: 結局分歧事件: 分道揚鑣
+  trigger:
+    - cond: or
+      clauses:
+        - cond: stat
+          name: 好感度
+          op: "<"
+          val: -500
+        - cond: flag
+          name: 首次吵架_處理失敗
+          is: set
+  effects:
+    - eff: scene
+      id: SCN_MOVE_OUT
+    - eff: timer
+      name: 最後機會
+      dur: 7d
+---
+event:
+  id: EVT_ENDING_02_MOVE_OUT_POSITIVE
+  phase: endgame
+  rpt: true
+  desc: 結局分歧事件: 共築新家
+  trigger:
+    - cond: rel
+      in: [未婚夫妻, 配偶]
+  effects:
+    - eff: unlock_act
+      id: ACT_FIND_NEW_HOME
+---
+# ======================================================================
+# 系統性與關係進階觸發器 (System & Relationship Progression)
+# ======================================================================
+event:
+  id: EVT_REL_PROG_FRIEND
+  phase: mid
+  rpt: false
+  type: system
+  desc: 關係進階 -> 朋友
+  trigger:
+    - cond: stat
+      name: 好感度
+      op: ">="
+      val: 1500
+    - cond: rel
+      is: 室友
+  effects:
+    - eff: set_rel
+      status: 朋友
+    - eff: scene
+      id: SCN_REL_BECOME_FRIEND
+---
+event:
+  id: EVT_REL_PROG_LOVER
+  phase: late
+  rpt: false
+  type: system
+  desc: 關係進階 -> 戀人
+  trigger:
+    - cond: rel
+      is: 曖昧對象
+    - cond: flag
+      name: 告白成功
+      is: set
+  effects:
+    - eff: set_rel
+      status: 戀人
+    - eff: scene
+      id: SCN_REL_BECOME_LOVER
