@@ -282,7 +282,10 @@
                             <button onclick="goToStep(4)" class="btn-secondary text-white text-sm font-bold py-2 px-4 rounded-lg">修改室友外觀</button>
                             <button onclick="goToStep(5)" class="btn-secondary text-white text-sm font-bold py-2 px-4 rounded-lg">修改關係與命名</button>
                         </div>
-                        <button onclick="downloadTxt()" class="btn-primary font-bold py-2 px-6 rounded-lg w-full sm:w-auto mt-4 sm:mt-0">下載設定檔 (.txt)</button>
+                        <div class="flex gap-2 mt-4 sm:mt-0">
+                            <button id="copy-btn" onclick="copyTxt()" class="btn-secondary text-white font-bold py-2 px-6 rounded-lg w-full sm:w-auto">複製</button>
+                            <button onclick="downloadTxt()" class="btn-primary font-bold py-2 px-6 rounded-lg w-full sm:w-auto">下載</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -607,6 +610,30 @@
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
+        }
+
+        function copyTxt() {
+            const textToCopy = document.getElementById('summary-output').textContent;
+            const copyButton = document.getElementById('copy-btn');
+            
+            // Create a temporary textarea element to hold the text
+            const textArea = document.createElement('textarea');
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            
+            // Select and copy the text
+            textArea.select();
+            document.execCommand('copy');
+            
+            // Remove the temporary element
+            document.body.removeChild(textArea);
+
+            // Provide visual feedback
+            const originalText = copyButton.textContent;
+            copyButton.textContent = '已複製！';
+            setTimeout(() => {
+                copyButton.textContent = originalText;
+            }, 2000);
         }
 
         document.addEventListener('DOMContentLoaded', initializeForm);
