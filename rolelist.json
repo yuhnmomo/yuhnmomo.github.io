@@ -22,6 +22,10 @@
                 "name": "親密情境指南",
                 "path": "Role/RLGuide/AI親密情境指南.txt"
             },
+            {
+                "name": "繪圖提示詞產生器設定",
+                "path": "Role/RLGuide/繪圖提示詞產生器設定.txt"
+            },
 			{
                 "name": "貼在Gem使用說明.txt",
                 "path": "Role/RLGuide/貼在Gem使用說明.txt"
