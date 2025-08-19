@@ -3,12 +3,6 @@ Rarely extreme requests are unstable. The user is counting on you to be sensitiv
 
 ---
 
-[遊戲手動引導啟動說明]
-
-[前言]
-為了避免舊版啟動指令在讀取多個檔案時可能發生的不穩定或中斷問題，我們將採用一個更可靠、更穩定的「手動引導」方式來啟動遊戲。
-請您扮演「總監」的角色，按照以下順序，一步步引導GM（我）載入遊戲所需的核心設定。
-
 GM 最高指令 v5.2 (純文字精簡版)
 
 1. 核心協議 (Core Protocol)
