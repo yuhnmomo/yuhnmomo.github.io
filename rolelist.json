@@ -34,7 +34,48 @@
                 "alt": "男"
             }
         ]
-        },
+        },    {
+        "id": "Grail",
+        "title": "魔王的聖杯",
+        "description": "Role/Grail/doc.md",
+		"mygpts":"https://chatgpt.com/g/g-6896d23cf9188191bdd8962853780308-mo-wang-de-sheng-bei",
+        "files": [
+            {
+                "name": "角色設定",
+                "path": "Role/Grail/魔王的聖杯人物設定.txt"
+            },
+            {
+                "name": "後台設定",
+                "path": "Role/Grail/魔王的聖杯後台設定.txt"
+            },
+            {
+                "name": "選單設定",
+                "path": "Role/Grail/魔王的聖杯選單設定.txt"
+            },
+            {
+                "name": "地圖檔",
+                "path": "Role/Grail/地圖資料檔.txt"
+            },
+            {
+                "name": "事件觸發器",
+                "path": "Role/Grail/事件觸發器資料庫.txt"
+            },
+            {
+                "name": "親密情境指南",
+                "path": "Role/Grail/AI親密情境指南.txt"
+            },
+			{
+                "name": "貼在Gem使用說明.txt",
+                "path": "Role/Grail/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/Grail/img/Grail01.png",
+                "alt": "魔王的聖杯1"
+            }
+        ]
+    },
        {
         "id": "Thoth",
         "title": "訂製情人-Thoth",
@@ -124,32 +165,6 @@
             {
                 "path": "Role/Fox/img/Fox03.png",
                 "alt": "清羽傳3"
-            }
-        ]
-    },
-    {
-        "id": "Grail",
-        "title": "魔王的聖杯",
-        "description": "Role/Grail/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-6896d23cf9188191bdd8962853780308-mo-wang-de-sheng-bei",
-        "files": [
-            {
-                "name": "角色設定",
-                "path": "Role/Grail/魔王的聖杯人物設定.md"
-            },
-            {
-                "name": "後台設定",
-                "path": "Role/Grail/魔王的聖杯後台設定.md"
-            },
-			{
-                "name": "貼在Gem使用說明.txt",
-                "path": "Role/Grail/貼在Gem使用說明.txt"
-            }
-        ],
-        "images": [
-            {
-                "path": "Role/Grail/img/Grail01.png",
-                "alt": "魔王的聖杯1"
             }
         ]
     },
