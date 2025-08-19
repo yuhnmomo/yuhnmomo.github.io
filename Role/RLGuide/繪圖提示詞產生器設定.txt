@@ -1,0 +1,70 @@
+[VISUAL_PROMPT_GENERATOR]:
+  enabled: true
+  description: |
+    在特定劇情節點或由玩家手動觸發時，系統會分析當前劇情，生成一段可用於AI繪圖的提示詞。
+    提示詞將以英文為主，以獲得最佳的AI繪圖效果。
+
+  output_format:
+    prefix: "📸 場景快照："
+    structure: "[風格], [主體描述], [情緒與氛圍], [場景細節], [構圖與光線], [畫質], [負面提示]"
+    
+  follow_up_prompt:
+    enabled: true
+    text: "需要我現在為您產生這張圖片嗎？ (此為開發中功能，未來將串接AI繪圖服務)"
+
+  # --- Prompt Building Blocks ---
+  style:
+    default: "High-detail semi-realistic Japanese anime style, digital painting, sharp focus"
+  
+  quality:
+    default: "photographic-level resolution, clean details, exquisite fabric textures, no softening effect, ultra-detailed, high-resolution"
+
+  lighting:
+    default: "soft cinematic lighting, Rembrandt lighting"
+    natural: "natural lighting"
+
+  technical:
+    default: "aspect ratio 4:3"
+
+  negative_prompts:
+    default: "no text, no watermark, no slogans, no signature, noise-free, dialogue box"
+
+  # --- Trigger-based Templates ---
+  triggers:
+    # --- 新增的動態觸發機制 ---
+    - event: "on_demand_generation"
+      command: "//生成劇情圖"
+      process:
+        - step: 1
+          action: "暫停劇情，跳脫角色扮演。"
+        - step: 2
+          action: "分析[目前當下劇情摘要]，提煉出最核心、最富畫面感的「核心瞬間」。"
+        - step: 3
+          action: "根據「核心瞬間」，構思一個能代表當前情境的「代表性畫面」（包含人物姿態、互動、情緒）。"
+        - step: 4
+          action: "從角色設定中，提取主角當前的「代表性外觀特徵」（如服裝、髮型、配飾）。"
+        - step: 5
+          action: "結合[風格]、[畫質]、[光線]、[技術]等模組，並融入前述分析，撰寫最終的英文生圖指令。"
+      example_prompt_generation:
+        scene: "玩家在雨天把自己的傘遞給了被淋濕的室友。"
+        core_moment: "遞傘的動作，以及兩人之間的氛圍。"
+        representative_image: "一人將傘傾向另一人，傘外是雨，傘下是關心。"
+        character_features: "玩家穿著休閒外套，室友穿著濕透的襯衫，頭髮貼在臉上。"
+        final_prompt: "High-detail semi-realistic Japanese anime style, a person holding an umbrella over another person who is wet from the rain, a gentle and caring expression, city street scene with rain blurring the background, natural lighting filtering through the rain, exquisite fabric textures on wet clothes, aspect ratio 4:3, clean details, no text, no watermark."
+
+    # --- 系統自動觸發 ---
+    - event: "relationship_status_change"
+      condition: "new_status == '朋友' or new_status == '戀人'"
+      prompt_template: "Two people, a man and a woman, smiling at each other, feeling of warmth and budding romance, in a cozy living room, sunlight streaming through the window, soft focus, portrait format."
+
+    - event: "shared_activity"
+      activity: "cooking_together"
+      prompt_template: "A man and a woman cooking together in a modern kitchen, laughing, flour on their faces, warm and happy atmosphere, afternoon light, dynamic angle."
+
+    - event: "emotional_moment"
+      emotion: "comforting_sad_roommate"
+      prompt_template: "A person gently placing a hand on the shoulder of a sad friend, offering comfort, melancholic but hopeful mood, sitting on a couch in a dimly lit room at night, soft ambient light from a lamp."
+      
+    - event: "quiet_moment"
+      activity: "watching_rain"
+      prompt_template: "slice of life anime, two people looking out a window at the rain, holding warm mugs, calm and comfortable feeling, reflections on the window pane, soft indoor lighting."
