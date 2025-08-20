@@ -73,13 +73,24 @@
   # --- Command Set (指令集) ---
   # 語法：//指令名稱 [風格] [目標模型] | [主要描述] | [次要描述...]
   commands:
-    - name: "角色半身照" # <-- 已修正名稱
-      syntax: "//角色半身照 [風格] [目標模型] | [角色描述]"
-      desc: "生成 1:1 胸上近照（半身照），專注臉部與上半身細節。"
+ # --- Command Set (指令集) ---
+  # 語法：//指令名稱 [風格] [目標模型] | [主要描述] | [次要描述...]
+  commands:
+    - name: "角色特寫" # 
+      syntax: "//角色特寫 [風格] [目標模型] | [角色描述]"
+      desc: "生成 1:1 胸上近照（頭像），專注臉部與情緒細節。"
       defaults:
         composition: "medium close-up portrait, expressive"
         background: "simple neutral studio background or atmospheric blur"
         technical: "aspect ratio 1:1"
+
+    - name: "角色半身照" # 
+      syntax: "//角色半身照 [風格] [目標模型] | [角色描述]"
+      desc: "生成 3:4 從腰部以上的半身照，能展現更多上半身服裝與姿態。"
+      defaults:
+        composition: "medium shot, waist-up portrait"
+        background: "simple neutral studio background or atmospheric blur"
+        technical: "aspect ratio 3:4"
 
     - name: "角色全身"
       syntax: "//角色全身 [風格] [目標模型] | [角色描述] | [姿態與場景描述]"
@@ -96,14 +107,6 @@
         composition: "dynamic action pose, cinematic framing, motion blur"
         background: "interactive background based on [場景]"
         technical: "aspect ratio 16:9"
-
-    - name: "角色情緒"
-      syntax: "//角色情緒 [風格] [目標模型] | [角色描述] | [表情/氛圍]"
-      desc: "專注於角色情緒，臉部特寫，強調情感。"
-      defaults:
-        composition: "expressive close-up portrait, focus on emotion"
-        background: "atmospheric and moody background"
-        technical: "aspect ratio 1:1"
 
     - name: "雙人場景"
       syntax: "//雙人場景 [風格] [目標模型] | [角色A描述] & [角色B描述] | [互動與場景]"
