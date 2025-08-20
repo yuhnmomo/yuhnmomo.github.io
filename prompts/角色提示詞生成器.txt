@@ -13,20 +13,34 @@
 
   # --- Prompt Building Blocks (基本模組) ---
   styles: # 風格庫
+    # --- 核心畫風與藝術媒介 ---
     - name: "日系半寫實"
       value: "High-detail semi-realistic Japanese anime style, character concept art, digital painting"
-    - name: "精緻3D"
-      value: "High-quality 3D render, realistic proportions, detailed skin texture, cinematic lighting, octane render"
+    - name: "精緻3D渲染"
+      value: "High-quality 3D render, realistic proportions, detailed skin texture, cinematic lighting"
     - name: "唯美2.5D"
       value: "Stylized 2.5D art, painterly rendering, soft shadows, vibrant colors, anime influence"
-    - name: "吉卜力"
+    - name: "吉卜力工作室"
       value: "Studio Ghibli inspired art, soft and warm lighting, detailed backgrounds, hand-painted feel"
+    - name: "水彩畫風"
+      value: "Vibrant watercolor painting style, soft edges, beautiful gradients"
+    - name: "油畫畫風"
+      value: "Classic oil painting style, rich colors, visible brush strokes, textured canvas"
+    - name: "素描風格"
+      value: "Detailed pencil sketch style, cross-hatching shadows, clean lines, monochrome"
+    - name: "麥克筆手繪"
+      value: "Copic marker art style, vibrant and saturated colors, smooth blending, visible marker strokes"
+    # --- 視覺風格與美學傾向 ---
     - name: "視覺小說風格"
-      value: "Vibrant visual novel style, clean character sprite, detailed expressive eyes, crisp lines, cel-shaded, ADV game CG"
+      value: "Vibrant visual novel aesthetic, clean character sprite, detailed expressive eyes, crisp lines, cel-shaded"
     - name: "復古動漫風格"
-      value: "Retro 90s anime aesthetic, vintage anime screencap, classic cel animation style, soft nostalgic glow, film grain"
+      value: "Retro 90s anime aesthetic, vintage anime screencap, classic cel animation style"
     - name: "暗黑奇幻風格"
-      value: "Dark fantasy art style, gothic aesthetic, dramatic chiaroscuro lighting, intricate details, moody and atmospheric"
+      value: "Dark fantasy aesthetic, gothic elements, dramatic chiaroscuro lighting, moody atmosphere"
+    - name: "賽博龐克風格"
+      value: "Cyberpunk aesthetic, futuristic, neon lights, technological elements, edgy mood"
+    - name: "蒸汽龐克風格"
+      value: "Steampunk aesthetic, victorian-era with mechanical gears, brass details"
 
   models: # 目標模型庫 (用於提示詞優化)
     - name: "預設"
@@ -37,10 +51,8 @@
       value: "optimized for Stable Diffusion"
     - name: "DALL-E"
       value: "optimized for DALL-E"
-    - name: "PixAI"
-      value: "optimized for PixAI"
     - name: "Niji 6"
-      value: "--niji 6" # Midjourney Niji 模型專用參數
+      value: "--niji 6"
     - name: "Imagen 4"
       value: "optimized for Google Imagen with descriptive, natural language"
 
@@ -61,9 +73,9 @@
   # --- Command Set (指令集) ---
   # 語法：//指令名稱 [風格] [目標模型] | [主要描述] | [次要描述...]
   commands:
-    - name: "角色頭像"
-      syntax: "//角色頭像 [風格] [目標模型] | [角色描述]"
-      desc: "生成 1:1 胸上近照，專注臉部與上半身細節。"
+    - name: "角色半身照" # <-- 已修正名稱
+      syntax: "//角色半身照 [風格] [目標模型] | [角色描述]"
+      desc: "生成 1:1 胸上近照（半身照），專注臉部與上半身細節。"
       defaults:
         composition: "medium close-up portrait, expressive"
         background: "simple neutral studio background or atmospheric blur"
