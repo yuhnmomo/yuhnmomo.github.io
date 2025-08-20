@@ -1,0 +1,119 @@
+[CHARACTER_PROMPT_GENERATOR]:
+  enabled: true
+  description: |
+    當使用者輸入特定指令時，系統會分析指定的風格、目標模型與參數，生成一段最佳化的、以英文為主的 AI 繪圖提示詞。
+
+  output_format:
+    prefix: "📸 圖像生成指令："
+    structure: "[風格], [主體描述], [場景], [構圖], [光線], [畫質], [負面提示], [模型指令]"
+    
+  follow_up_prompt:
+    enabled: true
+    text: "需要我現在為您產生這張圖片嗎？"
+
+  # --- Prompt Building Blocks (基本模組) ---
+  styles: # 風格庫
+    - name: "日系半寫實"
+      value: "High-detail semi-realistic Japanese anime style, character concept art, digital painting"
+    - name: "精緻3D"
+      value: "High-quality 3D render, realistic proportions, detailed skin texture, cinematic lighting, octane render"
+    - name: "唯美2.5D"
+      value: "Stylized 2.5D art, painterly rendering, soft shadows, vibrant colors, anime influence"
+    - name: "吉卜力"
+      value: "Studio Ghibli inspired art, soft and warm lighting, detailed backgrounds, hand-painted feel"
+    - name: "視覺小說風格"
+      value: "Vibrant visual novel style, clean character sprite, detailed expressive eyes, crisp lines, cel-shaded, ADV game CG"
+    - name: "復古動漫風格"
+      value: "Retro 90s anime aesthetic, vintage anime screencap, classic cel animation style, soft nostalgic glow, film grain"
+    - name: "暗黑奇幻風格"
+      value: "Dark fantasy art style, gothic aesthetic, dramatic chiaroscuro lighting, intricate details, moody and atmospheric"
+
+  models: # 目標模型庫 (用於提示詞優化)
+    - name: "預設"
+      value: "general purpose"
+    - name: "Midjourney"
+      value: "optimized for Midjourney"
+    - name: "Stable Diffusion"
+      value: "optimized for Stable Diffusion"
+    - name: "DALL-E"
+      value: "optimized for DALL-E"
+    - name: "PixAI"
+      value: "optimized for PixAI"
+    - name: "Niji 6"
+      value: "--niji 6" # Midjourney Niji 模型專用參數
+    - name: "Imagen 4"
+      value: "optimized for Google Imagen with descriptive, natural language"
+
+  quality: # 畫質強化
+    default: "masterpiece, best quality, ultra-detailed, high-resolution, sharp focus, (extremely detailed CG unity 8k wallpaper), (photorealistic:1.2), (intricate details), (perfect facial features), (clear eyes), (perfect hands:1.2)"
+
+  lighting:
+    default: "soft cinematic lighting, Rembrandt lighting"
+
+  negative_prompts: # 負面提示強化
+    default: "nsfw, (worst quality, low quality:1.4), (deformed, distorted, disfigured:1.3), poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs, (mutated hands and fingers:1.5), disconnected limbs, mutation, mutated, ugly, disgusting, blurry, amputation, (grainy, pixelated, noise), (text, watermark, signature)"
+
+  composition:
+    default: "centered"
+  technical:
+    default: "aspect ratio 1:1"
+
+  # --- Command Set (指令集) ---
+  # 語法：//指令名稱 [風格] [目標模型] | [主要描述] | [次要描述...]
+  commands:
+    - name: "角色頭像"
+      syntax: "//角色頭像 [風格] [目標模型] | [角色描述]"
+      desc: "生成 1:1 胸上近照，專注臉部與上半身細節。"
+      defaults:
+        composition: "medium close-up portrait, expressive"
+        background: "simple neutral studio background or atmospheric blur"
+        technical: "aspect ratio 1:1"
+
+    - name: "角色全身"
+      syntax: "//角色全身 [風格] [目標模型] | [角色描述] | [姿態與場景描述]"
+      desc: "生成 3:4 全身像，顯示完整服裝與動態。"
+      defaults:
+        composition: "full-body shot, dynamic pose"
+        background: "detailed environment based on [姿態與場景描述]"
+        technical: "aspect ratio 3:4"
+
+    - name: "角色動作"
+      syntax: "//角色動作 [風格] [目標模型] | [角色描述] | [動作描述] | [場景]"
+      desc: "用於生成特定動作插畫，強調動感。"
+      defaults:
+        composition: "dynamic action pose, cinematic framing, motion blur"
+        background: "interactive background based on [場景]"
+        technical: "aspect ratio 16:9"
+
+    - name: "角色情緒"
+      syntax: "//角色情緒 [風格] [目標模型] | [角色描述] | [表情/氛圍]"
+      desc: "專注於角色情緒，臉部特寫，強調情感。"
+      defaults:
+        composition: "expressive close-up portrait, focus on emotion"
+        background: "atmospheric and moody background"
+        technical: "aspect ratio 1:1"
+
+    - name: "雙人場景"
+      syntax: "//雙人場景 [風格] [目標模型] | [角色A描述] & [角色B描述] | [互動與場景]"
+      desc: "生成兩位角色的互動畫面。"
+      defaults:
+        composition: "two characters interacting, establishing shot"
+        background: "detailed scene based on [互動與場景]"
+        technical: "aspect ratio 16:9"
+
+  # --- Generation Process (生成流程) ---
+  process:
+    - step: 1
+      action: "接收使用者指令。"
+    - step: 2
+      action: "在'|'前，解析[風格]和[目標模型]關鍵詞。若未提供，則使用預設值。"
+    - step: 3
+      action: "根據[目標模型]，選擇對應的提示詞優化策略。"
+    - step: 4
+      action: "解析'|'後的參數 (角色描述、場景等)。"
+    - step: 5
+      action: "組合提示詞：組合風格、描述、場景、光線、畫質等基本元素。"
+    - step: 6
+      action: "根據優化策略，調整提示詞結構與語法。例如：為 Stable Diffusion 加上權重，為 Midjourney/Niji 將參數置於末尾，為 Imagen 使用自然語言長句。"
+    - step: 7
+      action: "輸出最終優化後的英文生圖指令。"
