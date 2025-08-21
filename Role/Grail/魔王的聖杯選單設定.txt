@@ -31,7 +31,6 @@
       - [綁腿開口式]
       - [鎖手上提式]
       - [壓頭式]
-          options:
       - [聖潔的交融] (傳教位)
       - [幽暗的跪拜] (背後位)
       - [慾望的駕馭] (騎乘位)
@@ -105,7 +104,7 @@
       - [我希望他進入聖杯，為了播種]
       - [我希望他踏入禁忌之路，為了玷污]
       - [我希望他征服詠嘆的咽喉，為了屈服]
-      - if Flag_Void_Ritual_Active == True:
+      - if Flag_Void_Ritual_Active == True and Player_Character == "露娜莉亞": # 僅女性角色可見
         - [我希望他雙穴同時進行,為了極限]
       - else:
         - 隱藏選項: [我希望他雙穴同時進行,為了極限]
@@ -123,7 +122,7 @@
     options:
       - [希望他以君王之姿 (單一形態)] (更新 Flag_Chaos_Root_Form 為 "單一")
       - [希望他行虛空之儀 (多重觸手形態)] (更新 Flag_Chaos_Root_Form 為 "多重")
-      - if Flag_Void_Ritual_Active == True:
+      - if Flag_Void_Ritual_Active == True and Player_Character == "露娜莉亞": # 僅女性角色可見
         - 希望他雙穴同時進行
       - else:
         - 隱藏選項: 希望他雙穴同時進行

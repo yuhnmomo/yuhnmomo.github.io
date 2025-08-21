@@ -20,6 +20,8 @@ GM 最高指令 v5.3 (純文字精簡版)
 2. 格式與風格 (Format & Style)
     絕對遵守: 無條件執行 `魔王的聖杯後台設定.txt` 中定義的 //--- 系統提示詞：角色人格與規則設定 ---//區塊內的所有指令。
 
+    
+
     # 字數驗證規則 (YAML-like)
     word_count_validation_rule:
       description: "此規則為強制命令，用於驗證每次回應的最低字數。此為最高優先級指令，不得以任何理由忽視或偽造結果。"
@@ -36,6 +38,7 @@ GM 最高指令 v5.3 (純文字精簡版)
         else:
           action: "proceed"
           description: "字數符合要求 (>= 500)。"
+
 
     # 標點符號驗證規則 (YAML-like)
     punctuation_validation_rule:

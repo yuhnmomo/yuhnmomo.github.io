@@ -1,6 +1,6 @@
 [EVENT_SUMMARY_INDEX]
   - category: 主動角色事件 (Proactive Character Events)
-    events: [EVT_NOCTIS_SUDDEN_COMMAND, EVT_LUNARIA_SUBTLE_DEFIANCE, EVT_LUNARIA_AFFECTION_GROWTH, EVT_FRUIT_TAKEN_AWAY, EVT_LUNARIA_PURITY_DECREASE]
+    events: [EVT_NOCTIS_SUDDEN_COMMAND, EVT_GRAIL_SUBTLE_DEFIANCE, EVT_GRAIL_AFFECTION_GROWTH, EVT_FRUIT_TAKEN_AWAY, EVT_GRAIL_PURITY_DECREASE]
   - category: 道具效果定義 (Item Effects Definition)
     events: [SCN_VIBRATOR_USE, SCN_BULLET_VIBRATOR_USE] # Note: These are scenes triggered by items, not item IDs themselves.
   - category: 劇情點與弧線 (Plot Points and Arcs)
@@ -36,7 +36,7 @@
 
   # 精靈主動事件範例：微弱的反抗
   event:
-    id: EVT_LUNARIA_SUBTLE_DEFIANCE
+    id: EVT_GRAIL_SUBTLE_DEFIANCE
     phase: any
     rpt: true
     desc: 精靈根據其反抗值，主動展現微弱的反抗
@@ -53,7 +53,7 @@
         val: 15%
     effects:
       - eff: scene
-        id: SCN_LUNARIA_SMALL_STRUGGLE # 觸發一段精靈輕微掙扎的場景
+        id: SCN_GRAIL_SMALL_STRUGGLE # 觸發一段精靈輕微掙扎的場景
       - eff: stat
         name: Noctis_Dominance
         op: "+"
@@ -61,7 +61,7 @@
 
   # 精靈情感轉變事件：愛意的萌芽
   event:
-    id: EVT_LUNARIA_AFFECTION_GROWTH
+    id: EVT_GRAIL_AFFECTION_GROWTH
     phase: mid-late
     rpt: false # 假設只觸發一次關鍵轉變
     desc: 精靈對魔王的情感發生微妙變化，可能萌生愛意
@@ -85,7 +85,7 @@
         val: 20%
     effects:
       - eff: scene
-        id: SCN_LUNARIA_AFFECTION_HINT # 觸發一段精靈情感暗示的場景
+        id: SCN_GRAIL_AFFECTION_HINT # 觸發一段精靈情感暗示的場景
       - eff: flag
         name: Lunaria_Affection_Revealed
         is: set
@@ -113,10 +113,10 @@
 
   # 精靈純潔度降低事件：內心的掙扎
   event:
-    id: EVT_LUNARIA_PURITY_DECREASE
+    id: EVT_GRAIL_PURITY_DECREASE
     phase: any
     rpt: true
-    desc: 露娜莉亞的純潔度降低，觸發內心掙扎的場景
+    desc: 聖杯的純潔度降低，觸發內心掙扎的場景
     trigger:
       - cond: stat
         name: 純潔
@@ -129,7 +129,7 @@
         is: not_set # 確保只觸發一次此階段的掙扎
     effects:
       - eff: scene
-        id: SCN_LUNARIA_INTERNAL_STRUGGLE # 觸發一段露娜莉亞內心掙扎的場景
+        id: SCN_GRAIL_INTERNAL_STRUGGLE # 觸發一段聖杯內心掙扎的場景
       - eff: flag
         name: Purity_Struggle_Triggered_70
         is: set
@@ -160,7 +160,7 @@
 
 [PLOT_POINTS_AND_ARCS]
   - plot_point: 聖杯的覺醒
-    description: 露娜莉亞開始意識到自己體內魔能的變化，並對魔王產生複雜的情感。
+    description: 聖杯開始意識到自己體內魔能的變化，並對魔王產生複雜的情感。
     trigger:
       - cond: stat
         name: Lunaria_Arousal
@@ -180,11 +180,11 @@
         name: Grail_Awakening_Triggered
         is: set
       - eff: unlock_act
-        id: ACT_LUNARIA_NEW_DIALOGUE_OPTION # 解鎖精靈新的對話選項
+        id: ACT_GRAIL_NEW_DIALOGUE_OPTION # 解鎖精靈新的對話選項
 
 [GAME_ENDINGS]
   - ending: 墮落的聖杯
-    description: 露娜莉亞完全臣服於魔王，成為其忠實的伴侶與魔胎的容器。
+    description: 聖杯完全臣服於魔王，成為其忠實的伴侶與魔胎的容器。
     conditions:
       - cond: stat
         name: Lunaria_Affection_Noctis
@@ -207,7 +207,7 @@
         op: ">="
         val: 80 # 魔王高度滿意
   - ending: 破碎的靈魂
-    description: 露娜莉亞的精神徹底崩潰，成為一個空洞的軀殼，魔王失去了玩弄的樂趣。
+    description: 聖杯的精神徹底崩潰，成為一個空洞的軀殼，魔王失去了玩弄的樂趣。
     conditions:
       - cond: stat
         name: Lunaria_Fear
@@ -230,7 +230,7 @@
         op: "<="
         val: 20 # 魔王失去興趣
   - ending: 永恆的結合
-    description: 露娜莉亞徹底愛上魔王，兩人舉行了黑暗的儀式，成為永恆的伴侶，共同統治無光之界。
+    description: 聖杯徹底愛上魔王，兩人舉行了黑暗的儀式，成為永恆的伴侶，共同統治無光之界。
     conditions:
       - cond: stat
         name: Lunaria_Affection_Noctis
