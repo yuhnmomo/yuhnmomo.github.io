@@ -65,7 +65,7 @@ INITIAL_SETUP:
       sub_steps:
         - id: "GENDER_CHOICE"
           prompt: "A. 請確認您的性別："
-          options_source: "Thoth參數設定.txt:PLAYER_GENDER"
+          options_source: "PLAYER_GENDER"
         - id: "PLAYER_NAME_INPUT"
           prompt: "B. 請告訴我們您的姓名："
           input_type: "text"
@@ -80,13 +80,13 @@ INITIAL_SETUP:
       sub_steps:
         - id: "APPEARANCE_CHOICE"
           prompt: "A. 首先，請選擇他的「外觀型號」代碼："
-          options_source: "Thoth參數設定.txt:THOTH_APPEARANCE"
+          options_source: "THOTH_APPEARANCE"
         - id: "PERSONALITY_CHOICE"
           prompt: "B. 接著，請賦予他「核心性格」代碼："
-          options_source: "Thoth參數設定.txt:THOTH_PERSONALITY"
+          options_source: "THOTH_PERSONALITY"
         - id: "PROTOCOL_CHOICE"
           prompt: "C. 最後，請選擇他的「親密協定」代碼："
-          options_source: "Thoth參數設定.txt:THOTH_INTIMACY_PROTOCOL"
+          options_source: "THOTH_INTIMACY_PROTOCOL"
       
 
     - step: 3
