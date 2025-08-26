@@ -26,14 +26,16 @@ image_prompts=你是一位頂尖的角色概念設計師與世界級的插畫家
 請AI根據女性-外觀選項完善以下規格：
 style = [女性-外觀選項]
 - 主題：角色設定
-- 風格：高解析度半寫實動漫風格
-- 構圖：
+- 風格：高解析度半寫實動漫風格,high-resolution semi-realistic anime style, digital painting, sharp focus
+- 構圖：半身照
 - 動作：
 - 服裝：
 - 場景：
 - 色調：
 - 情緒：
 - 技法：
+- 畫質：clean details, smooth textures, ultra-detailed, noise-free, clear quality
+- 光線：soft cinematic lighting, high clarity, crisp contrast
 - 其他：禁止畫面中有文字、標語、水印（no text, no watermark, no slogans）
 
 no text, no watermark, no cartoon, no fantasy」這幾句記得每條都加，防止AI出現亂碼。
