@@ -94,6 +94,18 @@
                 "name": "地圖檔",
                 "path": "Role/Thoth/Thoth地圖資料檔.txt"
             },
+            {
+                "name": "參數檔",
+                "path": "Role/Thoth/Thoth參數設定.txt"
+            },
+            {
+                "name": "親密情境指南",
+                "path": "Role/Thoth/AI親密情境指南.txt"
+            },
+            {
+                "name": "事件資料庫",
+                "path": "Role/Thoth/Thoth事件資料庫.txt"
+            },
 			{
                 "name": "貼在Gem使用說明.txt",
                 "path": "Role/Thoth/貼在Gem使用說明.txt"
