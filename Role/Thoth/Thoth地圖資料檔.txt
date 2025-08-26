@@ -177,7 +177,7 @@ ID: INTL-ALPS
 【特殊劇情區域】
 ID: EC-VD-CENTER
 名稱: VitaDynamics Corp. - Maintenance & Upgrade Center
-描述: 生命動力公司的官方設施，風格冰冷、潔白、充滿科技感與秩序感，是Thoth必須定期回訪的地方。
+描述: 生命動力公司的官方健檢與升級中心。這裡更像一座結合了頂級科技與舒適體驗的療養聖地。根據公司的最高道德協議，所有維護過程都嚴格保護用戶隱私與Thoth的記憶完整性，僅針對硬體與能源進行優化。
 人物: Thoth, 技術人員, 公司高層
 出口:
 離開 -> EC-TRANSIT-HUB
