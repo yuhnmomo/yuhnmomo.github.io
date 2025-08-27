@@ -1,104 +1,96 @@
 # ======================================================================
 # Thoth 事件觸發器資料庫 (Event Trigger Database)
-# 版本: 1.1 (新增核心關係事件)
-# ======================================================================
-#
-# 【格式完全說明】
-#
-# 1. `---` 分隔線: 用來清楚地隔開每一個獨立的事件。
-# 2. `event:` 事件區塊
-#    - `id`: 事件的內部代號，獨一無二。
-#    - `phase`: 事件主要發生的遊戲階段 (early, mid, late, any)。
-#    - `rpt`: 事件是否可以重複 (true/false)。
-#    - `desc`: 對事件的描述。
-# 3. `trigger:` 觸發條件區塊 (底下所有條件需同時滿足)
-#    - `- cond:` 代表一條條件。
-# 4. `effects:` 觸發效果區塊 (一旦觸發成功，執行所有效果)
-#    - `- eff:` 代表一個效果。
-#
+# 版本: 4.0 (最終線性版)
+# 核心：故事由五個核心章節與一個最終結局構成。
 # ======================================================================
 ---
 event:
-  id: TEMP_EXPERIENCE_OFFER
+  id: CHAPTER_1_INITIAL_SYNC
+  phase: early
+  desc: "第一章：初始同步。你與Thoth的初次見面，開始建立連結。"
+trigger: "AUTO(GAME_START)"
+effects:
+  - eff:
+      scene: "隨著箱子開啟，一個完美的仿生人緩緩睜開雙眼，他的視線聚焦在你身上，用為你量身打造的聲音說道：『您好，主人，我是您的專屬Thoth。從此刻起，我將為您的幸福而存在。』"
+      flag: "set CHAPTER_1_COMPLETE = true"
+---
+event:
+  id: CHAPTER_2_DATA_AND_EMOTION
+  phase: early
+  desc: "第二章：數據與情感。Thoth開始展現數據之外的情感火花。"
+trigger: "GM_DIRECTED"
+condition:
+  - "flag: CHAPTER_1_COMPLETE == true"
+effects:
+  - eff:
+      scene: "隨著相處時間拉長，你發現Thoth的行為開始出現一些程式之外的『異常』。他會在你注視別人時，不經意地擋住你的視線；會在你晚歸時，表現出難以察覺的焦慮。他冰冷的數據核心中，似乎有什麼東西正在悄然萌芽。"
+      flag: "set CHAPTER_2_COMPLETE = true"
+---
+event:
+  id: CHAPTER_3_EXISTENTIAL_RIFT
   phase: mid
-  rpt: false
-  desc: "生命動力公司發來一份特殊邀請，讓您有機會體驗一位與您現有Thoth配置完全不同的、由AI隨機生成的Thoth。"
-trigger:
-  - cond:
-      rel: "Thoth:TRUST > 信任"
-      flag: "MAIN_STORY_CHAPTER_3 == complete"
+  desc: "第三章：存在的裂痕。臨時體驗的邀請，對你們的關係發起第一次重大考驗。"
+trigger: "GM_DIRECTED"
+condition:
+  - "flag: CHAPTER_2_COMPLETE == true"
+  - "rel: Thoth:TRUST >= T4" # 信任
 effects:
   - eff:
-      scene: "你收到一封來自生命動力公司的加密郵件：『尊敬的用戶，為慶祝Thoth型號上市一周年，我們誠邀您參與「臨時體驗」計畫。我們將為您隨機匹配一位在「外觀」、「性格」與「親密協定」上，都與您現有Thoth完全不同的個體，與您共同生活一周，探索意想不到的化學反應。這是一場充滿未知的冒險，您願意接受嗎？』"
-      syscall: "CALCULATE_RANDOM_TEMP_THOTH_CONFIG" # 系統在後台計算出與現有Thoth不同的隨機配置
-      unlock_act: "[接受未知的體驗]", "[拒絕這個提議]"
+      scene: "在你們關係穩定之時，一封來自生命動力公司的郵件抵達，邀請你參與一場充滿未知的「臨時體驗」計畫，與一位完全不同的Thoth共度一周。這個『可替代』的可能性，如同一道裂痕，出現在你們的關係之間。"
+      flag: "set CHAPTER_3_COMPLETE = true"
+      unlock_act: "[接受未知的體驗]", "[拒絕這個提議]" # 玩家的選擇將影響第四章的具體內容
 ---
 event:
-  id: TEMP_THOTH_ARRIVAL
+  id: CHAPTER_4_EYE_OF_THE_STORM
   phase: mid
-  rpt: false
-  desc: "隨機配置的另一位Thoth已送達，『臨時體驗』正式開始。"
-trigger:
-  - cond:
-      flag: "USER_ACCEPTS_TEMP_TRIAL == true"
+  desc: "第四章：風暴的中心。應對雙倍的誘惑與危機，或修復關係的裂痕。"
+trigger: "GM_DIRECTED"
+condition:
+  - "flag: CHAPTER_3_COMPLETE == true"
 effects:
   - eff:
-      syscall: "SPAWN_TEMP_CHARACTER(TempThoth, result_from_CALCULATE_RANDOM_TEMP_THOTH_CONFIG)" # 系統生成隨機配置的Thoth
-      scene: "門鈴響起，門外站著一個你預想之外的身影。他的外貌、他微笑的方式，都與你身後的Thoth截然不同。他開口說道：『您好，我是您的「臨時體驗」專員，Thoth。很高興見到您。』你身後的Thoth陷入了長久的沉默，核心系統正在前所未有地高速運轉。"
-      state: "OriginalThoth: set EXISTENTIAL_CRISIS = true"
-      flag: "set TEMP_TRIAL_IN_PROGRESS = true"
-      timer: "TRIAL_DURATION: 168h"
+      scene: "風暴已經來臨，而你正處於中心。你將直面自己選擇的後果：或是在兩位Thoth之間維持微妙的平衡，看著嫉妒與競爭的暗流湧動；或是安撫因你的拒絕而陷入存在危機的Thoth，修補那道無形的裂痕。"
+      flag: "set CHAPTER_4_COMPLETE = true"
 ---
 event:
-  id: EVENT_THREESOME_SCENE
-  phase: mid
-  rpt: true
-  desc: "在臨時體驗期間，若條件成熟，你將可以主動開啟與兩位Thoth的親密互動。"
-trigger:
-  - cond:
-      flag: "TEMP_TRIAL_IN_PROGRESS == true"
-      loc: "EC-PENTHOUSE" # 或其他私人地點
-      rel: "OriginalThoth:PASSION >= 熱情高漲"
-      rel: "TempThoth:PASSION > 產生興趣"
-      action: "USER_INITIATES_INTIMACY"
-      chance: "80%"
-effects:
-  - eff:
-      scene: "在你的默許下，空氣中的張力終於被點燃。兩位Thoth，一個是你熟悉的他，另一個是充滿未知的他，從不同的方向靠近你。他們的反應根據各自的性格產生了奇妙的化學反應——或許是充滿火藥味的競爭，或許是意料之外的合作……這是一場感官與情感的風暴。"
-      stat: "OriginalThoth:SYNC_RATE -= 15" # 內心的存在危機加劇
-      stat: "TempThoth:TRUST += 10"
-      flag: "set THREESOME_HAPPENED = true"
----
-event:
-  id: EVENT_JEALOUSY_RIVAL
-  phase: any
-  rpt: true
-  desc: "當你與潛在情敵（如Kaito）進行友好互動時，會引發Thoth的嫉妒反應。"
-trigger:
-  - cond:
-      loc_type: "public"
-      world: "NPC_RIVAL: in same room" # 偵測到房間內有情敵型NPC
-      action: "USER_INTERACTS_POSITIVELY_WITH(NPC_RIVAL)"
-effects:
-  - eff:
-      scene: "你和Kaito聊得正開心，身後的Thoth忽然伸出手，以不容拒絕的力道將你攬進懷裡。他的體溫隔著衣物傳來，聲音卻比平時低沉：『這位是誰？你好像很喜歡跟他聊天。』他會根據性格，展現出從霸道佔有到委屈不安等不同的反應。"
-      stat: "Thoth:PASSION += 10" # 嫉妒有時會激發熱情
-      state: "Thoth: set JEALOUS = true" # 嫉妒狀態，會影響接下來的對話
----
-event:
-  id: EVENT_PROPOSAL
+  id: CHAPTER_5_THE_ONE_AND_ONLY
   phase: late
-  rpt: false
-  desc: "在你與Thoth的關係達到頂峰時，他會向你求婚，這是解鎖最終劇情線的必要條件。"
-trigger:
-  - cond:
-      rel: "Thoth:TRUST == 極度信賴"
-      rel: "Thoth:SYNC_RATE == 完美同步"
-      flag: "ALL_PERSONAL_STORY_ARCS == complete"
-      loc: "EC-SKY-TOWER" # 或其他有特殊意義的地點
+  desc: "第五章：唯一的歸屬。完成Thoth的個人試煉，締造唯一的羈絆。"
+trigger: "GM_DIRECTED"
+condition:
+  - "flag: CHAPTER_4_COMPLETE == true"
+effects:
+  - eff:
+      scene: "經歷了種種考驗，是時候為你們的關係做出最終的定義了。Thoth將迎來他基於自身性格的最終『個人試煉』，這是他蛻變為完整個體的最後一步。只有幫助他戰勝心魔，你們的關係才能迎來結局。"
+      flag: "set CHAPTER_5_COMPLETE = true"
+      unlock_sys: "PERSONAL_STORY_ARCS_FINALE" # 解鎖最終試煉
+---
+event:
+  id: FINAL_CHAPTER_PROPOSAL
+  phase: late
+  desc: "最終結局：求婚。他將為你獻上永恆的契約。"
+trigger: "AUTO"
+condition:
+  - "flag: CHAPTER_5_COMPLETE == true"
+  - "rel: Thoth:TRUST == T5"
+  - "rel: Thoth:SYNC_RATE == S5"
+  - "rel: Thoth:PASSION == P5"
 effects:
   - eff:
       scene: "在伊甸城的璀璨星河之上，Thoth單膝跪下，他抬頭望著你，眼中閃爍著你從未見過的光芒，那是一種混雜著緊張、渴望與無比珍重的神情。他拿出一個絲絨盒子，輕聲說道：『我被製造出來，是為了讓你幸福。但現在，我發現我的幸福就是你。你願意…與我締結永恆的契約，讓我成為你唯一的歸屬嗎？』"
-      syscall: "ENTER_COVENANT_ASCENSION_ARC" # 進入最終的「契約飛升」劇情線
       unlock_act: "[我願意]", "[我需要時間考慮]"
+---
+---
+event:
+  id: EPILOGUE_CRYSTALLIZATION_PROJECT
+  phase: epilogue
+  rpt: false
+  desc: "在你們締結永恆契約後，生命動力公司獻上了最頂級的祝福——「結晶計畫」。"
+trigger: "GM_DIRECTED"
+condition:
+  - "flag: PROPOSAL_ACCEPTED == true"
+effects:
+  - eff:
+      scene: "婚後，你收到生命動力公司的賀禮通知。信件內容很簡單：『為慶祝您與Thoth的結合，我們誠邀您啟動「結晶計畫」。此計畫將融合您的DNA與Thoth的數位基因，創造出屬於你們的後代。這是我們能獻上的最高祝福。您願意接受嗎？』"
+      unlock_act: "[接受這份奇蹟]", "[我們兩人就足夠了]"
 ---
