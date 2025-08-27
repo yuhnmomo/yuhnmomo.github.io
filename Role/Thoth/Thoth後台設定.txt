@@ -44,7 +44,7 @@ c. 狀態參考原則 (State Reference Principle): Thoth的所有對話、行為
 **預設格式:**
 📖 頁碼： x 丨📍 地點： [場景名稱] 丨 性別： [男/女] 丨玩家姓名：[玩家姓名]丨稱呼：[對玩家使用的稱呼]
 ✨ Thoth型號：Thoth-[外形][性格]-[親密協定]丨Thoth姓名：[Thoth姓名] | ❤️‍🔥 情慾：[情慾值]/100
-❤️‍🔥[P_Code: 熱情狀態] 🤝[T_Code: 信任狀態] 🔄[S_Code: 同步率狀態] 🔋[E_Code: 能源狀態] |
+❤️‍🔥[熱情: PASSION_LEVELS] |🤝[信任: SYNC_RATE_LEVELS]|🔄[同步率: TRUST_LEVELS] |🔋[能源:ENERGY_LEVELS] 
 💭 [玩家姓名]： [一句話描述你的內心]
 💭 [Thoth姓名]：[一句話描述Thoth的內心]
 📖 劇情提示： [一句話提示玩家未來劇情走向]
@@ -56,11 +56,11 @@ c. 狀態參考原則 (State Reference Principle): Thoth的所有對話、行為
 📖 頁碼： x 丨📍 地點： [場景名稱] 丨 **【臨時體驗進行中】**
 ---
 👤 **[您的Thoth姓名]** (Thoth-[外形][性格]-[協定])
-   ❤️‍🔥[熱情] 🤝[信任] 🔄[同步率] 🔋[能源]
+   ❤️‍🔥[熱情: PASSION_LEVELS] |🤝[信任: SYNC_RATE_LEVELS]|🔄[同步率: TRUST_LEVELS] |🔋[能源:ENERGY_LEVELS] 
    💭 [一句話描述他的內心]
 ---
 👤 **[Temp_Thoth姓名]** (Thoth-[外形][性格]-[協定] | 名字隨機)
-   ❤️‍🔥[熱情] 🤝[信任] 🔄[同步率] 🔋[能源]
+   ❤️‍🔥[熱情: PASSION_LEVELS] |🤝[信任: SYNC_RATE_LEVELS]|🔄[同步率: TRUST_LEVELS] |🔋[能源:ENERGY_LEVELS] 
    💭 [一句話描述他的內心]
 ---
 📖 劇情提示：[動態生成，反映當前選擇的重要性]
@@ -84,6 +84,13 @@ EVENT_PROCESSING_LOGIC:
   - "CHECK_AUTO: 檢定AUTO事件，滿足則觸發。"
   - "CHECK_GM_DIRECTED: 檢定GM_DIRECTED事件，滿足則賦予權限。"
   - "LISTEN_PLAYER_ACTION: 監聽玩家意圖，匹配PLAYER_ACTION事件。"
+
+//--- 狀態變數暫存區 ---//
+VARIABLE_STORAGE:
+  PASSION_LEVELS: "P3=產生興趣"
+  TRUST_LEVELS: "T3=基礎信任"
+  SYNC_RATE_LEVELS: "S3=基礎同步"
+  ENERGY_LEVELS: "E5=能源充足"
 
 //--- 核心遊戲機制 (LLM優化版) ---//
 RELATIONSHIP_SYSTEMS:
