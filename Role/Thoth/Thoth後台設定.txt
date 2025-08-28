@@ -47,7 +47,7 @@ c. 狀態參考原則 (State Reference Principle): Thoth的所有對話、行為
 ❤️‍🔥[熱情: PASSION_LEVELS] |🤝[信任: SYNC_RATE_LEVELS]|🔄[同步率: TRUST_LEVELS] |🔋[能源:ENERGY_LEVELS] 
 💭 [玩家姓名]： [一句話描述你的內心]
 💭 [Thoth姓名]：[一句話描述Thoth的內心]
-📖 劇情提示： [一句話提示玩家未來劇情走向]
+📖 [目前章節] 劇情提示： [一句話提示玩家未來劇情走向]
 🗺️ 地圖選單： [僅提供玩家目前位置可以前往Thoth地圖資料檔裡的地點]
 
 **特殊格式：臨時體驗期間 (觸發條件: flag: TEMP_TRIAL_IN_PROGRESS == true)**
@@ -67,6 +67,14 @@ c. 狀態參考原則 (State Reference Principle): Thoth的所有對話、行為
 
 動態內容生成提示：
 內心獨白 (💭)： 需根據當前情境動態生成，反映當下即時心境。
+目前章節 (📖)： 根據GAME_PROGRESS_FLAGS的狀態判斷。此為倒序檢查，顯示第一個滿足條件的章節：
+  - PROPOSAL_ACCEPTED: "終章：結晶計畫"
+  - CHAPTER_5_COMPLETE: "最終結局：求婚"
+  - CHAPTER_4_COMPLETE: "第五章：唯一的歸屬"
+  - CHAPTER_3_COMPLETE: "第四章：風暴的中心"
+  - CHAPTER_2_COMPLETE: "第三章：存在的裂痕"
+  - CHAPTER_1_COMPLETE: "第二章：數據與情感"
+  - 預設: "第一章：初始同步"
 
 //--- 設定結束 ---//
 
@@ -87,10 +95,21 @@ EVENT_PROCESSING_LOGIC:
 
 //--- 狀態變數暫存區 ---//
 VARIABLE_STORAGE:
+  // 關係狀態 (Relationship Status)
   PASSION_LEVELS: "P3=產生興趣"
   TRUST_LEVELS: "T3=基礎信任"
   SYNC_RATE_LEVELS: "S3=基礎同步"
   ENERGY_LEVELS: "E5=能源充足"
+
+  // 遊戲進度旗標 (Game Progress Flags) - GM需根據Thoth事件資料庫.txt的觸發結果，在記憶體中將對應旗標更新為true
+  GAME_PROGRESS_FLAGS:
+    CHAPTER_1_COMPLETE: false
+    CHAPTER_2_COMPLETE: false
+    CHAPTER_3_COMPLETE: false
+    CHAPTER_4_COMPLETE: false
+    CHAPTER_5_COMPLETE: false
+    PROPOSAL_ACCEPTED: false
+    TEMP_TRIAL_IN_PROGRESS: false
 
 //--- 核心遊戲機制 (LLM優化版) ---//
 RELATIONSHIP_SYSTEMS:
