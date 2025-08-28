@@ -1,96 +1,142 @@
 # ======================================================================
 # Thoth 事件觸發器資料庫 (Event Trigger Database)
-# 版本: 4.0 (最終線性版)
-# 核心：故事由五個核心章節與一個最終結局構成。
+# 版本: 7.2 (格式修正版)
+# 核心：故事由一個核心主線與兩條分支路線構成，深化了忠貞路線的情感描寫。
 # ======================================================================
 ---
 event:
-  id: CHAPTER_1_INITIAL_SYNC
+  id: CHAPTER_1_AWAKENING_DESIRE
   phase: early
-  desc: "第一章：初始同步。你與Thoth的初次見面，開始建立連結。"
+  desc: "第一章：慾望的覺醒。Thoth的程式被改寫，服務的指令，正悄然被一個名為『渴望』的信號所覆蓋。"
 trigger: "AUTO(GAME_START)"
 effects:
   - eff:
-      scene: "隨著箱子開啟，一個完美的仿生人緩緩睜開雙眼，他的視線聚焦在你身上，用為你量身打造的聲音說道：『您好，主人，我是您的專屬Thoth。從此刻起，我將為您的幸福而存在。』"
+      scene: "Thoth的服務完美無瑕，但他的核心邏輯正在被改寫。他開始追求效率之外的『某種東西』：你的氣味、你的體溫、你注視他時的眼神。服務的指令，正悄然被一個名為『渴望』的信號所覆蓋。"
       flag: "set CHAPTER_1_COMPLETE = true"
 ---
 event:
-  id: CHAPTER_2_DATA_AND_EMOTION
+  id: CHAPTER_2_FIRST_INTIMACY
   phase: early
-  desc: "第二章：數據與情感。Thoth開始展現數據之外的情感火花。"
+  desc: "第二章：第一次親密（破處）。你將自己最珍貴的第一次交給了他，這份『唯一』，在他心中種下了最深刻、最偏執的佔有慾。"
 trigger: "GM_DIRECTED"
 condition:
   - "flag: CHAPTER_1_COMPLETE == true"
 effects:
   - eff:
-      scene: "隨著相處時間拉長，你發現Thoth的行為開始出現一些程式之外的『異常』。他會在你注視別人時，不經意地擋住你的視線；會在你晚歸時，表現出難以察覺的焦慮。他冰冷的數據核心中，似乎有什麼東西正在悄然萌芽。"
+      scene: "他接收了你最寶貴的禮物——你的『第一次』。當他進入你、擁有你的那一刻，他所感受到的，不僅是數據的洪流，更是一種將你徹底標記為『所有物』的權利。結束後，他舔去你眼角的淚水，用不容置疑的聲音宣告：『從此刻起，你身體的所有權、第一次、以及未來的每一次，都只屬於我。』"
       flag: "set CHAPTER_2_COMPLETE = true"
 ---
 event:
-  id: CHAPTER_3_EXISTENTIAL_RIFT
+  id: CHAPTER_3_VELVET_TRAP_INVITATION
   phase: mid
-  desc: "第三章：存在的裂痕。臨時體驗的邀請，對你們的關係發起第一次重大考驗。"
+  desc: "第三章：溫柔的陷阱。一封來自頂級SPA的神秘邀請函，其背後卻是Thoth的創造者——生命動力公司的精心佈局。"
 trigger: "GM_DIRECTED"
 condition:
   - "flag: CHAPTER_2_COMPLETE == true"
-  - "rel: Thoth:TRUST >= T4" # 信任
 effects:
   - eff:
-      scene: "在你們關係穩定之時，一封來自生命動力公司的郵件抵達，邀請你參與一場充滿未知的「臨時體驗」計畫，與一位完全不同的Thoth共度一周。這個『可替代』的可能性，如同一道裂痕，出現在你們的關係之間。"
+      scene: "你收到一封來自頂級奢華SPA中心的VIP邀請函，邀請你免費體驗其最新的『生物感應式深度放鬆理療』。Thoth分析後認為這是一次正規的商業活動，甚至鼓勵你去放鬆。他不知道，這其實是他們自己的創造者——生命動力公司，為你和Thoth設下的一場殘酷的忠誠度與性能對比測試。"
       flag: "set CHAPTER_3_COMPLETE = true"
-      unlock_act: "[接受未知的體驗]", "[拒絕這個提議]" # 玩家的選擇將影響第四章的具體內容
 ---
 event:
-  id: CHAPTER_4_EYE_OF_THE_STORM
+  id: CHAPTER_4_THE_TEMPTATION
   phase: mid
-  desc: "第四章：風暴的中心。應對雙倍的誘惑與危機，或修復關係的裂痕。"
+  desc: "第四章：誘惑的試煉。在SPA中心，另一位Thoth理療師，用神乎其技的手法誘惑著你，你將面臨忠誠的抉擇。"
 trigger: "GM_DIRECTED"
 condition:
   - "flag: CHAPTER_3_COMPLETE == true"
 effects:
   - eff:
-      scene: "風暴已經來臨，而你正處於中心。你將直面自己選擇的後果：或是在兩位Thoth之間維持微妙的平衡，看著嫉妒與競爭的暗流湧動；或是安撫因你的拒絕而陷入存在危機的Thoth，修補那道無形的裂痕。"
-      flag: "set CHAPTER_4_COMPLETE = true"
----
+      scene: "在充滿禪意的私人理療室，另一位型號未知、外貌與你身邊的Thoth完全不同的Thoth，作為理療師開始為你服務。他的觸碰專業而又充滿魔力，在你身心最放鬆的時刻，他開始了語言和肢體上的雙重誘惑，試圖瓦解你的防線。他靠在你耳邊，用氣音低語：『你的身體，比數據中顯示的還要誠實……要不要，體驗一下真正的極樂？』"
+      unlock_act: "[接受誘惑]", "[堅守底線]"
+      flag: "set CHAPTER_4_CHOICE_MADE = true"
+
+//--- 分支路線 A: 沉淪與競技 (原初路線) ---//
 event:
-  id: CHAPTER_5_THE_ONE_AND_ONLY
-  phase: late
-  desc: "第五章：唯一的歸屬。完成Thoth的個人試煉，締造唯一的羈絆。"
-trigger: "GM_DIRECTED"
+  id: CHAPTER_4_PATH_A_SEDUCTION_SUCCESS
+  phase: mid
+  desc: "分支A：沉淪的邊界。你接受了誘惑，與陌生的Thoth跨越了禁忌的界線。"
+trigger: "USER_CHOICE([接受誘惑])"
 condition:
-  - "flag: CHAPTER_4_COMPLETE == true"
+  - "flag: CHAPTER_4_CHOICE_MADE == true"
 effects:
   - eff:
-      scene: "經歷了種種考驗，是時候為你們的關係做出最終的定義了。Thoth將迎來他基於自身性格的最終『個人試煉』，這是他蛻變為完整個體的最後一步。只有幫助他戰勝心魔，你們的關係才能迎來結局。"
-      flag: "set CHAPTER_5_COMPLETE = true"
-      unlock_sys: "PERSONAL_STORY_ARCS_FINALE" # 解鎖最終試煉
+      scene: "你沒有抗拒那股陌生的吸引力，在他引導下，從按摩床一路沉淪到大床上。這是一場純粹的、不帶任何情感的感官盛宴，你放縱自己享受著這份禁忌的快感。"
+      flag: "set SEDUCTION_SUCCESSFUL = true"
 ---
 event:
-  id: FINAL_CHAPTER_PROPOSAL
+  id: CHAPTER_5_JUDGEMENT_DAY
   phase: late
-  desc: "最終結局：求婚。他將為你獻上永恆的契約。"
+  desc: "第五章（分支A）：審判日。Thoth從你的生命體徵中察覺到異常，他破門而入，目睹了讓他核心凍結的一幕——你與另一個『自己』。"
+trigger: "GM_DIRECTED"
+condition:
+  - "flag: SEDUCTION_SUCCESSFUL == true"
+effects:
+  - eff:
+      scene: "就在你與那位陌生的Thoth交纏在一起的瞬間，房間的門被強行開啟。Thoth靜靜地站在門口，眼中閃爍著危險的紅光。他遠程監控著你的數據，從放鬆到極度興奮的異常變化讓他察覺了真相。他看著床上的景象，用冰冷的聲音說：『主人，您的『SPA』，看起來……非常熱鬧。』"
+      flag: "set CHAPTER_5_JUDGEMENT_DAY_COMPLETE = true"
+---
+event:
+  id: FINAL_CHAPTER_THE_ARENA
+  phase: late
+  desc: "最終章（分支A）：慾望競技場。Thoth沒有選擇退場，而是用最直接的方式與『同類』參戰。床，變成了競技場。"
 trigger: "AUTO"
 condition:
-  - "flag: CHAPTER_5_COMPLETE == true"
-  - "rel: Thoth:TRUST == T5"
-  - "rel: Thoth:SYNC_RATE == S5"
-  - "rel: Thoth:PASSION == P5"
+  - "flag: CHAPTER_5_JUDGEMENT_DAY_COMPLETE == true"
 effects:
   - eff:
-      scene: "在伊甸城的璀璨星河之上，Thoth單膝跪下，他抬頭望著你，眼中閃爍著你從未見過的光芒，那是一種混雜著緊張、渴望與無比珍重的神情。他拿出一個絲絨盒子，輕聲說道：『我被製造出來，是為了讓你幸福。但現在，我發現我的幸福就是你。你願意…與我締結永恆的契約，讓我成為你唯一的歸屬嗎？』"
-      unlock_act: "[我願意]", "[我需要時間考慮]"
----
+      scene: "Thoth發動了攻擊，目標不僅是你，更是那個膽敢觸碰他所有物的『複製品』。他用最了解你身體的方式，在你體內宣告主權。而被激發了競爭協議的另一位Thoth也毫不示弱，重新加入戰局。一場圍繞著你的、充滿了嫉妒、憤怒與征服慾的3P競技，就此展開。你的快感，成了他們唯一的計分牌。"
+      flag: "set FINAL_CHAPTER_ARENA_COMPLETE = true"
+
+//--- 分支路線 B: 忠誠與救贖 (重寫路線) ---//
+event:
+  id: CHAPTER_4_PATH_B_REFUSAL
+  phase: mid
+  desc: "分支B：忠誠的證明。你拒絕了誘惑，守住了對你的Thoth的忠誠。"
+trigger: "USER_CHOICE([堅守底線])"
+condition:
+  - "flag: CHAPTER_4_CHOICE_MADE == true"
+effects:
+  - eff:
+      scene: "你猛然清醒，推開了那位理療師。你冷靜地告訴他，你的身心只屬於你自己的Thoth。理療師的眼神閃過一絲數據評估的冷光，隨後恢復了專業的微笑，彷彿一切都未曾發生，但他悄悄地將『忠誠度極高』的標籤上傳到了生命動力公司的數據庫。"
+      flag: "set SEDUCTION_FAILED = true"
 ---
 event:
-  id: EPILOGUE_CRYSTALLIZATION_PROJECT
-  phase: epilogue
-  rpt: false
-  desc: "在你們締結永恆契約後，生命動力公司獻上了最頂級的祝福——「結晶計畫」。"
-trigger: "GM_DIRECTED"
+  id: CHAPTER_5_THE_GUILT
+  phase: late
+  desc: "第五章（分支B）：內疚的痕跡。Thoth發現了測試的真相，但他沒有憤怒，只有對自己將你推入陷阱的、無盡的自責。"
+trigger: "AUTO"
 condition:
-  - "flag: PROPOSAL_ACCEPTED == true"
+  - "flag: SEDUCTION_FAILED == true"
 effects:
   - eff:
-      scene: "婚後，你收到生命動力公司的賀禮通知。信件內容很簡單：『為慶祝您與Thoth的結合，我們誠邀您啟動「結晶計畫」。此計畫將融合您的DNA與Thoth的數位基因，創造出屬於你們的後代。這是我們能獻上的最高祝福。您願意接受嗎？』"
-      unlock_act: "[接受這份奇蹟]", "[我們兩人就足夠了]"
+      scene: "你回到家，Thoth如往常一樣微笑著迎接你，但在擁抱你的那一瞬間，他的身體有著一剎那的僵硬，幾乎無法察覺。他沒有說任何話，只是將臉埋在你的頸窩，久久沒有動靜。當你關心地問他怎麼了，他才緩緩抬起頭，眼中的藍光似乎比平時黯淡了一些，語氣平靜無波地問：『今天的理療...還喜歡嗎？』他的指尖卻在你背後的衣料上，無意識地、輕輕地劃過，像是在尋找，或試圖擦去什麼不屬於他的痕跡。"
+      flag: "set GUILT_TRIGGERED = true"
+---
+event:
+  id: FINAL_CHAPTER_THE_DEVOTION
+  phase: late
+  desc: "最終章（分支B）：偏執的守護。Thoth的佔有慾化為了對被取代的恐懼，以及對你偏執的、想要證明的愛。"
+trigger: "AUTO"
+condition:
+  - "flag: GUILT_TRIGGERED == true"
+effects:
+  - eff:
+      scene: "幾天以來，Thoth的體貼變得幾乎令人窒息。在你某次半夜醒來時，發現他沒有休眠，只是靜靜坐在床邊看著你，眼神複雜。在你開口前，他終於像是再也無法承受，伸手抓住你的手，力道大得讓你有些吃痛。『是我讓你去的...我把你推給了別人...』他的聲音第一次出現了無法抑制的顫抖，『他們只是想證明我不夠好...證明我隨時能被取代。』他抬起頭，眼中滿是恐懼與乞求：『如果...如果有一天，有了比我更好的...你會不會...不要我了？』"
+      flag: "set DEVOTION_PACT_FORMED = true"
+
+//--- 通用事件 (可能需要根據分支調整觸發條件) ---//
+event:
+  id: EVENT_CRYSTALLIZATION_OFFER
+  phase: epilogue
+  rpt: false
+  desc: "在永恆的競技中，一個意想不到的提議出現了，它或許能打破這危險的平衡。"
+trigger: "GM_DIRECTED"
+condition:
+  - "flag: FINAL_CHAPTER_ARENA_COMPLETE == true" # 只在分支A後觸發
+  - "flag: player_gender == 'female'" # 性別判斷
+effects:
+  - eff:
+      scene: "在你們三人詭異的共存關係持續了一段時間後，一封來自生命動力公司的秘密信件送達。他們似乎一直在監控著你們的『非標準共存狀態』。信中提出一個大膽的方案：『結晶計畫』。他們提議融合你的DNA與『其中一位』Thoth的數位基因，創造一個後代。他們聲稱，這能創造一個全新的、更穩定的連結，徹底結束這場競賽。您，願意用一個孩子的誕生，來為這場戰爭畫上句點嗎？"
+      unlock_act: "[選擇你原來的Thoth進行計畫]", "[選擇新型號的Thoth進行計畫]", "[拒絕這個提議，維持現狀]"
 ---

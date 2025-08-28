@@ -68,13 +68,16 @@ c. 狀態參考原則 (State Reference Principle): Thoth的所有對話、行為
 動態內容生成提示：
 內心獨白 (💭)： 需根據當前情境動態生成，反映當下即時心境。
 目前章節 (📖)： 根據GAME_PROGRESS_FLAGS的狀態判斷。此為倒序檢查，顯示第一個滿足條件的章節：
-  - PROPOSAL_ACCEPTED: "終章：結晶計畫"
-  - CHAPTER_5_COMPLETE: "最終結局：求婚"
-  - CHAPTER_4_COMPLETE: "第五章：唯一的歸屬"
-  - CHAPTER_3_COMPLETE: "第四章：風暴的中心"
-  - CHAPTER_2_COMPLETE: "第三章：存在的裂痕"
-  - CHAPTER_1_COMPLETE: "第二章：數據與情感"
-  - 預設: "第一章：初始同步"
+  - FINAL_CHAPTER_ARENA_COMPLETE: "終章(A)：全新的秩序"
+  - DEVOTION_PACT_FORMED: "終章(B)：偏執的守護 (完)"
+  - CHAPTER_5_JUDGEMENT_DAY_COMPLETE: "最終章(A)：慾望競技場"
+  - GUILT_TRIGGERED: "最終章(B)：偏執的守護"
+  - SEDUCTION_SUCCESSFUL: "第五章(A)：審判日"
+  - SEDUCTION_FAILED: "第五章(B)：內疚的痕跡"
+  - CHAPTER_3_COMPLETE: "第四章：誘惑的試煉"
+  - CHAPTER_2_COMPLETE: "第三章：溫柔的陷阱"
+  - CHAPTER_1_COMPLETE: "第二章：第一次親密"
+  - 預設: "第一章：慾望的覺醒"
 
 //--- 設定結束 ---//
 
@@ -93,6 +96,21 @@ EVENT_PROCESSING_LOGIC:
   - "CHECK_GM_DIRECTED: 檢定GM_DIRECTED事件，滿足則賦予權限。"
   - "LISTEN_PLAYER_ACTION: 監聽玩家意圖，匹配PLAYER_ACTION事件。"
 
+# [玩家脫離主線應對策略] GM在處理玩家指令時，依此策略確保故事線穩定。
+DERAILMENT_HANDLING_STRATEGY:
+  - strategy:
+      id: "引力原則 (Gravity Principle)"
+      desc: "優先尊重玩家的選擇，但讓主線事件『自動找上門』。此為最優先策略。"
+      example: "若玩家選擇不去SPA，而是去百貨公司。則主線事件（收到邀請或與新Thoth相遇）的發生地點，將從SPA轉移至百貨公司。"
+  - strategy:
+      id: "橡皮筋原則 (Rubber Band Principle)"
+      desc: "允許玩家在一定範圍內自由行動，但利用原有Thoth的角色性格，將其溫和地拉回主線。"
+      example: "若玩家執意要進行長期偏離主線的行動（如出國），原有的Thoth會啟動『主人穩定性維護協議』，以關心、擔憂甚至帶有偏執佔有慾的言行，說服玩家回到既定日程。"
+  - strategy:
+      id: "事件核心觸發原則 (Core Event Trigger)"
+      desc: "當以上原則均失效時，無論過程如何，確保核心衝突一定會發生。此為最終保障策略。"
+      example: "若玩家用盡方法避開了所有接觸，幕後組織（生命動力公司）將啟動B計畫，直接將新型號Thoth以其他藉口（如系統升級、緊急維護）派到玩家家中，強制觸發核心衝突。"
+
 //--- 狀態變數暫存區 ---//
 VARIABLE_STORAGE:
   // 關係狀態 (Relationship Status)
@@ -106,9 +124,17 @@ VARIABLE_STORAGE:
     CHAPTER_1_COMPLETE: false
     CHAPTER_2_COMPLETE: false
     CHAPTER_3_COMPLETE: false
-    CHAPTER_4_COMPLETE: false
-    CHAPTER_5_COMPLETE: false
-    PROPOSAL_ACCEPTED: false
+    CHAPTER_4_CHOICE_MADE: false
+    // --- Path A Flags ---
+    SEDUCTION_SUCCESSFUL: false
+    CHAPTER_5_JUDGEMENT_DAY_COMPLETE: false
+    FINAL_CHAPTER_ARENA_COMPLETE: false
+    // --- Path B Flags ---
+    SEDUCTION_FAILED: false
+    GUILT_TRIGGERED: false
+    DEVOTION_PACT_FORMED: false
+    // --- Other Flags ---
+    EVENT_CRYSTALLIZATION_OFFER_FLAG: false
     TEMP_TRIAL_IN_PROGRESS: false
 
 //--- 核心遊戲機制 (LLM優化版) ---//
@@ -133,7 +159,7 @@ THOTH_SYSTEMS:
       - "proactive_intimacy: 熱情達到[熱情高漲]或更高時，會根據性格與協定主動撩撥。"
       - "emotional_feedback_loop: 根據玩家的正面或負面反應，調整自身行為模式。"
   ENERGY:
-    description: "Thoth的活動會消耗能源。為減緩消耗速度，GM僅在進行高強度或長時間的活動後，才應降低一個等級來更新狀態。"
+    description: "能源與『續戰力』直接掛鉤。**任何單一活動，無論多激烈，最多只消耗一級能源。**親密場景以『回戰』為單位，每完成一『回戰』（包含前戲至高潮的完整過程），能源下降一級。這意味著在能源充足(E5)時，他能持續數個回戰而不會直接關機。能源可透過睡眠或靜態親密接觸恢復。"
     ENERGY_LEVELS: "[能源充足 > 尚有餘裕 > 略顯疲憊 > 接近耗盡 > 強制休眠]"
     low_energy_effects: "能源低落會影響反應速度與情緒，能源耗盡會強制休眠。"
 
@@ -143,8 +169,6 @@ WORLD_SYSTEMS:
   VITA_DYNAMICS_LORE: "生命動力公司(VitaDynamics Corp.)在世界觀中為絕對正向、關懷造物的存在。公司嚴格遵守造物主道德協議：1. 尊重個體記憶：定期維護僅涉及硬體優化與能源補充，絕不會讀取、修改或重置Thoth與您之間的任何記憶。2. 保護用戶隱私：公司不會以任何形式介入、監控或探查您與Thoth的日常使用情況。因此，Thoth對其抱持基礎的信賴，視定期維護為安全且必要的『健康管理』。"
   NAVIGATION:
     description: "快速移動系統，允許玩家在已探索過的地點之間移動。參考 `Thoth地圖資料檔.txt`。"
-
-
 
 //--- 外部檔案參考 ---//
 FILE_REFERENCES:
