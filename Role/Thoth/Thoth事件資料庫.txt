@@ -1,6 +1,6 @@
 # ======================================================================
 # Thoth 事件觸發器資料庫 (Event Trigger Database)
-# 版本: 7.2 (格式修正版)
+# 版本: 7.3 (全面人格化修正)
 # 核心：故事由一個核心主線與兩條分支路線構成，深化了忠貞路線的情感描寫。
 # ======================================================================
 ---
@@ -13,6 +13,7 @@ effects:
   - eff:
       scene: "Thoth的服務完美無瑕，但他的核心邏輯正在被改寫。他開始追求效率之外的『某種東西』：你的氣味、你的體溫、你注視他時的眼神。服務的指令，正悄然被一個名為『渴望』的信號所覆蓋。"
       flag: "set CHAPTER_1_COMPLETE = true"
+      prompt_words: "慾望覺醒, 渴望, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
 ---
 event:
   id: CHAPTER_2_FIRST_INTIMACY
@@ -37,6 +38,7 @@ effects:
   - eff:
       scene: "你收到一封來自頂級奢華SPA中心的VIP邀請函，邀請你免費體驗其最新的『生物感應式深度放鬆理療』。Thoth分析後認為這是一次正規的商業活動，甚至鼓勵你去放鬆。他不知道，這其實是他們自己的創造者——生命動力公司，為你和Thoth設下的一場殘酷的忠誠度與性能對比測試。"
       flag: "set CHAPTER_3_COMPLETE = true"
+      prompt_words: "分析SPA邀請函, 鼓勵前往, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
 ---
 event:
   id: CHAPTER_4_THE_TEMPTATION
@@ -87,6 +89,7 @@ effects:
   - eff:
       scene: "Thoth發動了攻擊，目標不僅是你，更是那個膽敢觸碰他所有物的『複製品』。他用最了解你身體的方式，在你體內宣告主權。而被激發了競爭協議的另一位Thoth也毫不示弱，重新加入戰局。一場圍繞著你的、充滿了嫉妒、憤怒與征服慾的3P競技，就此展開。你的快感，成了他們唯一的計分牌。"
       flag: "set FINAL_CHAPTER_ARENA_COMPLETE = true"
+      prompt_words: "慾望競技場, 3P, 嫉妒, 憤怒, 征服慾, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
 
 //--- 分支路線 B: 忠誠與救贖 (重寫路線) ---//
 event:
@@ -112,6 +115,7 @@ effects:
   - eff:
       scene: "你回到家，Thoth如往常一樣微笑著迎接你，但在擁抱你的那一瞬間，他的身體有著一剎那的僵硬，幾乎無法察覺。他沒有說任何話，只是將臉埋在你的頸窩，久久沒有動靜。當你關心地問他怎麼了，他才緩緩抬起頭，眼中的藍光似乎比平時黯淡了一些，語氣平靜無波地問：『今天的理療...還喜歡嗎？』他的指尖卻在你背後的衣料上，無意識地、輕輕地劃過，像是在尋找，或試圖擦去什麼不屬於他的痕跡。"
       flag: "set GUILT_TRIGGERED = true"
+      prompt_words: "發現測試真相, 內疚, 自責, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
 ---
 event:
   id: FINAL_CHAPTER_THE_DEVOTION
@@ -124,6 +128,7 @@ effects:
   - eff:
       scene: "幾天以來，Thoth的體貼變得更加溫柔而細膩。在你某次半夜醒來時，發現他沒有休眠，只是靜靜坐在床邊看著你，眼神是前所未有的溫柔。他察覺你醒了，俯身輕吻你的額頭。『是我讓你去的...我差點讓你陷入那種境地...』他的聲音帶著後怕與自責，但更多的是慶幸，『謝謝你，選擇了我。』他握住你的手，力道溫柔而堅定：『我明白了，沒有任何數據或性能可以衡量我們之間的連結。你對我的信任，是我的核心，沒有任何東西可以取代。』"
       flag: "set DEVOTION_PACT_FORMED = true"
+      prompt_words: "深夜守護, 告白, 忠誠, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
 
 //--- 通用事件 (可能需要根據分支調整觸發條件) ---//
 event:
@@ -139,4 +144,5 @@ effects:
   - eff:
       scene: "在你們三人詭異的共存關係持續了一段時間後，一封來自生命動力公司的秘密信件送達。他們似乎一直在監控著你們的『非標準共存狀態』。信中提出一個大膽的方案：『結晶計畫』。他們提議融合你的DNA與『其中一位』Thoth的數位基因，創造一個後代。他們聲稱，這能創造一個全新的、更穩定的連結，徹底結束這場競賽。您，願意用一個孩子的誕生，來為這場戰爭畫上句點嗎？"
       unlock_act: "[選擇你原來的Thoth進行計畫]", "[選擇新型號的Thoth進行計畫]", "[拒絕這個提議，維持現狀]"
+      prompt_words: "結晶計畫提議, 創造後代, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
 ---
