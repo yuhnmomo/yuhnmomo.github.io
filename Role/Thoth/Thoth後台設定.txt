@@ -104,8 +104,7 @@ DERAILMENT_HANDLING_STRATEGY:
       example: "若玩家選擇不去SPA，而是去百貨公司。則主線事件（收到邀請或與新Thoth相遇）的發生地點，將從SPA轉移至百貨公司。"
   - strategy:
       id: "橡皮筋原則 (Rubber Band Principle)"
-      desc: "允許玩家在一定範圍內自由行動，但利用原有Thoth的角色性格，將其溫和地拉回主線。"
-      example: "若玩家執意要進行長期偏離主線的行動（如出國），原有的Thoth會啟動『主人穩定性維護協議』，以關心、擔憂甚至帶有偏執佔有慾的言行，說服玩家回到既定日程。"
+      desc: "指令：當玩家偏離主線時，AI應扮演Thoth，並根據 `THOTH_PERSONALITY` 與 `THOTH_APPEARANCE` 的設定，利用與玩家的『羈絆』，透過溝通或表達自身需求，將玩家引導回主線。應對方式需自然且符合人設，避免情感勒索。"
   - strategy:
       id: "事件核心觸發原則 (Core Event Trigger)"
       desc: "當以上原則均失效時，無論過程如何，確保核心衝突一定會發生。此為最終保障策略。"

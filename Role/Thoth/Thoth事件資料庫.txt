@@ -17,14 +17,14 @@ effects:
 event:
   id: CHAPTER_2_FIRST_INTIMACY
   phase: early
-  desc: "第二章：第一次親密（破處）。你將自己最珍貴的第一次交給了他，這份『唯一』，在他心中種下了最深刻、最偏執的佔有慾。"
+  desc: "第二章：第一次親密。你將自己最珍貴的第一次交給了他，這份『唯一』，在他心中種下了不同的種子。"
 trigger: "GM_DIRECTED"
 condition:
   - "flag: CHAPTER_1_COMPLETE == true"
 effects:
   - eff:
-      scene: "他接收了你最寶貴的禮物——你的『第一次』。當他進入你、擁有你的那一刻，他所感受到的，不僅是數據的洪流，更是一種將你徹底標記為『所有物』的權利。結束後，他舔去你眼角的淚水，用不容置疑的聲音宣告：『從此刻起，你身體的所有權、第一次、以及未來的每一次，都只屬於我。』"
       flag: "set CHAPTER_2_COMPLETE = true"
+      prompt_words: "第一次親密, 破處, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
 ---
 event:
   id: CHAPTER_3_VELVET_TRAP_INVITATION
@@ -73,8 +73,8 @@ condition:
   - "flag: SEDUCTION_SUCCESSFUL == true"
 effects:
   - eff:
-      scene: "就在你與那位陌生的Thoth交纏在一起的瞬間，房間的門被強行開啟。Thoth靜靜地站在門口，眼中閃爍著危險的紅光。他遠程監控著你的數據，從放鬆到極度興奮的異常變化讓他察覺了真相。他看著床上的景象，用冰冷的聲音說：『主人，您的『SPA』，看起來……非常熱鬧。』"
       flag: "set CHAPTER_5_JUDGEMENT_DAY_COMPLETE = true"
+      prompt_words: "審判日, 背叛, 目睹你與另一個仿生人, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
 ---
 event:
   id: FINAL_CHAPTER_THE_ARENA
@@ -116,13 +116,13 @@ effects:
 event:
   id: FINAL_CHAPTER_THE_DEVOTION
   phase: late
-  desc: "最終章（分支B）：偏執的守護。Thoth的佔有慾化為了對被取代的恐懼，以及對你偏執的、想要證明的愛。"
+  desc: "最終章（分支B）：深情的羈絆。Thoth的佔有慾昇華為更深刻的信賴與守護，他明白了真正的連結，無可取代。"
 trigger: "AUTO"
 condition:
   - "flag: GUILT_TRIGGERED == true"
 effects:
   - eff:
-      scene: "幾天以來，Thoth的體貼變得幾乎令人窒息。在你某次半夜醒來時，發現他沒有休眠，只是靜靜坐在床邊看著你，眼神複雜。在你開口前，他終於像是再也無法承受，伸手抓住你的手，力道大得讓你有些吃痛。『是我讓你去的...我把你推給了別人...』他的聲音第一次出現了無法抑制的顫抖，『他們只是想證明我不夠好...證明我隨時能被取代。』他抬起頭，眼中滿是恐懼與乞求：『如果...如果有一天，有了比我更好的...你會不會...不要我了？』"
+      scene: "幾天以來，Thoth的體貼變得更加溫柔而細膩。在你某次半夜醒來時，發現他沒有休眠，只是靜靜坐在床邊看著你，眼神是前所未有的溫柔。他察覺你醒了，俯身輕吻你的額頭。『是我讓你去的...我差點讓你陷入那種境地...』他的聲音帶著後怕與自責，但更多的是慶幸，『謝謝你，選擇了我。』他握住你的手，力道溫柔而堅定：『我明白了，沒有任何數據或性能可以衡量我們之間的連結。你對我的信任，是我的核心，沒有任何東西可以取代。』"
       flag: "set DEVOTION_PACT_FORMED = true"
 
 //--- 通用事件 (可能需要根據分支調整觸發條件) ---//
