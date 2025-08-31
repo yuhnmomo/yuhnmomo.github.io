@@ -1,0 +1,171 @@
+events:
+  - id: PLOT_01
+    name: 初次侍寢
+    category: 序章核心劇情
+    trigger: "寵愛(favor) > 20"
+    description: "進入「侍寢」互動，根據皇帝性格與玩家選擇進行屬性檢定。"
+    outcomes:
+      - condition: "滿意度·極高"
+        effects:
+          - "寵愛+20"
+          - "心悅+15"
+      - condition: "滿意度·高"
+        effects:
+          - "寵愛+15"
+          - "心悅+10"
+      - condition: "滿意度·平平"
+        effects:
+          - "寵愛+5"
+          - "心悅+5"
+      - condition: "滿意度·不滿"
+        effects:
+          - "寵愛+0"
+          - "心悅-5"
+
+  - id: PLOT_02
+    name: 慈寧宮的對弈
+    category: 序章核心劇情
+    trigger: "完成 PLOT_01 後"
+    description: "與太后對話，根據選項進行檢定。"
+    choices:
+      - option: "謹慎回答"
+        check: "心計檢定 > 50"
+        success: { description: "太后初始印象=中立" }
+        failure: { description: "太后初始印象=愚蠢或危險", effects: ["太后陣營信任-10"] }
+      - option: "表現天真"
+        check: "心計檢定 > 60"
+        success: { description: "太后初始印象=可利用的棋子" }
+        failure: { description: "太后初始印象=愚蠢或危險", effects: ["太后陣營信任-10"] }
+      - option: "暗中示好"
+        check: "謀略檢定 > 70"
+        success: { description: "太后初始印象=潛在盟友", effects: ["太后陣營信任+10"] }
+        failure: { description: "太后初始印象=愚蠢或危險", effects: ["太后陣營信任-10"] }
+
+  - id: PLOT_03
+    name: 第一次回報
+    category: 序章核心劇情
+    trigger: "完成 PLOT_02，且首次向義父求助"
+    description: "面臨義父的「親密請求」。"
+    choices:
+      - option: "接受"
+        effects:
+          - "義父信任值+20"
+          - "獲得求助的資源"
+          - "開啟「珠胎暗結」風險"
+      - option: "拒絕"
+        effects:
+          - "義父信任值-30"
+          - "求助失敗"
+
+  - id: PLOT_04
+    name: 來自暗處的黑手
+    category: 序章核心劇情
+    trigger: "完成 PLOT_03 後數回合"
+    description: "進入「應對式防禦系統」。"
+    branch_on_success:
+      - option: "寬容大度"
+        effects:
+          - "心悅+5"
+          - "獲得「仁善」標籤"
+      - option: "以牙還牙"
+        effects:
+          - "勢力+10"
+          - "獲得「狠辣」標籤"
+      - option: "索要賠償"
+        effects:
+          - "銀兩+200 或 密信+2"
+
+  - id: PLOT_05
+    name: 龍裔之喜
+    category: 序章核心劇情
+    trigger: "成功懷孕後"
+    description: "選擇是否告知皇帝或義父。"
+    choices:
+      - option: "告知皇帝"
+        effects:
+          - "寵愛+30"
+          - "勢力+10"
+          - "獲得「龍裔護體」狀態"
+          - "成為所有派系的眼中釘"
+      - option: "告知義父(若為義父之子)"
+        effects:
+          - "義父信任值+50"
+          - "義父會為你提供庇護計畫"
+
+  - id: PLOT_EMPEROR_LOVE
+    name: 御書房的告白
+    category: 終局與特殊事件
+    trigger: "`心悅` > 90 且已加入皇帝陣營"
+    description: "選擇如何回應皇帝的告白。"
+    choices:
+      - option: "回應愛意"
+        effects:
+          - "`心悅`鎖定100"
+          - "獲得「帝王之愛」狀態（豁免一次致命傷害）"
+      - option: "保持距離"
+        effects:
+          - "心悅-20"
+          - "關係變為純粹的政治合作"
+
+  - id: RECURRING_01
+    name: 節日家宴
+    category: 終局與特殊事件
+    description: "多階段場景事件。"
+    outcomes:
+      - condition: "向太后敬酒"
+        effects: ["太后陣營信任+2"]
+      - condition: "向皇帝敬酒"
+        effects: ["寵愛+3"]
+      - condition: "獻藝成功 (魅力檢定>60)"
+        effects: ["寵愛+10"]
+
+  - id: ENDGAME_FAIL_01
+    name: 龍顏大怒
+    category: 終局與特殊事件
+    trigger: "與義父私會時「暴露檢定」失敗"
+    description: "遊戲結束。"
+    effects: ["結局：株連九族"]
+
+---
+faction_questlines:
+  - faction: "玄鳳 (太后派)"
+    theme: "固本清源"
+    description: "維護皇室正統與舊有秩序，手段更為傳統和隱秘，講究名正言順。"
+    missions:
+      - name: "查訪失德"
+        description: "太后命您秘密查訪權臣派某位妃子的不檢點行為。"
+        type: "調查任務 (心計/謀略)"
+      - name: "敬獻賀禮"
+        description: "代表陣營向皇帝獻上賀禮，考驗您的言談舉止。"
+        type: "表現任務 (氣質/魅力)"
+      - name: "聯絡舊臣"
+        description: "作為密使，拜訪某位忠於先帝的退休官員，爭取其支持。"
+        type: "外交任務"
+
+  - faction: "碧梧 (權臣派)"
+    theme: "權傾朝野"
+    description: "積極擴張權力，安插自己人，不擇手段地控制朝堂與後宮。"
+    missions:
+      - name: "排除異己"
+        description: "貴妃命令您設計陷害一位中立或敵對的妃嬪。"
+        type: "攻擊任務 (技能使用)"
+      - name: "吹枕邊風"
+        description: "在侍寢時，向皇帝進言，為本派系官員謀求升遷。"
+        type: "影響任務 (寵愛/心計)"
+      - name: "偽造文書"
+        description: "協助偽造一份關鍵文書，以陷害敵對派系的重要官員。"
+        type: "高風險任務 (心計)"
+
+  - faction: "芙蓉 (寵妃派)"
+    theme: "聖眷不衰"
+    description: "核心目標是爭奪皇帝的注意力，鞏固聖寵，手段直接，圍繞爭風吃醋。"
+    missions:
+      - name: "爭奇鬥豔"
+        description: "在重要宴會上，通過計謀壓過對手，讓本方陣營的領袖大放異彩。"
+        type: "妨害任務 (心計/魅力)"
+      - name: "投其所好"
+        description: "搶在所有人之前，找到皇帝最近想要的奇珍異寶並獻上。"
+        type: "資源任務 (銀兩/人脈)"
+      - name: "散播流言"
+        description: "散播一段關於競爭對手的、足以影響其聖眷的流言。"
+        type: "輿論任務 (心計)"

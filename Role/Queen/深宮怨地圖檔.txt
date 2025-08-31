@@ -1,0 +1,148 @@
+檔案：深宮怨_地圖資料檔 (v4)
+【格式說明】
+
+---: 場景分隔線
+
+ID:: 場景的唯一ID
+
+名稱:: 場景名稱
+
+描述:: 場景的簡短描述
+
+人物:: 可能出現的NPC
+
+出口:: 方向 -> 目標ID
+
+【紫禁城 - 中軸線 & 皇帝核心區】
+ID: GG_GATE_SHENWU
+名稱: 神武門
+描述: 皇宮的北門，也是宮中守衛換防和後宮進出的主要通道。門外是廣闊的皇城。
+人物:
+出口:
+南 -> GG_GARDEN_YUHUA
+
+ID: GG_GARDEN_YUHUA
+名稱: 御花園
+描述: 這是宮中最為繁盛的景緻，四時花卉不斷。這裡是邂逅、密謀與衝突最頻繁的發生地。
+人物: 各宮妃嬪
+出口:
+北 -> GG_GATE_SHENWU
+南 -> GG_PATH_KUNNING
+東 -> GG_SIX_PALACES_EAST
+西 -> GG_SIX_PALACES_WEST
+
+ID: GG_PATH_KUNNING
+名稱: 坤寧宮外長街
+描述: 連接東西六宮與御花園的必經之路，宮女太監們來來往往，是打探消息的好地方。
+人物: 小春子
+出口:
+北 -> GG_GARDEN_YUHUA
+南 -> GG_HALL_QIANQING
+
+ID: GG_HALL_QIANQING
+名稱: 乾清宮
+描述: 皇帝處理日常政務、批閱奏摺的地方。殿宇莊嚴，氣氛肅穆，無詔不得入內。
+人物: 皇帝
+出口:
+北 -> GG_HALL_JIAOTAI
+南 -> GG_GATE_QIANQING (通往外朝)
+
+ID: GG_HALL_YANGXIN
+名稱: 養心殿
+描述: 皇帝的寢宮，也是他召幸妃嬪的地方。殿內溫暖如春，但權力的氣息讓人不敢放鬆。
+人物: 皇帝
+出口:
+東 -> GG_STUDY_YUSHU
+
+ID: GG_STUDY_YUSHU
+名稱: 御書房
+描述: 皇帝日常讀書和召見近臣的地方，比乾清宮更為私密。無數影響國運的決策在此誕生。
+人物: 皇帝, 宰相幕僚 (F04)
+出口:
+西 -> GG_HALL_YANGXIN
+東 -> GG_COURTYARD_HANFANG
+
+ID: GG_COURTYARD_HANFANG
+名稱: 含芳閣 (你的居所)
+描述: 你所居住的獨門小院，緊鄰著御書房。佈置清雅，但位置極其敏感，無數雙眼睛正從暗中盯著這裡。
+人物: (你), 小清
+出口:
+西 -> GG_STUDY_YUSHU
+
+【紫禁城 - 東六宮 (權臣派 - 碧梧陣營)】
+ID: GG_SIX_PALACES_EAST
+名稱: 東六宮 (碧梧派)
+描述: 權臣宰相派系的大本營，以貴妃蕭明珠的承乾宮為首，氣勢非凡，宮人行事也頗為張揚。
+人物:
+出口:
+西 -> GG_GARDEN_YUHUA
+承乾宮 -> GG_PALACE_CHENGQIAN
+景福宮 -> GG_PALACE_JINGFU
+
+ID: GG_PALACE_CHENGQIAN
+名稱: 承乾宮
+描述: 東六宮最華麗的宮殿，由貴妃蕭明珠所居。殿內裝飾極盡奢華，彰顯著其父宰相的權勢。
+人物: 貴妃·蕭明珠 (CC01)
+出口:
+出宮 -> GG_SIX_PALACES_EAST
+
+ID: GG_PALACE_JINGFU
+名稱: 景福宮
+描述: 緊鄰承乾宮的宮殿，住著貴妃的左膀右臂，淑妃與麗嬪。
+人物: 淑妃·賀清芙 (CC02), 麗嬪·唐嫣然 (CC03)
+出口:
+出宮 -> GG_SIX_PALACES_EAST
+
+【紫禁城 - 西六宮 (太后派 & 寵妃派)】
+ID: GG_SIX_PALACES_WEST
+名稱: 西六宮 (太后派 & 寵妃派)
+描述: 勢力錯綜複雜的西六宮，既有太后派的根基，也有新晉寵妃的住所，暗流湧動。
+人物:
+出口:
+東 -> GG_GARDEN_YUHUA
+永壽宮 -> GG_PALACE_YONGSHOU
+翊坤宮 -> GG_PALACE_YIKUN
+儲秀宮 -> GG_PALACE_CHUXIU
+
+ID: GG_PALACE_YONGSHOU
+名稱: 永壽宮
+描述: 太后派人馬的據點，由賢妃所居，時常與慈寧宮互通消息。
+人物: 賢妃·韓綺蘭 (CA02), 婉嬪·張若水 (CA03)
+出口:
+出宮 -> GG_SIX_PALACES_WEST
+
+ID: GG_PALACE_YIKUN
+名稱: 翊坤宮
+描述: 近來聖眷正濃的寵妃們的住所，佈置得格外精緻，引來不少嫉妒的目光。
+人物: 昭容·柳煙雨 (CD01), 嬪妃·蘇婉柔 (CD02), 芳華·魏清音 (CD03)
+出口:
+出宮 -> GG_SIX_PALACES_WEST
+
+ID: GG_PALACE_CHUXIU
+名稱: 儲秀宮 (新人區)
+描述: 新晉秀女的住所，房間簡潔，數人同住，充滿了希望與不安。
+人物:
+出口:
+出宮 -> GG_SIX_PALACES_WEST
+
+【紫禁城 - 特殊區域】
+ID: GG_PALACE_CINING
+名稱: 慈寧宮
+描述: 太后的居所，位於後宮西側的僻靜之處。莊重而靜謐，但無疑是後宮一方權力的中心。
+人物: 太后·趙婉儀 (CA01)
+出口:
+(需特殊途徑或傳召進入)
+
+ID: GG_HOSPITAL_TAIYI
+名稱: 太醫院
+描述: 院內終年瀰漫著藥草的氣味，所有的太醫都在此處當值。防衛森嚴，尋常人不得靠近。
+人物: 太醫卿 (F07)
+出口:
+(需特殊途徑進入)
+
+ID: GG_PALACE_LENG
+名稱: 冷宮
+描述: 宮中廢棄的偏院，雜草叢生，陰森恐怖。這裡是所有宮鬥失敗者的最終歸宿。
+人物:
+出口:
+(有進無出)
