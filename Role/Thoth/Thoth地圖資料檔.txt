@@ -74,6 +74,14 @@ ID: EC-PARK-FERRISWHEEL
 出口:
 返回樂園 -> EC-ORBITAL-PARK
 
+---
+ID: EC-PROMISE-ATELIER
+名稱: The Covenant Atelier - 聖約工坊
+描述: 一家隱藏在城市最高檔區域的私人訂製工坊，不對外開放，僅接受預約。這裡專門為決定結下「聖約」的伴侶，打造獨一無二的誓約信物。工坊內不僅展示著閃耀的寶石，更記錄著無數愛侶的動人故事。
+人物: Thoth, 工坊主人 (一位優雅的老師傅)
+出口:
+離開 -> EC-TRANSIT-HUB
+
 【新增日常約會地點】
 ID: EC-SKY-TOWER
 名稱: 'Eye of Eden' Observation Deck

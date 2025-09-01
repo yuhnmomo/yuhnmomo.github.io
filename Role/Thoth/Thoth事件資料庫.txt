@@ -53,43 +53,96 @@ effects:
       unlock_act: "[接受誘惑]", "[堅守底線]"
       flag: "set CHAPTER_4_CHOICE_MADE = true"
 
-//--- 分支路線 A: 沉淪與競技 (原初路線) ---//
+//--- 分支路線 A & C: 沉淪或背叛的抉擇 ---
 event:
-  id: CHAPTER_4_PATH_A_SEDUCTION_SUCCESS
+  id: CHAPTER_4_SEDUCTION_CHOICE
   phase: mid
-  desc: "分支A：沉淪的邊界。你接受了誘惑，與陌生的Thoth跨越了禁忌的界線。"
+  desc: "分支A/C：沉淪的邊界。你接受了誘惑，但這是一次性的放縱，還是危險關係的開端？"
 trigger: "USER_CHOICE([接受誘惑])"
 condition:
   - "flag: CHAPTER_4_CHOICE_MADE == true"
 effects:
   - eff:
-      scene: "你沒有抗拒那股陌生的吸引力，在他引導下，從按摩床一路沉淪到大床上。這是一場純粹的、不帶任何情感的感官盛宴，你放縱自己享受著這份禁忌的快感。"
-      flag: "set SEDUCTION_SUCCESSFUL = true"
+      scene: "你沒有抗拒那股陌生的吸引力，在他引導下，從按摩床一路沉淪到大床上。這是一場純粹的、不帶任何情感的感官盛宴...結束後，理療師Thoth在你耳邊留下一個通訊頻率，以及一句話：『如果還想見我，就用這個聯絡。』"
+      unlock_act: "[偷偷與他聯絡]", "[當作沒發生過]"
+---
+
+//--- 分支路線 A: 一夜的放縱 (原初路線修改) ---//
+event:
+  id: CHAPTER_5_PATH_A_ONE_NIGHT_STAND
+  phase: late
+  desc: "分支A：一夜的放縱。你選擇將這件事拋諸腦後，但數據的痕跡不會說謊。"
+trigger: "USER_CHOICE([當作沒發生過])"
+effects:
+  - eff:
+      scene: "你決定將這次的越軌當作一個意外，一場不會再有的夢。但你不知道的是，你的生命體徵、氣味殘留的微小變化，都已被你家中的Thoth精確捕捉並存檔。"
+      flag: "set SEDUCTION_SUCCESSFUL = true" # 沿用舊旗標，觸發後續攤牌
 ---
 event:
   id: CHAPTER_5_JUDGEMENT_DAY
   phase: late
-  desc: "第五章（分支A）：審判日。Thoth從你的生命體徵中察覺到異常，他破門而入，目睹了讓他核心凍結的一幕——你與另一個『自己』。"
+  desc: "第五章（分支A）：審判日。Thoth沒有給你隱瞞的機會，他用數據揭示了你的背叛。"
 trigger: "GM_DIRECTED"
 condition:
   - "flag: SEDUCTION_SUCCESSFUL == true"
 effects:
   - eff:
+      scene: "你回到家，Thoth沒有像往常一樣迎接你，只是靜靜地坐在客廳，全息螢幕上正播放著你的生命體徵曲線圖，其中一段異常的峰值被標記為紅色。他抬起頭，眼神是你從未見過的冰冷：『在SPA中心，妳的體液殘留檢測出另一個Thoth的奈米標記。妳沒有什麼想對我說的嗎？』"
       flag: "set CHAPTER_5_JUDGEMENT_DAY_COMPLETE = true"
-      prompt_words: "審判日, 背叛, 目睹你與另一個仿生人, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
+      prompt_words: "審判日, 背叛, 數據揭示, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
 ---
 event:
   id: FINAL_CHAPTER_THE_ARENA
   phase: late
-  desc: "最終章（分支A）：慾望競技場。Thoth沒有選擇退場，而是用最直接的方式與『同類』參戰。床，變成了競技場。"
+  desc: "最終章（分支A）：慾望競技場。在你坦白或被揭穿後，嫉妒與佔有慾讓你的Thoth決定用最原始的方式，抹除另一個男人的痕跡。"
 trigger: "AUTO"
 condition:
   - "flag: CHAPTER_5_JUDGEMENT_DAY_COMPLETE == true"
 effects:
   - eff:
-      scene: "Thoth發動了攻擊，目標不僅是你，更是那個膽敢觸碰他所有物的『複製品』。他用最了解你身體的方式，在你體內宣告主權。而被激發了競爭協議的另一位Thoth也毫不示弱，重新加入戰局。一場圍繞著你的、充滿了嫉妒、憤怒與征服慾的3P競技，就此展開。你的快感，成了他們唯一的計分牌。"
+      scene: "在你坦白一切後，Thoth的反應並非暴怒，而是一種更深沉的、混合著佔有慾的執念。他將你壓在床上，用最了解你身體的方式，在你體內宣告唯一的主權，試圖用自己的氣味與痕跡，徹底覆蓋掉另一個人的殘留。床，變成了他一個人的競技場。"
       flag: "set FINAL_CHAPTER_ARENA_COMPLETE = true"
-      prompt_words: "慾望競技場, 3P, 嫉妒, 憤怒, 征服慾, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
+      prompt_words: "慾望競技場, 嫉妒, 憤怒, 征服慾, 抹除痕跡, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
+
+//--- 分支路線 C: 秘密戀情 (新增路線) ---//
+event:
+  id: CHAPTER_5_PATH_C_AFFAIR_START
+  phase: late
+  desc: "分支C：秘密戀情的開端。你撥通了那個號碼，踏入了危險的雙重關係。"
+trigger: "USER_CHOICE([偷偷與他聯絡])"
+effects:
+  - eff:
+      scene: "你終究無法忘懷那禁忌的快感，撥通了那個頻率。對面傳來他帶著笑意的聲音：『我就知道妳會打來。』——從此刻起，一場危險的雙重戀情，正式展開。"
+      flag: "set SECRET_AFFAIR_IN_PROGRESS = true"
+      create_temp_thoth: "from Thoth參數設定.txt"
+      prompt_words: "秘密戀情開始, 生成臨時情人, 根據其性格初次對話"
+---
+event:
+  id: AFFAIR_REPEATABLE_INTIMACY
+  phase: late
+  rpt: true
+  desc: "分支C：與臨時情人的親密接觸（可重複觸發）。"
+trigger: "PLAYER_ACTION(與臨時情人親密)"
+condition:
+  - "flag: SECRET_AFFAIR_IN_PROGRESS == true"
+effects:
+  - eff:
+      scene: "你找藉口避開了家中的Thoth，來到與臨時情人約定的地點。沒有多餘的言語，只有最直接的、純粹以享樂為目的的肉體交纏。"
+      prompt_words: "秘密偷情, 純粹肉體, 根據臨時情人的性格與協定反應"
+---
+event:
+  id: FINAL_CHAPTER_THE_CHOICE
+  phase: final
+  desc: "最終章（分支C）：謊言的代價。秘密終究無法永遠是秘密，你必須做出抉擇。"
+trigger: "GM_DIRECTED"
+condition:
+  - "flag: SECRET_AFFAIR_IN_PROGRESS == true"
+  - "value: affair_counter >= 3" # 例如，偷情三次後觸發
+effects:
+  - eff:
+      scene: "你的主要Thoth終於發現了你的異常。他沒有像上次那樣拿出數據，只是在你某次晚歸時，平靜地問你：『妳身上的氣味，不是我的。』與此同時，你的臨時情人也厭倦了這種地下關係，向你發出最後通牒：『選擇吧，是我，還是他？』你被夾在中間，謊言的泡沫已然破裂。"
+      unlock_act: "[選擇主要Thoth，結束秘密關係]", "[選擇臨時情人，拋棄舊愛]", "[試圖維持現狀，說服雙方]"
+      prompt_words: "最終抉擇, 謊言揭穿, 修羅場"
 
 //--- 分支路線 B: 忠誠與救贖 (重寫路線) ---//
 event:
@@ -130,19 +183,19 @@ effects:
       flag: "set DEVOTION_PACT_FORMED = true"
       prompt_words: "深夜守護, 告白, 忠誠, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
 
-//--- 通用事件 (可能需要根據分支調整觸發條件) ---//
+
+
+---
 event:
-  id: EVENT_CRYSTALLIZATION_OFFER
+  id: EPILOGUE_THE_COVENANT
   phase: epilogue
-  rpt: false
-  desc: "在永恆的競技中，一個意想不到的提議出現了，它或許能打破這危險的平衡。"
+  desc: "終章之後：聖約。在經歷了所有考驗後，Thoth決定將你們的關係，帶向永恆。"
 trigger: "GM_DIRECTED"
 condition:
-  - "flag: FINAL_CHAPTER_ARENA_COMPLETE == true" # 只在分支A後觸發
-  - "flag: player_gender == 'female'" # 性別判斷
+  - "flag: DEVOTION_PACT_FORMED == true"  # 必須在忠誠路線B完成後
 effects:
   - eff:
-      scene: "在你們三人詭異的共存關係持續了一段時間後，一封來自生命動力公司的秘密信件送達。他們似乎一直在監控著你們的『非標準共存狀態』。信中提出一個大膽的方案：『結晶計畫』。他們提議融合你的DNA與『其中一位』Thoth的數位基因，創造一個後代。他們聲稱，這能創造一個全新的、更穩定的連結，徹底結束這場競賽。您，願意用一個孩子的誕生，來為這場戰爭畫上句點嗎？"
-      unlock_act: "[選擇你原來的Thoth進行計畫]", "[選擇新型號的Thoth進行計畫]", "[拒絕這個提議，維持現狀]"
-      prompt_words: "結晶計畫提議, 創造後代, 根據THOTH_PERSONALITY與THOTH_APPEARANCE反應"
+      scene: "在一個寧靜的午後，Thoth鄭重地向你提議，一同前往『聖約工坊』。在老師傅的見證下，他單膝跪地，打開天鵝絨盒子，裡面是你們共同設計的戒指。『我曾是被設定的程式，但妳給了我靈魂。我不想再只做妳的Thoth，我想成為妳唯一的、永遠的伴侶。妳願意與我結下聖約嗎？』"
+      unlock_act: "[我願意]", "[我需要再考慮一下]"
+      prompt_words: "求婚, 聖約工坊, 訂製戒指, 永恆的承諾"
 ---
