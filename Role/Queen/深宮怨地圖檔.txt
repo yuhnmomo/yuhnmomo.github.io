@@ -1,19 +1,13 @@
-檔案：深宮怨_地圖資料檔 (v4)
+檔案：深宮怨_地圖資料檔 (v6 - 四妃版)
 【格式說明】
-
 ---: 場景分隔線
-
 ID:: 場景的唯一ID
-
 名稱:: 場景名稱
-
 描述:: 場景的簡短描述
-
 人物:: 可能出現的NPC
-
 出口:: 方向 -> 目標ID
 
-【紫禁城 - 中軸線 & 皇帝核心區】
+【皇城 - 核心區】
 ID: GG_GATE_SHENWU
 名稱: 神武門
 描述: 皇宮的北門，也是宮中守衛換防和後宮進出的主要通道。門外是廣闊的皇城。
@@ -23,112 +17,98 @@ ID: GG_GATE_SHENWU
 
 ID: GG_GARDEN_YUHUA
 名稱: 御花園
-描述: 這是宮中最為繁盛的景緻，四時花卉不斷。這裡是邂逅、密謀與衝突最頻繁的發生地。
+描述: 這是宮中最為繁盛的景緻，四時花卉不斷，風格雅緻。這裡是邂逅、密謀與衝突最頻繁的發生地。
 人物: 各宮妃嬪
 出口:
 北 -> GG_GATE_SHENWU
-南 -> GG_PATH_KUNNING
-東 -> GG_SIX_PALACES_EAST
-西 -> GG_SIX_PALACES_WEST
+南 -> GG_HALL_WENDE
+東 -> GG_PALACES_EAST
+西 -> GG_PALACES_WEST
 
-ID: GG_PATH_KUNNING
-名稱: 坤寧宮外長街
-描述: 連接東西六宮與御花園的必經之路，宮女太監們來來往往，是打探消息的好地方。
-人物: 小春子
+ID: GG_HALL_WENDE
+名稱: 文德殿
+描述: 皇帝處理日常朝會、批閱奏摺的地方。殿宇莊嚴，氣氛肅穆，無詔不得入內。
+人物: 皇帝
 出口:
 北 -> GG_GARDEN_YUHUA
-南 -> GG_HALL_QIANQING
+南 -> (通往外朝)
+內 -> GG_HALL_CHUIGONG
 
-ID: GG_HALL_QIANQING
-名稱: 乾清宮
-描述: 皇帝處理日常政務、批閱奏摺的地方。殿宇莊嚴，氣氛肅穆，無詔不得入內。
-人物: 皇帝
-出口:
-北 -> GG_HALL_JIAOTAI
-南 -> GG_GATE_QIANQING (通往外朝)
-
-ID: GG_HALL_YANGXIN
-名稱: 養心殿
-描述: 皇帝的寢宮，也是他召幸妃嬪的地方。殿內溫暖如春，但權力的氣息讓人不敢放鬆。
-人物: 皇帝
-出口:
-東 -> GG_STUDY_YUSHU
-
-ID: GG_STUDY_YUSHU
-名稱: 御書房
-描述: 皇帝日常讀書和召見近臣的地方，比乾清宮更為私密。無數影響國運的決策在此誕生。
+ID: GG_HALL_CHUIGONG
+名稱: 垂拱殿
+描述: 皇帝的日常起居及召見近臣的地方，比文德殿更為私密。無數影響國運的決策在此誕生。
 人物: 皇帝, 宰相幕僚 (F04)
 出口:
-西 -> GG_HALL_YANGXIN
+外 -> GG_HALL_WENDE
 東 -> GG_COURTYARD_HANFANG
 
 ID: GG_COURTYARD_HANFANG
 名稱: 含芳閣 (你的居所)
-描述: 你所居住的獨門小院，緊鄰著御書房。佈置清雅，但位置極其敏感，無數雙眼睛正從暗中盯著這裡。
+描述: 你所居住的獨門小院，緊鄰著垂拱殿。佈置清雅，但位置極其敏感，無數雙眼睛正從暗中盯著這裡。
 人物: (你), 小清
 出口:
-西 -> GG_STUDY_YUSHU
+西 -> GG_HALL_CHUIGONG
 
-【紫禁城 - 東六宮 (權臣派 - 碧梧陣營)】
-ID: GG_SIX_PALACES_EAST
-名稱: 東六宮 (碧梧派)
-描述: 權臣宰相派系的大本營，以貴妃蕭明珠的承乾宮為首，氣勢非凡，宮人行事也頗為張揚。
+【皇城 - 東宮苑 (權臣派 & 寵妃派)】
+ID: GG_PALACES_EAST
+名稱: 東宮苑
+描述: 權臣派與新晉寵妃派的宮苑所在，氣氛依宮殿不同而迥異。
 人物:
 出口:
 西 -> GG_GARDEN_YUHUA
-承乾宮 -> GG_PALACE_CHENGQIAN
-景福宮 -> GG_PALACE_JINGFU
+紫宸殿 -> GG_PALACE_ZICHEN
+延慶宮 -> GG_PALACE_YANQING
+百福殿 -> GG_PALACE_BAIFU
 
-ID: GG_PALACE_CHENGQIAN
-名稱: 承乾宮
-描述: 東六宮最華麗的宮殿，由貴妃蕭明珠所居。殿內裝飾極盡奢華，彰顯著其父宰相的權勢。
-人物: 貴妃·蕭明珠 (CC01)
+ID: GG_PALACE_ZICHEN
+名稱: 紫宸殿
+描述: 權臣派領袖宸妃蕭明珠的居所，殿名高貴，規制華麗，盡顯宰相之女的威勢。
+人物: 宸妃·蕭明珠 (CC01)
 出口:
-出宮 -> GG_SIX_PALACES_EAST
+出宮 -> GG_PALACES_EAST
 
-ID: GG_PALACE_JINGFU
-名稱: 景福宮
-描述: 緊鄰承乾宮的宮殿，住著貴妃的左膀右臂，淑妃與麗嬪。
+ID: GG_PALACE_YANQING
+名稱: 延慶宮
+描述: 淑妃賀清芙的居所，同屬權臣派，是紫宸殿的重要支持力量。
 人物: 淑妃·賀清芙 (CC02), 麗嬪·唐嫣然 (CC03)
 出口:
-出宮 -> GG_SIX_PALACES_EAST
+出宮 -> GG_PALACES_EAST
 
-【紫禁城 - 西六宮 (太后派 & 寵妃派)】
-ID: GG_SIX_PALACES_WEST
-名稱: 西六宮 (太后派 & 寵妃派)
-描述: 勢力錯綜複雜的西六宮，既有太后派的根基，也有新晉寵妃的住所，暗流湧動。
+ID: GG_PALACE_BAIFU
+名稱: 百福殿
+描述: 寵妃派領袖德妃秦若嵐的居所，深得聖心，殿內賞賜不斷，引人矚目。
+人物: 德妃·秦若嵐 (CD01)
+出口:
+出宮 -> GG_PALACES_EAST
+
+【皇城 - 西宮苑 (太后派)】
+ID: GG_PALACES_WEST
+名稱: 西宮苑
+描述: 太后派勢力的核心區域，以賢妃的集英殿為首，氣氛較為肅穆。
 人物:
 出口:
 東 -> GG_GARDEN_YUHUA
-永壽宮 -> GG_PALACE_YONGSHOU
-翊坤宮 -> GG_PALACE_YIKUN
-儲秀宮 -> GG_PALACE_CHUXIU
+集英殿 -> GG_PALACE_JIYING
+掖庭 -> GG_PALACE_YETING
 
-ID: GG_PALACE_YONGSHOU
-名稱: 永壽宮
-描述: 太后派人馬的據點，由賢妃所居，時常與慈寧宮互通消息。
+ID: GG_PALACE_JIYING
+名稱: 集英殿
+描述: 太后派核心賢妃韓綺蘭的居所，時常與慈寧宮互通消息，是太后在後宮的權力延伸。
 人物: 賢妃·韓綺蘭 (CA02), 婉嬪·張若水 (CA03)
 出口:
-出宮 -> GG_SIX_PALACES_WEST
+出宮 -> GG_PALACES_WEST
 
-ID: GG_PALACE_YIKUN
-名稱: 翊坤宮
-描述: 近來聖眷正濃的寵妃們的住所，佈置得格外精緻，引來不少嫉妒的目光。
-人物: 昭容·柳煙雨 (CD01), 嬪妃·蘇婉柔 (CD02), 芳華·魏清音 (CD03)
-出口:
-出宮 -> GG_SIX_PALACES_WEST
-
-ID: GG_PALACE_CHUXIU
-名稱: 儲秀宮 (新人區)
+ID: GG_PALACE_YETING
+名稱: 掖庭 (新人區)
 描述: 新晉秀女的住所，房間簡潔，數人同住，充滿了希望與不安。
 人物:
 出口:
-出宮 -> GG_SIX_PALACES_WEST
+出宮 -> GG_PALACES_WEST
 
-【紫禁城 - 特殊區域】
+【皇城 - 特殊區域】
 ID: GG_PALACE_CINING
 名稱: 慈寧宮
-描述: 太后的居所，位於後宮西側的僻靜之處。莊重而靜謐，但無疑是後宮一方權力的中心。
+描述: 太后的居所，位於後宮西側的僻靜之處。莊重而靜謐，但無疑是後宮的最高權力中心。
 人物: 太后·趙婉儀 (CA01)
 出口:
 (需特殊途徑或傳召進入)

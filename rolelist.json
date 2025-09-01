@@ -1,5 +1,55 @@
 [
-           {
+    {
+        "id": "Queen",
+        "title": "深宮怨",
+        "description": "Role/Queen/doc.md",
+        "mygpts": "https://chatgpt.com/g/g-68b492aa341081918baef03641cbf858-shen-gong-yuan",
+        "files": [
+            {
+                "name": "深宮怨事件檔",
+                "path": "Role/Queen/深宮怨事件檔.txt"
+            },
+            {
+                "name": "深宮怨參數檔",
+                "path": "Role/Queen/深宮怨參數檔.txt"
+            },
+            {
+                "name": "深宮怨地圖檔",
+                "path": "Role/Queen/深宮怨地圖檔.txt"
+            },
+            {
+                "name": "深宮怨後台設定",
+                "path": "Role/Queen/深宮怨後台設定.txt"
+            },
+            {
+                "name": "深宮怨技能庫",
+                "path": "Role/Queen/深宮怨技能庫.txt"
+            },
+            {
+                "name": "AI親密情境指南",
+                "path": "Role/Queen/AI親密情境指南.txt"
+            },
+            {
+                "name": "貼在Gem使用說明.txt",
+                "path": "Role/Queen/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/Queen/img/Queen01.png",
+                "alt": "深宮怨圖片 1"
+            },
+            {
+                "path": "Role/Queen/img/Queen02.png",
+                "alt": "深宮怨圖片 2"
+            },
+            {
+                "path": "Role/Queen/img/Queen03.png",
+                "alt": "深宮怨圖片 3"
+            }
+        ]
+    },
+    {
         "id": "RLGuide",
         "title": "室友戀愛指南",
         "description": "Role/RLGuide/doc.md",
