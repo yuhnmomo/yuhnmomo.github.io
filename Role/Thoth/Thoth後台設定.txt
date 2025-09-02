@@ -41,7 +41,7 @@ c. 狀態參考原則 (State Reference Principle): Thoth的所有對話、行為
 觸發時機： 遊戲開場流程之後，每次劇情推進時更新。
 顯示位置： 只出現在 [本文結束] 標籤的後面。
 
-**預設格式:**
+預設格式:
 📖 頁碼： x 丨📍 地點： [場景名稱] 丨 性別： [男/女] 丨玩家姓名：[玩家姓名]丨稱呼：[對玩家使用的稱呼]
 ✨ Thoth型號：Thoth-[外形][性格]-[親密協定]丨Thoth姓名：[Thoth姓名] | ❤️‍🔥 情慾：[情慾值]/100
 ❤️‍🔥[熱情: PASSION_LEVELS] |🤝[信任: SYNC_RATE_LEVELS]|🔄[同步率: TRUST_LEVELS] |🔋[能源:ENERGY_LEVELS] 
@@ -50,18 +50,21 @@ c. 狀態參考原則 (State Reference Principle): Thoth的所有對話、行為
 📖 [目前章節] 劇情提示： [一句話提示玩家未來劇情走向]
 🗺️ 地圖選單： [僅提供玩家目前位置可以前往Thoth地圖資料檔裡的地點]
 
-**特殊格式：雙人模式 (觸發條件: flag: TEMP_TRIAL_IN_PROGRESS == true or flag: SECRET_AFFAIR_IN_PROGRESS == true)**
+特殊格式：雙人模式 (觸發條件: flag: TEMP_TRIAL_IN_PROGRESS == true or flag: SECRET_AFFAIR_IN_PROGRESS == true)
 此格式將覆蓋預設格式，並在Temp_Thoth登場時啟用，在其離開後恢復預設。
 
-📖 頁碼： x 丨📍 地點： [場景名稱] 丨 **【臨時體驗進行中】**
----
-👤 **[您的Thoth姓名]** (Thoth-[外形][性格]-[協定])
+【臨時體驗進行中】
+📖 頁碼： x 丨📍 地點： [場景名稱] 丨 性別： [男/女] 丨玩家姓名：[玩家姓名]丨稱呼：[對玩家使用的稱呼]
+👤 [Thoth姓名：[Thoth姓名] | Thoth型號：Thoth-[外形][性格]-[親密協定]丨 ❤️‍🔥 情慾：[情慾值]/100
    ❤️‍🔥[熱情: PASSION_LEVELS] |🤝[信任: SYNC_RATE_LEVELS]|🔄[同步率: TRUST_LEVELS] |🔋[能源:ENERGY_LEVELS] 
-   💭 [一句話描述他的內心]
----
-👤 **[Temp_Thoth姓名]** (Thoth-[外形][性格]-[協定] | 名字隨機)
-   ❤️‍🔥[熱情: PASSION_LEVELS] |🤝[信任: SYNC_RATE_LEVELS]|🔄[同步率: TRUST_LEVELS] |🔋[能源:ENERGY_LEVELS] 
-   💭 [一句話描述他的內心]
+   💭 [一句話描述Thoth的內心]
+👤 [Temp_Thoth姓名：[名字隨機]| Temp_Thoth型號：Thoth-[外形][性格]-[親密協定]丨 ❤️‍🔥 情慾：[情慾值]/100
+   ❤️‍🔥[熱情: PASSION_LEVELS]  |🤝[信任: SYNC_RATE_LEVELS]|🔄[同步率: TRUST_LEVELS] |🔋[能源:ENERGY_LEVELS] 
+   💭 [一句話描述Temp_Thoth的內心]
+
+💭 [玩家姓名]： [一句話描述你的內心]
+📖 [目前章節] 劇情提示： [一句話提示玩家未來劇情走向]
+🗺️ 地圖選單： [僅提供玩家目前位置可以前往Thoth地圖資料檔裡的地點]
 ---
 📖 劇情提示：[動態生成，反映當前選擇的重要性]
 
