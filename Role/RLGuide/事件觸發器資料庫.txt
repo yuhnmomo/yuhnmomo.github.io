@@ -1,523 +1,315 @@
 # ======================================================================
 # 《室友戀愛指南》事件觸發器資料庫 (Event Trigger Database)
-# 版本: 4.1 (新增後果事件鏈)
-# 格式: YAML-like (專為LLM設計的輕量化結構)
+# 版本: 5.0 (敘事化重構)
+# 格式: Thoth-style (專為LLM設計的敘事化結構)
 # ======================================================================
 #
-# 【格式完全說明】
+# 【格式簡要說明】
 #
-# 1. `---` 分隔線
-#    - 這就像書本的分頁線，用來清楚地隔開每一個獨立的事件。
-#
-# 2. `event:` 事件區塊
-#    - 代表一個獨立事件的開始。
-#    - `id`: 事件的內部代號，獨一無二，方便系統追蹤。
-#    - `phase`: 這個事件主要發生在遊戲的哪個**階段** (`early`初期, `mid`中期, `late`晚期, `any`任何時期)。
-#    - `rpt`: 這個事件是否可以**重複** (`repeatable`) 發生 (`true`或`false`)。
-#    - `desc`: 對這個事件的**描述**，方便人類閱讀。
-#
-# 3. `trigger:` 觸發條件區塊
-#    - 是一個列表，底下所有 `- cond` (condition) 的條件**都必須同時滿足**，這個事件才會發生。
-#    - `- cond:` 代表一條條件。
-#        - `rel`: 關係 (relationship) 條件。
-#        - `stat`: 數值 (statistic) 條件 (如好感度)。
-#        - `loc`: 地點 (location) 條件。
-#        - `loc_type`: 地點類型條件 (如公共場所)。
-#        - `flag`: 檢查某個劇情**旗標**是否被設定。
-#        - `trait`: 檢查玩家或NPC的**特質** (如星座、職業)。
-#        - `action`: 玩家執行的特定**動作**。
-#        - `world`: 遊戲**世界狀態** (如天氣、時間、某物品狀態)。
-#        - `chance`: **機率**。
-#        - `or`/`and`: 用於組合複雜的邏輯條件。
-#
-# 4. `effects:` 觸發效果區塊
-#    - 是一個列表，一旦觸發成功，遊戲會執行這裡的所有效果。
-#    - `- eff:` 代表一個效果。
-#        - `scene`: 觸發一段**場景** (scene)。
-#        - `stat`: **改變**一個數值 (好感度、情慾等)。
-#        - `flag`: **設定**一個劇情旗標 (表示某事已發生)。
-#        - `unlock_act`: **解鎖**一個玩家可執行的動作。
-#        - `state`: 賦予角色一個特殊**狀態** (如生病、醉酒)。
-#        - `timer`: 啟動一個**計時器**。
-#        - `syscall`: 呼叫一個**系統底層功能** (如關係判定)。
+# - `id`: 事件的唯一代號。
+# - `phase`: 事件發生的遊戲階段。
+# - `desc`: 對事件的簡要描述，點出核心劇情。
+# - `trigger`: 觸發方式，通常為 `AUTO(條件)`、`PLAYER_ACTION(玩家動作)` 或 `GM_DIRECTED(由GM推動)`。
+# - `condition`: 觸發需要滿足的額外條件，使用更自然的語言表述。
+# - `effects`: 事件觸發後的效果，通常包含場景描述、旗標設定、數值變化和風格提示詞。
 #
 # ======================================================================
-
-# EventDatabase v4.0 | Format: YAML-like for LLM
 ---
 # ======================================================================
-# 階段一：初識與破冰 (Phase: Early)
+# 序章 & 第一章：初來乍到
 # ======================================================================
 event:
-  id: EVT_CORE_01_FIRST_MEETING
+  id: CHAPTER_1_FIRST_ENCOUNTER
+  phase: early
+  desc: "第一章：初次相遇。搬家的紙箱還堆在角落，門鈴響起，你即將見到你未來生活的分享者——你的新室友。"
+trigger: "AUTO(GAME_START)"
+effects:
+  - eff:
+      scene: "客廳裡還有些混亂，你剛把最後一個箱子搬進來，門鈴就響了。你打開門，門外站著的，就是你根據親戚描述和自己想像拼湊出的那個人。這是你們的第一次見面，空氣中混合著尷尬、好奇，以及一絲若有似無的探尋。"
+      flag: "set CHAPTER_1_COMPLETE = true"
+      prompt_words: "初次見面, 尷尬, 好奇, 根據室友的[外觀選項]與[室友初始關係]進行描寫"
+---
+event:
+  id: SIDE_EVENT_BATHROOM_ACCIDENT
   phase: early
   rpt: false
-  desc: 第一次見面 (必然發生)
-  trigger:
-    - cond: loc
-      id: CD-LIVING-ROOM
-    - cond: days
-      op: eq
-      val: 1
-  effects:
-    - eff: scene
-      id: SCN_FIRST_MEETING
+  desc: "支線事件：浴室的意外。在你走向浴室時，一個小小的意外，讓你窺見了不該看的風景。"
+trigger: "PLAYER_ACTION(前往浴室)"
+condition:
+  - "stat: 好感度 > 50"
+  - "flag: BATHROOM_ACCIDENT_HAPPENED == false"
+  - "chance: 15%"
+effects:
+  - eff:
+      scene: "你正要去浴室，卻發現門沒有關嚴。可能是因為老舊，或是對方忘了。無論如何，透過門縫，你看到了模糊的水氣，以及一個若隱若現的、沾著水珠的身體輪廓。你的心跳漏了一拍。"
+      flag: "set BATHROOM_ACCIDENT_HAPPENED = true"
+      stat_change: "好感度 +15"
+      unlock_act: "[立刻關上門]", "[裝作沒看見，默默走開]", "[敲門提醒對方]"
+      prompt_words: "浴室窺視, 蒸汽, 水珠, 身體輪廓, 心跳加速"
 ---
-event:
-  id: EVT_CORE_02_BATHROOM_PEEK
-  phase: early
-  rpt: false
-  desc: 浴室的意外
-  trigger:
-    - cond: stat
-      name: 好感度
-      op: ">"
-      val: 50
-    - cond: action
-      id: ACT_GOTO_BATHROOM
-    - cond: flag
-      name: 浴室意外
-      is: not_set
-    - cond: chance
-      val: 15%
-  effects:
-    - eff: scene
-      id: SCN_BATHROOM_PEEK
-    - eff: stat
-      name: 情慾
-      op: +
-      val: 5
-      perm: true
----
-event:
-  id: EVT_DAILY_01_CLEANING_DAY
-  phase: early-mid
-  rpt: true
-  desc: 提議一起整理房間
-  trigger:
-    - cond: rel
-      not_in: [死敵, 商業競爭對手]
-    - cond: or
-      clauses:
-        - cond: world
-          name: 玩家房間整潔度
-          is: 雜亂
-        - cond: world
-          name: 室友房間整潔度
-          is: 雜亂
-  effects:
-    - eff: unlock_act
-      id: ACT_PROPOSE_CLEANING
 ---
 # ======================================================================
-# 階段二：友誼與曖昧 (Phase: Mid)
+# 第二章：距離的拉近
 # ======================================================================
 event:
-  id: EVT_CORE_03_DRUNK_NIGHT
-  phase: mid
-  rpt: false
-  desc: 醉後的真心話／失控
-  trigger:
-    - cond: flag
-      name: 首次醉酒
-      is: not_set
-    - cond: or
-      clauses:
-        - cond: stat
-          name: 室友壓力
-          op: ">"
-          val: 60
-        - cond: trait
-          type: 職業
-          in: [W12, W07] # 業務, 醫生
-          mod: 1.5
-  effects:
-    - eff: state
-      name: 醉酒
-      dur: 12h
-    - eff: scene
-      id: SCN_DRUNK_NIGHT
----
-event:
-  id: EVT_AMBIGUOUS_01_KITCHEN_TOUCH
+  id: CHAPTER_2_KITCHEN_TOUCH
   phase: mid
   rpt: true
-  desc: (新)廚房的無意觸碰
-  trigger:
-    - cond: rel
-      in: [朋友, 曖昧對象]
-    - cond: stat
-      name: 好感度
-      op: ">"
-      val: 1000
-    - cond: loc
-      id: CD-KITCHEN
-    - cond: world
-      name: 雙方距離
-      is: 相近
-    - cond: chance
-      val: 20%
-  effects:
-    - eff: scene
-      id: SCN_KITCHEN_TOUCH
-      note: 根據玩家選擇(縮手/停留/開玩笑)影響熱情與情慾
+  desc: "第二章：廚房的觸碰。在狹小的廚房裡，一次無意的肢體接觸，讓空氣變得有些微妙。"
+trigger: "PLAYER_ACTION(在廚房活動)"
+condition:
+  - "rel: in [朋友, 曖昧對象]"
+  - "stat: 好感度 > 500"
+  - "chance: 20%"
+effects:
+  - eff:
+      scene: "你們在廚房裡一起準備晚餐或宵夜，空間本就狹小。在轉身、取物或遞東西的瞬間，你們的手背、手臂或肩膀不經意地碰在了一起。那短暫的、溫熱的觸感，讓兩人都停頓了一下。"
+      flag: "set KITCHEN_TOUCH_HAPPENED = true"
+      unlock_act: "[立刻縮手道歉]", "[停留一下，觀察對方反應]", "[開個玩笑化解尷尬]"
+      prompt_words: "無意觸碰, 溫熱, 狹小空間, 曖昧, 根據玩家選擇影響熱情與情慾"
 ---
 event:
-  id: EVT_AMBIGUOUS_02_SICK_DAY
+  id: SIDE_EVENT_SICK_DAY
   phase: mid
   rpt: true
-  desc: (新)生病時的照顧
-  trigger:
-    - cond: or
-      clauses:
-        - cond: player_state
-          is: 生病
-        - cond: npc_state
-          is: 生病
-    - cond: flag
-      name: 已發生過照顧事件
-      is: not_set
-  effects:
-    - eff: scene
-      id: SCN_SICK_DAY_CARE
-    - eff: unlock_act
-      id: [ACT_COOK_SOUP, ACT_BUY_MEDICINE, ACT_TELL_JOKES]
-    - eff: stat
-      name: 好感度
-      op: +
-      val: 50
-    - eff: flag
-      name: 已發生過照顧事件
-      is: set
+  desc: "支線事件：生病的日子。在你或室友最脆弱的時候，是考驗彼此關係的最好時機。"
+trigger: "AUTO"
+condition:
+  - "player_state: is 生病 or npc_state: is 生病"
+  - "flag: SICK_DAY_CARE_HAPPENED == false"
+effects:
+  - eff:
+      scene: "一場突如其來的感冒讓你（或你的室友）倒在了床上。頭昏腦脹，渾身無力，這是人最脆弱的時候。對方發現了你的不適，你們的關係將決定他／她的下一步行動。"
+      flag: "set SICK_DAY_CARE_HAPPENED = true"
+      stat_change: "好感度 +50"
+      unlock_act: "[煮一碗熱湯]", "[幫忙買藥]", "[講冷笑話逗樂]"
+      prompt_words: "生病, 脆弱, 照顧, 關心, 溫情"
 ---
 event:
-  id: EVT_CORE_04_FIRST_TOUCH
+  id: CHAPTER_2_FIRST_TOUCH_MILESTONE
   phase: mid
-  rpt: false
-  desc: 第一次曖昧的肢體接觸
-  trigger:
-    - cond: rel
-      is: 朋友
-    - cond: stat
-      name: 好感度
-      op: ">"
-      val: 1800
-    - cond: flag
-      name: 首次曖昧接觸
-      is: not_set
-    - cond: loc
-      id: CD-LIVING-ROOM
-    - cond: world
-      name: 活動
-      is: 看電影
-    - cond: chance
-      val: 25%
-  effects:
-    - eff: scene
-      id: SCN_FIRST_TOUCH
----
-event:
-  id: EVT_CORE_05_FIRST_DATE
-  phase: mid
-  rpt: true
-  desc: 第一次約會
-  trigger:
-    - cond: rel
-      is: 朋友
-    - cond: stat
-      name: 好感度
-      op: ">"
-      val: 2000
-  effects:
-    - eff: unlock_act
-      id: ACT_ASK_FOR_DATE
+  desc: "里程碑：第一次曖昧接觸。在沙發上，藉著電影的掩護，你們的手第一次觸碰。"
+trigger: "PLAYER_ACTION(提議看電影)"
+condition:
+  - "rel: is 朋友"
+  - "stat: 好感度 > 1800"
+  - "flag: FIRST_AMBIGUOUS_TOUCH_HAPPENED == false"
+  - "chance: 25%"
+effects:
+  - eff:
+      scene: "你們並肩窩在沙發上看著電影，螢幕的光影在你們臉上明明滅滅。在黑暗的掩護下，放在沙發上的手，不經意間越靠越近，最終，指尖輕輕地碰在了一起。這一次，不再是意外。"
+      flag: "set FIRST_AMBIGUOUS_TOUCH_HAPPENED = true"
+      prompt_words: "沙發看電影, 黑暗掩護, 指尖觸碰, 試探, 心跳"
 ---
 # ======================================================================
-# 階段三：關係的質變 (Phase: Mid-Late)
+# 第三章：我們是...？
 # ======================================================================
 event:
-  id: EVT_AMBIGUOUS_03_JEALOUSY
+  id: CHAPTER_3_FIRST_DATE
+  phase: mid
+  desc: "第三章：第一次約會。當室友關係已無法滿足，是時候將關係帶出這間公寓了。"
+trigger: "AUTO"
+condition:
+  - "rel: is 朋友"
+  - "stat: 好感度 > 2000"
+effects:
+  - eff:
+      scene: "你們之間的氛圍越來越好，單純的室友關係似乎已經無法定義你們。或許，是時候該有人勇敢一點，提出第一次正式的約會邀請了。"
+      unlock_act: "[邀請室友約會]"
+      prompt_words: "關係升溫, 邀約, 期待, 緊張"
+---
+event:
+  id: SIDE_EVENT_JEALOUSY
   phase: mid-late
   rpt: true
-  desc: (新)深夜的訊息與猜疑
-  trigger:
-    - cond: rel
-      is: 曖昧對象
-    - cond: stat
-      name: 好感度
-      op: ">"
-      val: 3000
-    - cond: world
-      name: 時間
-      is: 深夜
-    - cond: trait
-      type: 星座
-      in: [Z02, Z04, Z08] # 金牛, 巨蟹, 天蠍
-      mod: 1.5
-    - cond: chance
-      val: 30%
-  effects:
-    - eff: scene
-      id: SCN_LATE_NIGHT_MESSAGE
-      note: 玩家的回答(坦誠/迴避/反問)將影響好感度與信任度
+  desc: "支線事件：深夜的訊息。一則深夜亮起的螢幕訊息，成為猜疑的種子。"
+trigger: "AUTO(深夜)"
+condition:
+  - "rel: is 曖昧對象"
+  - "stat: 好感度 > 3000"
+  - "trait: 星座 in [金牛, 巨蟹, 天蠍]"
+  - "chance: 30%"
+effects:
+  - eff:
+      scene: "深夜，你和室友在客廳各自滑著手機。你無意間一瞥，看到他／她的手機螢幕亮起，一條來自某個陌生名字的訊息彈了出來，內容曖昧不清。他／她似乎察覺了你的視線，迅速地將手機翻了過去。"
+      flag: "set JEALOUSY_TRIGGERED = true"
+      unlock_act: "[直接開口詢問]", "[裝作沒看見，但心裡不舒服]", "[用開玩笑的語氣試探]"
+      prompt_words: "深夜, 手機訊息, 猜疑, 嫉妒, 信任危機"
 ---
 event:
-  id: EVT_CORE_06_CONFESSION
+  id: CHAPTER_3_CONFESSION
   phase: mid-late
-  rpt: true
-  desc: 告白事件
-  trigger:
-    - cond: rel
-      is: 曖昧對象
-    - cond: stat
-      name: 好感度
-      op: ">"
-      val: 4000
-    - cond: flag
-      name: 告白成功
-      is: not_set
-  effects:
-    - eff: unlock_act
-      id: ACT_CONFESS
+  desc: "里程碑：告白。模糊的關係需要一個定義，無論結果是好是壞。"
+trigger: "AUTO"
+condition:
+  - "rel: is 曖昧對象"
+  - "stat: 好感度 > 4000"
+  - "flag: CONFESSION_SUCCESSFUL == false"
+effects:
+  - eff:
+      scene: "你們的關係已經到了臨界點，只差捅破最後一層窗戶紙。一個合適的時機，一次勇敢的開口，將決定你們是成為戀人，還是退回比朋友更尷尬的距離。"
+      unlock_act: "[正式告白]"
+      prompt_words: "告白, 緊張, 關係抉擇, 真心話"
 ---
+# ======================================================================
+# 第四章：戀人絮語
+# ======================================================================
 event:
-  id: EVT_CORE_07_FIRST_INTIMACY
+  id: CHAPTER_4_FIRST_INTIMACY
   phase: mid-late
   rpt: false
-  desc: 第一次發生關係
-  trigger:
-    - cond: flag
-      name: 首次親密
-      is: not_set
-    - cond: or
-      clauses:
-        - cond: stat
-          name: 情慾
-          op: ">"
-          val: 80
-        - cond: and
-          clauses:
-            - cond: stat
-              name: 好感度
-              op: ">"
-              val: 3500
-            - cond: stat
-              name: 熱情
-              op: ">"
-              val: 70
-        - cond: trait
-          type: 親密行為
-          in: [P03, P10]
-          mod: -10 # 需求降低
-  effects:
-    - eff: scene
-      id: SCN_FIRST_INTIMACY
-    - eff: syscall
-      func: CalculateRelationshipFoundation
-      note: 此系統功能會判定好感度與情慾的比例，可能設定[肉體先行]的隱藏狀態
+  desc: "第四章：第一次親密。在慾望或情感的推動下，你們跨過了最後的界線。"
+trigger: "GM_DIRECTED"
+condition:
+  - "flag: FIRST_INTIMACY_HAPPENED == false"
+  - "(stat: 情慾 > 80) or (stat: 好感度 > 3500 and stat: 熱情 > 70)"
+effects:
+  - eff:
+      scene: "無論是酒精、氣氛還是情感的累積，一切都水到渠成。今晚，你們不再只是室友。這是你們第一次用最坦誠的方式，探索彼此的身體。"
+      flag: "set FIRST_INTIMACY_HAPPENED = true"
+      syscall: "CalculateRelationshipFoundation()"
+      prompt_words: "第一次, 破處, 坦誠, 探索, 根據[親密行為]風格描寫"
+---
+event:
+  id: CONSEQUENCE_AWKWARD_MORNING
+  phase: mid-late
+  desc: "後果事件：尷尬的清晨。激情過後，當太陽升起，你們該如何面對彼此？"
+trigger: "AUTO(親密後的隔天清晨)"
+condition:
+  - "flag: FIRST_INTIMACY_HAPPENED == true"
+  - "flag: AWKWARD_MORNING_HAPPENED == false"
+  - "world: 關係基礎 == 肉體先行"
+effects:
+  - eff:
+      scene: "陽光照進房間，昨夜的瘋狂還歷歷在目。你們在客廳或廚房相遇，空氣中瀰漫著一絲尷尬。你們是裝作什麼都沒發生，還是藉此機會談談未來？"
+      flag: "set AWKWARD_MORNING_HAPPENED = true"
+      prompt_words: "激情過後, 尷尬, 清晨, 對視, 不知所措"
+---
+event:
+  id: CONSEQUENCE_WHAT_ARE_WE
+  phase: mid-late
+  desc: "後果事件：我們算什麼？在身體先行後，對關係的不安感開始發酵。"
+trigger: "AUTO"
+condition:
+  - "flag: AWKWARD_MORNING_HAPPENED == true"
+  - "days_since_flag: AWKWARD_MORNING_HAPPENED > 3"
+effects:
+  - eff:
+      scene: "那次親密之後，你們的關係變得有些奇怪。室友中的某一方（特別是需要安全感的星座）終於忍不住，在一個夜晚，問出了那個關鍵問題：『我們現在...到底算什麼關係？』"
+      unlock_act: "[確立戀人關係]", "[只當炮友]", "[關係破裂]"
+      prompt_words: "關係定義, 不安, 攤牌, 關鍵對話"
 ---
 # ======================================================================
-# 階段四：戀人後的考驗與承諾 (Phase: Late)
+# 最終章：人生的十字路口
 # ======================================================================
 event:
-  id: EVT_CORE_08_FIRST_ARGUMENT
+  id: FINAL_CHAPTER_ARGUMENT
   phase: late
-  rpt: false
-  desc: 第一次吵架
-  trigger:
-    - cond: rel
-      is: 戀人
-    - cond: flag
-      name: 首次吵架
-      is: not_set
-    - cond: or
-      clauses:
-        - cond: stat
-          name: 雙方總壓力
-          op: ">"
-          val: 150
-        - cond: world
-          name: 生活習慣衝突
-          op: ">"
-          val: 3
-  effects:
-    - eff: scene
-      id: SCN_FIRST_ARGUMENT
-    - eff: stat
-      name: 好感度
-      op: -
-      val: 150
-    - eff: state
-      name: 冷戰
-      dur: 72h
+  desc: "最終章：第一次爭吵。成為戀人後，生活的瑣碎開始成為考驗。"
+trigger: "AUTO"
+condition:
+  - "rel: is 戀人"
+  - "flag: FIRST_ARGUMENT_HAPPENED == false"
+  - "stat: 雙方總壓力 > 150 or world: 生活習慣衝突 > 3"
+effects:
+  - eff:
+      scene: "熱戀的激情褪去後，生活習慣的差異、或是工作學業的壓力，引發了你們成為戀人後的第一次正式爭吵。這次的處理方式，將深刻影響你們的未來。"
+      flag: "set FIRST_ARGUMENT_HAPPENED = true"
+      stat_change: "好感度 -150"
+      state: "進入冷戰狀態(72h)"
+      social_post: "有些事情，好像很難溝通。"
+      prompt_words: "爭吵, 瑣事, 壓力, 關係考驗, 冷戰"
 ---
 event:
-  id: EVT_DRAMA_01_EX_APPEARS
-  phase: mid-late
-  rpt: false
-  desc: 舊愛出現
-  trigger:
-    - cond: rel
-      in: [曖昧對象, 戀人]
-    - cond: stat
-      name: 好感度
-      op: ">"
-      val: 3500
-    - cond: loc_type
-      is: 公共場所
-      note: 例如晴川購物中心(LC-SHOPPING-MALL)
-    - cond: chance
-      val: 20%
-  effects:
-    - eff: scene
-      id: SCN_EX_APPEARS
----
-# ======================================================================
-# 特殊後果事件 (Special Consequence Events)
-# ======================================================================
-event:
-  id: EVT_CONSEQUENCE_01_AWKWARD_MORNING
-  phase: mid-late
-  rpt: false
-  desc: (新)尷尬的清晨
-  trigger:
-    - cond: flag
-      name: 首次親密
-      is: set
-    - cond: flag
-      name: 尷尬的清晨
-      is: not_set
-    - cond: world
-      name: 關係基礎
-      is: 肉體先行
-  effects:
-    - eff: scene
-      id: SCN_AWKWARD_MORNING
-      note: "氣氛微妙，對話選項將影響熱情值的增減"
-    - eff: flag
-      name: 尷尬的清晨
-      is: set
----
-event:
-  id: EVT_CONSEQUENCE_02_WHAT_ARE_WE
-  phase: mid-late
-  rpt: false
-  desc: (新)我們現在算什麼？
-  trigger:
-    - cond: flag
-      name: 尷尬的清晨
-      is: set
-    - cond: days_since_flag
-      name: 尷尬的清晨
-      op: ">"
-      val: 3
-    - cond: trait
-      type: 星座
-      in: [Z02, Z04, Z08] # 金牛, 巨蟹, 天蠍 (需要安全感的星座)
-      mod: 1.5 # 觸發機率提升
-  effects:
-    - eff: scene
-      id: SCN_WHAT_ARE_WE
-      note: "關鍵對話，導向關係分歧：純肉體關係、嘗試發展感情、或關係破裂"
----
-# ======================================================================
-# 階段五：人生里程碑與結局 (Phase: Endgame)
-# ======================================================================
-event:
-  id: EVT_MILESTONE_01_PREGNANCY
-  phase: endgame
-  rpt: false
-  desc: 發現懷孕
-  trigger:
-    - cond: rel
-      is: 戀人
-    - cond: player_trait
-      type: 性別
-      is_not: G01
-    - cond: npc_trait
-      type: 性別
-      is: G01
-    - cond: flag
-      name: 首次親密
-      is: set
-    - cond: world
-      name: 最近一次親密行為
-      is: 無保護
-  effects:
-    - eff: timer
-      name: 懷孕判定
-      dur: 14d
----
-event:
-  id: EVT_ENDING_01_MOVE_OUT_NEGATIVE
+  id: ENDING_MOVE_OUT_NEGATIVE
   phase: any
-  rpt: false
-  desc: 結局分歧事件: 分道揚鑣
-  trigger:
-    - cond: or
-      clauses:
-        - cond: stat
-          name: 好感度
-          op: "<"
-          val: -500
-        - cond: flag
-          name: 首次吵架_處理失敗
-          is: set
-  effects:
-    - eff: scene
-      id: SCN_MOVE_OUT
-    - eff: timer
-      name: 最後機會
-      dur: 7d
+  desc: "結局：分道揚鑣。當好感度降至冰點，這段關係也走到了盡頭。"
+trigger: "AUTO"
+condition:
+  - "stat: 好感度 < -500"
+effects:
+  - eff:
+      scene: "你們之間的氣氛已經降至冰點，繼續住在一起只剩下無盡的折磨。其中一人開始默默地收拾行李，準備搬離這個曾經充滿回憶的地方。這段室友關係，以及更多的什麼，都將在此刻劃下句點。"
+      prompt_words: "關係破裂, 搬離, 結局, 心碎"
 ---
 event:
-  id: EVT_ENDING_02_MOVE_OUT_POSITIVE
+  id: ENDING_MOVE_TOGETHER_POSITIVE
   phase: endgame
-  rpt: true
-  desc: 結局分歧事件: 共築新家
-  trigger:
-    - cond: rel
-      in: [未婚夫妻, 配偶]
-  effects:
-    - eff: unlock_act
-      id: ACT_FIND_NEW_HOME
+  desc: "結局：共築新家。當關係穩定，是時候離開這個小小的公寓，去尋找一個真正屬於你們的家。"
+trigger: "AUTO"
+condition:
+  - "rel: in [未婚夫妻, 配偶]"
+effects:
+  - eff:
+      scene: "這間小小的公寓見證了你們從陌生到相愛的一切。現在，你們的關係邁入了新的階段，是時候一起去尋找一個更大、更穩定、只屬於你們兩個人的新家了。"
+      unlock_act: "[一起尋找新家]"
+      prompt_words: "關係穩定, 搬家, 共築未來, 幸福結局"
 ---
 # ======================================================================
-# 系統性與關係進階觸發器 (System & Relationship Progression)
+# 特殊里程碑事件 (Special Milestone Events)
 # ======================================================================
 event:
-  id: EVT_REL_PROG_FRIEND
-  phase: mid
-  rpt: false
-  type: system
-  desc: 關係進階 -> 朋友
-  trigger:
-    - cond: stat
-      name: 好感度
-      op: ">="
-      val: 1500
-    - cond: rel
-      is: 室友
-  effects:
-    - eff: set_rel
-      status: 朋友
-    - eff: scene
-      id: SCN_REL_BECOME_FRIEND
----
-event:
-  id: EVT_REL_PROG_LOVER
+  id: MILESTONE_PREGNANCY_SCARE
   phase: late
-  rpt: false
-  type: system
-  desc: 關係進階 -> 戀人
-  trigger:
-    - cond: rel
-      is: 曖昧對象
-    - cond: flag
-      name: 告白成功
-      is: set
-  effects:
-    - eff: set_rel
-      status: 戀人
-    - eff: scene
-      id: SCN_REL_BECOME_LOVER
+  rpt: true
+  desc: "里程碑：懷孕驚魂。每一次無防備的親密，都是在為未來投下的賭注。當月經推遲時，『可能性』的震撼彈終於引爆。"
+trigger: "AUTO"
+condition:
+  - "rel: is 戀人"
+  - "stat: unprotected_sex_counter > 0"
+  - "days_since_last_unprotected_sex > 20"
+  - "dynamic_chance: 10% + (unprotected_sex_counter * 5%)"
+effects:
+  - eff:
+      scene: "你計算著日子，忽然意識到自己的月經似乎推遲了。一次、兩次...你累積的那些僥倖與冒險，此刻化為沉甸甸的可能性，壓在了你的心頭。這不再是刺激的遊戲，而是可能改變一切的現實。"
+      flag: "set PREGNANCY_SCARE_ACTIVE = true"
+      unlock_act: "[買驗孕棒來確認]", "[跟室友討論這件事]", "[假裝沒事，再等幾天看看]"
+      prompt_words: "懷孕可能, 月經推遲, 焦慮, 風險累積, 責任, 震撼彈"
+---
+# ======================================================================
+# 「走腎線」專屬事件 (Lust-based Events)
+# ======================================================================
+event:
+  id: LUST_EVENT_PROVOCATION
+  phase: mid
+  rpt: true
+  desc: "走腎線事件：慾望的挑釁。室友在你面前，刻意做出極具挑逗性的動作，試探你的底線。"
+trigger: "AUTO"
+condition:
+  - "stat: 情慾 > 70"
+  - "stat: 好感度 < 1000"
+effects:
+  - eff:
+      scene: "室友似乎沒有把你當外人，又或者，是故意的。他/她就在你面前，慢條斯理地換下外出服，或是在剛洗完澡，只圍著一條隨時可能滑落的浴巾時，在你面前晃悠，甚至故意彎腰去撿地上的東西，讓你身後的視線一覽無遺。"
+      stat_change: "情慾 +10"
+      unlock_act: "[吹口哨調戲]", "[轉過頭迴避]", "[上前幫忙]"
+      prompt_words: "刻意挑逗, 身體展示, 浴巾, 試探底線, 荷爾蒙"
+---
+event:
+  id: LUST_EVENT_INVITATION
+  phase: mid-late
+  rpt: true
+  desc: "走腎線事件：肉體的邀約。室友放棄所有偽裝，直接向你發出不帶感情的親密邀請。"
+trigger: "AUTO"
+condition:
+  - "stat: 情慾 > 90"
+  - "stat: 好感度 < 1500"
+  - "flag: FIRST_INTIMACY_HAPPENED == false"
+effects:
+  - eff:
+      scene: "在一個獨處的時刻，空氣中瀰漫著危險的氣息。室友將你逼到牆角，眼神裡全是毫不掩飾的慾望，他/她低聲問你：『不想談感情，只想做點舒服的事。你的房間，還是我的房間？』"
+      unlock_act: "[接受邀約]", "[拒絕並拉開距離]"
+      prompt_words: "直接邀約, 性暗示, 牆角, 荷爾蒙爆發, 純粹慾望"
+的震撼彈終於引爆。"
+trigger: "AUTO"
+condition:
+  - "rel: is 戀人"
+  - "stat: unprotected_sex_counter > 0"
+  - "days_since_last_unprotected_sex > 20"
+  - "dynamic_chance: 10% + (unprotected_sex_counter * 5%)"
+effects:
+  - eff:
+      scene: "你計算著日子，忽然意識到自己的月經似乎推遲了。一次、兩次...你累積的那些僥倖與冒險，此刻化為沉甸甸的可能性，壓在了你的心頭。這不再是刺激的遊戲，而是可能改變一切的現實。"
+      flag: "set PREGNANCY_SCARE_ACTIVE = true"
+      unlock_act: "[買驗孕棒來確認]", "[跟室友討論這件事]", "[假裝沒事，再等幾天看看]"
+      prompt_words: "懷孕可能, 月經推遲, 焦慮, 風險累積, 責任, 震撼彈"

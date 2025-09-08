@@ -156,6 +156,10 @@
                             <div id="playerSexuality" class="card-grid icon-grid"></div>
                         </div>
                         <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">職業</label>
+                            <div id="playerProfession" class="card-grid icon-grid"></div>
+                        </div>
+                        <div>
                             <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">星座</label>
                             <div id="playerZodiac" class="card-grid zodiac-grid"></div>
                         </div>
@@ -163,7 +167,6 @@
                             <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">血型</label>
                             <div id="playerBloodType" class="card-grid icon-grid"></div>
                         </div>
-                        <p class="text-sm pt-2" style="color: var(--text-muted);">你的職業預設為：數位遊牧 (以筆電遠端工作，作息彈性)。</p>
                     </div>
                     <div class="mt-8 flex justify-end items-center gap-4">
                         <button onclick="nextStep()" class="btn-primary font-bold py-2 px-6 rounded-lg">下一步</button>
@@ -193,16 +196,16 @@
                             <div id="roommateGender" class="card-grid icon-grid"></div>
                         </div>
                         <div>
+                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">職業</label>
+                            <div id="roommateProfession" class="card-grid icon-grid"></div>
+                        </div>
+                        <div>
                             <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">星座</label>
                             <div id="roommateZodiac" class="card-grid zodiac-grid"></div>
                         </div>
                         <div>
                             <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">血型</label>
                             <div id="roommateBloodType" class="card-grid icon-grid"></div>
-                        </div>
-                        <div>
-                            <label class="block mb-2 text-sm font-medium" style="color: var(--text-muted);">職業</label>
-                            <div id="roommateProfession" class="card-grid icon-grid"></div>
                         </div>
                     </div>
                     <div class="mt-8 flex justify-between items-center">
@@ -384,6 +387,7 @@
 
             populateCards('playerGender', gameData.gender, 'playerGender', true, 'icon');
             populateCards('playerSexuality', gameData.sexuality, 'playerSexuality', true, 'icon');
+            populateCards('playerProfession', gameData.profession, 'playerProfession', true, 'icon');
             populateCards('playerZodiac', gameData.zodiac, 'playerZodiac', true, 'zodiac');
             populateCards('playerBloodType', gameData.bloodType, 'playerBloodType', true, 'icon');
             updateAppearanceOptions('playerGender', 'playerAppearance');
@@ -490,6 +494,7 @@
                         <p><span>姓名:</span> ${data.playerName}</p>
                         <p><span>性別:</span> ${data.playerGender.text}</p>
                         <p><span>性向:</span> ${data.playerSexuality.text}</p>
+                        <p><span>職業:</span> ${data.playerProfession.title}</p>
                         <p><span>外觀:</span> ${playerApp.title}</p>
                         <p><span>星座:</span> ${data.playerZodiac.title}</p>
                         <p><span>血型:</span> ${data.playerBloodType.title}</p>
@@ -515,6 +520,7 @@
                 playerName: document.getElementById('playerName').value,
                 playerGender: findDataItem(gameData.gender, getRadioValue('playerGender')),
                 playerSexuality: findDataItem(gameData.sexuality, getRadioValue('playerSexuality')),
+                playerProfession: findDataItem(gameData.profession, getRadioValue('playerProfession')),
                 playerZodiac: findDataItem(gameData.zodiac, getRadioValue('playerZodiac')),
                 playerBloodType: findDataItem(gameData.bloodType, getRadioValue('playerBloodType')),
                 playerAppearance: { code: getRadioValue('playerAppearance') },
@@ -541,7 +547,7 @@
                 ? findDataItem(gameData.appearance.male, data.roommateAppearance.code)
                 : findDataItem(gameData.appearance.female, data.roommateAppearance.code);
 
-            const playerID = `UR-${data.playerGender.code}${data.playerAppearance.code}${data.playerZodiac.code}${data.playerBloodType.code}-${data.playerSexuality.code}W13`;
+            const playerID = `UR-${data.playerGender.code}${data.playerAppearance.code}${data.playerZodiac.code}${data.playerBloodType.code}-${data.playerSexuality.code}${data.playerProfession.code}`;
             const roommateID = `PL-${data.roommateGender.code}${data.roommateAppearance.code}${data.roommateZodiac.code}${data.roommateBloodType.code}-${data.roommateIntimacy.code}${data.roommateProfession.code}${data.initialRelationship.code}`;
 
             const output = `--- 玩家設定 ---
@@ -550,6 +556,7 @@
 身份號: ${playerID}
 性別: ${data.playerGender.text}
 性向: ${data.playerSexuality.text}
+職業: ${data.playerProfession.full_text}
 外觀: ${playerApp.full_text}
 星座: ${data.playerZodiac.full_text}
 血型: ${data.playerBloodType.full_text}
