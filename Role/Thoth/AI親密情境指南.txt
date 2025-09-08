@@ -127,7 +127,7 @@ bl_supplement:
 # 十、特殊情境玩法模組 (Special Scenarios)
 special_plays:
   - type: 著衣Play (Clothed)
-    keywords: [隔衣觸碰, 布料質感, 半遮半掩, 焦灼渴望]
+    keywords:  keywords: [隔衣觸碰, 衣物遮掩, 布料摩擦, 半遮半掩, 焦灼渴望]
   - type: 鏡子Play (Mirror)
     keywords: [視覺衝擊, 鏡中對視, 強迫觀看, 羞恥放大]
   - type: 浴室／水中Play (Bathroom/Water)
