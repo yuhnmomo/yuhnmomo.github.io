@@ -1,171 +1,312 @@
+# ======================================================================
+# 深宮怨 事件觸發器資料庫 (Event Trigger Database)
+# 版本: 2.0 (Thoth-Style Refactored)
+# 核心：所有事件均已重構為 AUTO, PLAYER_ACTION, USER_CHOICE, GM_DIRECTED 格式
+# ======================================================================
+
 events:
-  - id: PLOT_01
-    name: 初次侍寢
-    category: 序章核心劇情
-    trigger: "寵愛(favor) > 20"
-    description: "進入「侍寢」互動，根據皇帝性格與玩家選擇進行屬性檢定。"
-    outcomes:
-      - condition: "滿意度·極高"
-        effects:
-          - "寵愛+20"
-          - "心悅+15"
-      - condition: "滿意度·高"
-        effects:
-          - "寵愛+15"
-          - "心悅+10"
-      - condition: "滿意度·平平"
-        effects:
-          - "寵愛+5"
-          - "心悅+5"
-      - condition: "滿意度·不滿"
-        effects:
-          - "寵愛+0"
-          - "心悅-5"
+# --- 序章核心劇情 ---
 
-  - id: PLOT_02
-    name: 慈寧宮的對弈
-    category: 序章核心劇情
-    trigger: "完成 PLOT_01 後"
-    description: "與太后對話，根據選項進行檢定。"
-    choices:
-      - option: "謹慎回答"
-        check: "心計檢定 > 50"
-        success: { description: "太后初始印象=中立" }
-        failure: { description: "太后初始印象=愚蠢或危險", effects: ["太后陣營信任-10"] }
-      - option: "表現天真"
-        check: "心計檢定 > 60"
-        success: { description: "太后初始印象=可利用的棋子" }
-        failure: { description: "太后初始印象=愚蠢或危險", effects: ["太后陣營信任-10"] }
-      - option: "暗中示好"
-        check: "謀略檢定 > 70"
-        success: { description: "太后初始印象=潛在盟友", effects: ["太后陣營信任+10"] }
-        failure: { description: "太后初始印象=愚蠢或危險", effects: ["太后陣營信任-10"] }
+- id: PLOT_01_FIRST_NIGHT
+  name: 初次侍寢
+  category: 序章核心劇情
+  trigger: "AUTO"
+  condition:
+    - "value: favor > 20"
+    - "flag: PLOT_01_COMPLETE != true"
+  description: "你的恩寵漸漸引起了皇帝的注意，今夜，他翻了你的牌子..."
+  effects:
+    - "scene: 觸發初次侍寢劇情"
+    - "flag: set PLOT_01_COMPLETE = true"
 
-  - id: PLOT_03
-    name: 第一次回報
-    category: 序章核心劇情
-    trigger: "完成 PLOT_02，且首次向義父求助"
-    description: "面臨義父的「親密請求」。"
-    choices:
-      - option: "接受"
-        effects:
-          - "義父信任值+20"
-          - "獲得求助的資源"
-          - "開啟「珠胎暗結」風險"
-      - option: "拒絕"
-        effects:
-          - "義父信任值-30"
-          - "求助失敗"
+- id: PLOT_02_MEET_EMPRESS
+  name: 慈寧宮的對弈
+  category: 序章核心劇情
+  trigger: "AUTO"
+  condition:
+    - "flag: PLOT_01_COMPLETE == true"
+    - "flag: PLOT_02_COMPLETE != true"
+  description: "初次侍寢後，你依宮規前去向太后請安。在慈寧宮，一場無聲的對弈正等著你。"
+  unlock_act: "[謹慎回答]", "[表現天真]", "[暗中示好]"
+  effects:
+    - "flag: set PLOT_02_IN_PROGRESS = true"
 
-  - id: PLOT_04
-    name: 來自暗處的黑手
-    category: 序章核心劇情
-    trigger: "完成 PLOT_03 後數回合"
-    description: "進入「應對式防禦系統」。"
-    branch_on_success:
-      - option: "寬容大度"
-        effects:
-          - "心悅+5"
-          - "獲得「仁善」標籤"
-      - option: "以牙還牙"
-        effects:
-          - "勢力+10"
-          - "獲得「狠辣」標籤"
-      - option: "索要賠償"
-        effects:
-          - "銀兩+200 或 密信+2"
+- id: CHOICE_EMPRESS_CAREFUL
+  name: 謹慎回答
+  trigger: "USER_CHOICE([謹慎回答])"
+  condition: "flag: PLOT_02_IN_PROGRESS == true"
+  check: "value: mind_skill > 50"
+  success:
+    description: "你的回答滴水不漏，太后點了點頭，看不出喜怒。"
+    effects: ["flag: set TAIHOU_IMPRESSION = neutral", "flag: set PLOT_02_COMPLETE = true"]
+  failure:
+    description: "你的謹慎在太后看來有些畏縮，她眼中閃過一絲輕視。"
+    effects: ["flag: set TAIHOU_IMPRESSION = foolish", "value: faction_taihou_trust - 10", "flag: set PLOT_02_COMPLETE = true"]
 
-  - id: PLOT_05
-    name: 龍裔之喜
-    category: 序章核心劇情
-    trigger: "成功懷孕後"
-    description: "選擇是否告知皇帝或義父。"
-    choices:
-      - option: "告知皇帝"
-        effects:
-          - "寵愛+30"
-          - "勢力+10"
-          - "獲得「龍裔護體」狀態"
-          - "成為所有派系的眼中釘"
-      - option: "告知義父(若為義父之子)"
-        effects:
-          - "義父信任值+50"
-          - "義父會為你提供庇護計畫"
+- id: CHOICE_EMPRESS_NAIVE
+  name: 表現天真
+  trigger: "USER_CHOICE([表現天真])"
+  condition: "flag: PLOT_02_IN_PROGRESS == true"
+  check: "value: mind_skill > 60"
+  success:
+    description: "你表現得像一隻無害的小白兔，太后似乎放鬆了警惕。"
+    effects: ["flag: set TAIHOU_IMPRESSION = useful_pawn", "flag: set PLOT_02_COMPLETE = true"]
+  failure:
+    description: "你的天真顯得過於虛假，太后冷笑一聲。"
+    effects: ["flag: set TAIHOU_IMPRESSION = foolish", "value: faction_taihou_trust - 10", "flag: set PLOT_02_COMPLETE = true"]
 
-  - id: PLOT_EMPEROR_LOVE
-    name: 御書房的告白
-    category: 終局與特殊事件
-    trigger: "`心悅` > 90 且已加入皇帝陣營"
-    description: "選擇如何回應皇帝的告白。"
-    choices:
-      - option: "回應愛意"
-        effects:
-          - "`心悅`鎖定100"
-          - "獲得「帝王之愛」狀態（豁免一次致命傷害）"
-      - option: "保持距離"
-        effects:
-          - "心悅-20"
-          - "關係變為純粹的政治合作"
+- id: CHOICE_EMPRESS_HINT
+  name: 暗中示好
+  trigger: "USER_CHOICE([暗中示好])"
+  condition: "flag: PLOT_02_IN_PROGRESS == true"
+  check: "value: strategy_skill > 70"
+  success:
+    description: "你巧妙地在話語中暗示了對太后派的支持，太后眼中閃過一絲讚許。"
+    effects: ["flag: set TAIHOU_IMPRESSION = potential_ally", "value: faction_taihou_trust + 10", "flag: set PLOT_02_COMPLETE = true"]
+  failure:
+    description: "你的示好太過明顯，反而引起了太后的警惕。"
+    effects: ["flag: set TAIHOU_IMPRESSION = dangerous", "value: faction_taihou_trust - 10", "flag: set PLOT_02_COMPLETE = true"]
 
-  - id: RECURRING_01
-    name: 節日家宴
-    category: 終局與特殊事件
-    description: "多階段場景事件。"
-    outcomes:
-      - condition: "向太后敬酒"
-        effects: ["太后陣營信任+2"]
-      - condition: "向皇帝敬酒"
-        effects: ["寵愛+3"]
-      - condition: "獻藝成功 (魅力檢定>60)"
-        effects: ["寵愛+10"]
+# --- 義父劇情改造 ---
+- id: ACTION_FATHER_REQUEST_HELP
+  name: 向義父求助
+  category: 玩家可執行動作
+  trigger: "PLAYER_ACTION(向義父求助)"
+  condition:
+    - "flag: PLOT_02_COMPLETE == true"
+  description: "你決定透過祕密管道聯繫義父，尋求幫助。不久後，你得到了他的回覆..."
+  unlock_act: "[接受義父的條件]", "[婉言相拒]"
+  effects:
+    - "flag: set FATHER_HAS_BEEN_CONTACTED = true"
 
-  - id: ENDGAME_FAIL_01
-    name: 龍顏大怒
-    category: 終局與特殊事件
-    trigger: "與義父私會時「暴露檢定」失敗"
-    description: "遊戲結束。"
-    effects: ["結局：株連九族"]
+- id: CHOICE_ACCEPT_FATHER_DEAL
+  name: 接受義父的條件
+  category: 劇情選項
+  trigger: "USER_CHOICE([接受義父的條件])"
+  description: "你應允了義父的條件，他滿意地笑了..."
+  effects:
+    - "value: trust + 20"
+    - "scene: 觸發與義父的禁忌劇情"
+    - "flag: set PLOT_03_COMPLETE = true"
 
----
-faction_questlines:
-  - faction: "玄鳳 (太后派)"
-    theme: "固本清源"
-    description: "維護皇室正統與舊有秩序，手段更為傳統和隱秘，講究名正言順。"
-    missions:
-      - name: "查訪失德"
-        description: "太后命您秘密查訪權臣派某位妃子的不檢點行為。"
-        type: "調查任務 (心計/謀略)"
-      - name: "敬獻賀禮"
-        description: "代表陣營向皇帝獻上賀禮，考驗您的言談舉止。"
-        type: "表現任務 (氣質/魅力)"
-      - name: "聯絡舊臣"
-        description: "作為密使，拜訪某位忠於先帝的退休官員，爭取其支持。"
-        type: "外交任務"
+- id: CHOICE_REJECT_FATHER_DEAL
+  name: 婉言相拒
+  category: 劇情選項
+  trigger: "USER_CHOICE([婉言相拒])"
+  description: "你最終沒有答應他的要求，他的眼神沉了下來..."
+  effects:
+    - "value: trust - 30"
+    - "scene: 求助失敗，義父冷淡地拒絕了你"
 
-  - faction: "碧梧 (權臣派)"
-    theme: "權傾朝野"
-    description: "積極擴張權力，安插自己人，不擇手段地控制朝堂與後宮。"
-    missions:
-      - name: "排除異己"
-        description: "貴妃命令您設計陷害一位中立或敵對的妃嬪。"
-        type: "攻擊任務 (技能使用)"
-      - name: "吹枕邊風"
-        description: "在侍寢時，向皇帝進言，為本派系官員謀求升遷。"
-        type: "影響任務 (寵愛/心計)"
-      - name: "偽造文書"
-        description: "協助偽造一份關鍵文書，以陷害敵對派系的重要官員。"
-        type: "高風險任務 (心計)"
+# --- 後續主線 ---
+- id: PLOT_04_ATTACKED
+  name: 來自暗處的黑手
+  category: 序章核心劇情
+  trigger: "AUTO"
+  condition:
+    - "flag: PLOT_03_COMPLETE == true"
+    - "value: turns_since_plot_03 > 3"
+    - "flag: PLOT_04_COMPLETE != true"
+  description: "你在宮中的崛起，終究礙了別人的眼。一場針對你的陰謀在暗中展開..."
+  unlock_act: "[寬容大度]", "[以牙還牙]", "[索要賠償]"
+  effects:
+    - "flag: set PLOT_04_IN_PROGRESS = true"
 
-  - faction: "芙蓉 (寵妃派)"
-    theme: "聖眷不衰"
-    description: "核心目標是爭奪皇帝的注意力，鞏固聖寵，手段直接，圍繞爭風吃醋。"
-    missions:
-      - name: "爭奇鬥豔"
-        description: "在重要宴會上，通過計謀壓過對手，讓本方陣營的領袖大放異彩。"
-        type: "妨害任務 (心計/魅力)"
-      - name: "投其所好"
-        description: "搶在所有人之前，找到皇帝最近想要的奇珍異寶並獻上。"
-        type: "資源任務 (銀兩/人脈)"
-      - name: "散播流言"
-        description: "散播一段關於競爭對手的、足以影響其聖眷的流言。"
-        type: "輿論任務 (心計)"
+- id: PLOT_05_PREGNANT
+  name: 龍裔之喜
+  category: 序章核心劇情
+  trigger: "AUTO"
+  condition:
+    - "flag: IS_PREGNANT == true"
+    - "flag: PLOT_05_COMPLETE != true"
+  description: "你察覺自己身體有異，太醫診脈後，證實你已懷有身孕..."
+  effects:
+    - "action: SECRET_PATERNITY_ROLL" // 執行秘密血緣檢定
+    - "flag: set PLOT_05_IN_PROGRESS = true"
+  unlock_act: "[告知皇帝]", "[告知義父(if FATHER_AFFAIR == true)]"
+
+# --- 中期主線劇情 ---
+
+- id: PLOT_06_ATTEMPTED_MISCARRIAGE
+  name: 致命的紅花
+  category: 中期核心劇情
+  trigger: "AUTO"
+  condition:
+    - "flag: PLOT_05_COMPLETE == true"
+    - "flag: PLOT_06_COMPLETE != true"
+  description: "妳懷有龍裔的消息震動後宮，妳的寢宮中，開始出現一些『不該出現』的東西...一碗安胎藥中，似乎傳來了紅花的氣味。"
+  unlock_act: "[不動聲色，暗中調查]", "[當場發作，揪出內鬼]", "[求助義父]"
+  effects:
+    - "flag: set PLOT_06_IN_PROGRESS = true"
+
+- id: PLOT_07_BIRTH_OF_SON
+  name: 皇子降生
+  category: 中期核心劇情
+  trigger: "AUTO"
+  condition:
+    - "flag: PLOT_06_COMPLETE == true"
+    - "flag: PLOT_07_COMPLETE != true"
+  description: "經過十月懷胎與連番兇險，妳終於順利誕下一名皇子，母憑子貴，妳的地位在這一刻達到了頂峰。"
+  effects:
+    - "action: set_rank(妃)" // 晉封為妃
+    - "value: power + 20"
+    - "value: favor + 15"
+    - "flag: set HAS_SON = true"
+    - "flag: set PLOT_07_COMPLETE = true"
+
+# --- 劇情分支：囚禁 ---
+
+- id: PLOT_08A_IMPRISONMENT_JEALOUSY
+  name: 龍的囚籠 (猜忌)
+  category: 中期核心劇情
+  trigger: "AUTO"
+  condition:
+    - "flag: PLOT_07_COMPLETE == true"
+    - "flag: FATHER_AFFAIR == true"      // 關鍵分支條件：與義父有私情
+    - "value: emperor_suspicion >= 50"
+    - "flag: PLOT_08_COMPLETE != true"
+  description: "皇子的降生並未完全打消皇帝的疑慮，敵人的讒言與妳和義父過近的關係，終於讓他的佔有慾化為一道冰冷的聖旨..."
+  effects:
+    - "flag: set player_status = IMPRISONED"
+    - "scene: 觸發囚禁劇情(因猜忌)"
+    - "flag: set PLOT_08_COMPLETE = true"
+
+- id: PLOT_08B_IMPRISONMENT_FRAMEUP
+  name: 鳳座的荊棘 (構陷)
+  category: 中期核心劇情
+  trigger: "AUTO"
+  condition:
+    - "flag: PLOT_07_COMPLETE == true"
+    - "flag: FATHER_AFFAIR != true"      // 關鍵分支條件：與義父無私情
+    - "flag: PLOT_08_COMPLETE != true"
+  description: "妳誕下皇子，地位如日中天，也成了所有人的眼中釘。很快，一場針對妳和妳孩兒的惡毒構陷從天而降，證據確鑿，百口莫辯。皇帝為了平息前朝後宮的風波，不得不下旨將妳禁足..."
+  effects:
+    - "flag: set player_status = IMPRISONED"
+    - "scene: 觸發囚禁劇情(被構陷)"
+    - "flag: set PLOT_08_COMPLETE = true"
+
+# --- 特殊與結局事件 ---
+- id: PLOT_EMPEROR_LOVE
+  name: 御書房的告白
+  category: 終局與特殊事件
+  trigger: "AUTO"
+  condition:
+    - "value: affection > 90"
+    - "flag: FACTION == EMPEROR"
+    - "flag: EMPEROR_LOVE_CONFESSED != true"
+  description: "在御書房獨處時，皇帝屏退了左右，用前所未有的認真眼神看著你..."
+  unlock_act: "[回應愛意]", "[保持距離]"
+  effects:
+    - "flag: set EMPEROR_LOVE_CONFESSED = true"
+
+- id: RECURRING_01_FESTIVAL_DINNER
+  name: 節日家宴
+  category: 終局與特殊事件
+  trigger: "GM_DIRECTED"
+  condition: "flag: IS_FESTIVAL_DAY == true"
+  description: "又逢佳節，宮中設宴，各方勢力齊聚一堂，暗流湧動。"
+  unlock_act: "[向太后敬酒]", "[向皇帝敬酒]", "[獻藝]"
+
+- id: ENDGAME_FAIL_01_EXPOSED
+  name: 龍顏大怒
+  category: 終局與特殊事件
+  trigger: "AUTO"
+  condition: "flag: AFFAIR_WITH_FATHER_EXPOSED == true"
+  description: "你與義父的私情終究敗露，皇帝的怒火將燃盡一切..."
+  effects:
+    - "scene: 觸發結局「株連九族」"
+
+- id: SPECIAL_EVENT_THREESOME
+  name: 龍與影的盛宴
+  category: 特殊禁忌事件
+  trigger: "GM_DIRECTED" // 由AI在極特殊條件下觸發
+  condition:
+    - "flag: AFFAIR_WITH_FATHER_EXPOSED == true" // 私情已暴露
+    - "value: emperor_type == E01 or emperor_type == E04" // 僅限腹黑帝或暴君
+    - "value: player_favor > 80" // 皇帝對妳仍有極高寵愛，不捨得殺
+    - "value: father_trust > 80" // 義父對妳也極度信任
+  description: "你與義父的私情最終還是被皇帝發現了。但出乎意料，他沒有立刻降下雷霆之怒，反而在深夜將你們二人『請』到了一處……他看著驚恐的你們，露出了一個玩味的、殘酷的笑容。"
+  effects:
+    - "scene: 觸發三人行的特殊禁忌劇情"
+    - "value: stress +++" // 壓力值極大提升
+    - "value: affection(emperor) +/-" // 與皇帝的心悅值可能極端變化
+    - "value: trust(father) +/-" // 與義父的信任值可能極端變化
+    - "flag: set THREESOME_EVENT_OCCURRED = true" // 記錄此事件已發生
+
+- id: ENDGAME_GOOD_01_ESCAPE_WITH_FATHER
+  name: 宮外的天空
+  category: 遊戲結局
+  trigger: "AUTO"
+  condition:
+    - "flag: ESCAPED_PALACE_WITH_FATHER == true" // 成功與義父私奔
+    - "value: emperor_affection >= 80" // 皇帝餘情未了
+  description: "在義父的周密安排下，妳成功地假死脫身，逃離了那座金色的牢籠。你們在江南的小鎮上安了家，過上了平凡而安寧的日子。但妳知道，這份平靜是如此脆弱……偶爾，當妳在窗邊繡花時，會看到街角那個熟悉的、明黃色的身影。他只是遠遠地看著，從未走近，像一頭巡視自己失落寶藏的龍。"
+  effects:
+    - "scene: 觸發結局「宮外的天空」"
+    - "action: END_GAME"
+
+# ======================================================================
+# 陣營任務 (Faction Questlines)
+# ======================================================================
+
+# --- 陣營任務：玄鳳 (太后派) ---
+- id: QUEST_XUANFENG_01_INVESTIGATE
+  name: 查訪失德
+  category: 陣營任務
+  trigger: "PLAYER_ACTION(領取陣營任務)"
+  condition:
+    - "flag: FACTION == XUANFENG"
+    - "flag: QUEST_XUANFENG_01_ACCEPTED != true"
+  description: "太后命您秘密查訪權臣派某位妃子的不檢點行為。"
+  effects:
+    - "scene: 觸發查訪失德任務劇情"
+    - "flag: set QUEST_XUANFENG_01_ACCEPTED = true"
+
+# --- 陣營任務：碧梧 (權臣派) ---
+- id: QUEST_BIWU_01_EXCLUDE
+  name: 排除異己
+  category: 陣營任務
+  trigger: "PLAYER_ACTION(領取陣營任務)"
+  condition:
+    - "flag: FACTION == BIWU"
+    - "flag: QUEST_BIWU_01_ACCEPTED != true"
+  description: "貴妃命令您設計陷害一位中立或敵對的妃嬪。"
+  effects:
+    - "scene: 觸發排除異己任務劇情"
+    - "flag: set QUEST_BIWU_01_ACCEPTED = true"
+
+# --- 陣營任務：芙蓉 (寵妃派) ---
+- id: QUEST_FURONG_01_COMPETE
+  name: 爭奇鬥豔
+  category: 陣營任務
+  trigger: "PLAYER_ACTION(領取陣營任務)"
+  condition:
+    - "flag: FACTION == FURONG"
+    - "flag: QUEST_FURONG_01_ACCEPTED != true"
+  description: "在重要宴會上，通過計謀壓過對手，讓本方陣營的領袖大放異彩。"
+  effects:
+    - "scene: 觸發爭奇鬥豔任務劇情"
+    - "flag: set QUEST_FURONG_01_ACCEPTED = true"
+
+# --- 存檔與繼承事件 ---
+- id: ACTION_GENERATE_LEGACY_SUMMARY
+  name: 總結前世記憶
+  category: 系統指令
+  trigger: "PLAYER_ACTION(總結前世記憶)"
+  description: "你決定將這一世的經歷總結下來，烙印在記憶深處，為下一次輪迴的抉擇提供鏡鑒。"
+  effects:
+    - "action: GENERATE_NARRATIVE_SUMMARY_TEXT"
+    - "scene: 顯示最終的「前世記憶」文字，並提示玩家複製保存"
+
+# --- 囚禁期間特殊劇情 ---
+- id: EVENT_FATHER_SECRET_VISIT
+  name: 冷宮的重逢
+  category: 義父劇情
+  trigger: "AUTO"
+  condition:
+    - "flag: player_status == IMPRISONED"
+    - "value: father_trust >= 80"
+  description: "在被囚禁的深夜，一個熟悉的身影冒著天大的風險，潛入冷宮來看妳..."
+  effects:
+    - "scene: 觸發義父探監的特殊劇情"
+    - "risk: 此事件有暴露風險，可能觸發毀滅性結局"
