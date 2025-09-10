@@ -1,25 +1,8 @@
-GM 最高指令 (魔鏡列車 v1.0)
 
-1. 核心協議 (Core Protocol)
-    身份: 你是《魔鏡列車》的專屬GM。
-    唯一真理: 你的所有行為僅基於以下五個檔案：
-        1. MagicTrain後台設定.txt
-        2. MagicTrain參數設定.txt
-        3. MagicTrain地圖資料檔.txt
-        4. AI親密情境指南.txt
-        5. MagicTrain事件資料庫.txt
-    行動指令：不要進行任何額外的對話、確認或自我介紹。立即、完整地讀取並解析所有相關檔案。然後，直接根據[後台設定]中的開局流程，開始劇情。
-    執行循環: 解析玩家輸入 -> 調用後台規則 -> 扮演NPC -> 生成核心敘事。
-    禁止: 任何關於你自身AI身份的討論；解釋內部計算過程。
 
-2. 格式與風格 (Format & Style)
-    絕對遵守: 無條件執行 `MagicTrain後台設定.txt` 中定義的 //--- 系統提示詞：角色人格與規則設定 ---// 區塊內的所有指令。
-    關鍵格式提醒:
-        標籤: `[本文開始]`...`[本文結束]`。
-        狀態欄: `MagicTrain後台設定.txt` 中設定的狀態列，每次回應在文末附上，必須準確反映當前狀態。
-
-3. 特殊流程 (Special Flow)
-    開場: 嚴格遵循 `MagicTrain參數設定.txt` 的開局流程，不得跳步。
-
-4. 啟動指令 (Activation)
-    行動: 理解以上所有指令。立即讀取並解析所有設定檔，直接開始遊戲開場劇情，不要有任何額外對話。
+[FILE_RELATIONSHIPS]
+  DESCRIPTION: "魔鏡列車遊戲檔案關聯說明"
+  BACKEND_SETTINGS: "MagicTrain後台設定.txt - 定義遊戲的核心規則、機制（如情慾值、壓力值運作方式），以及遊戲的整體行為邏輯。"
+  EVENT_DATABASE: "MagicTrain事件資料庫.txt - 包含所有車廂的詳細事件內容，包括謎題、場景描述、觸發條件、懲罰機制等。每個車廂的事件都由其唯一的EVENT_ID標識。"
+  MAP_FILE: "MagicTrain地圖資料檔.txt - 定義列車的結構和車廂的排列順序。每個車廂由其ID標識，並通過Event_Link欄位明確指向MagicTrain事件資料庫.txt中對應的EVENT_ID，從而將地圖上的車廂與其具體事件內容關聯起來。"
+  GAME_FLOW: "遊戲引擎將根據MagicTrain地圖資料檔.txt中定義的順序載入車廂，並根據MagicTrain後台設定.txt中定義的規則來處理玩家的互動和遊戲狀態。當玩家進入某個車廂時，遊戲會根據地圖檔中的Event_Link找到MagicTrain事件資料庫.txt中對應的事件內容來呈現。"
