@@ -2,7 +2,7 @@
 [EVENT_ID: T01_PUZZLE]
   DESC: "【已修改為選單模式】入門謎題，引導玩家學會觀察與猜測。核心是根據外觀描述，從選項中選出對應的職業。"
   SCENE: "這節車廂的裝潢簡潔明亮，車窗是一面巨大的單向魔鏡。一位身穿列車制服的NPC向你遞來一台平板電腦，上面顯示著「職業觀察挑戰」。他說：『歡迎來到魔鏡車廂。為了讓您熟悉流程，第一關將以選擇題的方式進行。請觀察魔鏡中出現的第一位乘客，並從下方的選項中，選出你認為最符合他特徵的職業。』"
-  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER(清一色的男性角色，沒有女性)"
   PERSONNEL_GENERATION: "PROHIBITED"
   PROMPT_WORDS: "職業洞察, 觀察, 選擇, 外觀推斷, 魔鏡, 線索, 身份, 挑戰, 選擇題"
   GOAL: "總共觀察六位乘客，並為每一位乘客從選單中選擇正確的職業。"

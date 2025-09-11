@@ -1,4 +1,57 @@
-[
+[    {
+        "id": "MagicTrain",
+        "title": "魔幻列車",
+        "description": "Role/MagicTrain/doc.md",
+		"mygpts":"https://chatgpt.com/g/g-68c1a7fb28088191b4994993e561fe19-mo-jing-lie-che",
+        "files": [
+            {
+                "name": "後台設定",
+                "path": "Role/MagicTrain/MagicTrain後台設定.txt"
+            },
+            {
+                "name": "地圖檔",
+                "path": "Role/MagicTrain/MagicTrain地圖資料檔.txt"
+            },
+            {
+                "name": "參數檔",
+                "path": "Role/MagicTrain/MagicTrain參數設定.txt"
+            },
+            {
+                "name": "AI親密情境指南",
+                "path": "Role/MagicTrain/AI親密情境指南.txt"
+            },
+            {
+                "name": "事件資料庫",
+                "path": "Role/MagicTrain/MagicTrain事件資料庫.txt"
+            },
+			{
+                "name": "貼在Gem使用說明.txt",
+                "path": "Role/MagicTrain/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/MagicTrain/img/MagicTrain01.png",
+                "alt": "魔幻列車1"
+            },
+            {
+                "path": "Role/MagicTrain/img/MagicTrain02.png",
+                "alt": "魔幻列車1"
+            },
+            {
+                "path": "Role/MagicTrain/img/MagicTrain03.png",
+                "alt": "魔幻列車1"
+            },
+            {
+                "path": "Role/MagicTrain/img/MagicTrain04.png",
+                "alt": "魔幻列車1"
+            },
+            {
+                "path": "Role/MagicTrain/img/MagicTrain05.png",
+                "alt": "魔幻列車1"
+            }
+        ]
+    },
     {
         "id": "Queen",
         "title": "深宮怨",
@@ -512,4 +565,5 @@
             }
         ]
     }
+
 ]
