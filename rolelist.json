@@ -17,6 +17,10 @@
                 "path": "Role/MagicTrain/MagicTrain參數設定.txt"
             },
             {
+                "name": "NPC名單",
+                "path": "Role/MagicTrain/MagicTrain_NPC_Roster.txt"
+            },
+            {
                 "name": "AI親密情境指南",
                 "path": "Role/MagicTrain/AI親密情境指南.txt"
             },
