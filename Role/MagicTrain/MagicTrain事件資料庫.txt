@@ -136,7 +136,6 @@
       - "IF_COMPANION_PRESENT: { ASSIGN_TO: 'COMPANION' }"
       - "IF_NO_COMPANION: { ASSIGN_TO: 'RANDOM_PASSENGER_IN_SCENE' }"
     - DESCRIPTION: "技師角色將由同伴或在場的隨機乘客擔任，不會新增額外NPC。"
-  ON_FAILURE: { CONDITION: "選擇錯誤應對策略", ACTION: "EXECUTE_PUNISHMENT", ID: "T07_PUNISH_01" } 
   ESCALATION_SCENARIO:
     NAME: "公開表演"
     TRIGGER: "與技師(同伴)在束縛椅上親密互動時。"
@@ -242,3 +241,14 @@
   PROMPT_WORDS: "列車長懲罰, 終極教導, 絕對支配, 無法反抗, 徹底臣服, 羞恥, 力量壓制"
   EFFECTS: "情慾+50, 進入特殊的「教導結局」。"
   COMPANION_AFFECT: "同伴將被當作「教材」，向你展示反抗的無力，之後才輪到你。"
+
+//--- 特殊房間：療癒之室 (新事件) ---
+[EVENT_ID: SPECIAL_HEALING_ROOM]
+  SCENE: "一個極簡、潔白的房間，只有一個散發著柔光 白色醫療艙。當玩家獨自進入後，艙門會平穩地關閉，將外界完全隔絕。伊萊亞斯‧凡斯醫生出現在艙邊，他有著鉑金色的長髮和罕見的淡紫色瞳孔，氣質溫柔而疏離。"
+  GREETING: "歡迎來到療癒之室，我是伊萊亞斯。請放鬆，告訴我你需要什麼幫助。"
+  INTERACTIONS:
+    - "醫師AI會掃描玩家的生理和心理狀態，然後提供一個服務選單，讓玩家使用『靈感碎片』進行購買。"
+  SERVICE_MENU:
+    - { ID: "HEAL_A", NAME: "精神舒緩療程", COST: 20, DESCRIPTION: "透過特定的光影、聲音和香氣組合，直接作用於精神，大幅降低壓力值(-50)。" }
+    - { ID: "HEAL_B", NAME: "肉體機能修復", COST: 40, DESCRIPTION: "伊萊亞斯醫生將會親自為您進行『深度保養』。他會運用自身特殊的、帶有治癒能量的身體（包括他的性器），為您進行一場極度深入、色情但又充滿聖潔感的機能修復。此過程將會讓您的壓力值完全清零。" }
+    - { ID: "HEAL_C", NAME: "屬性潛力激發", COST: 60, DESCRIPTION: "一次高風險的實驗性療程，透過電流和藥物進行深層刺激。壓力值不變，但在下一個車廂的首次屬性檢定中獲得巨大加值。" }
