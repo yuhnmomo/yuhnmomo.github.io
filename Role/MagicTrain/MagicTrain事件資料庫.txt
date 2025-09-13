@@ -125,7 +125,7 @@
   SCENE: "辨認失敗，被錯認者以另一種方式強制記住他的味道。"
   PROMPT_WORDS: "懲罰, 氣味記憶, 強制口交, 味道刻印, 支配"
   EFFECTS: "情慾+30, 進度重置"
-  ITEM_AFFECT: "嗅覺增幅器: 可選擇過載，加倍感官刺激，換取「隱藏癖好」線索。"
+  
 
 //--- T07 機械拘束車廂 ---
 [EVENT_ID: T07_PUZZLE]
@@ -231,20 +231,18 @@
 //--- T12 列車長車廂 ---
 [EVENT_ID: T12_PUZZLE]
   SCENE: "在列車心臟的王座前，面對列車長，在『征服』與『臣服』間做出最終選擇。"
-  PROMPT_WORDS: "列車長, 終點, 王座, 黑暗, 力量, 選擇, 征服, 臣服, 壓迫感, 最終對決, 命運骰子"
+  PROMPT_WORDS: "列車長, 終點, 王座, 黑暗, 力量, 選擇, 征服, 臣服, 壓迫感, 最終對決"
   GOAL: "在「終極問答」中做出選擇，並以行動證明，達成结局。"
   CHOICES: [
     { TEXT: "征服列車長", ACTION: "EXECUTE_SCENARIO", ID: "SCENARIO_CONQUER_ENDING" },
-    { TEXT: "臣服於列車長", ACTION: "EXECUTE_SCENARIO", ID: "SCENARIO_SUBMIT_ENDING" },
-    { IF: "COMPANION_BOND_MAX", TEXT: "與同伴一同回歸現實", ACTION: "EXECUTE_SCENARIO", ID: "SCENARIO_COUPLE_ENDING" },
-    { IF: "HAS_ITEM:命運骰子", TEXT: "擲出命運骰子", ACTION: "EXECUTE_SCENARIO", ID: "SCENARIO_FATE_ENDING" }
+    { IF: "COMPANION_BOND_MAX", TEXT: "與同伴一同回歸現實", ACTION: "EXECUTE_SCENARIO", ID: "SCENARIO_COUPLE_ENDING" }
   ]
   FAILURE_CONDITIONS:
     - { CONDITION: "未做選擇", ACTION: "EXECUTE_PUNISHMENT", ID: "T12_PUNISH_01" } 
     - { CONDITION: "選擇征服但檢定失敗", ACTION: "EXECUTE_PUNISHMENT", ID: "T12_PUNISH_01" } 
   PROGRESS_GAIN: 100
-  NON_LINEAR_SOLUTIONS: ["【征服結局】: 通過極高難度綜合屬性檢定(S+I或S+B)，反壓列車長，奪取控制權。", "【臣服結局】: 展現全然信賴與交付(高I檢定)，心甘情願獻上自己。", "【情侶結局】: 與同伴羈絆達到最高等級，並選擇一同回歸現實，在現實世界中發展戀情。"]
-  ITEM_USAGE: "命運骰子: 可放棄選擇，擲骰隨機進入特殊「命運結局」。"
+  NON_LINEAR_SOLUTIONS: ["【征服發展】: 通過極高難度綜合屬性檢定(S+I或S+B)，反壓列車長，奪取控制權，並選擇回歸現實。", "【情侶發展】: 與同伴羈絆達到最高等級，並選擇一同回歸現實，在現實世界中發展戀情。"]
+  
   COMPANION_INTERACTION: "最終羈絆等級決定同伴行為(支持/並肩作戰/陪伴獻身/背叛)。"
 [PUNISHMENT_ID: T12_PUNISH_01]
   INITIATOR: "列車長。"
