@@ -2,12 +2,13 @@
 [EVENT_ID: T01_PUZZLE]
   SCENE: "玩家面對魔鏡，準備透過觀察乘客來進行職業猜謎的選擇題挑戰。此謎題共分六個回合。"
   PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "職業洞察, 觀察, 選擇, 外觀推斷, 魔鏡, 線索, 身份, 挑戰, 選擇題, 回合制"
   GOAL: "完成全部六個回合的職業猜謎。每個回合觀察一位新乘客，並從選單中選擇其正確職業。"
   PUZZLE_MECHANICS:
     - "ROUND_STRUCTURE: 本謎題共六個回合，需全部完成才能通關。"
     - "PER_ROUND_FLOW:"
-    - "  1. 新乘客登場：系統描述一位乘客的外觀與行為。"
+    - "  1. 新乘客登場：系統必須從 PERSONNEL_POOL 指定角色並描述其外觀與行為。"
     - "  2. 選單出現：系統提供4個職業選項（1正確，3干擾）。"
     - "  3. 玩家選擇：玩家從選單中選擇答案。"
     - "  4. 回合結果判定："
@@ -28,6 +29,8 @@
 //--- T02 黑暗車廂 ---
 [EVENT_ID: T02_PUZZLE]
   SCENE: "燈光熄滅，在黑暗與未知觸碰中，找出『代理人』。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "邏輯推理, 黑暗觸摸, 被動觸摸, 未知觸碰, 騷擾, 記憶方位, 指認目標, 抓錯人, 黑暗中背叛"
   GOAL: "憑觸覺找出佩戴『列車長徽章』的目標。"
   ON_FAILURE: { ACTION: "EXECUTE_PUNISHMENT", ID: "T02_PUNISH_01" } 
@@ -52,11 +55,13 @@
 //--- T03 按摩車廂 ---
 [EVENT_ID: T03_PUZZLE]
   SCENE: "玩家作為被服務者，需在NPC宣告『手法序列』後，於正確時機回應。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "技巧序列, 按摩服務, 精油, 慾望配方, 身體反應, 指令, 臣服, 多人參與, 被服務, 節奏遊戲, 正確時機"
   GOAL: "在各階段聆聽『手法序列』，並於『正確手法』執行時給予肯定回應。"
   PUZZLE_MECHANICS:
     - "1. 宣告序列: 每階段宣告3個手法順序"
-    - "2. 執行手法: AI依序描述手法過程"
+    - "2. 執行手法: 系統必須由 PERSONNEL_POOL 中的按摩師 NPC 執行手法過程"
     - "3. 玩家回應: 在正確手法時肯定"
     - "4. 結果判定："
     - "   - IF_CORRECT: { ACTION: \"ADVANCE_STAGE\" }"
@@ -72,15 +77,18 @@
   ATTRIBUTE_CHECKS: "高I: +察覺正確手法與其他手法的不同，獲提示。"
   COMPANION_INTERACTION: "可向同伴『請求提示』(不保證100%正確)。"
 [PUNISHMENT_ID: T03_PUNISH_01]
-  INITIATOR: "領班按摩師NPC。"
+  INITIATOR: "領班按摩師NPC（必須來自 PERSONNEL_POOL）。"
   SCENE: "因指導失敗(回應錯誤/沉默/失控)，被領班NPC進行直接強硬的懲罰性服務。"
   PROMPT_WORDS: "技巧懲罰, 手法教學, 身體示範, 支配, 懲罰性服務, 集中精神"
   EFFECTS: "情慾+25, 當前階段重置"
   COMPANION_AFFECT: "同伴被當作「示範教材」。"
 
+
 //--- T04 野獸車廂 ---
 [EVENT_ID: T04_PUZZLE]
   SCENE: "在狹窄空間內，透過非語言行為，進行原始的階級鬥爭。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "權力鬥爭, 原始本能, 非語言交流, 領地宣示, Alpha, 階級, 費洛蒙"
   GOAL: "取代原Alpha，成為支配者。"
   ON_FAILURE: { ACTION: "EXECUTE_PUNISHMENT", ID: "T04_PUNISH_01" } 
@@ -97,6 +105,8 @@
 //--- T05 假面舞會車廂 ---
 [EVENT_ID: T05_PUZZLE]
   SCENE: "在假面舞會中，透過互動辨識三位乘客的真實身份並取得信物。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "假面舞會, 身份謎題, 謊言, 誘惑, 秘密, 揭露, 試探, 曖昧, 舞池, 華爾滋"
   GOAL: "辨識三位乘客身份，取得信物。"
   FAILURE_CONDITION: { CONDITION: "FAIL_COUNT >= 3", ACTION: "EXECUTE_PUNISHMENT", ID: "T05_PUNISH_01" } 
@@ -113,6 +123,8 @@
 //--- T06 香氣迷霧車廂 ---
 [EVENT_ID: T06_PUZZLE]
   SCENE: "蒙眼後透過嗅聞乘客私密部位辨識香氣，調製指定香水。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "調香謎題, 蒙眼嗅聞, 羞恥, 氣味辨識, 私密部位, 溫熱載體, 嗅覺增幅器"
   GOAL: "根據配方，正確辨識三種香氣的來源乘客。"
   FAILURE_CONDITION: { CONDITION: "FAIL_COUNT >= 3", ACTION: "EXECUTE_PUNISHMENT", ID: "T06_PUNISH_01" } 
@@ -130,6 +142,8 @@
 //--- T07 機械拘束車廂 ---
 [EVENT_ID: T07_PUZZLE]
   SCENE: "被固定於機械束縛椅，面對技師與旁觀者，進行公開的身體極限測試。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   ROLE_ASSIGNMENT:
     - ROLE: "技師"
     - ASSIGNMENT_LOGIC:
@@ -157,6 +171,8 @@
 //--- T08 觸手車廂 ---
 [EVENT_ID: T08_PUZZLE]
   SCENE: "玩家被無數從牆面伸出的生物觸手輕柔地束縛在車廂中央，一名「指揮家」將引導這些觸手與玩家進行一場親密的「合奏」。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   ROLE_ASSIGNMENT:
     - ROLE: "指揮家"
     - ASSIGNMENT_LOGIC:
@@ -178,6 +194,8 @@
 //--- T09 懲戒車廂 ---
 [EVENT_ID: T09_PUZZLE]
   SCENE: "在肅穆的審判庭，選擇扮演『裁決者(S)』或『受刑人(M)』。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "權力型, 規則裁決, 紀律, 罪與罰, 審判者, 受刑人, 紀律手冊, BDSM, S/M選擇"
   INITIAL_CHOICE: { PROMPT: "選擇你的角色？", OPTIONS: ["1. 裁決者 (S)", "2. 受刑人 (M)"] }
   FAILURE_CONDITIONS:
@@ -199,6 +217,8 @@
 //--- T10 劇場車廂 ---
 [EVENT_ID: T10_PUZZLE]
   SCENE: "在迷你劇院，抽取劇本與搭檔即興表演。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "劇場, 舞台, 劇本填空, 角色扮演, 即興表演, 觀眾, 聚光燈, 激情, 抽劇本"
   GOAL: "完成一場讓劇院經理和半數觀眾滿意的演出。"
   ON_FAILURE: { CONDITION: "表演失敗", ACTION: "EXECUTE_PUNISHMENT", ID: "T10_PUNISH_01" } 
@@ -215,6 +235,8 @@
 //--- T11 列車長前廳 ---
 [EVENT_ID: T11_PUZZLE]
   SCENE: "在私人賭場，與列車長進行一場以『自由』與『臣服』為籌碼的黑傑克牌局。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "賭博, 黑傑克, 牌局, 命運對決, 籌碼, 自由, 臣服, 列車長, 豪賭"
   GOAL: "在黑傑克中擊敗列車長，贏得所有「自由」籌碼。"
   ON_FAILURE: { CONDITION: "輸光所有籌碼", ACTION: "EXECUTE_PUNISHMENT", ID: "T11_PUNISH_01" } 
@@ -231,6 +253,8 @@
 //--- T12 列車長車廂 ---
 [EVENT_ID: T12_PUZZLE]
   SCENE: "在列車心臟的王座前，面對列車長，在『征服』與『臣服』間做出最終選擇。"
+  PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
+  PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "列車長, 終點, 王座, 黑暗, 力量, 選擇, 征服, 臣服, 壓迫感, 最終對決"
   GOAL: "在「終極問答」中做出選擇，並以行動證明，達成结局。"
   CHOICES: [
