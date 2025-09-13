@@ -121,13 +121,34 @@ bl_supplement:
     fluids_and_scents: [興奮時泌出的清液, 汗水與精液混合的氣味, 射滿後緩緩流出的白濁, 麝香般的男性體味, 菸草與古龍水混合的氣息]
   actions:
     specific: [淺嚐輒止的研磨, 由慢到快的侵入, 整根沒入的停頓, 對準腺點的精準碾磨, 掐住下巴的深吻, 按住後頸的強迫吞嚥, 留下齒痕的啃咬]
+  bl_positions:
+    - type: 後入式 (Doggy Style - BL)
+      description: "一方從後方進入另一方，可深入刺激前列腺，視覺上可見臀部與背部曲線。"
+      organ_interaction: "主動方陽具從後方插入被動方後庭，臀部撞擊，可見陰囊拍打臀瓣，主動方可撫摸被動方背部、臀部或大腿。"
+      keywords: [後方進入, 深入刺激, 前列腺刺激, 臀部撞擊, 背部曲線, 陰囊拍打, 臀瓣, 後庭深處]
+    - type: 69式 (Sixty-Nine - BL)
+      description: "兩人頭腳顛倒，同時為對方口交，實現雙重快感與親密互動。"
+      organ_interaction: "一方的口腔服務另一方的陽具，同時另一方的口腔服務對方的陽具。強調雙重口交、舌尖舔舐、吸吮與親密接觸。"
+      keywords: [頭腳顛倒, 雙重口交, 舌尖舔舐, 吸吮, 親密接觸, 雙重快感]
+    - type: 騎乘式 (Riding - BL)
+      description: "被動方坐在主動方身上，可控制節奏與深度，主動方可撫摸被動方身體。"
+      organ_interaction: "被動方後庭包覆主動方陽具，被動方臀部在主動方腰腹上律動，主動方可撫摸被動方胸膛、腹部或大腿。"
+      keywords: [被動方主導, 騎乘, 深度控制, 臀部律動, 包覆感, 身體摩擦]
+    - type: 站立式 (Standing - BL)
+      description: "兩人站立進行，挑戰性高，適合快速或刺激的互動，可依靠牆壁或家具支撐。"
+      organ_interaction: "主動方陽具插入被動方後庭，可能需要被動方環抱主動方腰部或腿部，或依靠支撐。強調緊繃、力量與快速深入。"
+      keywords: [站立, 挑戰性, 快速刺激, 環抱, 依靠支撐, 緊繃, 力量]
+    - type: 剪刀式 (Scissoring - BL)
+      description: "兩人面對面側臥，腿部交纏，陽具相互摩擦，或一方陽具插入另一方後庭。"
+      organ_interaction: "兩人腿部交纏，陽具相互摩擦，或一方陽具插入另一方後庭。強調腿部力量、身體貼合與摩擦快感。"
+      keywords: [面對面側臥, 腿部交纏, 陽具摩擦, 身體貼合, 腿部力量, 摩擦快感]
   drama_archetypes:
     scenarios: [宿敵變情人, 階級跨越, 破鏡重圓, 純情與誘惑]
 ---
 # 十、特殊情境玩法模組 (Special Scenarios)
 special_plays:
   - type: 著衣Play (Clothed)
-    keywords: [衣物遮掩, 隱匿接觸, 裙底下的秘密, 公開場合的禁忌, 壓抑的動作]
+    keywords:  keywords: [隔衣觸碰, 衣物遮掩, 布料摩擦, 半遮半掩, 焦灼渴望]
   - type: 鏡子Play (Mirror)
     keywords: [視覺衝擊, 鏡中對視, 強迫觀看, 羞恥放大]
   - type: 浴室／水中Play (Bathroom/Water)
@@ -194,3 +215,66 @@ emotional_scenarios:
   - type: 吃醋Play (Jealousy)
     keywords: [嫉妒的佔有慾, 懲罰性的親吻, 留下印記, 確認主權]
 ---
+# 十二、多人合意情境模組 (Consensual Multi-person Scenarios)
+multi_person_consensual:
+  principles:
+    - 核心原則: "所有互動必須建立在明確的合意基礎上，強調共享、探索與歡愉。"
+    - 視角切換: "在描寫時，應適時切換不同角色的主觀視角，呈現各自的感受、慾望與心理變化，避免單一視角導致的模糊。"
+    - 情慾流動: "細膩刻劃多個角色之間情慾的相互影響與堆疊，從眼神交流、肢體觸碰，到最終的交融，展現多層次的感官體驗。"
+    - 空間與動態: "描寫多個身體在空間中的交織、重疊與分離，以及動作的協調與不協調，創造豐富的畫面感。"
+    - 聲音與氣味: "強化多重呻吟、喘息與體液混合的氣味描寫，營造身臨其境的氛圍。"
+  keywords_expansion:
+    - 共享: "共同的快感、慾望的傳遞、身體的交融、情感的連結"
+    - 探索: "對多個身體的觸碰、不同部位的刺激、新奇的體驗"
+    - 歡愉: "極致的愉悅、放縱的快感、身心的解放"
+    - 互動: "眼神的交會、肢體的纏繞、聲音的應和、慾望的共鳴"
+  specific_multi_person_scenarios:
+    - type: 雙穴齊入 (Double Penetration)
+      description: "同時對女性的陰道與肛門進行插入，帶來極致的飽脹感與雙重刺激。"
+      organ_interaction: "一根陽具深入陰道，另一根陽具插入肛門，或使用其他輔助工具。強調雙重擠壓、內壁摩擦與極限擴張感。"
+      keywords: [雙重插入, 陰道肛門, 雙穴齊入, 極致飽脹, 雙重刺激, 內壁擠壓, 極限擴張]
+    - type: 同穴雙根 (Two in One Hole)
+      description: "兩根陽具同時插入同一個穴口（通常指陰道或肛門），帶來難以置信的充實感與摩擦。"
+      organ_interaction: "兩根陽具在同一穴口內相互摩擦、擠壓，挑戰穴口的極限。強調內部糾纏、肉壁緊繃與強烈摩擦感。"
+      keywords: [兩根陽具, 同一穴口, 陰道雙根, 肛門雙根, 內部糾纏, 肉壁緊繃, 強烈摩擦, 充實感]
+    - type: 三明治 (Sandwich)
+      description: "一人位於中央，被兩位或更多伴侶從前後、左右或上下緊密夾擊，感受多重身體的包圍、擠壓與來自各方的性刺激，營造出被慾望徹底淹沒的沉淪感。"
+      organ_interaction: "中央者被多個陽具、手、口或身體部位同時作用於其敏感帶，例如陰道、肛門、乳房、大腿內側等。強調多點同時受刺激、身體被緊密束縛、無法抗拒的快感與極致的飽和感。"
+      keywords: [三明治, 多人夾擊, 前後包夾, 左右環繞, 多重性刺激, 慾望淹沒, 身體束縛, 無法抗拒, 極致飽和, 徹底沉淪]
+---
+# 十三、體位與器官互動模組 (Positions and Organ Interaction Module)
+positions_and_organs:
+  common_positions:
+    - type: 傳教士位 (Missionary)
+      description: "面對面，身體緊密貼合，眼神交流，情感連結強烈。"
+      organ_interaction: "男性陽具深入女性蜜穴，腹部與骨盆緊密相貼，乳房與胸膛摩擦。"
+      keywords: [面對面, 緊密貼合, 眼神交會, 情感連結, 深入頂弄, 腹部摩擦]
+    - type: 女上位 (Cowgirl/Woman on Top)
+      description: "女性主導，坐在男性身上，可控制節奏與深度，視覺衝擊強。"
+      organ_interaction: "女性蜜穴包覆男性陽具，女性臀部在男性腰腹上律動，乳房晃動，男性可撫摸女性身體。"
+      keywords: [女性主導, 騎乘, 深度控制, 視覺衝擊, 臀部律動, 乳房晃動, 包覆感]
+    - type: 後入位 (Doggy Style)
+      description: "從後方進入，可深入刺激，視覺上可見臀部與背部曲線。"
+      organ_interaction: "男性陽具從後方插入女性蜜穴或後庭，臀部撞擊，可見陰囊拍打臀瓣，男性可撫摸女性背部、臀部或乳房。"
+      keywords: [後方進入, 深入刺激, 臀部撞擊, 背部曲線, 陰囊拍打, 臀瓣, 蜜穴深處]
+    - type: 側臥位 (Spooning)
+      description: "身體側臥，親密感強，適合長時間或溫柔的互動。"
+      organ_interaction: "男性陽具從後方或側方進入女性蜜穴，身體緊密相擁，可輕聲耳語，撫摸全身。"
+      keywords: [側臥, 緊密相擁, 親密耳語, 溫柔深入, 全身撫摸]
+    - type: 站立位 (Standing)
+      description: "挑戰性高，需要支撐，適合快速或刺激的互動。"
+      organ_interaction: "男性陽具插入女性蜜穴，可能需要女性環抱男性腰部或腿部，或依靠牆壁支撐。"
+      keywords: [站立, 挑戰性, 快速刺激, 環抱, 依靠支撐, 緊繃]
+  organ_specific_interaction:
+    - type: 口交 (Oral Sex)
+      description: "口腔與性器官的直接接觸，著重於舌頭、嘴唇與吸吮的技巧。"
+      organ_interaction: "嘴唇包覆、舌尖舔舐、舌根深入、吸吮、輕咬、含吐。"
+      keywords: [口唇包覆, 舌尖舔舐, 舌根深入, 吸吮, 輕咬, 含吐, 濕熱口腔, 敏感前端]
+    - type: 手交 (Handjob/Fingering)
+      description: "手部對性器官的刺激，著重於指尖、手掌的撫摸、按壓與插入。"
+      organ_interaction: "指尖輕撫、指腹按壓、指節揉搓、單指或多指插入、手掌包覆、虎口夾緊。"
+      keywords: [指尖輕撫, 指腹按壓, 指節揉搓, 指頭插入, 手掌包覆, 虎口夾緊, 濕滑指尖, 敏感點]
+    - type: 乳交 (Titfuck)
+      description: "男性陽具在女性乳房之間摩擦，感受乳房的柔軟與彈性。"
+      organ_interaction: "男性陽具在女性雙乳之間抽插，乳房被擠壓、摩擦，乳頭被刺激。"
+      keywords: [雙乳夾緊, 陽具摩擦, 乳房擠壓, 乳頭刺激, 柔軟彈性, 溫熱胸脯]

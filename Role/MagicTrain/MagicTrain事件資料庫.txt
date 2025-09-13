@@ -118,7 +118,7 @@
   FAILURE_CONDITION: { CONDITION: "FAIL_COUNT >= 3", ACTION: "EXECUTE_PUNISHMENT", ID: "T06_PUNISH_01" } 
   PROGRESS_GAIN: 33
   ATTRIBUTE_CHECKS: ["高O: +嗅覺敏銳度", "高I: +體香與性格的連結猜測"]
-  ITEM_USAGE: "嗅覺增幅器: 氣味層次放大並標籤化，降低難度。"
+  
   COMPANION_INTERACTION: "可與同伴討論氣味(不保證準確)。"
 [PUNISHMENT_ID: T06_PUNISH_01]
   INITIATOR: "最後辨識失敗的乘客。"
@@ -252,6 +252,13 @@
   PROMPT_WORDS: "列車長懲罰, 終極教導, 絕對支配, 無法反抗, 徹底臣服, 羞恥, 力量壓制"
   EFFECTS: "情慾+50, 進入特殊的「教導結局」。"
   COMPANION_AFFECT: "同伴將被當作「教材」，向你展示反抗的無力，之後才輪到你。"
+
+//--- T12 破關後情侶事件 ---
+[EVENT_ID: T12_POST_PUZZLE_COUPLE_EVENT]
+  name: "情侶故事後續"
+  trigger: "玩家與同伴羈絆達到最高等級，並通關T12車廂"
+  detail: "列車緩緩停下，您與同伴手牽著手，一同踏出現實世界的陽光。列車上的經歷讓你們的關係昇華，回到現實世界後，你們迫不及待地探索彼此的身體，迎來了第一次的現實親密破處。此後，你們的日常充滿了甜蜜的聊天與約會，共同編織著屬於你們的幸福篇章。"
+  PROMPT_WORDS: "情侶, 現實回歸, 幸福, 戀情, 新生, 羈絆昇華, 現實親密, 破處, 日常約會, 甜蜜生活"
 
 //--- 特殊房間：療癒之室 (新事件) ---
 [EVENT_ID: SPECIAL_HEALING_ROOM]
