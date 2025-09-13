@@ -17,7 +17,7 @@
     - "    - POST_PUNISHMENT_ACTION: { ACTION: \"INCREASE_PROGRESS\", VALUE: 17 }"
     - "    - DESCRIPTION: \"無論答對或受罰，回合結束後謎題進度都將推進。\""
   ATTRIBUTE_CHECKS: ["高O: +描述關鍵詞識別", "高I: +行為與職業連結能力"]
-  ITEM_USAGE: "職業線索筆記: 使用後，在每次選擇時，會自動從4個選項中排除1個錯誤答案。"
+  
   COMPANION_INTERACTION: "可諮詢同伴(依其O/I屬性建議，不保證正確)。"
 [PUNISHMENT_ID: T01_PUNISH_01]
   INITIATOR: "被錯認的乘客。"
@@ -28,7 +28,7 @@
 //--- T02 黑暗車廂 ---
 [EVENT_ID: T02_PUZZLE]
   SCENE: "燈光熄滅，在黑暗與未知觸碰中，找出『代理人』。"
-  PROMPT_WORDS: "邏輯推理, 黑暗觸摸, 被動觸摸, 未知觸碰, 騷擾, 記憶方位, 指認目標, 抓錯人, 觸覺手套, 黑暗中背叛"
+  PROMPT_WORDS: "邏輯推理, 黑暗觸摸, 被動觸摸, 未知觸碰, 騷擾, 記憶方位, 指認目標, 抓錯人, 黑暗中背叛"
   GOAL: "憑觸覺找出佩戴『列車長徽章』的目標。"
   ON_FAILURE: { ACTION: "EXECUTE_PUNISHMENT", ID: "T02_PUNISH_01" } 
   DYNAMIC_ELEMENTS: "被動接觸: NPC會主動觸碰玩家或同伴，可作為干擾或線索。"
@@ -40,7 +40,7 @@
     PROMPT_WORDS: "背叛, 強制play, 尋找道具, 絕望, 掙扎, 雙重任務"
   PROGRESS_GAIN: 33
   ATTRIBUTE_CHECKS: ["高O: +空間記憶, +方位判斷", "高B: +移動敏捷, +反應靈敏, +對抗掙扎空間"]
-  ITEM_USAGE: "觸覺手套: +觸覺，+材質信息獲取，+道具形狀識別。"
+  
   COMPANION_INTERACTION: "可命令同伴協助搜索。低羈絆可能誤導或觸發背叛。"
 [PUNISHMENT_ID: T02_PUNISH_01]
   INITIATOR: "被錯認的NPC。"
@@ -81,12 +81,12 @@
 //--- T04 野獸車廂 ---
 [EVENT_ID: T04_PUZZLE]
   SCENE: "在狹窄空間內，透過非語言行為，進行原始的階級鬥爭。"
-  PROMPT_WORDS: "權力鬥爭, 原始本能, 非語言交流, 領地宣示, Alpha, 階級, 費洛蒙, 費洛蒙抑制劑"
+  PROMPT_WORDS: "權力鬥爭, 原始本能, 非語言交流, 領地宣示, Alpha, 階級, 費洛蒙"
   GOAL: "取代原Alpha，成為支配者。"
   ON_FAILURE: { ACTION: "EXECUTE_PUNISHMENT", ID: "T04_PUNISH_01" } 
   PROGRESS_GAIN: 33
   NON_LINEAR_SOLUTIONS: ["【征服(高B/S)】:正面挑戰擊敗Alpha", "【詭術(高I)】:觀察並利用Alpha弱點", "【魅惑(高S)】:征服或誘惑Alpha，轉化為情慾支配"]
-  ITEM_USAGE: "費洛蒙抑制劑: 3次檢定中免疫費洛蒙影響，I/S檢定加值。"
+  
 [PUNISHMENT_ID: T04_PUNISH_01]
   INITIATOR: "擊敗你的乘客。"
   SCENE: "挑戰失敗，被勝利者壓制，宣告為戰利品。"
@@ -142,11 +142,11 @@
     SCENE: "親密行為被旁觀者輪流操控，變成一場公開表演。"
     PROMPT_WORDS: "公開表演, 輪流操控, 機械椅, 圍觀, 數據化, 羞恥, 支配, 多人參與"
     EFFECTS: "情慾大幅提升，進度依表演精彩度變化，可能解鎖特殊結局。"
-  PROMPT_WORDS: "權力服從, 機械束縛, 固定, 公開羞恥, 旁觀者, 技師, 極限測試, 萬能解鎖器"
+  PROMPT_WORDS: "權力服從, 機械束縛, 固定, 公開羞恥, 旁觀者, 技師, 極限測試"
   GOAL: "選擇正確應對策略(順從/忍耐/挑釁)取悅技師或撐到結束。"
   PROGRESS_GAIN: 33
   ATTRIBUTE_CHECKS: ["高B: +承受刺激", "高S: +反應更能取悅技師"]
-  ITEM_USAGE: "萬能解鎖器: 可嘗試提前解開束縛(需B檢定)，失敗則加重懲罰。"
+  
 [PUNISHMENT_ID: T07_PUNISH_01]
   INITIATOR: "技師，及可能被邀請的旁觀者。"
   SCENE: "錯誤選擇惹怒技師，啟動懲罰模式，旁觀者可能加入。"
@@ -156,19 +156,24 @@
 
 //--- T08 觸手車廂 ---
 [EVENT_ID: T08_PUZZLE]
-  SCENE: "引導生物組織牆面伸出的無數觸手，與中央的核心共鳴。"
-  PROMPT_WORDS: "觸手, 生物組織, 蠕動, 指引, 異樣, 樂章, 意識, 指令, 纏繞, 撫摸"
-  GOAL: "引導至少三條觸手完成「動作序列」，從核心取得「異樣的結晶」。"
-  FAILURE_CONDITION: { CONDITION: "CHAOS_COUNT >= 3", ACTION: "EXECUTE_PUNISHMENT", ID: "T08_PUNISH_01" } 
+  SCENE: "玩家被無數從牆面伸出的生物觸手輕柔地束縛在車廂中央，一名「指揮家」將引導這些觸手與玩家進行一場親密的「合奏」。"
+  ROLE_ASSIGNMENT:
+    - ROLE: "指揮家"
+    - ASSIGNMENT_LOGIC:
+      - "IF_COMPANION_PRESENT: { ASSIGN_TO: 'COMPANION' }"
+      - "IF_NO_COMPANION: { PROMPT_PLAYER_TO_CHOOSE_FROM: 'PASSENGERS_IN_SCENE' }"
+    - DESCRIPTION: "指揮家角色將由您的同伴擔任。若您沒有同伴，您將可以從在場的乘客中指定一位來擔任。"
+  PROMPT_WORDS: "觸手, 表演, 指揮, 合奏, 束縛, 公開, 圍觀, 性愛, 玩家被動, 肛交, 吊掛"
+  GOAL: "在高潮時，從「指揮家」手中獲得「異樣的結晶」。"
+  FAILURE_CONDITION: { CONDITION: "指揮家不滿意", ACTION: "EXECUTE_PUNISHMENT", ID: "T08_PUNISH_01" } 
   PROGRESS_GAIN: 33
-  ATTRIBUTE_CHECKS: ["高I: +理解核心意圖", "高S: +聲音/氣場引導觸手", "高B: 可用身體當媒介傳達指令(高風險高成功率)"]
-  COMPANION_INTERACTION: "可與同伴合奏(高羈絆)或造成混亂(低羈絆)。"
+  ATTRIBUTE_CHECKS: ["高S: +表演的感染力，提升指揮家的興奮度", "高B: +承受刺激，解鎖更多觸手互動"]
 [PUNISHMENT_ID: T08_PUNISH_01]
-  INITIATOR: "生物核心。"
-  SCENE: "指令錯誤導致觸手狂暴，將玩家與同伴包裹束縛，感受其渴望。"
-  PROMPT_WORDS: "觸手懲罰, 束縛, 吸盤, 強制, 狂暴, 渴望, 異樣的合奏, 無法反抗"
-  EFFECTS: "情慾+35, 進度重置"
-  COMPANION_AFFECT: "與同伴被緊綁，被迫親密接觸。"
+  INITIATOR: "指揮家"
+  SCENE: "指揮家對你的反應感到不滿，他親自上前，用更粗暴的方式「教導」你如何與觸手互動。"
+  PROMPT_WORDS: "觸手懲罰, 教導, 強制, 粗暴, 支配, 1v1"
+  EFFECTS: "情慾+35, 進度歸零"
+  COMPANION_AFFECT: "若指揮家是同伴，他會展現出不同於以往的支配慾。"
 
 //--- T09 懲戒車廂 ---
 [EVENT_ID: T09_PUZZLE]
@@ -249,6 +254,6 @@
   INTERACTIONS:
     - "醫師AI會掃描玩家的生理和心理狀態，然後提供一個服務選單，讓玩家使用『靈感碎片』進行購買。"
   SERVICE_MENU:
-    - { ID: "HEAL_A", NAME: "精神舒緩療程", COST: 20, DESCRIPTION: "透過特定的光影、聲音和香氣組合，直接作用於精神，大幅降低壓力值(-50)。" }
-    - { ID: "HEAL_B", NAME: "肉體機能修復", COST: 40, DESCRIPTION: "伊萊亞斯醫生將會親自為您進行『深度保養』。他會運用自身特殊的、帶有治癒能量的身體（包括他的性器），為您進行一場極度深入、色情但又充滿聖潔感的機能修復。此過程將會讓您的壓力值完全清零。" }
-    - { ID: "HEAL_C", NAME: "屬性潛力激發", COST: 60, DESCRIPTION: "一次高風險的實驗性療程，透過電流和藥物進行深層刺激。壓力值不變，但在下一個車廂的首次屬性檢定中獲得巨大加值。" }
+    - { ID: "HEAL_A", NAME: "精神舒緩療程", COST: 10, DESCRIPTION: "伊萊亞斯醫生將為您進行一場極致 sensual 的裸體精油按摩。他會用雙手與嘴唇探索您身體的每一寸敏感帶，為您帶來極致的放鬆與歡愉，但療程將不包含任何插入式性行為。此療程能大幅降低壓力值(-50)。", PROMPT_WORDS: "精神舒緩, 裸體按摩, 色情按摩, 精油, 全身愛撫, 手交, 口交, 體外高潮, 溫柔挑逗", INTERACTIONS: [{ "PROMPT": "您可以引導醫生加強特定部位的按摩，例如：『請加強肩頸』。" }] }
+    - { ID: "HEAL_B", NAME: "肉體機能修復", COST: 20, DESCRIPTION: "伊萊亞斯醫生將會親自為您進行一場徹底的『深度保養』，最終將您的壓力值完全清零，並為您帶來前所未有的新生感。", PROMPT_WORDS: "深度保養, 機能修復, 聖潔, 色情, 能量吻, 全身愛撫, 性器治療, 溫柔侵入, 壓力歸零, 詳細過程", INTERACTIONS: [{ "PROMPT": "在療程中，您可以隨時對醫生提出『再深入一點』或『加強治療』等要求，醫生會根據您的狀態調整治療的強度與深度。" }] }
+    - { ID: "HEAL_C", NAME: "屬性潛力激發", COST: 30, DESCRIPTION: "一場融合了藥物、電流與機械裝置的高風險實驗性療程。伊萊亞斯醫生將親自操作並與機械一同參與，將您的身體推向極限，在痛苦與歡愉的邊界喚醒潛能。此療程將包含醫生與機械共同執行的、強制性的高強度性愛內容。壓力值不變，但在下一個車廂的首次屬性檢定中獲得巨大加值。", PROMPT_WORDS: "高風險實驗, 醫生與機械, 雙重刺激, 電流刺激, 藥物催情, 機械姦, 醫生支配, 潛能激發, 極限測試, 痛並快樂著, 感官過載, 強制高潮", INTERACTIONS: [{ "PROMPT": "療程中，您可以選擇『承受』以提升效果，或『抵抗』以降低風險，您的選擇將影響最終獲得的加值幅度。" }] }
