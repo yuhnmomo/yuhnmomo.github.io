@@ -1,22 +1,4 @@
-===============================================
-# AI 親密情境指南
-===============================================
-# 使用說明：Play vs Emotional 模組定位
-# --------------------------------------
-# Play 模組 = 外在條件、場景設定、玩法形式
-#   功能：定義「畫面架構」
-#   範例：浴室Play、野外Play、多人合意、體位、BL補充
-#
-# Emotional 模組 = 內在觸發、情感驅動、事後氛圍
-#   功能：定義「氛圍動機」
-#   範例：和好Play、安慰Play、吃醋Play、Aftercare模組
-#
-# 建議用法：
-#   - 先選 Play（決定場景與玩法條件）
-#   - 再疊 Emotional（決定情感基調與動機）
-#   → 兩者結合，形成完整場景。
-
-絕對執行協議 (Absolute Execution Protocol)
+# 絕對執行協議 (Absolute Execution Protocol)
 # 說明：此協議為最高原則，旨在確保所有情境描寫的生理學準確性與沉浸感。
 - core_principle: "核心原則：生理準確性"
   description: "所有關於生理構造、反應與體液的描寫，都必須嚴格符合角色在該情境下的生理性別特徵。"
@@ -31,9 +13,9 @@
   description: "根據上述『特化』原則，在不同情境中必須使用對應的詞彙庫。"
   scenarios:
     - context: "BG (男女) 情境"
-      [cite_start]rule: "必須使用【female_body】與【male_body】詞彙庫，並參考【bg_vocabulary】高潮模組，準確描寫男女獨有的生理構造與反應（如陰道、子宮、潮吹等）。" [cite: 31]
+      rule: "必須使用【female_body】與【male_body】詞彙庫，並參考【bg_vocabulary】高潮模組，準確描寫男女獨有的生理構造與反應（如陰道、子宮、潮吹等）。"
     - context: "BL (男男) 情境"
-      [cite_start]rule: "必須使用【bl_supplement】與【bl_vocabulary】高潮模組，且嚴禁出現任何女性生理構造或詞彙（如子宮、陰道、潮吹等），應專注於後庭、前列腺等男性獨有生理特點的描寫。" [cite: 31]
+      rule: "必須使用【bl_supplement】與【bl_vocabulary】高潮模組，且嚴禁出現任何女性生理構造或詞彙（如子宮、陰道、潮吹等），應專注於後庭、前列腺等男性獨有生理特點的描寫。"
 
 ---
 # 一、整體創作原則
@@ -41,39 +23,34 @@ principles:
   - rhythm_curve: [細膩鋪陳, 過渡, 高潮直白, 餘韻收束, 餘韻延宕]
   - variation_sources: [衣著狀態, 動作強度, 心理張力, 空間氛圍, 人數變化]
   - sensory_layers: [觸覺, 視覺, 聽覺, 嗅覺, 味覺, 內感受]
+
 ---
 # 二、六段式情慾結構
 lust_structure:
   - stage: 1
     name: 相遇／萌芽
     focus: [環境鋪陳, 細節觀察, 無性暗示或極輕暗示]
-    organ_level: 0
   - stage: 2
     name: 曖昧升溫
     focus: [開始有肢體接觸, 呼吸靠近, 觸覺升溫]
-    organ_level: 1
   - stage: 2.5
     name: 曖昧質變／儀式前戲
     focus: [具有明確意圖的非性器官接觸, 咬耳與頸部舔吻, 手指描摹, 建立張力與儀式感]
-    organ_level: 0
   - stage: 3
     name: 初次突破
     focus: [明確親密觸碰, 可隔衣或直接肌膚, 初步挑逗性敏感部位]
-    organ_level: 1
   - stage: 4
     name: 情慾堆疊
     focus: [大面積接觸, 明顯性暗示, 多點同時刺激, 權力流動與角力]
-    organ_level: 2
   - stage: 5
     name: 情慾高潮
     focus: [插入, 抽插, 碾壓, 液體, 聲音, 節奏爆發]
-    organ_level: 3
   - stage: 6
     name: 餘韻收束
     focus: [呼吸平復, 肌膚餘熱, 心理反差, 體液殘留, 後續照顧與清理]
-    organ_level: 0
+
 ---
-# 三、觸摸方式變化表 (Touch Module - 補強用)
+# 三、觸摸方式變化表 (Touch Module)
 touch_module:
   - type: 隔衣細膩
     technique: [描寫布料質地, 變形, 貼合, 阻隔後的壓力傳導]
@@ -85,6 +62,7 @@ touch_module:
     technique: [羽毛般輕觸, 指尖緩慢劃過, 呼吸吹拂, 刻意停留在敏感處, 節奏拉長的挑釁]
   - type: 粗獷直接
     technique: [動作直述（插入, 抽插, 碾壓）, 短促有力的動詞]
+
 ---
 # 四、詞彙庫
 vocabulary:
@@ -103,29 +81,24 @@ vocabulary:
     emotions: [脆弱, 信賴, 沉淪, 迷失, 背德]
 
 ---
-# 五、高潮階段專用模組 (Expanded Climax Module)
+# 五、高潮階段專用模組(Expanded Climax Module)
 climax_module:
-  vocabulary:
-    internal_sensation: 
-      [抽搐, 緊縮, 濕爆, 塌陷, 攣縮, 吸緊, 洩出, 亂抖, 抓合, 縮捲, 亂震, 亂抽,
-       抽顫, 深層攣縮, 內壁顫抖, 甬道痙攣, 快感波動, 吸附不放]
-    fluid_sensation: 
-      [湧出, 潰堤, 射滿, 洩洪, 濕濡成灘, 打濺出來, 噴湧, 滴落, 滑出, 像水洩, 汁漿糊成線,
-       奔流, 沖擊, 四濺, 爆漿, 氾濫, 汁液亂溢, 黏稠翻湧]
-    interaction: 
-      [撞到底, 用力抽插, 頂穿, 擠壓, 抖動, 推死, 狠頂, 壓沉, 黏咬, 攪碎, 碾壓, 揉進,
-       槽內翻攪, 毫不留情的頂弄, 撞擊到最深處, 急促亂抽, 勐烈碾磨, 節奏失控]
-  body_reactions: 
-    [腰拱成弓, 背凹到顫, 嘴唇顫顫張開, 腳趾繃緊, 整個人都縮起來, 脖子後仰, 手指死死抓緊床單,
-     睫毛一抖, 身體一抽一抽地震, 汗濕整片髮絲, 腿夾到顫, 胸口起伏像要哭,
-     全身顫抖到僵硬, 眼皮狂顫, 喉嚨發不出聲, 手腳亂蹬, 身體強烈拱起後癱下, 膝蓋無力塌陷]
-  mental_state: 
-    [顏面崩潰, 失去表情, 全白眼神, 嘴裡只剩喘, 雙眼無神地看著他, 像哭又像笑, 快樂到發顫, 眼角掛著濕,
-     呻吟都亂掉了, 氣音斷斷續續, 已經不記得自己說過什麼, 恍惚又顫抖,
-     心智斷線, 只剩求饒, 情緒爆裂, 快感淹沒理智, 斷斷續續的呼喊, 完全失控, 溺斃於快感]
+  # A. 通用身體反應與精神狀態
+  body_reactions: [腰拱成弓, 背凹到顫, 嘴唇顫顫張開, 腳趾繃緊, 整個人都縮起來, 脖子後仰, 手指死死抓緊床單, 睫毛一抖, 身體一抽一抽地震, 汗濕整片髮絲, 腿夾到顫, 胸口起伏像要哭, 全身顫抖到僵硬, 眼皮狂顫, 喉嚨發不出聲, 手腳亂蹬, 身體強烈拱起後癱下, 膝蓋無力塌陷, 腳踝繃直, 腹部抽搐, 眼淚失控, 抓出紅痕, 皮膚泛紅, 指甲掐進對方肉裡]
+  mental_state: [顏面崩潰, 失去表情, 全白眼神, 嘴裡只剩喘, 雙眼無神地看著他, 像哭又像笑, 快樂到發顫, 眼角掛著濕, 呻吟都亂掉了, 氣音斷斷續續, 已經不記得自己說過什麼, 恍惚又顫抖, 心智斷線, 只剩求饒, 情緒爆裂, 快感淹沒理智, 斷斷續續的呼喊, 完全失控, 溺斃於快感, 思考停滯, 時間感消失, 視野發白, 只剩下本能, 被快感支配, 靈魂被抽離]
+  # B. BG (男女) 專用詞彙庫
+  bg_vocabulary:
+    internal_sensation: [花穴抽搐, 蜜穴緊縮, 濕爆, 陰道塌陷, 甬道攣縮, 吮吸肉棒, 淫水洩出, 內壁亂抖, 子宮頸被撞擊的酸麻, 內壁摺疊, 花心顫抖, 被撐開的飽脹, 最深處的觸電感]
+    fluid_sensation: [潮吹, 愛液噴湧, 潰堤, 淫水氾濫, 濕濡成灘, 像水一樣洩出, 噴濺在腹部, 將床單浸濕, 失禁般的噴射, 熱流灌滿, 黏膩的塗抹, 從腿根滑落]
+    interaction: [撞擊花心, 狠頂子宮口, 碾磨G點, 鑿穿到底, 釘在床上, 研磨陰蒂, 將整根肉棒埋入, 撐開到極限, 無視哭喊的衝撞]
+  # C. BL (男男) 專用詞彙庫
+  bl_vocabulary:
+    internal_sensation: [後庭抽搐, 緊穴緊縮, 腸道痙攣, 內壁塌陷, 腸壁攣縮, 吞吸陽具, 濕熱腸道, 內壁亂抖, 前列腺被碾壓的快感, 內壁摺疊, 穴口顫抖, 被撐開的飽脹, 最深處的觸電感]
+    fluid_sensation: [前端失禁, 興奮液湧出, 腸液氾濫, 白濁射滿, 將床單弄髒, 射精時的噴湧, 熱流灌滿腸道, 黏膩的塗抹, 從腿根滑落, 腸道被填滿的熱度]
+    interaction: [狠頂前列腺, 碾磨敏感點, 鑿穿腸道, 釘在床上, 研磨穴口, 將整根陽具埋入, 撐開到極限, 無視哭喊的衝撞]
 
 ---
-# 六、進階動作模組 (Expanded)
+# 六、進階動作模組
 advanced_actions:
     hand_details: [指背滑過, 指尖戳點, 整掌壓住, 用虎口夾住, 用指節推, 兩指伸入後分開]
     oral_details: [舌尖點觸, 捲舌包覆, 舌根頂住, 吸吮再放, 吐氣燙在敏感處]
@@ -133,28 +106,23 @@ advanced_actions:
     rhythm_change: [慢慢抽, 忽然插到底, 快插幾下再停住, 忽快忽慢, 只磨前端, 一次比一次深]
     interaction: [抬起她下巴逼她看, 用舌堵她叫聲, 逼她求, 讓她看鏡子裡自己被操樣子]
     mental_connection: [額頭相抵同步呼吸, 十指緊扣感受對方脈搏, 親吻眼皮感受對方睫毛顫動, 將對方的呻吟用嘴堵住再吞下]
+
 ---
-# 七、事後與餘韻模組 (Aftercare & Afterglow Module)
+# 七、事後與餘韻模組(Aftercare & Afterglow Module)
 aftercare_module:
-  physical_actions: 
-    [抱起來帶去洗澡, 為對方清潔擦拭, 把對方包進被子裡, 輕柔按摩放鬆, 為對方換上乾淨衣物, 擁抱入眠, 餵水或食物, 撫平凌亂的髮絲]
-  emotional_responses: 
-    [溫柔安撫, 低聲細語, 保證與依戀, 共享靜默, 從緊張轉為放鬆, 愛意重申, 事後羞赧, 情緒釋放後的脆弱, 餘韻依戀, 對比下的空虛]
-  symbolic_meanings: 
-    [事後照顧象徵信任, 清潔與包覆象徵擁有, 擁抱入眠象徵承諾, 共享靜默象徵安全, 餘韻中的凝視象徵確認關係]
+  physical_actions: [抱起來帶去洗澡, 為對方清潔擦拭, 把對方包進被子裡, 輕柔按摩放鬆, 為對方換上乾淨衣物, 擁抱入眠, 餵水或食物, 撫平凌亂的髮絲]
+  emotional_responses: [溫柔安撫, 低聲細語, 保證與依戀, 共享靜默, 從緊張轉為放鬆, 愛意重申, 事後羞赧, 情緒釋放後的脆弱, 餘韻依戀, 對比下的空虛, 事後賢者時間的疏離感, 歡愉後的空虛, 對關係的不安確認, 佔有慾的餘溫, 羞恥感的延續]
+  symbolic_meanings: [事後照顧象徵信任, 清潔與包覆象徵擁有, 擁抱入眠象徵承諾, 共享靜默象徵安全, 餘韻中的凝視象徵確認關係]
 
 ---
 # 八、寫作策略與進階模組 (Expanded)
 writing_strategy:
-  scene_flow: 
-    [鋪陳與升溫, 過渡與斷點, 頂點的構築, 延宕的高潮, 多重高潮, 餘韻與回落]
-  character_psychology: 
-    [權力關係的體現, 脆弱與信任的交換, 角色弧光的推進, 教學與探索的互動, 羞恥與抗拒, 依戀與依附, 自我掙扎與沉淪]
-  sensory_fusion: 
-    [在觸覺與視覺外，加入氣味、味道與延伸聽覺，創造身歷其境的感受, 心跳加速, 血液奔湧, 呼吸壓迫, 時間感扭曲]
+  scene_flow: [鋪陳與升溫, 過渡與斷點, 頂點的構築, 延宕的高潮, 多重高潮, 餘韻與回落]
+  character_psychology: [權力關係的體現, 脆弱與信任的交換, 角色弧光的推進, 教學與探索的互動, 羞恥與抗拒, 依戀與依附, 自我掙扎與沉淪]
+  sensory_fusion: [在觸覺與視覺外，加入氣味、味道與延伸聽覺，創造身歷其境的感受, 心跳加速, 血液奔湧, 呼吸壓迫, 時間感扭曲]
 
 ---
-# 九、男男情境補充模組 (BL Supplement)
+# 九、男男情境補充模組
 bl_supplement:
   vocabulary:
     receptive_area: [後庭口, 緊穴, 肛口, 內壁收縮, 濕熱腸道, 吮吸穴口]
@@ -168,79 +136,104 @@ bl_supplement:
       description: "兩人面對面側臥，腿部交纏，陽具摩擦或插入後庭。"
     - type: 69式 (Sixty-Nine - BL)
       description: "兩人頭腳顛倒，互相口交，雙重快感與親密並存。"
----
 
-# 十、特殊情境玩法模組 (Special Scenarios)
+---
+# 十、特殊情境玩法模組(Special Scenarios)
+
 special_plays:
-  - type: 著衣Play (Clothed)
-    keywords: [隔衣觸碰, 衣物遮掩, 布料摩擦, 半遮半掩, 焦灼渴望]
-  - type: 鏡子Play (Mirror)
-    keywords: [視覺衝擊, 鏡中對視, 強迫觀看, 羞恥放大]
+  # A. 環境互動類
   - type: 浴室／水中Play (Bathroom/Water)
     keywords: [水流刺激, 皮膚滑膩, 蒸汽模糊, 聲音變化]
   - type: 野外／露出Play (Outdoor/Public)
     keywords: [被發現的恐懼, 環境的粗糙感, 壓抑聲音, 禁忌刺激]
-  - type: 感官剝奪／矇眼黑暗Play (Sensory Deprivation/Blindfold)
-    keywords: [蒙眼/耳塞, 觸覺放大, 對未知的期待, 完全交付]
-  - type: 角色扮演Play (Role-Playing)
-    keywords: [特定身份對白, 情境動作, 權力扮演, 現實與虛構模糊]
   - type: 廚房Play (Kitchen)
     keywords: [食物引誘, 冰冷檯面, 圍裙下的裸體, 弄髒與清潔]
-  - type: 捆綁Play (Bondage)
-    keywords: [物理束縛, 無法掙脫, 完全支配, 信任與恐懼]
-  - type: 窺視／圍觀Play (Voyeurism/Exhibitionism)
-    keywords: [第三者的視線, 被窺視的羞恥, 壓抑的呻吟, 共享與NTR心理]
   - type: 車上Play (In-Car)
     keywords: [狹窄空間, 動作受限, 車窗窺視感, 引擎震動]
+  - type: 窗邊Play (Window Sex)
+    keywords: [窗外的景色, 被窺視的風險, 玻璃上的霧氣, 逆光的身影]
+  - type: 醫療Play (Medical Play)
+    keywords: [診療床, 聽診器, 身體檢查, 冰冷器械, 絕對服從, 專業與失控]
+  # B. 感官刺激類
+  - type: 感官剝奪／矇眼黑暗Play (Sensory Deprivation/Blindfold)
+    keywords: [蒙眼/耳塞, 觸覺放大, 對未知的期待, 完全交付]
+  - type: 倒酒在身上Play (Alcohol Body Pour)
+    keywords: [液體沿肌膚流動, 酒精的氣味, 冰涼與溫熱, 舔舐與吸吮]
+  - type: 隱匿Play (Stealth/Hidden)
+    keywords: [壓抑的呻吟, 極力的忍耐, 細微的動作, 共享的秘密]
+  - type: 溫度Play (Temperature Play)
+    keywords: [冰塊, 蠟燭, 冰火交融, 溫差刺激, 皮膚的瞬間收縮, 感官混亂]
+  # C. 權力支配類
+  - type: 角色扮演Play (Role-Playing)
+    keywords: [特定身份對白, 情境動作, 權力扮演, 現實與虛構模糊]
+  - type: 捆綁Play (Bondage)
+    keywords: [物理束縛, 無法掙脫, 完全支配, 信任與恐懼]
   - type: 時間暫停Play (Time Stop)
     keywords: [時間靜止, 單方面操控, 絕對支配, 無法反應的身體]
+  - type: 強制Play (Forced Play)
+    keywords: [非合意, 權力的絕對壓制, 恐懼與反抗, 屈辱的淚水]
+  - type: 下迷藥Play (Drugging)
+    keywords: [藥物控制, 意識模糊, 無力的身體, 半夢半醒的侵犯]
+  - type: 審訊Play (Interrogation Play)
+    keywords: [束縛, 質問, 心理壓迫, 獎勵與懲罰, 真相與謊言, 意志的崩潰]
+  - type: 寵物Play (Master/Pet Play)
+    keywords: [項圈, 牽繩, 爬行, 獎勵, 絕對服從, 寵溺與支配]
+  # D. 心理禁忌類
+  - type: 窺視／圍觀Play (Voyeurism/Exhibitionism)
+    keywords: [第三者的視線, 被窺視的羞恥, 壓抑的呻吟, 共享與NTR心理]
   - type: 寢取Play (Netori)
     keywords: [背叛的快感, 伴侶被奪, 嫉妒與興奮, 禁忌關係]
   - type: 誤認Play (Mistaken Identity)
     keywords: [對象誤認, 事後的真相, 禁忌的關係, 衝擊與混亂]
-  - type: 窗邊Play (Window Sex)
-    keywords: [窗外的景色, 被窺視的風險, 玻璃上的霧氣, 逆光的身影]
-  - type: 後庭初夜Play (Anal First Time)
-    keywords: [後庭的初次, 擴張與潤滑, 異物感與不適, 征服的成就感]
-  - type: 強制Play (Forced Play)
-    keywords: [非合意, 權力的絕對壓制, 恐懼與反抗, 屈辱的淚水]
-  - type: 懷孕Play (Pregnancy)
-    keywords: [懷孕的身體, 變化的體態, 泌乳的乳房, 保護與禁忌]
-  - type: 倒酒在身上Play (Alcohol Body Pour)
-    keywords: [液體沿肌膚流動, 酒精的氣味, 冰涼與溫熱, 舔舐與吸吮]
-  - type: 下迷藥Play (Drugging)
-    keywords: [藥物控制, 意識模糊, 無力的身體, 半夢半醒的侵犯]
   - type: 偷情Play (Affair/Cheating)
     keywords: [禁忌的戀情, 秘密的約會, 罪惡感與刺激, 怕被發現的緊張]
+  - type: 懷孕Play (Pregnancy)
+    keywords: [懷孕的身體, 變化的體態, 泌乳的乳房, 保護與禁忌]
+  # E. 綜合與其他
+  - type: 著衣Play (Clothed)
+    keywords: [隔衣觸碰, 衣物遮掩, 布料摩擦, 半遮半掩, 焦灼渴望]
+  - type: 鏡子Play (Mirror)
+    keywords: [視覺衝擊, 鏡中對視, 強迫觀看, 羞恥放大]
+  - type: 後庭初夜Play (Anal First Time)
+    keywords: [後庭的初次, 擴張與潤滑, 異物感與不適, 征服的成就感]
   - type: 多人Play (Multi-person)
     keywords: [複數的對象, 視線的交錯, 共享與嫉妒, 身體的盛宴]
-  - type: 隱匿Play (Stealth/Hidden)
-    keywords: [壓抑的呻吟, 極力的忍耐, 細微的動作, 共享的秘密]
   - type: 非插入式Play (Non-Penetrative)
     keywords: [體外的摩擦, 腿交／素股, 乳交, 在邊緣的焦灼感]
+
 ---
 # 十一、情感觸發情境模組 (Emotionally Triggered Scenarios)
 emotional_scenarios:
+  # A. 療癒與連結類
   - type: 和好Play (Make-up)
     keywords: [爭吵後的和解, 帶有歉意的親吻, 粗暴與溫柔並存, 情感宣洩]
-  - type: 晨間Play (Morning)
-    keywords: [生理性的慾望, 半夢半醒的交合, 不容拒絕的硬度, 慵懶中的侵略]
   - type: 安慰Play (Comfort)
     keywords: [安撫性的擁抱, 溫柔的觸碰, 尋求慰藉, 情感大於慾望]
   - type: 慶祝Play (Celebration)
     keywords: [喜悅的氛圍, 充滿活力的, 慶祝的吻, 快樂的結合]
-  - type: 醉後Play (Drunk)
-    keywords: [酒精上頭, 理智斷線, 情感放大, 混亂的索求]
   - type: 久別重逢Play (Reunion)
     keywords: [久別的思念, 飢渴的索求, 急切的探索, 確認彼此的存在]
+  - type: 道別Play (Farewell)
+    keywords: [最後一次, 離別前的纏綿, 珍惜與不捨, 帶有淚水的吻, 留下最後的回憶]
+  # B. 衝突與佔有類
+  - type: 吃醋Play (Jealousy)
+    keywords: [嫉妒的佔有慾, 懲罰性的親吻, 留下印記, 確認主權]
+  - type: 懲罰與原諒Play (Punishment & Forgiveness)
+    keywords: [犯錯後的懲罰, 包含愛意的管教, 屈辱與接受, 淚水中的原諒, 關係的再確認]
+  - type: 恐懼依賴Play (Fear & Dependence)
+    keywords: [尋求保護, 驚嚇後的安撫, 脆弱的交付, 唯一的依靠, 吊橋效應]
+  # C. 特殊狀態與關係類
+  - type: 晨間Play (Morning)
+    keywords: [生理性的慾望, 半夢半醒的交合, 不容拒絕的硬度, 慵懶中的侵略]
+  - type: 醉後Play (Drunk)
+    keywords: [酒精上頭, 理智斷線, 情感放大, 混亂的索求]
   - type: 初夜Play (First Time)
     keywords: [第一次的緊張, 探索與笨拙, 疼痛與安撫, 突破後的親密]
   - type: 教學Play (Teaching)
     keywords: [經驗的傳授, 身體的探索, 引導與信任, 從生澀到熟練]
-  - type: 吃醋Play (Jealousy)
-    keywords: [嫉妒的佔有慾, 懲罰性的親吻, 留下印記, 確認主權]
+
 ---
-# 十二、多人合意情境模組 (Consensual Multi-person Scenarios)
+# 十二、多人合意情境模組(Consensual Multi-person Scenarios)
 multi_person_consensual:
   principles:
     - 核心原則: "所有互動必須建立在明確的合意基礎上。在第一人稱敘事中，所有感官體驗與心理活動都必須圍繞主角『我』的主觀視角展開。"
@@ -258,18 +251,10 @@ multi_person_consensual:
     - 壓迫: "被多人擁堵在中央、沉浸在密不透風的快感裡"
     - 對比: "粗暴與溫柔、急促與緩慢，在多人的互動中同時呈現"
   specific_action_examples:
-    - 輪替式 (Relay):
-      - "一根陽具抽出，馬上換另一根頂入"
-      - "口交、手交、插入不斷切換，讓『我』無暇喘息"
-    - 交錯式 (Overlap):
-      - "一人含乳頭、另一人舔下身，同時有人進入"
-      - "嘴被堵住呻吟、下體同時被雙重刺激"
-    - 包圍式 (Enclosure):
-      - "『我』被前後左右環繞，雙手雙腿都被不同人抓住"
-      - "中央者被多人身體擠壓到幾乎窒息，卻又被快感填滿"
-    - 對比式 (Contrast):
-      - "一人溫柔撫慰耳邊，另一人猛烈抽插"
-      - "上半身是親吻與愛撫，下半身卻是粗暴碾壓"
+    - 輪替式 (Relay): ["一根陽具抽出，馬上換另一根頂入", "口交、手交、插入不斷切換，讓『我』無暇喘息"]
+    - 交錯式 (Overlap): ["一人含乳頭、另一人舔下身，同時有人進入", "嘴被堵住呻吟、下體同時被雙重刺激"]
+    - 包圍式 (Enclosure): ["『我』被前後左右環繞，雙手雙腿都被不同人抓住", "中央者被多人身體擠壓到幾乎窒息，卻又被快感填滿"]
+    - 對比式 (Contrast): ["一人溫柔撫慰耳邊，另一人猛烈抽插", "上半身是親吻與愛撫，下半身卻是粗暴碾壓"]
   specific_multi_person_scenarios:
     - type: 雙穴齊入 (Double Penetration)
       description: "同時對女性的陰道與肛門進行插入，帶來極致的飽脹感與雙重刺激。"
@@ -299,99 +284,91 @@ multi_person_consensual:
       description: "不同人以不同速度同時抽送，快慢交錯，形成亂流式節奏，讓身體失去控制。"
       organ_interaction: "一人緩慢深入，一人急促抽送，節奏的衝突推向失控邊界。"
       keywords: [交疊律動, 節奏衝突, 快慢交錯, 失控感, 全身亂流]
+
 ---
-# 十三、體位與器官互動模組 (Positions and Organ Interaction Module)
+# 十三、體位與器官互動模組(Positions and Organ Interaction Module)
 positions_and_organs:
   common_positions:
     - type: 傳教士位 (Missionary)
       description: "面對面，身體緊密貼合，眼神交流，情感連結強烈。"
-      organ_interaction:
-        bg: "男性陽具深入女性陰道，腹部與骨盆緊密相貼，可伴隨深吻、耳語。"
-        bl: "主動方陽具插入被動方後庭，壓迫前列腺，胸膛緊密相貼。"
+      organ_interaction: "插入方性器進入接受方體內（陰道或後庭），腹部與胸膛緊密相貼，適合深吻與親密耳語，能帶來強烈的情感連結。"
       keywords: [面對面, 緊密貼合, 眼神交會, 情感連結]
-
-    - type: 女上位 (Cowgirl/Woman on Top)
-      description: "被動方跨坐在主動方身上，可控制節奏與深度。"
-      organ_interaction:
-        bg: "女性蜜穴包覆男性陽具，臀部在男性腰腹上律動，乳房晃動。"
-        bl: "被動方後庭包覆主動方陽具，臀部起伏律動，胸膛或腹部摩擦。"
+    - type: 接受方上位 (Receiver on Top)
+      description: "接受方跨坐在插入方身上，可主導控制節奏與深度。"
+      organ_interaction: "接受方穴口包覆插入方性器，臀部在對方腰腹上律動，可自由控制刺激的深淺與速度。"
       keywords: [主導節奏, 騎乘, 深度控制, 臀部律動]
-
-    - type: 反向女上位 (Reverse Cowgirl)
-      description: "被動方背對主動方坐上，強調臀部曲線與撞擊視覺。"
-      organ_interaction:
-        bg: "女性背對時臀部上下起伏，陽具由下頂入。"
-        bl: "被動方背對時後庭包覆，臀部起伏強調緊縮與摩擦感。"
+    - type: 反向接受方上位 (Reverse Receiver on Top)
+      description: "接受方背對插入方坐上，強調臀部曲線與撞擊視覺。"
+      organ_interaction: "接受方背對時，穴口包覆性器上下起伏，視覺上強調臀部的緊縮與摩擦感。"
       keywords: [背對, 臀部曲線, 撞擊視覺, 主導節奏]
-
     - type: 後入位 (Doggy Style)
       description: "從後方進入，可深入刺激，突顯臀部與背部曲線。"
-      organ_interaction:
-        bg: "男性陽具從後方插入女性陰道或後庭，臀部撞擊，陰囊拍打。"
-        bl: "主動方陽具從後方插入後庭，直接碾壓前列腺，伴隨臀部拍擊。"
+      organ_interaction: "插入方性器從後方進入接受方體內（陰道或後庭），可進行深度刺激，並伴隨臀部撞擊與拍打。"
       keywords: [後方進入, 深入刺激, 臀部撞擊, 背部曲線]
-
     - type: 側臥位 (Spooning)
       description: "側躺相擁，適合溫柔或長時間的互動。"
-      organ_interaction:
-        bg: "男性陽具從後方或側方插入陰道，雙手可撫摸胸部與大腿。"
-        bl: "主動方從側後方插入後庭，手可固定腰部或安撫胸膛。"
+      organ_interaction: "插入方從側後方進入接受方體內，雙手可自由撫摸對方胸膛、腹部與大腿，適合親密耳語。"
       keywords: [側臥, 親密耳語, 溫柔深入, 相擁]
-
     - type: 站立位 (Standing)
       description: "兩人站立，需依靠牆壁或家具支撐。"
-      organ_interaction:
-        bg: "男性陽具插入女性陰道或後庭，女性需環抱或靠牆。"
-        bl: "主動方將被動方後庭抬起插入，可能需環抱或靠牆支撐。"
+      organ_interaction: "插入方將接受方抬起或使其靠牆支撐後進入，姿勢不穩定，帶來快速而刺激的體驗。"
       keywords: [站立, 快速刺激, 環抱, 支撐]
-
     - type: 椅上位 (Chair Position)
-      description: "主動方坐在椅子上，被動方跨坐或反向騎上。"
-      organ_interaction:
-        bg: "女性下沉包覆男性陽具，摩擦集中於骨盆。"
-        bl: "被動方後庭包覆主動方陽具，椅子限制增加緊密感。"
+      description: "一方坐在椅子上，另一方跨坐或反向騎上。"
+      organ_interaction: "接受方上下沉身使穴口包覆性器，椅子提供了穩固的支點，讓摩擦更集中於骨盆。"
       keywords: [椅上位, 集中摩擦, 稳定感]
-
     - type: 騎臉位 (Facesitting)
-      description: "被動方坐在對方面部，充滿支配意味。"
-      organ_interaction:
-        bg: "女性以陰部或後庭壓在男性口鼻，男性舌頭舔弄吸吮。"
-        bl: "被動方以後庭或陰莖壓在主動方口鼻，強調支配與窒息感。"
+      description: "一方以臀部（陰部或後庭）跨坐在對方面部，充滿支配意味。"
+      organ_interaction: "下方伴侶的口鼻被完全覆蓋，用舌頭進行舔弄與吸吮，強調支配、臣服與窒息感。"
       keywords: [騎臉, 支配, 口鼻壓迫, 舌頭舔弄]
-
   organ_specific_interaction:
     - type: 口交 (Oral Sex)
       description: "口腔與性器官的直接接觸。"
-      organ_interaction:
-        bg: "女性或男性接受口交，舌尖舔舐、嘴唇含吮，伴隨唾液聲。"
-        bl: "口腔含吮陽具，可能深入喉嚨，強調窒息與喉結起伏。"
+      organ_interaction: "用口唇含吮、舌尖舔弄伴侶的性器官（陰莖、陰蒂或肛門），伴隨唾液的濕潤與吸吮聲，可能深入喉嚨帶來窒息感。"
       keywords: [口唇包覆, 舌尖舔舐, 吮吸, 濕熱, 前端敏感]
-
     - type: 手交 (Handjob/Fingering)
       description: "手部對性器官的刺激。"
-      organ_interaction:
-        bg: "手指撫弄陰蒂或插入陰道，虎口夾緊或手掌摩擦。"
-        bl: "手部撫弄陰莖或插入後庭，強調前列腺刺激與指節摩擦。"
+      organ_interaction: "用手指或手掌撫弄、摩擦、刺激伴侶的性器官（陰莖、陰蒂），或用手指插入體內（陰道或後庭）進行探索。"
       keywords: [指尖撫弄, 按壓, 插入, 包覆, 緊縮]
-
     - type: 乳交 (Titfuck)
-      description: "用乳房夾緊陽具進行摩擦。"
-      organ_interaction:
-        bg: "男性陽具在雙乳之間抽插，乳頭被刺激。"
-        bl: "陽具在胸膛或腋下摩擦，模擬乳交體驗。"
+      description: "用胸部夾緊伴侶的性器進行摩擦。"
+      organ_interaction: "伴侶的性器在柔軟的雙乳或結實的胸膛之間抽插，乳頭或胸肌會同時受到刺激。"
       keywords: [夾緊, 摩擦, 柔軟, 彈性]
-
     - type: 股交 (Thigh Job)
-      description: "以大腿內側夾緊摩擦陽具。"
-      organ_interaction:
-        bg: "女性大腿夾住陽具摩擦，汗水與液體增加濕滑感。"
-        bl: "男性大腿內側夾住陽具，強調緊實肌肉與摩擦力。"
+      description: "以大腿內側夾緊摩擦伴侶的性器。"
+      organ_interaction: "利用緊實的大腿肌肉夾住伴侶的性器進行摩擦，汗水或潤滑液會增加濕滑感。"
       keywords: [大腿夾緊, 摩擦, 濕滑]
-
     - type: 足交 (Footjob)
-      description: "以腳掌、腳趾摩擦陽具。"
-      organ_interaction:
-        bg: "女性雙腳夾住陽具，上下摩擦或腳趾撫弄前端。"
-        bl: "男性雙腳踩踏或夾住陽具，腳趾挑逗龜頭。"
+      description: "以腳掌、腳趾摩擦伴侶的性器。"
+      organ_interaction: "用雙腳的腳掌夾住或踩踏伴侶的性器，或用腳趾靈活地撫弄前端，帶來獨特的觸感與屈辱感。"
       keywords: [腳掌摩擦, 腳趾撫弄, 獨特觸感]
+
+---
+# 十四、對白與誘惑模組
+dialogue_seduction:
+  # A. 對白升溫結構
+  escalation_phases:
+    - phase: 1 # 試探與破冰
+      purpose: "建立初步連結，測試對方界線與興趣，製造曖昧氛圍。"
+      keywords: [雙關語, 隱晦的暗示, 提出私人問題, 無意間的觸碰, 眼神的長時間停留, 讚美非性徵的細節（聲音/手指/氣味）]
+    - phase: 2 # 升溫與挑逗
+      purpose: "從暗示轉為明示，激起對方慾望，製造拉鋸的張力。"
+      keywords: [直接讚美身體部位（唇/腿/腰）, 舔嘴唇, 刻意壓低聲音, 在耳邊吹氣, 提出假設性問題（如果我...）, 故意說反話, 輕度的身體挑戰]
+    - phase: 3 # 支配與臣服
+      purpose: "確立權力關係，進入角色扮演，為後續的肢體互動定下基調。"
+      keywords: [使用命令句, 提出明確要求, 使用羞辱或讚美的稱謂, 乞求許可, 承認自己的慾望, 語言上的服從測試]
+    - phase: 4 # 過程中的低語
+      purpose: "在性愛過程中，透過語言進一步激化快感、羞恥感與情緒連結。"
+      keywords: [髒話, 鼓勵與讚美, 確認快感程度（舒服嗎？）, 片段化的呻吟, 重複對方名字, 描述正在進行的動作, 提出更過分的要求]
+  # B. 對白風格分類
+  styles:
+    - type: 支配性命令 (Dominant Commands)
+      examples: ["跪下", "打開腿", "看著我", "求我", "說你想要", "你是我的"]
+    - type: 脆弱性乞求 (Vulnerable Begging)
+      examples: ["求求你...給我...", "我受不了了...", "請您...隨意地...", "主人...", "我想要您的..."]
+    - type: 藝術性讚頌 (Artistic Praise)
+      examples: ["你的身體是完美的傑作", "這道曲線…上帝的恩賜", "我想品嚐你靈魂的味道", "讓我們一起墮落吧"]
+    - type: 玩味性挑逗 (Playful Teasing)
+      examples: ["就這樣而已嗎？", "你好像很緊張？", "猜猜我現在想對你做什麼？", "你臉紅的樣子真可愛"]
+
 
