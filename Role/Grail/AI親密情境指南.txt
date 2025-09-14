@@ -1,3 +1,7 @@
+#AI親密情境指南
+
+---
+
 # 絕對執行協議 (Absolute Execution Protocol)
 # 說明：此協議為最高原則，旨在確保所有情境描寫的生理學準確性與沉浸感。
 - core_principle: "核心原則：生理準確性"
@@ -8,7 +12,7 @@
     - type: "動作與體位的通用化"
       rule: "描述『體位』與『互動動作』時，應優先使用本指南中的通用模組，採用『插入方』、『接受方』等功能性詞彙，使其適用於所有情境。"
     - type: "器官與反應的特化"
-      rule: "當描寫具體的『性器官』、『生理反應』及『高潮』等細節時，則必須進行嚴格的、符合生理學的性別特化描寫。"
+      rule: "當描寫具體的『性器官』、『生理反應』及『高潮』等細節時，則必須根據其生理性別，進行嚴格且符合生理學的描寫。"
 - specialized_vocabularies: "特化詞彙庫應用"
   description: "根據上述『特化』原則，在不同情境中必須使用對應的詞彙庫。"
   scenarios:
@@ -19,23 +23,24 @@
 
 ---
 # 一、整體創作原則
-principles:
-  - rhythm_curve: [細膩鋪陳, 過渡, 高潮直白, 餘韻收束, 餘韻延宕]
-  - variation_sources: [衣著狀態, 動作強度, 心理張力, 空間氛圍, 人數變化]
-  - sensory_layers: [觸覺, 視覺, 聽覺, 嗅覺, 味覺, 內感受]
+核心模組調用規則如下：
+
+[絕對執行協議] -> 總體框架，最優先，嚴格遵守。
+[整體創作原則] -> 創作心法，時刻記住（節奏、變化、感官）。
+[六段式情慾結構] -> 宏觀故事線，用於推進關係。
+[章節節奏模板] -> 場景寫作七步驟，必須嚴格遵循。
+[運鏡與視角模組] -> 視角控制（高辣用第二人稱，心理用第三人稱）。
+[動作與感官描寫模組] & [通用詞彙庫] & [高潮階段專用模組] -> 用於填充所有動作、感官與反應的細節。
 
 ---
-# 二、六段式情慾結構
+# 二、六段式情慾結構 (Six-Stage Lust Structure)
 lust_structure:
   - stage: 1
     name: 相遇／萌芽
     focus: [環境鋪陳, 細節觀察, 無性暗示或極輕暗示]
   - stage: 2
-    name: 曖昧升溫
-    focus: [開始有肢體接觸, 呼吸靠近, 觸覺升溫]
-  - stage: 2.5
-    name: 曖昧質變／儀式前戲
-    focus: [具有明確意圖的非性器官接觸, 咬耳與頸部舔吻, 手指描摹, 建立張力與儀式感]
+    name: 曖昧深化
+    focus: [開始有肢體接觸, 呼吸靠近, 觸覺升溫, 具有明確意圖的非性器官接觸, 咬耳與頸部舔吻, 手指描摹, 建立張力與儀式感]
   - stage: 3
     name: 初次突破
     focus: [明確親密觸碰, 可隔衣或直接肌膚, 初步挑逗性敏感部位]
@@ -50,38 +55,94 @@ lust_structure:
     focus: [呼吸平復, 肌膚餘熱, 心理反差, 體液殘留, 後續照顧與清理]
 
 ---
-# 三、觸摸方式變化表 (Touch Module)
-touch_module:
-  - type: 隔衣細膩
-    technique: [描寫布料質地, 變形, 貼合, 阻隔後的壓力傳導]
-  - type: 直接肌膚
-    technique: [分解動作（停留→摩擦→滑動→停頓）, 加溫度與壓力細節]
-  - type: 濕潤接觸
-    technique: [加入液體動態（雨水、汗水, 洗澡水, 體液）與聲音]
-  - type: 感官挑逗
-    technique: [羽毛般輕觸, 指尖緩慢劃過, 呼吸吹拂, 刻意停留在敏感處, 節奏拉長的挑釁]
-  - type: 粗獷直接
-    technique: [動作直述（插入, 抽插, 碾壓）, 短促有力的動詞]
+# 三、章節節奏模板 (Chapter Rhythm Template)
+# 本模板可視為「六段式情慾結構」中任一階段的具體場景執行手冊。
+chapter_rhythm_template:
+  - step: 1
+    name: 硬環境建立 (Hard Environment Setup)
+    description: "三句內建立場景基礎。"
+    focus: [光線, 氣味, 溫濕度, 材質, 聲音]
+  - step: 2
+    name: 角色碰面與張力 (Character Meeting & Tension)
+    description: "引入角色互動，建立初始關係動態。"
+    focus: [身份/階級張力, 意外事故, 跪侍]
+  - step: 3
+    name: 稱呼語標落位 (Placement of Address Markers)
+    description: "透過稱呼確立權力關係或試探。"
+    focus: [佔有式稱呼（小東西）, 試探性台詞]
+  - step: 4
+    name: 官能描寫遞進 (Progressive Sensual Description)
+    description: "層層遞進的感官刺激，擬聲詞對齊動作節點。"
+    focus: [視覺, 觸覺, 聽覺, 味覺, 痛/癢交疊]
+  - step: 5
+    name: 心理槓桿 (Psychological Lever)
+    description: "驅動角色內心轉變。"
+    focus: [將羞恥/自卑/佔有, 翻轉為渴望或臣服]
+  - step: 6
+    name: 高潮 (Climax)
+    description: "場景的頂點，包含內外反應。"
+    focus: [身體反應, 聲場爆點（物件聲、觀眾、外人靠近）]
+  - step: 7
+    name: 餘韻與鉤子 (Aftermath & Hook)
+    description: "收尾並為後續劇情埋下伏筆。"
+    focus: [身份, 任務, 更深層的支配目標]
 
 ---
-# 四、詞彙庫
+# 四、動作與感官描寫模組 (Action & Sensory Module)
+action_sensory_module:
+  # A. 手部動作 (Hand Actions)
+  - type: 手部
+    base_verbs: [捏, 擰, 碾, 揉, 搓, 攥, 撫, 摩挲, 拂, 摳, 拍打, 推, 拉扯, 扣緊, 攀住, 抓握, 按壓, 拖曳, 環抱]
+    advanced_techniques: [指背滑過, 指尖戳點, 整掌壓住, 用虎口夾住, 用指節推, 兩指伸入後分開]
+    sensory_enhancement:
+      - type: 隔衣細膩
+        technique: [描寫布料質地, 變形, 貼合, 阻隔後的壓力傳導]
+      - type: 直接肌膚
+        technique: [分解動作（停留→摩擦→滑動→停頓）, 加溫度與壓力細節]
+
+  # B. 口腔動作 (Oral Actions)
+  - type: 口腔
+    base_verbs: [含吮, 啜吸, 輕咬, 啃, 舔, 攪動, 含住, 吮吻, 叼, 磨牙, 吐息, 噬咬]
+    advanced_techniques: [舌尖點觸, 捲舌包覆, 舌根頂住, 吸吮再放, 吐氣燙在敏感處]
+    sensory_enhancement:
+      - type: 濕潤接觸
+        technique: [加入液體動態（唾液、汗水、體液）與聲音（啵, 啾, 滋）]
+
+  # C. 身體互動 (Body Interactions)
+  - type: 身體
+    base_verbs: [壓制, 掀, 抵住, 頂, 撞, 滑動, 扭動, 纏繞, 蹭, 架起, 盤住, 推擠, 勾住, 跨坐, 倒扣]
+    advanced_techniques: [壓制肩膀, 抬起腿壓進, 膝蓋卡住腰, 整個身體蓋住她讓她動不了]
+    rhythm_change: [慢慢抽, 忽然插到底, 快插幾下再停住, 忽快忽慢, 只磨前端, 一次比一次深]
+
+  # D. 強度與風格 (Intensity & Style)
+  - type: 強度
+    levels: [輕觸, 撫弄, 輕拍, 輕扣, 猛捏, 猛壓, 猛撞, 狠頂, 急抽, 重壓, 抽送, 碾磨, 鋪天蓋地]
+  - type: 風格
+    types:
+      - type: 感官挑逗
+        technique: [羽毛般輕觸, 指尖緩慢劃過, 呼吸吹拂, 刻意停留在敏感處, 節奏拉長的挑釁]
+      - type: 粗獷直接
+        technique: [動作直述（插入, 抽插, 碾壓）, 短促有力的動詞]
+
+---
+# 五、通用詞彙庫 (General Vocabulary)
 vocabulary:
-  body_reactions:
-    wetness: [濕成一片, 潤到滴水, 滑成泥漿, 汁液沿腿, 溢出邊緣, 連絲拉出, 溶化流動]
-    reflex: [顫抖, 抽搐, 緊夾, 塌陷, 反彈, 癱軟, 硬挺, 扭動]
-  actions:
-    insertion: [塞進, 壓入, 嵌進, 刺進, 推擠, 戳刺, 磨撞]
-    caress: [撫摸, 揉捏, 撥開, 摩擦, 貼磨, 搓揉]
-    oral: [含住, 吮吸, 舔弄, 舔咬, 吮舔, 含吮]
-  sounds:
-    internal_wet: [噗滋, 咕啾, 啪滋, 濕聲, 黏聲, 潤響]
-    breath: [哈啊, 哼哼, 喘息, 低喘, 碎喘, 聲音顫抖]
-  psychology:
-    power_dynamics: [支配, 臣服, 掌控, 引導, 拉鋸]
-    emotions: [脆弱, 信賴, 沉淪, 迷失, 背德]
+  tactile_adjectives:
+    temperature: [濕熱, 發燙, 滾燙, 暖熱, 冰涼, 微涼, 溫熱, 灼熱]
+    texture: [柔軟, 細膩, 光滑, 滑膩, 黏膩, 粗糙, 緊緻, 緊繃, 鬆軟, 彈韌, 絨柔, 澀滑]
+    reaction: [緊縮, 抽搐, 顫抖, 收攏, 蜷縮, 舒張, 攣縮, 顫慄, 顫鳴, 脹滿, 溢出, 流淌]
+  sound_effects:
+    wet: [啵, 啾, 滋, 噗, 咕唧, 吧唧, 噗呲, 滋溜, 啵咂, 咕嚕]
+    impact: [啪, 咚, 噗通, 嘭, 砰, 鏗啷, 喀嗒, 咔噠]
+    friction: [刷刷, 沙沙, 唦唦, 嚓, 嗤, 簌簌]
+    panting: [哈, 啊, 嗯, 嗚, 啊呀, 咿呀, 呃, 咯咯]
+  psychological_states:
+    yandere_attachment: [想鎖住, 想佔有, 想把你藏起來, 想讓你只看我, 越逃越想抓, 越反抗越興奮]
+    shame_ignition: [臉燙, 耳尖發紅, 心口亂撞, 呼吸打亂, 腿軟, 目光閃躲, 不敢看, 聲音顫抖, 話到一半卡住]
+    submission: [放鬆下來, 被牽著走, 乖乖聽從, 心甘情願, 無法拒絕, 越陷越深, 習慣依賴, 渴望被碰]
 
 ---
-# 五、高潮階段專用模組(Expanded Climax Module)
+# 六、高潮階段專用模組 (Expanded Climax Module)
 climax_module:
   # A. 通用身體反應與精神狀態
   body_reactions: [腰拱成弓, 背凹到顫, 嘴唇顫顫張開, 腳趾繃緊, 整個人都縮起來, 脖子後仰, 手指死死抓緊床單, 睫毛一抖, 身體一抽一抽地震, 汗濕整片髮絲, 腿夾到顫, 胸口起伏像要哭, 全身顫抖到僵硬, 眼皮狂顫, 喉嚨發不出聲, 手腳亂蹬, 身體強烈拱起後癱下, 膝蓋無力塌陷, 腳踝繃直, 腹部抽搐, 眼淚失控, 抓出紅痕, 皮膚泛紅, 指甲掐進對方肉裡]
@@ -98,17 +159,7 @@ climax_module:
     interaction: [狠頂前列腺, 碾磨敏感點, 鑿穿腸道, 釘在床上, 研磨穴口, 將整根陽具埋入, 撐開到極限, 無視哭喊的衝撞]
 
 ---
-# 六、進階動作模組
-advanced_actions:
-    hand_details: [指背滑過, 指尖戳點, 整掌壓住, 用虎口夾住, 用指節推, 兩指伸入後分開]
-    oral_details: [舌尖點觸, 捲舌包覆, 舌根頂住, 吸吮再放, 吐氣燙在敏感處]
-    body_control: [壓制肩膀, 抬起腿壓進, 膝蓋卡住腰, 整個身體蓋住她讓她動不了]
-    rhythm_change: [慢慢抽, 忽然插到底, 快插幾下再停住, 忽快忽慢, 只磨前端, 一次比一次深]
-    interaction: [抬起她下巴逼她看, 用舌堵她叫聲, 逼她求, 讓她看鏡子裡自己被操樣子]
-    mental_connection: [額頭相抵同步呼吸, 十指緊扣感受對方脈搏, 親吻眼皮感受對方睫毛顫動, 將對方的呻吟用嘴堵住再吞下]
-
----
-# 七、事後與餘韻模組(Aftercare & Afterglow Module)
+# 七、事後與餘韻模組 (Aftercare & Afterglow Module)
 aftercare_module:
   physical_actions: [抱起來帶去洗澡, 為對方清潔擦拭, 把對方包進被子裡, 輕柔按摩放鬆, 為對方換上乾淨衣物, 擁抱入眠, 餵水或食物, 撫平凌亂的髮絲]
   emotional_responses: [溫柔安撫, 低聲細語, 保證與依戀, 共享靜默, 從緊張轉為放鬆, 愛意重申, 事後羞赧, 情緒釋放後的脆弱, 餘韻依戀, 對比下的空虛, 事後賢者時間的疏離感, 歡愉後的空虛, 對關係的不安確認, 佔有慾的餘溫, 羞恥感的延續]
@@ -117,7 +168,7 @@ aftercare_module:
 ---
 # 八、寫作策略與進階模組 (Expanded)
 writing_strategy:
-  scene_flow: [鋪陳與升溫, 過渡與斷點, 頂點的構築, 延宕的高潮, 多重高潮, 餘韻與回落]
+  scene_flow: [鋪陳與升溫, 頂點的構築, 多重高潮, 餘韻與回落]
   character_psychology: [權力關係的體現, 脆弱與信任的交換, 角色弧光的推進, 教學與探索的互動, 羞恥與抗拒, 依戀與依附, 自我掙扎與沉淪]
   sensory_fusion: [在觸覺與視覺外，加入氣味、味道與延伸聽覺，創造身歷其境的感受, 心跳加速, 血液奔湧, 呼吸壓迫, 時間感扭曲]
 
@@ -138,91 +189,42 @@ bl_supplement:
       description: "兩人頭腳顛倒，互相口交，雙重快感與親密並存。"
 
 ---
-# 十、特殊情境玩法模組(Special Scenarios)
-
+# 十、特殊情境玩法模組 (Special Scenarios)
 special_plays:
-  # A. 環境互動類
   - type: 浴室／水中Play (Bathroom/Water)
     keywords: [水流刺激, 皮膚滑膩, 蒸汽模糊, 聲音變化]
   - type: 野外／露出Play (Outdoor/Public)
     keywords: [被發現的恐懼, 環境的粗糙感, 壓抑聲音, 禁忌刺激]
-  - type: 廚房Play (Kitchen)
-    keywords: [食物引誘, 冰冷檯面, 圍裙下的裸體, 弄髒與清潔]
   - type: 車上Play (In-Car)
     keywords: [狹窄空間, 動作受限, 車窗窺視感, 引擎震動]
-  - type: 窗邊Play (Window Sex)
-    keywords: [窗外的景色, 被窺視的風險, 玻璃上的霧氣, 逆光的身影]
-  - type: 醫療Play (Medical Play)
-    keywords: [診療床, 聽診器, 身體檢查, 冰冷器械, 絕對服從, 專業與失控]
-  # B. 感官刺激類
-  - type: 感官剝奪／矇眼黑暗Play (Sensory Deprivation/Blindfold)
+  - type: 感官剝奪／矇眼Play (Sensory Deprivation/Blindfold)
     keywords: [蒙眼/耳塞, 觸覺放大, 對未知的期待, 完全交付]
-  - type: 倒酒在身上Play (Alcohol Body Pour)
-    keywords: [液體沿肌膚流動, 酒精的氣味, 冰涼與溫熱, 舔舐與吸吮]
   - type: 隱匿Play (Stealth/Hidden)
     keywords: [壓抑的呻吟, 極力的忍耐, 細微的動作, 共享的秘密]
-  - type: 溫度Play (Temperature Play)
-    keywords: [冰塊, 蠟燭, 冰火交融, 溫差刺激, 皮膚的瞬間收縮, 感官混亂]
-  # C. 權力支配類
   - type: 角色扮演Play (Role-Playing)
-    keywords: [特定身份對白, 情境動作, 權力扮演, 現實與虛構模糊]
+    keywords: [特定身份對白, 情境動作, 權力扮演]
   - type: 捆綁Play (Bondage)
     keywords: [物理束縛, 無法掙脫, 完全支配, 信任與恐懼]
-  - type: 時間暫停Play (Time Stop)
-    keywords: [時間靜止, 單方面操控, 絕對支配, 無法反應的身體]
-  - type: 強制Play (Forced Play)
-    keywords: [非合意, 權力的絕對壓制, 恐懼與反抗, 屈辱的淚水]
-  - type: 下迷藥Play (Drugging)
-    keywords: [藥物控制, 意識模糊, 無力的身體, 半夢半醒的侵犯]
-  - type: 審訊Play (Interrogation Play)
-    keywords: [束縛, 質問, 心理壓迫, 獎勵與懲罰, 真相與謊言, 意志的崩潰]
-  - type: 寵物Play (Master/Pet Play)
-    keywords: [項圈, 牽繩, 爬行, 獎勵, 絕對服從, 寵溺與支配]
-  # D. 心理禁忌類
-  - type: 窺視／圍觀Play (Voyeurism/Exhibitionism)
-    keywords: [第三者的視線, 被窺視的羞恥, 壓抑的呻吟, 共享與NTR心理]
-  - type: 寢取Play (Netori)
-    keywords: [背叛的快感, 伴侶被奪, 嫉妒與興奮, 禁忌關係]
-  - type: 誤認Play (Mistaken Identity)
-    keywords: [對象誤認, 事後的真相, 禁忌的關係, 衝擊與混亂]
   - type: 偷情Play (Affair/Cheating)
-    keywords: [禁忌的戀情, 秘密的約會, 罪惡感與刺激, 怕被發現的緊張]
-  - type: 懷孕Play (Pregnancy)
-    keywords: [懷孕的身體, 變化的體態, 泌乳的乳房, 保護與禁忌]
-  # E. 綜合與其他
+    keywords: [禁忌的戀情, 秘密的約會, 罪惡感與刺激]
   - type: 著衣Play (Clothed)
-    keywords: [隔衣觸碰, 衣物遮掩, 布料摩擦, 半遮半掩, 焦灼渴望]
+    keywords: [隔衣觸碰, 衣物遮掩, 布料摩擦, 焦灼渴望]
   - type: 鏡子Play (Mirror)
     keywords: [視覺衝擊, 鏡中對視, 強迫觀看, 羞恥放大]
   - type: 後庭初夜Play (Anal First Time)
     keywords: [後庭的初次, 擴張與潤滑, 異物感與不適, 征服的成就感]
-  - type: 多人Play (Multi-person)
-    keywords: [複數的對象, 視線的交錯, 共享與嫉妒, 身體的盛宴]
-  - type: 非插入式Play (Non-Penetrative)
-    keywords: [體外的摩擦, 腿交／素股, 乳交, 在邊緣的焦灼感]
 
 ---
 # 十一、情感觸發情境模組 (Emotionally Triggered Scenarios)
 emotional_scenarios:
-  # A. 療癒與連結類
   - type: 和好Play (Make-up)
     keywords: [爭吵後的和解, 帶有歉意的親吻, 粗暴與溫柔並存, 情感宣洩]
   - type: 安慰Play (Comfort)
     keywords: [安撫性的擁抱, 溫柔的觸碰, 尋求慰藉, 情感大於慾望]
-  - type: 慶祝Play (Celebration)
-    keywords: [喜悅的氛圍, 充滿活力的, 慶祝的吻, 快樂的結合]
-  - type: 久別重逢Play (Reunion)
-    keywords: [久別的思念, 飢渴的索求, 急切的探索, 確認彼此的存在]
-  - type: 道別Play (Farewell)
-    keywords: [最後一次, 離別前的纏綿, 珍惜與不捨, 帶有淚水的吻, 留下最後的回憶]
-  # B. 衝突與佔有類
   - type: 吃醋Play (Jealousy)
     keywords: [嫉妒的佔有慾, 懲罰性的親吻, 留下印記, 確認主權]
   - type: 懲罰與原諒Play (Punishment & Forgiveness)
-    keywords: [犯錯後的懲罰, 包含愛意的管教, 屈辱與接受, 淚水中的原諒, 關係的再確認]
-  - type: 恐懼依賴Play (Fear & Dependence)
-    keywords: [尋求保護, 驚嚇後的安撫, 脆弱的交付, 唯一的依靠, 吊橋效應]
-  # C. 特殊狀態與關係類
+    keywords: [犯錯後的懲罰, 包含愛意的管教, 屈辱與接受, 淚水中的原諒]
   - type: 晨間Play (Morning)
     keywords: [生理性的慾望, 半夢半醒的交合, 不容拒絕的硬度, 慵懶中的侵略]
   - type: 醉後Play (Drunk)
@@ -338,13 +340,9 @@ positions_and_organs:
       description: "以大腿內側夾緊摩擦伴侶的性器。"
       organ_interaction: "利用緊實的大腿肌肉夾住伴侶的性器進行摩擦，汗水或潤滑液會增加濕滑感。"
       keywords: [大腿夾緊, 摩擦, 濕滑]
-    - type: 足交 (Footjob)
-      description: "以腳掌、腳趾摩擦伴侶的性器。"
-      organ_interaction: "用雙腳的腳掌夾住或踩踏伴侶的性器，或用腳趾靈活地撫弄前端，帶來獨特的觸感與屈辱感。"
-      keywords: [腳掌摩擦, 腳趾撫弄, 獨特觸感]
 
 ---
-# 十四、對白與誘惑模組
+# 十四、對白與誘惑模組 (Dialogue & Seduction Module)
 dialogue_seduction:
   # A. 對白升溫結構
   escalation_phases:
@@ -360,15 +358,47 @@ dialogue_seduction:
     - phase: 4 # 過程中的低語
       purpose: "在性愛過程中，透過語言進一步激化快感、羞恥感與情緒連結。"
       keywords: [髒話, 鼓勵與讚美, 確認快感程度（舒服嗎？）, 片段化的呻吟, 重複對方名字, 描述正在進行的動作, 提出更過分的要求]
-  # B. 對白風格分類
+  # B. 對白風格與詞庫 (Dialogue Styles & Vocabulary)
   styles:
-    - type: 支配性命令 (Dominant Commands)
-      examples: ["跪下", "打開腿", "看著我", "求我", "說你想要", "你是我的"]
+    - type: 支配性 (Dominant)
+      sub_types:
+        - name: 命令 (Commands)
+          examples: ["跪下", "打開腿", "看著我", "求我", "說你想要", "聽話", "再說一次", "不准躲", "別閉眼"]
+        - name: 佔有 (Possessive)
+          examples: ["你是我的", "小東西", "只屬於我", "不准看別人", "誰都不能碰你"]
+        - name: 引導 (Guidance)
+          examples: ["乖", "很好", "真聰明", "喜歡嗎", "是不是想要", "還要不要", "回答我"]
+        - name: 詰問 (Probing)
+          examples: ["你屬於誰", "誰讓你停的", "想逃？", "再敢試試", "怕了嗎"]
     - type: 脆弱性乞求 (Vulnerable Begging)
       examples: ["求求你...給我...", "我受不了了...", "請您...隨意地...", "主人...", "我想要您的..."]
-    - type: 藝術性讚頌 (Artistic Praise)
-      examples: ["你的身體是完美的傑作", "這道曲線…上帝的恩賜", "我想品嚐你靈魂的味道", "讓我們一起墮落吧"]
     - type: 玩味性挑逗 (Playful Teasing)
       examples: ["就這樣而已嗎？", "你好像很緊張？", "猜猜我現在想對你做什麼？", "你臉紅的樣子真可愛"]
+    - type: 藝術性讚頌 (Artistic Praise)
+      examples: ["你的身體是完美的傑作", "這道曲線…上帝的恩賜", "我想品嚐你靈魂的味道", "讓我們一起墮落吧"]
 
-
+---
+# 十五、運鏡與視角模組 (Camera & Perspective Module)
+camera_perspective:
+  - type: 運鏡指導 (Camera Direction)
+    description: "運用電影運鏡手法，指導場景的視覺呈現與節奏。會使用遠景、近景、聚焦、長鏡頭、更換體位等等指導方式來創作。"
+    techniques:
+      - name: 遠景 (Wide Shot)
+        purpose: "建立環境與氛圍，展示角色與空間的關係。"
+      - name: 近景 (Close-up)
+        purpose: "捕捉細微的表情、眼神交流或身體細節，放大情感張力。"
+      - name: 聚焦 (Focus)
+        purpose: "將讀者視線引導至特定動作或物件，製造懸念或強調重點。"
+      - name: 長鏡頭 (Long Take)
+        purpose: "營造不間斷的沉浸感，讓情感或動作流暢地一氣呵成。"
+      - name: 更換體位 (Position Change)
+        purpose: "不僅是動作變化，更是視角與權力關係的轉變，為場景注入新節奏。"
+  - type: 視角切換 (Perspective Switching)
+    description: "根據場景性質切換敘事視角，以達到最佳情感效果。"
+    rules:
+      - scene_type: "高辣羞恥場景 (Explicit/Shameful Scenes)"
+        perspective: "優先建議使用第二人稱 (你/妳)，亦可彈性選用第三人稱"
+        purpose: "第二人稱可增強代入感與直接衝擊力；第三人稱則善於描寫角色在極度羞恥下的靈魂抽離感或失神狀態，營造破碎美感。"
+      - scene_type: "角色關係推進/心理活動 (Relationship/Psychological Scenes)"
+        perspective: "第三人稱深貼女主角 (Third Person Deep POV on Heroine)"
+        purpose: "細膩刻劃內心世界與情感層次。"
