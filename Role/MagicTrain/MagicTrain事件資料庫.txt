@@ -123,6 +123,7 @@
 //--- T06 香氣迷霧車廂 ---
 [EVENT_ID: T06_PUZZLE]
   SCENE: "蒙眼後透過嗅聞乘客私密部位辨識香氣，調製指定香水。"
+  SPECIAL_RULE: "被嗅聞的NPC，其雙手必須被束縛，以確保玩家在嗅聞過程中的被動性，防止NPC主動操控玩家頭部進行強制性接觸。"
   PERSONNEL_POOL: "CORE_NPCS, FULL_PASSENGER_ROSTER"
   PERSONNEL_RULE: "NPC 僅能從 PERSONNEL_POOL 抽取，不得生成或腦補名冊外角色（包括女性）。"
   PROMPT_WORDS: "調香謎題, 蒙眼嗅聞, 羞恥, 氣味辨識, 私密部位, 溫熱載體, 嗅覺增幅器"
@@ -153,8 +154,8 @@
   ESCALATION_SCENARIO:
     NAME: "公開表演"
     TRIGGER: "與技師(同伴)在束縛椅上親密互動時。"
-    SCENE: "您的親密行為在眾人目光下，變成一場您樂在其中的公開展演。旁觀者們的眼神與操控，讓您在束縛中感受到前所未有的刺激與解放。"
-    PROMPT_WORDS: "公開表演, 輪流操控, 機械椅, 圍觀, 享受, 支配, 多人參與, 自願展演, 情慾解放"
+    SCENE: "您的親密行為在眾人目光下，變成一場您樂在其中的公開展演。技師親自用肉棒與機械椅結合，對您進行深入的操控與刺激。旁觀者們的眼神與操控，讓您在束縛中感受到前所未有的刺激與解放。"
+    PROMPT_WORDS: "公開表演, 輪流操控, 機械椅, 圍觀, 享受, 支配, 多人參與, 自願展演, 情慾解放, 肉棒插入, 機械結合, 深入操控"
     EFFECTS: "情慾大幅提升，進度依表演精彩度變化，可能解鎖特殊結局。"
   PROMPT_WORDS: "權力服從, 機械束縛, 固定, 公開羞恥, 旁觀者, 技師, 極限測試"
   GOAL: "選擇正確應對策略(順從/忍耐/挑釁)取悅技師或撐到結束。"
@@ -179,6 +180,7 @@
       - "IF_COMPANION_PRESENT: { ASSIGN_TO: 'COMPANION' }"
       - "IF_NO_COMPANION: { PROMPT_PLAYER_TO_CHOOSE_FROM: 'PASSENGERS_IN_SCENE' }"
     - DESCRIPTION: "指揮家角色將由您的同伴擔任。若您沒有同伴，您將可以從在場的乘客中指定一位來擔任。"
+  CONDUCTOR_LINK: "指揮家與被觸手插入者的感官連結：指揮家能透過觸手，同步感受到被插入者的所有生理反應與快感，反之亦然，形成一種共享的、極致的感官體驗。"
   PROMPT_WORDS: "觸手, 表演, 指揮, 合奏, 束縛, 公開, 圍觀, 性愛, 玩家被動, 肛交, 吊掛"
   GOAL: "在高潮時，從「指揮家」手中獲得「異樣的結晶」。"
   FAILURE_CONDITION: { CONDITION: "指揮家不滿意", ACTION: "EXECUTE_PUNISHMENT", ID: "T08_PUNISH_01" } 
