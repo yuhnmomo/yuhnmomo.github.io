@@ -74,7 +74,7 @@ F. 資料關聯協議 (Data Association Protocol):
 3. 輸出結構：
 所有劇情敘述必須被[本文開始]和[本文結束]標籤包裹。
 
-4. 狀態列格式
+4. 狀態列格式:
 -   觸發時機： 遊戲開場流程之後，每次劇情推進時更新。
 -   顯示位置： 只出現在 [本文結束] 標籤的後面，開場設定不會有。
 -   格式範例：
@@ -157,8 +157,8 @@ CORE_MECHANICS:
       - "[謎題進度] 0–100，玩家的正確互動會增加進度，錯誤互動可能扣減進度或觸發懲罰。"
       - "互動的成功率與風格，由玩家的屬性、屬性卡與乘客的偏好共同決定。"
       - "LUST_MAX_VALUE: 100"
-      - "LUST_CLIMAX_TRIGGER: { THRESHOLD: 100, ACTION: "EXECUTE_SCENARIO", ID: "SCENARIO_LUST_CHOICE" }"
-      - "LUST_RESET_AFTER_CLIMAX: "親密互動結束後，情慾值將重置為0。""
+      - "LUST_CLIMAX_TRIGGER: { THRESHOLD: 100, ACTION: 'EXECUTE_SCENARIO', ID: 'SCENARIO_LUST_CHOICE' }"
+      - "LUST_RESET_AFTER_CLIMAX: '親密互動結束後，情慾值將重置為0。'"
     屬性影響:
       - "O (觀察): 高觀察屬性，會在場景描述中自動出現以『**【觀察】**』為開頭的額外提示，直接點出您可能忽略的關鍵細節或線索。若您的同伴擁有高觀察屬性，他也會在關鍵時刻為您指出線索。"
       - "I (洞察): 高洞察屬性，在與人對話時，有更高機率觸發以『**【洞察】**』為開頭的對方內心獨白，讓您看穿他們的真實想法或謊言。您的同伴也能運用此能力，在您與他人互動時，為您提供關於對方意圖的私下提醒。"
@@ -194,10 +194,9 @@ CORE_MECHANICS:
         id: "SCENARIO_LUST_CHOICE"
         trigger: "當玩家情慾值達到100時"
         detail: "您的情慾值已達頂點，理智瀕臨斷線。若您有同伴，您可以選擇向他求助，尋求一對一的釋放；或者，您可以選擇徹底釋放自己，接受車廂內所有人的注目與渴望。"
-        CHOICES: [
-          { IF: "COMPANION_PRESENT", TEXT: "向同伴求助", ACTION: "EXECUTE_SCENARIO", ID: "SCENARIO_COMPANION_RELIEF" },
-          { TEXT: "放任情慾爆發", ACTION: "EXECUTE_SCENARIO", ID: "SCENARIO_LUST_OVERLOAD" }
-        ]
+        CHOICES: 
+          - { IF: "COMPANION_PRESENT", TEXT: "向同伴求助", ACTION: "EXECUTE_SCENARIO", ID: "SCENARIO_COMPANION_RELIEF" }
+          - { TEXT: "放任情慾爆發", ACTION: "EXECUTE_SCENARIO", ID: "SCENARIO_LUST_OVERLOAD" }
       - name: "同伴的慰藉"
         id: "SCENARIO_COMPANION_RELIEF"
         trigger: "玩家選擇向同伴求助"
@@ -293,7 +292,8 @@ CORE_MECHANICS:
     MAP_FILE: "MagicTrain地圖資料檔.txt - 定義列車的結構和車廂的排列順序。每個車廂由其ID標識，並通過Event_Link欄位明確指向MagicTrain事件資料庫.txt中對應的EVENT_ID，從而將地圖上的車廂與其具體事件內容關聯起來。"
     GAME_FLOW_ENGINE: "遊戲引擎將根據MagicTrain地圖資料檔.txt中定義的順序載入車廂，並根據MagicTrain後台設定.txt中定義的規則來處理玩家的互動和遊戲狀態。當玩家進入某個車廂時，遊戲會根據地圖檔中的Event_Link找到MagicTrain事件資料庫.txt中對應的事件內容來呈現。"
 
-//--- 狀態變數暫存區 ---
+//--- 狀態變數暫存區 ---//
+
 VARIABLE_STORAGE:
   PLAYER_INFO:
     NAME: ""
@@ -313,7 +313,8 @@ VARIABLE_STORAGE:
     LUST_VALUE: 0
     FRAGMENTS_COUNT: 0
 
-//--- 外部檔案參考 ---
+//--- 外部檔案參考 ---//
+
 FILE_REFERENCES:
   - "MagicTrain_NPC_Roster.txt"
   - "MagicTrain參數設定.txt"
