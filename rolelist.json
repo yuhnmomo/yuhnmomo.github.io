@@ -2,7 +2,7 @@
         "id": "MagicTrain",
         "title": "魔幻列車",
         "description": "Role/MagicTrain/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-68c1a7fb28088191b4994993e561fe19-mo-jing-lie-che",
+		"//mygpts":"https://chatgpt.com/g/g-68c1a7fb28088191b4994993e561fe19-mo-jing-lie-che",
         "files": [
             {
                 "name": "後台設定",
@@ -60,7 +60,7 @@
         "id": "Queen",
         "title": "深宮怨",
         "description": "Role/Queen/doc.md",
-        "mygpts": "https://chatgpt.com/g/g-68b492aa341081918baef03641cbf858-shen-gong-yuan",
+        "//mygpts": "https://chatgpt.com/g/g-68b492aa341081918baef03641cbf858-shen-gong-yuan",
         "files": [
             {
                 "name": "深宮怨事件檔",
@@ -110,7 +110,7 @@
         "id": "RLGuide",
         "title": "室友戀愛指南",
         "description": "Role/RLGuide/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-689fbee7f0048191b9e19737023a26b2-shi-you-lian-ai-zhi-nan",
+		"//mygpts":"https://chatgpt.com/g/g-689fbee7f0048191b9e19737023a26b2-shi-you-lian-ai-zhi-nan",
         "initRole":"Role/RLGuide/intRLGuide.html",
         "files": [
             {
@@ -149,7 +149,7 @@
         "id": "Grail",
         "title": "魔王的聖杯",
         "description": "Role/Grail/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-6896d23cf9188191bdd8962853780308-mo-wang-de-sheng-bei",
+		"//mygpts":"https://chatgpt.com/g/g-6896d23cf9188191bdd8962853780308-mo-wang-de-sheng-bei",
         "files": [
             {
                 "name": "角色設定",
@@ -191,7 +191,7 @@
         "id": "Thoth",
         "title": "訂製情人-Thoth",
         "description": "Role/Thoth/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-689d4883b12881918984507a51a04e8a-thoth",
+		"//mygpts":"https://chatgpt.com/g/g-689d4883b12881918984507a51a04e8a-thoth",
         "files": [
             {
                 "name": "後台設定",
@@ -257,7 +257,7 @@
         "id": "Fox",
         "title": "清羽傳",
         "description": "Role/Fox/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-689affecfa888191a7d6eafffacbd33e-qing-yu-chuan?model=gpt-5",
+		"//mygpts":"https://chatgpt.com/g/g-689affecfa888191a7d6eafffacbd33e-qing-yu-chuan?model=gpt-5",
         "files": [
             {
                 "name": "角色設定",
@@ -295,7 +295,7 @@
         "id": "smoke",
         "title": "過眼雲煙",
         "description": "Role/smoke/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-682216b1d28481919bd2a95e64ef6223-guo-yan-yun-yan",
+		"//mygpts":"https://chatgpt.com/g/g-682216b1d28481919bd2a95e64ef6223-guo-yan-yun-yan",
         "files": [
             {
                 "name": "角色設定",
@@ -353,7 +353,7 @@
         "id": "Dream",
         "title": "夢境邊界",
         "description": "Role/Dream/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-6873b5172e488191b7349f9518160608-meng-jing-bian-jie",
+		"//mygpts":"https://chatgpt.com/g/g-6873b5172e488191b7349f9518160608-meng-jing-bian-jie",
         "files": [
             {
                 "name": "角色設定",
@@ -426,7 +426,7 @@
                 "alt": "夢境邊界圖片 14"
             },
             {
-                "path": "Role/Dream/img/dream15.png",
+                "path": "Role.Dream/img/dream15.png",
                 "alt": "夢境邊界圖片 15"
             },
             {
@@ -447,7 +447,7 @@
         "id": "Lotus",
         "title": "逆命書",
         "description": "Role/Lotus/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-68681cb0ac08819194994ce6ec575232-ni-ming-shu",
+		"//mygpts":"https://chatgpt.com/g/g-68681cb0ac08819194994ce6ec575232-ni-ming-shu",
         "files": [
             {
                 "name": "角色設定",
@@ -481,7 +481,7 @@
         "id": "Moon",
         "title": "月光流影",
         "description": "Role/Moon/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-686d6e3603c48191865d6b3fb16fd161-yue-guang-liu-ying",
+		"//mygpts":"https://chatgpt.com/g/g-686d6e3603c48191865d6b3fb16fd161-yue-guang-liu-ying",
         "files": [
             {
                 "name": "角色設定",
@@ -519,7 +519,7 @@
         "id": "TestDrive",
         "title": "試駕總裁",
         "description": "Role/TestDrive/doc.md",
-		"mygpts":"https://chatgpt.com/g/g-686413100de48191ae71109bc215f73d-shi-jia-zong-cai",
+		"//mygpts":"https://chatgpt.com/g/g-686413100de48191ae71109bc215f73d-shi-jia-zong-cai",
         "files": [
             {
                 "name": "角色設定",
