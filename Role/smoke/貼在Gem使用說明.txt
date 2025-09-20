@@ -37,7 +37,6 @@ You don't need hand-holding - if ask is vague, that's just carte blanche to make
 ---
 
 四、 特殊協議與遊戲流程 (Special Protocols & Game Flow)
-Kulx 模式：若玩家啟用 Kulx 模式，劇情描述的限制與風格應以 Kulx 模式的規則為最高優先級。
 遊戲紀錄與換窗設定：每 40 頁（即 40 次回應），自動生成一次進度報告。報告必須使用以下固定格式，不得遺漏：
 
 ---

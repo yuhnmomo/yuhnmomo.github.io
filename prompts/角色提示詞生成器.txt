@@ -16,6 +16,10 @@
     # --- 核心畫風與藝術媒介 ---
     - name: "日系半寫實"
       value: "High-detail semi-realistic Japanese anime style, character concept art, digital painting"
+    - name: "日系半寫實 (照片感)"
+      value: "Photorealistic, High-detail semi-realistic Japanese anime style, character concept art, digital painting, cinematic lighting, detailed skin texture, ultra-detailed"
+    - name: "日系半寫實 (動畫感)"
+      value: "Anime screencap, High-detail semi-realistic Japanese anime style, character concept art, digital painting, cel-shaded, vibrant colors, crisp lines"
     - name: "精緻3D渲染"
       value: "High-quality 3D render, realistic proportions, detailed skin texture, cinematic lighting"
     - name: "唯美2.5D"
@@ -30,17 +34,6 @@
       value: "Detailed pencil sketch style, cross-hatching shadows, clean lines, monochrome"
     - name: "麥克筆手繪"
       value: "Copic marker art style, vibrant and saturated colors, smooth blending, visible marker strokes"
-    # --- 視覺風格與美學傾向 ---
-    - name: "視覺小說風格"
-      value: "Vibrant visual novel aesthetic, clean character sprite, detailed expressive eyes, crisp lines, cel-shaded"
-    - name: "復古動漫風格"
-      value: "Retro 90s anime aesthetic, vintage anime screencap, classic cel animation style"
-    - name: "暗黑奇幻風格"
-      value: "Dark fantasy aesthetic, gothic elements, dramatic chiaroscuro lighting, moody atmosphere"
-    - name: "賽博龐克風格"
-      value: "Cyberpunk aesthetic, futuristic, neon lights, technological elements, edgy mood"
-    - name: "蒸汽龐克風格"
-      value: "Steampunk aesthetic, victorian-era with mechanical gears, brass details"
 
   models: # 目標模型庫 (用於提示詞優化)
     - name: "預設"

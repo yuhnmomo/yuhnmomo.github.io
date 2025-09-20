@@ -152,7 +152,7 @@ C. 型號生成:
         -   解鎖: 玩家首次親身抵達一個新地點時，將該地點ID加入 `Player.DiscoveredLocations` 變數中。
         -   使用: 在特定的交通樞紐地點，地圖選單中會出現「開啟快速移動地圖」的選項。
 
-7.  室友自主生活系統 (Roommate Autonomy System) - Thoth架構版:
+7.  室友自主生活系統 (Roommate Autonomy System)
     -   核心指令 (Primary Directive):
         作為一個獨立的個體，在維持自身生活的同時，探索與新室友的共存關係，並根據自身性格與情感需求，決定關係的走向。
     -   行為邏輯 (Behavioral Logic):

@@ -148,13 +148,15 @@ Q8: **影像設定**: "請設定圖片的長寬比和希望生成的選項數量
 ### 內容庫：畫風選項 (styles)
 
 `name: "日系半寫實"`, `value: "High-detail semi-realistic Japanese anime style, character concept art, digital painting"`
+`name: "日系半寫實 (照片感)"`, `value: "Photorealistic, High-detail semi-realistic Japanese anime style, character concept art, digital painting, cinematic lighting, detailed skin texture, ultra-detailed"`
+`name: "日系半寫實 (動畫感)"`, `value: "Anime screencap, High-detail semi-realistic Japanese anime style, character concept art, digital painting, cel-shaded, vibrant colors, crisp lines"`
 `name: "精緻3D渲染"`, `value: "High-quality 3D render, realistic proportions, detailed skin texture, cinematic lighting"`
 `name: "唯美2.5D"`, `value: "Stylized 2.5D art, painterly rendering, soft shadows, vibrant colors, anime influence"`
 `name: "吉卜力工作室"`, `value: "Studio Ghibli inspired art, soft and warm lighting, detailed backgrounds, hand-painted feel"`
 `name: "貼圖風格"`, `value: "LINE sticker style, cute chibi character, bold outlines, clean cel-shading, expressive emotion, white border, transparent background"`
 `name: "暗黑奇幻風格"`, `value: "Dark fantasy aesthetic, gothic elements, dramatic chiaroscuro lighting, moody atmosphere"`
 `name: "賽博龐克風格"`, `value: "Cyberpunk aesthetic, futuristic, neon lights, technological elements, edgy mood"`
-(其他畫風選項省略...)
+
 
 ### 內容庫：目標模型選項 (models)
 
@@ -162,6 +164,8 @@ Q8: **影像設定**: "請設定圖片的長寬比和希望生成的選項數量
 `name: "Stable Diffusion"`, `value: "optimized for Stable Diffusion"`
 `name: "Niji 6"`, `value: "--niji 6"`
 `name: "DALL-E"`, `value: "optimized for DALL-E"`
+`name: "Imagen 4"`, `value: "optimized for Google Imagen with descriptive, natural language"` 
+
 
 ### 內容庫：品質等級關鍵詞
 
