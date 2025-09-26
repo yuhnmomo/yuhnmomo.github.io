@@ -1,3 +1,19 @@
+// --- 技能系統核心邏輯 (Core Skill System Logic) --- //
+
+[SKILL_ACQUISITION_RULE]
+  - rule: "當玩家的位份提升時，自動解鎖所有對應該位份及以下位份的技能。無需額外學習。"
+
+[SKILL_EXECUTION_LOGIC]
+  - description: "當玩家觸發 USE_SKILL 指令時，系統將遵循此邏輯。"
+  - flow:
+    - step: 1, CHECK_RANK_AND_LIST_SKILLS
+      description: "系統檢定玩家位份，並根據 `深宮怨參數檔.txt` 中的 [SKILL_GATES] 和本檔案中的技能列表，列出所有滿足位份要求且不在冷卻中的技能，形成選單。"
+    - step: 2, PLAYER_SELECTS_SKILL_AND_TARGET
+      description: "玩家從選單中選擇技能和目標角色。"
+    - step: 3, EXECUTE_EFFECT_AND_SET_COOLDOWN
+      description: "系統執行技能效果，並記錄該技能的冷卻時間（CD）。"
+
+
 # 第五部分：技能庫 (Skill Library)
 
 [40_PALACE_SKILLS]
@@ -20,7 +36,7 @@ C07=脂粉作毒(位份:貴人↑ 效果:3回合後 target.beauty降1階 CD:3)/
 B01=掌嘴三十(位份:妃↑ 效果:target.affection-10丨其陣營好感-10丨player.惡名+10 CD:2)/
 B02=禁足內殿(位份:妃↑ 效果:target禁錮3回合 FLAG:報復檢定 CD:3)/
 B03=杖責二十(位份:貴妃↑ 效果:target.favor=0丨隨機屬性-5 FLAG:需皇帝默許 CD:3)/
-B04=夜審酷刑(位份:妃↑ 效果:取得祕密(密信+1) 失敗:player.affection-15 CD:3)/
+B04=廷杖審問(位份:妃↑ 效果:消耗銀兩:100, 命下人對目標用刑，有機會取得祕密(密信+1)。失敗則可能暴露，player.惡名+15 CD:3)/
 B05=毀容辣手(位份:妃↑ 效果:target.beauty→B1丨favor=0 失敗:player.名聲-30 CD:4)/
 B06=慢性寒毒(位份:妃↑ 效果:連續3回合每回合target隨機屬性-5 FLAG:太醫可破 CD:3)/
 B07=墮胎狠計(位份:妃↑ 限制:對象懷孕 效果:清胎丨target.favor-20 FLAG:高敵意 CD:4)/
@@ -32,5 +48,5 @@ B07=墮胎狠計(位份:妃↑ 限制:對象懷孕 效果:清胎丨target.favor-
 A01=逐出宮闈(位份:皇貴妃↑ 效果:移除角色 FLAG:需皇帝/太后背書 CD:—)/
 A02=鴆酒賜死(位份:皇后/太后 效果:直接清除角色 FLAG:未經聖裁→失敗結算 CD:—)/
 A03=冊立廢黜(位份:皇后/太后 效果:目標位份±1~2丨連動favor/power CD:—)/
-A04=以毒控身(位份:皇后/太后 效果:每回合target全屬性-3(持續) FLAG:暴露風險高 CD:—)/
+A04=六宮非議(位份:皇后/太后 效果:消耗銀兩:200, 散播關於目標的負面謠言，可大幅降低其對外關係與朝中聲望，持續影響其「勢力」值。 CD:—)/
 ]

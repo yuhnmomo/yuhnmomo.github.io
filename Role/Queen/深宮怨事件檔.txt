@@ -112,18 +112,19 @@ events:
   effects:
     - "flag: set PLOT_04_IN_PROGRESS = true"
 
-- id: PLOT_05_PREGNANT
-  name: 龍裔之喜
+- id: PLOT_05_FORTUNE
+  name: 命運的賞賜
   category: 序章核心劇情
   trigger: "AUTO"
   condition:
-    - "flag: IS_PREGNANT == true"
+    - "flag: PLOT_04_COMPLETE == true"
     - "flag: PLOT_05_COMPLETE != true"
-  description: "你察覺自己身體有異，太醫診脈後，證實你已懷有身孕..."
+  description: "你成功度過了來自暗處的危機，皇帝為了安撫與獎賞你，決定賜予你一份意想不到的大禮..."
   effects:
-    - "action: SECRET_PATERNITY_ROLL" // 執行秘密血緣檢定
+    - "scene: 根據玩家當前狀態（是否懷孕、寵愛值等），動態生成不同的『賞賜』劇情。"
     - "flag: set PLOT_05_IN_PROGRESS = true"
-  unlock_act: "[告知皇帝]", "[告知義父(if FATHER_AFFAIR == true)]"
+    - "flag: set PLOT_05_COMPLETE = true"
+  unlock_act: "[欣然接受]", "[惶恐推辭]"
 
 # --- 中期主線劇情 ---
 
