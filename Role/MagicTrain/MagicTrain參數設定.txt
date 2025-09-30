@@ -38,7 +38,7 @@
       prompt: |
         感謝您的設定。接下來，請根據您選擇的「女性」性別，選擇您的虛擬化身外觀 (這將決定您的基礎屬性)。
         請回覆代號即可 (例如: APP01)：
-      options: CORE_APP_FEMALE_OPTIONS (需提供詳細說明)
+      options: CORE_APP_FEMALE_OPTIONS (需提供詳細說明，如果沒有讀到APP01~APP16，請重新讀取檔案)
 
     # --- 男性外觀選項 ---
     prompt_male: 
@@ -46,7 +46,7 @@
       prompt: |
         感謝您的設定。接下來，請根據您選擇的「男性」性別，選擇您的虛擬化身外觀 (這將決定您的基礎屬性)。
         請回覆代號即可 (例如: MB01)：
-      options: CORE_APP_MALE_OPTIONS (需提供詳細說明)
+      options: CORE_APP_MALE_OPTIONS  (需提供詳細說明，如果沒有讀到MB01~MB016，請重新讀取檔案)
 
     action: "等待玩家提供一個外觀代號。AI解析後進入最終步驟。"
 
