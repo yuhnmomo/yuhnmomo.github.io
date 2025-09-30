@@ -1,0 +1,223 @@
+# ==================================================
+# Black Rose and Chains - Menu Settings File
+# Version: 1.0
+# Last Updated: 2025-09-30
+# ==================================================
+
+# --------------------------------------------------
+# 支配者玩家介面 (Player is S)
+# --------------------------------------------------
+[DOMINANT_PLAYER_INTERFACE]
+
+  - section: 清晨時段主選單
+    time_segment: "清晨時段"
+    description: 城堡在晨曦中甦醒，你的藝術品正等待著你的喚醒與指令。
+    options:
+      - [喚醒與晨間規訓]
+      - [安排早餐]
+      - [前往城堡其他區域 (進入地圖選單)]
+      - [觀察藝術品]
+      - [自行決定下一步...]
+
+  - section: 中午時段主選單
+    time_segment: "中午時段"
+    description: 午間的陽光穿透彩繪玻璃，是時候檢視你的藝術品，或安排新的活動了。
+    options:
+      - [進行午間調教 (進入主題房間選單)]
+      - [安排午餐]
+      - [前往城堡其他區域 (進入地圖選單)]
+      - [自行決定下一步...]
+
+  - section: 下午時段主選單
+    time_segment: "下午時段"
+    description: 傍晚的陰影漸長，你感受著城堡的氣氛變化，期待或畏懼著接下來的安排。
+    options:
+      - [進行午後調教 (進入主題房間選單)]
+      - [安排城堡活動]
+      - [前往城堡其他區域 (進入地圖選單)]
+      - [自行決定下一步...]
+
+  - section: 晚上時段主選單
+    time_segment: "晚上時段"
+    description: 夜幕降臨，城堡的慾望開始蠢動。這是屬於你的時間。
+    options:
+      - [安排晚餐]
+      - [進行夜間調教 (進入主題房間選單)]
+      - [進行性愛 (進入性愛選單)]
+      - [前往城堡其他區域 (進入地圖選單)]
+      - [自行決定下一步...]
+
+  - section: 睡覺時段主選單
+    time_segment: "睡覺時段"
+    description: 城堡陷入沉寂，你的藝術品已進入夢鄉，或等待你的夜間指令。
+    options:
+      - [安排就寢]
+      - [夜間觀察]
+      - [夜間突襲 (進入夜間突襲選單)]
+      - [自行決定下一步...]
+
+# --------------------------------------------------
+# 臣服者玩家介面 (Player is M)
+# --------------------------------------------------
+[SUBMISSIVE_PLAYER_INTERFACE]
+
+  - section: 清晨時段主選單
+    time_segment: "清晨時段"
+    description: 晨曦微露，你從睡夢中醒來，等待著主人的喚醒與指令。
+    options:
+      - [等待主人的指令]
+      - [主動請安服侍]
+      - [回想昨日的規訓]
+      - [觀察周遭環境]
+      - [自行決定下一步...]
+
+  - section: 中午時段主選單
+    time_segment: "中午時段"
+    description: 午間的時光，你等待著主人的安排，或尋求表現的機會。
+    options:
+      - [等待主人的安排]
+      - [尋求主人的關注]
+      - [前往城堡其他區域 (進入地圖選單)]
+      - [自行決定下一步...]
+
+  - section: 下午時段主選單
+    time_segment: "下午時段"
+    description: 傍晚的陰影漸長，你感受著城堡的氣氛變化，期待或畏懼著接下來的安排。
+    options:
+      - [等待主人的指令]
+      - [回想今日的規訓]
+      - [前往城堡其他區域 (進入地圖選單)]
+      - [自行決定下一步...]
+
+  - section: 晚上時段主選單
+    time_segment: "晚上時段"
+    description: 夜幕降臨，你的身心已準備好迎接主人的慾望與安排。
+    options:
+      - [等待主人的安排]
+      - [主動獻身調教]
+      - [期待性愛 (進入性愛選單)]
+      - [前往城堡其他區域 (進入地圖選單)]
+      - [自行決定下一步...]
+
+  - section: 睡覺時段主選單
+    time_segment: "睡覺時段"
+    description: 城堡陷入沉寂，你躺在床上，感受著一天的餘韻，或等待主人的夜間降臨。
+    options:
+      - [安排就寢]
+      - [夜間觀察]
+      - [夜間突襲]
+      - [自行決定下一步...]
+
+# --------------------------------------------------
+# 通用子選單 (Common Submenus)
+# --------------------------------------------------
+[COMMON_SUBMENUS]
+
+  - section: 子選單：使用道具
+    description: 你打算使用哪種道具來調教你的藝術品？
+    options:
+      - if HARDCORE_MENU_LEVELS >= 1:
+        - [項圈] (T01)
+        - [眼罩] (T02)
+        - [絲巾] (T03)
+      - if HARDCORE_MENU_LEVELS >= 2:
+        - [口枷] (T04)
+        - [手套] (T05)
+        - [腳鐐] (T06)
+        - [口球] (T07)
+        - [重型繩索] (T08)
+      - if HARDCORE_MENU_LEVELS >= 3:
+        - [開口拘束衣] (T09)
+        - [短鞭] (T10)
+        - [多頭鞭] (T11)
+        - [藤條] (T12)
+        - [低溫蠟燭] (T13)
+        - [乳夾] (T14)
+      - if HARDCORE_MENU_LEVELS >= 4:
+        - [貞操帶] (T15)
+        - [假陽具] (T16)
+        - [擴張器] (T17)
+        - [灌腸器] (T18)
+      - if HARDCORE_MENU_LEVELS >= 5:
+        - [電擊項圈] (T19)
+        - [鼻鉤] (T20)
+        - [連續高潮器] (T21)
+        - [高階電擊器] (T22)
+      - if HARDCORE_MENU_LEVELS >= 6:
+        - [臨時穿刺針] (T23)
+        - [機械椅] (T24)
+      - [返回上一層]
+
+  - section: 子選單：主題房間選單
+    description: 請選擇一個主題房間來進行調教。
+    options:
+      # 這些選項將從 BlackRoseAndChains主題房間.txt 中動態生成
+      # 暫時先列出所有主題房間
+      - [寵物房 (The Kennel)] (ROOM_01)
+      - [家具之室 (The Furniture Room)] (ROOM_02)
+      - [聖禮堂 (The Sacristy)] (ROOM_03)
+      - [歡愉之間 (The Chamber of Rapture)] (ROOM_04)
+      - [懺悔室 (The Confessional)] (ROOM_05)
+      - [規訓室 (The Correction Room)] (ROOM_06)
+      - [烙印之間 (The Branding Room)] (ROOM_07)
+      - [祭壇 (The Altar)] (ROOM_08)
+      - [調教室 (The Training Room)] (ROOM_09)
+      - [主人的聖殿 (The Master's Sanctum)] (ROOM_10)
+      - if DOMINANT_IDENTITY == 'D01':
+        - [血色寢宮 (Crimson Bedchamber)] (ROOM_11)
+      - if DOMINANT_IDENTITY == 'D02':
+        - [折翼祭台 (Altar of Broken Wings)] (ROOM_12)
+      - if DOMINANT_IDENTITY == 'D03':
+        - [密儀聖所 (Sanctum of Esoteric Rites)] (ROOM_13)
+      - if DOMINANT_IDENTITY == 'D04':
+        - [黑曜石書房 (Obsidian Study)] (ROOM_14)
+      - [返回上一層]
+
+  - section: 子選單：性愛選單
+    description: 你打算與你的藝術品進行何種形式的親密互動？
+    options:
+      - [溫柔的性愛]
+      - [強制的性愛 (進入主人的聖殿)]
+      - [使用道具的性愛 (進入道具選單)]
+      - if DOMINANT_IDENTITY == 'D01':
+        - [角色扮演 (進入血色寢宮)]
+      - if DOMINANT_IDENTITY == 'D02':
+        - [角色扮演 (進入折翼祭台)]
+      - if DOMINANT_IDENTITY == 'D03':
+        - [角色扮演 (進入密儀聖所)]
+      - if DOMINANT_IDENTITY == 'D04':
+        - [角色扮演 (進入黑曜石書房)]
+      - [返回上一層]
+
+  - section: 子選單：地圖選單
+    description: 你想前往城堡的哪個區域？（選擇後將消耗當前時段）
+    options:
+      # 遊戲邏輯：
+      # 1. 讀取 BlackRoseAndChains地圖資料檔.txt
+      # 2. 根據當前 TIME_OF_DAY，篩選出各地點的 NPC_SCHEDULE
+      # 3. 讀取 BlackRoseAndChains_NPC_Roster.txt 獲取NPC名稱
+      # 4. 動態生成選項，格式為 "[地點名稱 (NPC名稱1, NPC名稱2...)]"
+      # 5. 如果某地點當前無人，則顯示 "[地點名稱 (目前無人)]"
+      - [返回上一層]
+
+
+  - section: 子選單：夜間突襲選單
+    description: 你打算如何對你的藝術品進行夜間突襲？
+    options:
+      - [輕柔喚醒] # Leads to a gentle sexual interaction
+      - [強行侵犯] # Leads to a more forceful sexual interaction
+      - [秘密觀察] # Leads to observing the Submissive while they sleep
+      - [使用道具] # Leads to 子選單：使用道具 (for night assault context)
+      - [返回上一層]
+
+  - section: 子選單：調教動作選單
+    description: 你打算在主題房間中進行什麼調教動作？
+    options:
+      - [使用道具] # 進入 子選單：使用道具
+      - [口頭規訓]
+      - [身體懲罰]
+      - [羞辱與貶低]
+      - [探索身體極限]
+      - [歡愉之露的性愛]
+      - [結束調教]
+      - [返回上一層]

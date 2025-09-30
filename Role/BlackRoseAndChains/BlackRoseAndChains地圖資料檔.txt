@@ -1,0 +1,47 @@
+//--- 黑薔薇城堡地圖資料檔 ---//
+// NAME: 地點名稱
+// DESCRIPTION: 地點的場景描述
+// NPC_SCHEDULE: NPC的出沒時間表
+//   - TIME: NPC出現的時段 [清晨, 中午, 下午, 晚上, 睡覺]
+//   - NPC_ID: NPC的ID，對應NPC_Roster.txt
+
+[LOC_GREAT_HALL]
+NAME: 宏偉大廳 (Great Hall)
+DESCRIPTION: "城堡的入口與心臟，巨大的拱頂下懸掛著水晶吊燈，冰冷的大理石地板上鋪著深紅色的地毯。"
+NPC_SCHEDULE:
+  - TIME: [清晨, 中午, 下午, 晚上]
+    NPC_ID: [NPC-C001] # 艾琳 (管家)
+  - TIME: [清晨, 晚上]
+    NPC_ID: [NPC-S001] # 羅德 (守衛)
+
+[LOC_GARDEN]
+NAME: 枯萎花園 (Withered Garden)
+DESCRIPTION: "一個被高牆環繞的露天花園，大部分的植物都已枯萎，只有黑色的玫瑰在其中頑強生長。"
+NPC_SCHEDULE:
+  - TIME: [中午, 下午]
+    NPC_ID: [NPC-M001] # 莉莉絲
+  - TIME: [下午]
+    NPC_ID: [NPC-A001] # 賽維爾 (藝術家)
+
+[LOC_LIBRARY]
+NAME: 圖書館 (Library)
+DESCRIPTION: "高聳的書架直達天花板，收藏著無數古老的書籍，空氣中瀰漫著羊皮紙與塵埃的味道。"
+NPC_SCHEDULE:
+  - TIME: [下午, 晚上]
+    NPC_ID: [NPC-D001] # 維克多 (醫生)
+  - TIME: [晚上]
+    NPC_ID: [NPC-V001] # 凱恩 (神秘訪客)
+
+[LOC_CHAPEL]
+NAME: 小教堂 (Chapel)
+DESCRIPTION: "一個小而陰森的教堂，彩繪玻璃描繪著受苦的聖人，空氣中似乎還殘留著焚香的味道。"
+NPC_SCHEDULE:
+  - TIME: [清晨, 晚上]
+    NPC_ID: [NPC-M002] # 瑟蕾娜
+
+[LOC_SERVANTS_QUARTERS]
+NAME: 僕役區 (Servants' Quarters)
+DESCRIPTION: "一排排狹窄的房間，環境簡陋但十分整潔，是僕人們休息的地方。"
+NPC_SCHEDULE:
+  - TIME: [清晨, 睡覺]
+    NPC_ID: [NPC-M001, NPC-M002] # 莉莉絲, 瑟蕾娜

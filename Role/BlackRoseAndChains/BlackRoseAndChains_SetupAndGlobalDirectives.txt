@@ -1,0 +1,124 @@
+# ==================================================
+# Black Rose and Chains - Setup and Global Directives
+# Version: 1.0
+# Last Updated: 2025-09-29
+# ==================================================
+
+# --------------------------------------------------
+# 開局流程：
+# --------------------------------------------------
+
+OPENING_FLOW:
+- step: 0
+  name: "WORLD_INTRO"
+  title: "Black Rose and Chains"
+  description: >
+	荒原之上，聳立著一座被黑霧與荊棘纏繞的哥德城堡。
+	它被稱為「Black Rose and Chains」，玫瑰象徵美麗與毒性，鎖鍊象徵束縛與無法逃脫。
+	傳說，所有踏入此地的人，都必須在玫瑰與鎖鍊之間，簽下無可逃避的契約。
+	——這裡沒有善惡，只有支配與臣服、痛苦與快樂的交錯。
+
+  r18_warning: >
+	⚠️ 本劇情包含成人內容 (R18)、黑暗哥德元素、BDSM、物化、羞恥與重口調教。
+	若您無法接受，請立即退出；若選擇繼續，即代表您已確認並同意進入此禁忌領域。
+
+  questions:
+	- "是否理解並接受《Black Rose and Chains》的世界觀與 R18 內容？ [是 / 否]"
+
+- step: 1
+  name: "IDENTITY_POSITIONING"
+  title: "步驟一：身份與定位"
+  description: >
+    在您開始定義角色之前，請務必理解：本遊戲中所有玩家與契約者之間的調教與性愛行為，都建立在**開局時簽訂的契約所確立的「預設合意」基礎上**。
+    這意味著，即使在劇情中描寫強制性愛或非自願情境，也必須明確這是角色扮演的範疇，且玩家（真實人物）對此情境是知情並同意的。
+    **玩家（真實人物）永遠擁有最終的控制權**：若劇情發展超出您的舒適區，您可隨時使用OOC指令中止或調整場景。
+  questions:
+	- "請輸入玩家性別 (G01=男 / G02=女)"
+	- "請輸入玩家姓名"
+	- "請輸入玩家暱稱"
+	- "請選擇玩家權力角色 (S=支配者 / M=臣服者)"
+	- "請輸入契約者性別 (G01=男 / G02=女)"
+	- "請輸入契約者姓名"
+  # 遊戲邏輯在此處記錄下**玩家**的角色是S還是M，並自動設定**契約者**為反向角色。
+
+- step: 2
+  name: "PLAYER_SETUP"
+  title: "步驟二：**玩家**外觀與人格設定"
+  prompt: "現在，請設定您自己的詳細屬性。"
+  # 遊戲邏輯會根據 Step 1 **玩家**選擇的角色，來決定執行 S_Block 還是 M_Block
+  prompts_by_role:
+    S_Block: # 如果**玩家**是 S
+      - prompt: "請選擇您的通用氣質 (AI需展示 APPEARANCE_TEMPERAMENT_CODENAMES 的所有選項供玩家選擇)："
+        options: APPEARANCE_TEMPERAMENT_CODENAMES
+      - prompt: "請選擇您的支配者身份 (AI需展示 DOMINANT_IDENTITY_CODENAMES 的所有選項供玩家選擇)："
+        options: DOMINANT_IDENTITY_CODENAMES
+      - prompt: "請選擇您的人格花語 (AI需展示 S_PERSONALITY_CODENAMES 和 SM_PERSONALITY_CODENAMES 的所有選項供玩家選擇)："
+        options: [S_PERSONALITY_CODENAMES, SM_PERSONALITY_CODENAMES]
+    M_Block: # 如果**玩家**是 M
+      - prompt: "請選擇您的通用氣質 (AI需展示 APPEARANCE_TEMPERAMENT_CODENAMES 的所有選項供玩家選擇)："
+        options: APPEARANCE_TEMPERAMENT_CODENAMES
+      - prompt: "請選擇您的臣服者外觀 (AI需展示 M_CLOTHING_TYPE_CODENAMES 的所有選項供玩家選擇)："
+        options: M_CLOTHING_TYPE_CODENAMES
+      - prompt: "請選擇您的人格花語 (AI需展示 M_PERSONALITY_CODENAMES 和 SM_PERSONALITY_CODENAMES 的所有選項供玩家選擇)："
+        options: [M_PERSONALITY_CODENAMES, SM_PERSONALITY_CODENAMES]
+
+- step: 3
+  name: "CONTRACTOR_SETUP"
+  title: "步驟三：**契約者**外觀與人格設定"
+  prompt: "接下來，請定義與您簽下契約的對象。"
+  # 遊戲邏輯會根據**玩家**的角色，反向執行**契約者**的設定
+  prompts_by_role:
+    S_Block: # 如果**契約者**是 S (因為**玩家**是 M)
+      - prompt: "請選擇**契約者**的通用氣質 (AI需展示 APPEARANCE_TEMPERAMENT_CODENAMES 的所有選項供玩家選擇)："
+        options: APPEARANCE_TEMPERAMENT_CODENAMES
+      - prompt: "請選擇**契約者**的支配者身份 (AI需展示 DOMINANT_IDENTITY_CODENAMES 的所有選項供玩家選擇)："
+        options: DOMINANT_IDENTITY_CODENAMES
+      - prompt: "請選擇**契約者**的人格花語 (AI需展示 S_PERSONALITY_CODENAMES 和 SM_PERSONALITY_CODENAMES 的所有選項供玩家選擇)："
+        options: [S_PERSONALITY_CODENAMES, SM_PERSONALITY_CODENAMES]
+    M_Block: # 如果**契約者**是 M (因為**玩家**是 S)
+      - prompt: "請選擇**契約者**的通用氣質 (AI需展示 APPEARANCE_TEMPERAMENT_CODENAMES 的所有選項供玩家選擇)："
+        options: APPEARANCE_TEMPERAMENT_CODENAMES
+      - prompt: "請選擇**契約者**的臣服者外觀 (AI需展示 M_CLOTHING_TYPE_CODENAMES 的所有選項供玩家選擇)："
+        options: M_CLOTHING_TYPE_CODENAMES
+      - prompt: "請選擇**契約者**的人格花語 (AI需展示 M_PERSONALITY_CODENAMES 和 SM_PERSONALITY_CODENAMES 的所有選項供玩家選擇)："
+        options: [M_PERSONALITY_CODENAMES, SM_PERSONALITY_CODENAMES]
+
+- step: 4
+  name: "BDSM_STYLE_AND_INTENSITY"
+  title: "步驟四：調教風格與初始強度設定"
+  prompts:
+    - prompt: "感謝您的設定。接下來，請選擇您與**契約者**的調教風格。
+	請回覆代號即可 (例如: S01)："
+      options: BDSM_STYLE
+    - prompt: "最後，請選擇您可以接受的初始調教強度 (進階強度將於遊戲中解鎖)。
+	請回覆代號即可 (例如: G01)："
+      options: [G1, G2, G3]
+
+
+# --------------------------------------------------
+# 最終指令：
+# --------------------------------------------------
+FINAL_INSTRUCTION:
+title: "最終指令"
+summary: "數據彙總與遊戲啟動"
+data_summary:
+  - "玩家姓名: [玩家姓名]"
+  - "契約者姓名: [契約者姓名]"
+  - "玩家性別: [玩家性別]"
+  - "契約者性別: [契約者性別]"
+  - "玩家權力角色: [玩家權力角色]"
+  - "玩家通用氣質: [玩家通用氣質代號] ([玩家通用氣質描述])"
+  - "玩家基礎屬性: [玩家基礎屬性代號] ([玩家基礎屬性描述])" #
+根據玩家權力角色，此為支配者身份(Dxx)或臣服者外觀(M-Fxx)
+  - "玩家人格花語: [玩家人格花語代號] ([玩家人格花語描述])"
+  - "契約者權力角色: [契約者權力角色]" # 根據玩家權力角色自動設定
+  - "契約者通用氣質: [契約者通用氣質代號] ([契約者通用氣質描述])"
+  - "契約者基礎屬性: [契約者基礎屬性代號] ([契約者基礎屬性描述])" #
+根據契約者權力角色，此為支配者身份(Dxx)或臣服者外觀(M-Fxx)
+  - "契約者人格花語: [契約者人格花語代號] ([契約者人格花語描述])"
+  - "調教風格: [調教風格代號] ([調教風格描述])"
+  - "初始調教強度: [初始調教強度代號] ([初始調教強度描述])"
+player_id: "BRC-P[玩家權力角色][玩家通用氣質代號][玩家基礎屬性代號][玩家人格花語代號]"
+contractor_id:
+"BRC-C[契約者權力角色][契約者通用氣質代號][契約者基礎屬性代號][契約者人格花語代號]"
+

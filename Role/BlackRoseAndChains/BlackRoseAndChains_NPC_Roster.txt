@@ -1,0 +1,91 @@
+# ==================================================
+# Black Rose and Chains - NPC Roster File
+# Version: 1.0
+# Last Updated: 2025-09-30
+# ==================================================
+
+[CORE_NPCS]:
+  - id: NPC-C001
+    name: 艾琳 (Aileen)
+    archetype: 管家/女僕長
+    gender: 女
+    appearance: 一頭整齊的深棕色髮絲盤起，身著典雅的黑色女僕長制服，眼神中帶著一絲不苟的嚴謹與深藏的順從。
+    personality: 沉穩、忠誠、嚴謹，對城堡的規矩和支配者的命令絕對服從，但內心深處對權力有著微妙的渴望。
+    role_function: 城堡的總管家，負責所有僕役的管理和城堡日常運作。
+    initial_stance: 對支配者玩家表現出極致的恭敬與順從，對臣服者玩家則保持距離但會執行支配者的指令。
+    interaction_potential: 可被調教，可進行性愛互動（需建立信任），可提供城堡情報。
+    initial_trust: 70/100
+    orientation: M
+
+[CASTLE_RESIDENTS_ROSTER]:
+  - id: NPC-S001
+    name: 羅德 (Rhode)
+    archetype: 城堡守衛
+    gender: 男
+    appearance: 身材高大，穿著厚重的黑色盔甲，臉上總是帶著冷峻的表情，眼神銳利。
+    personality: 沉默寡言，忠於職守，對支配者有著軍人般的服從，對城堡的秘密守口如瓶。
+    role_function: 城堡的首席守衛，負責巡邏和安全。
+    initial_stance: 對支配者玩家保持警惕的尊敬，對臣服者玩家則嚴格執行規訓。
+    interaction_potential: 可被調教（需突破其防線），可進行性愛互動（需極高支配力），可執行特殊任務。
+    initial_trust: 50/100
+    orientation: S
+
+  - id: NPC-M001
+    name: 莉莉絲 (Lilith)
+    archetype: 其他臣服者
+    gender: 女
+    appearance: 嬌小玲瓏，一頭凌亂的金色短髮，身穿殘破的囚服，眼神中帶著一絲恐懼與渴望被征服的矛盾。
+    personality: 膽怯、敏感，容易受到驚嚇，但內心深處渴望被更強大的力量所支配和保護。
+    role_function: 城堡中被囚禁的臣服者之一，負責一些輕微的勞動。
+    initial_stance: 對支配者玩家充滿恐懼與順從，對臣服者玩家則可能尋求同情或競爭。
+    interaction_potential: 可被調教，可進行性愛互動，可作為支配者玩家的玩物。
+    initial_trust: 30/100
+    orientation: M
+
+  - id: NPC-D001
+    name: 維克多 (Victor)
+    archetype: 醫生
+    gender: 男
+    appearance: 身形清瘦，戴著一副金邊眼鏡，穿著整潔的白大褂，眼神中透著冷靜與探究。
+    personality: 理性、嚴謹，對人體構造和痛苦的機制有著超乎尋常的興趣，對支配者的命令絕對服從。
+    role_function: 城堡的專屬醫師，負責所有居民的健康與傷勢處理，也可能參與某些「實驗」。
+    initial_stance: 對支配者玩家保持專業的服從，對臣服者玩家則視為研究對象。
+    interaction_potential: 可提供醫療協助，可參與調教（特別是涉及身體極限的），可進行性愛互動（以研究或命令為前提）。
+    initial_trust: 60/100
+    orientation: Switch
+
+  - id: NPC-A001
+    name: 賽維爾 (Xavier)
+    archetype: 藝術家/表演者
+    gender: 男
+    appearance: 一頭烏黑的長髮隨意披散，深邃的眼眸中閃爍著藝術家的狂熱與一絲頹廢。身形修長，常穿著絲絨質地的華麗服飾，指尖沾染著顏料。
+    personality: 敏感、浪漫、追求極致的美與感官刺激，對痛苦和歡愉有著獨特的見解，渴望被理解和啟發。
+    role_function: 城堡的專屬畫師，負責記錄城堡的歷史與支配者的「藝術品」。
+    initial_stance: 對支配者玩家充滿好奇與藝術家的探究，對臣服者玩家則可能視為靈感來源。
+    interaction_potential: 可被調教（以藝術為名），可進行性愛互動（追求感官極致），可提供藝術品或情報。
+    initial_trust: 40/100
+    orientation: Switch
+
+  - id: NPC-M002
+    name: 瑟蕾娜 (Serena)
+    archetype: 其他臣服者
+    gender: 女
+    appearance: 一頭如瀑布般的銀色長髮，肌膚蒼白，身著輕薄的絲質睡袍，眼神中帶著一絲迷離與天真，彷彿剛從夢中醒來。
+    personality: 溫順、被動、容易受影響，渴望被保護與引導，對支配者的命令幾乎沒有抵抗力，但有時會流露出孩子氣的任性。
+    role_function: 城堡中被支配的另一位臣服者，主要負責陪伴與取悅。
+    initial_stance: 對支配者玩家充滿依賴與順從，對臣服者玩家則可能表現出好奇或無意識的競爭。
+    interaction_potential: 可被調教，可進行性愛互動，可作為支配者玩家的玩物或實驗對象。
+    initial_trust: 35/100
+    orientation: M
+
+  - id: NPC-V001
+    name: 凱恩 (Cain)
+    archetype: 神秘訪客/居民
+    gender: 男
+    appearance: 身材高挑，總是隱藏在寬大的黑色斗篷之下，臉龐被陰影籠罩，只能看見一雙深邃而難以捉摸的金色眼眸。聲音低沉而富有磁性。
+    personality: 神秘、冷靜、觀察力敏銳，似乎知曉許多城堡的秘密，不輕易表露情感，但對某些事物有著執著的探求。
+    role_function: 城堡中的長期訪客，身份不明，可能與城堡的古老歷史有關。
+    initial_stance: 對所有人都保持距離，但會默默觀察。對支配者玩家保持中立的尊重，對臣服者玩家則可能給予意想不到的提示。
+    interaction_potential: 可提供情報，可參與特定事件，可被調教（需極高難度），可進行性愛互動（需解鎖其秘密）。
+    initial_trust: 20/100
+    orientation: Switch
