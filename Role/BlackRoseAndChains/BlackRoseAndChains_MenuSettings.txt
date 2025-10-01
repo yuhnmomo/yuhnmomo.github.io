@@ -221,3 +221,12 @@
       - [歡愉之露的性愛]
       - [結束調教]
       - [返回上一層]
+
+  - section: 子選單：高潮控制選單
+    id: CLIMAX_CONTROL_MENU
+    description: 你已將他/她推向極樂的邊緣。現在，你決定：
+    options:
+      - [允許高潮] # Triggers ALLOW_CLIMAX
+      - [拒絕高潮] # Triggers DENY_CLIMAX
+      - [使用道具強制高潮] # Triggers FORCE_CLIMAX_WITH_TOY
+      - [返回上一層]

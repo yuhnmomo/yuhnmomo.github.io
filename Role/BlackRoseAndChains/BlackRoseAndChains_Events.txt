@@ -1,0 +1,437 @@
+# ======================================================================
+# Black Rose and Chains - Event Trigger Database
+# Version: 1.0 
+# 核心：所有遊戲邏輯、劇情推進、數值變化均由此處的事件驅動。
+# ======================================================================
+---
+# ======================================================================
+# SECTION 1: MAIN NARRATIVE PROGRESSION (主線劇情推進)
+# ======================================================================
+---
+event:
+  id: STAGE_1_TO_2_TURNING_POINT
+  phase: mid
+  desc: "轉折點：第一次猜忌事件。觸發從蜜月期到改造期的關鍵事件。"
+  trigger: "AUTO_CHECK(END_OF_TIMESLOT)" # 在每個時間段結束時自動檢查
+  condition:
+    - "flag: GAME_STAGE == 1"
+    - "value: gs.contractor_love >= 30"
+    - "value: gs.player_love >= 20"
+    - "value: gs.day >= 4"
+  effects:
+    - eff:
+        flag: "set GAME_STAGE = 1.5" # 進入轉折事件狀態
+        trigger_event: "FIRST_SUSPICION_EVENT_SCENE" # 觸發具體的場景事件
+---
+event:
+  id: FIRST_SUSPICION_EVENT_SCENE
+  phase: mid
+  desc: "場景：第一次猜忌事件的具體發生過程。"
+  trigger: "EVENT_TRIGGER(FIRST_SUSPICION_EVENT_SCENE)"
+  effects:
+    - eff:
+        scene: "（此處根據S方的核心創傷，生成一段嫉妒、質問、並最終導向懲罰性床戲的劇情）"
+        flag: "set GAME_STAGE = 2" # 事件結束後，正式進入第二階段
+        trigger_event: "M_PSYCH_STATE_ENJOY_TO_CONFUSION" # 觸發M方心理狀態轉變
+---
+event:
+  id: STAGE_2_TO_3_TRANSITION
+  phase: late
+  desc: "階段轉變：從改造期到臣服期。"
+  trigger: "AUTO_CHECK(END_OF_TIMESLOT)"
+  condition:
+    - "flag: GAME_STAGE == 2"
+    - "value: gs.domination_level >= 6000"
+    - "value: gs.player_love >= 50"
+  effects:
+    - eff:
+        flag: "set GAME_STAGE = 3"
+        scene: "（此處可加入一段象徵性的劇情，描寫M方徹底臣服的心理轉變）"
+        trigger_event: "M_PSYCH_STATE_DEPENDENCE_TO_SUBMISSION"
+
+# ======================================================================
+# SECTION 3: STATE MACHINES (狀態機)
+# ======================================================================
+---
+event:
+  id: M_PSYCH_STATE_ENJOY_TO_CONFUSION
+  phase: mid
+  desc: "M方心理狀態轉變：從享受到困惑"
+  trigger: "EVENT_TRIGGER(M_PSYCH_STATE_ENJOY_TO_CONFUSION)"
+  condition:
+    - "flag: M_PSYCH_STATE == '享受'"
+  effects:
+    - eff:
+        flag: "set M_PSYCH_STATE = '困惑'"
+---
+event:
+  id: M_PSYCH_STATE_CONFUSION_TO_DEPENDENCE
+  phase: mid
+  desc: "M方心理狀態轉變：從困惑到依賴"
+  trigger: "AUTO_CHECK(END_OF_TIMESLOT)"
+  condition:
+    - "flag: M_PSYCH_STATE == '困惑'"
+    - "value: gs.player_love > 40"
+    - "value: gs.domination_level > 3000"
+  effects:
+    - eff:
+        flag: "set M_PSYCH_STATE = '依賴'"
+---
+[M方心理狀態機 (M-Side Psychological State Machine)]
+description: "定義了M方（玩家）的心理狀態如何根據關鍵事件和數值變化而演變。"
+states:
+  - state: "享受 (Enjoyment)"
+    description: "遊戲初期，M方享受著蜜月期的愉悅和探索的樂趣。"
+    transitions:
+      - to: "困惑 (Confusion)"
+        trigger: "經歷『第一次猜忌事件』"
+        reason: "第一次感受到關係中不合邏輯的、痛苦的一面，完美的幻覺出現裂痕。"
+
+  - state: "困惑 (Confusion)"
+    description: "M方在S方的忽冷忽熱中感到迷茫，分不清痛苦與愛。"
+    transitions:
+      - to: "依賴 (Dependence)"
+        trigger: "玩家愛意值 > 40 AND 調教度 > 3000"
+        reason: "在反覆的懲罰與獎勵中，M方開始將S方的關注（即使是負面的）視為生存必需，產生了情感依賴。"
+
+  - state: "依賴 (Dependence)"
+    description: "M方已經習慣了這種關係模式，並主動尋求S方的關注和控制以獲得安全感。"
+    transitions:
+      - to: "臣服 (Submission)"
+        trigger: "玩家愛意值 > 70 AND 調教度 > 10000"
+        reason: "M方徹底內化了S方的規則，將服從視為本能和天職，從中獲得最終的平靜。"
+      - to: "崩潰 (Breaking Down)"
+        trigger: "EVENT_TRIGGER(SEVERE_PUNISHMENT) AND value: gs.player_stamina < 10"
+        reason: "在極度的身心壓力下，M方的精神防線暫時崩潰。"
+
+  - state: "臣服 (Submission)"
+    description: "M方的自我意志已與S方同步，達到了靈魂層面的歸屬。"
+    transitions: [] # 最終狀態
+
+  - state: "崩潰 (Breaking Down)"
+    description: "M方精神過載，處於極度脆弱和不穩定的狀態。"
+    transitions: [] # 只能透過特殊事件（如蜜月復現）來脫離
+---
+event:
+  id: HONEYMOON_RECURRENCE_EVENT
+  desc: "稀有事件：蜜月復現。在M方瀕臨崩潰時，S方突然展現短暫的、極致的溫柔。"
+  trigger: "AUTO_CHECK(END_OF_TIMESLOT)"
+  condition:
+    - "flag: GAME_STAGE >= 2"
+    - "flag: M_PSYCH_STATE == '崩潰'"
+    - "action: ROLL_CHANCE(25%)"
+  effects:
+    - eff:
+        scene: "（觸發一段特殊劇情，S方察覺到M方的崩潰，一反常態地展現出蜜月期般的溫柔，進行安撫性的、不求回報的親密行為...）"
+        value: "gs.player_love += 15"
+        flag: "set M_PSYCH_STATE = '依賴'"
+        prompt_words: "蜜月復現, 意外的溫柔, 崩潰後的安撫, 情感綁定"
+---
+# ======================================================================
+# SECTION 4: VALUE MODIFIERS (數值增減規則)
+# ======================================================================
+---
+event:
+  id: LOVE_VALUE_M_OBEYS_S
+  desc: "當M方玩家服從S方契約者時，愛意值的變化。"
+  trigger: "PLAYER_ACTION(OBEY_DIFFICULT_COMMAND)"
+  condition:
+    - "PLAYER_ROLE == 'M'"
+  effects:
+    - eff:
+        value: "gs.contractor_love += 3"
+        value: "gs.player_love += 1"
+---
+event:
+  id: LOVE_VALUE_S_REWARDS_M
+  desc: "當S方玩家給予M方契約者獎勵時，愛意值的變化。"
+  trigger: "PLAYER_ACTION(GIVE_REWARD)"
+  condition:
+    - "PLAYER_ROLE == 'S'"
+  effects:
+    - eff:
+        value: "gs.contractor_love += 3"
+--- 
+event:
+  id: HONEYMOON_WARM_CHAT
+  desc: "蜜月期進行了一次溫情聊天"
+  trigger: "PLAYER_ACTION(WARM_CHAT)"
+  condition:
+    - "flag: GAME_STAGE == 1" # 僅在蜜月期
+  effects:
+    - eff:
+        # 根據玩家扮演M或S，增減的對象不同
+        value: "gs.player_love += 2"
+    - eff:
+        value: "gs.contractor_love += 1"
+    - eff:
+        scene: "（觸發一段溫馨的、關於日常或興趣的對話，增進彼此了解...）"
+    - eff:
+        flag: "set gs.last_intimacy_action_day = gs.day" # 標記情感維度
+--- 
+event:
+  id: HONEYMOON_GIVE_GIFT
+  desc: "蜜月期贈送禮物給對方"
+  trigger: "PLAYER_ACTION(GIVE_GIFT)"
+  condition:
+    - "flag: GAME_STAGE == 1"
+  effects:
+    - eff:
+        # 假設總是M方（玩家）贈禮給S方（契約者）
+        condition: "PLAYER_ROLE == 'M'"
+        value: "gs.contractor_love += 5"
+        scene: "（契約者收到禮物後，可能會表現出短暫的驚訝或不符合人設的溫柔...）"
+# ... 其他愛意值增減事件 ...
+# ======================================================================
+# SECTION 5: CORE GAMEPLAY MECHANICS (核心遊戲機制)
+# ======================================================================
+---
+event:
+  id: START_SEX_SCENE
+  desc: "開始一場性愛場景，進入核心循環。"
+  trigger: "PLAYER_ACTION(START_SEX)"
+  effects:
+    - eff:
+        trigger_event: "SEX_CYCLE_MENU_DISPLAY"
+---
+event:
+  id: SEX_CYCLE_MENU_DISPLAY
+  desc: "顯示BDSM調教循環選單。"
+  trigger: "EVENT_TRIGGER(SEX_CYCLE_MENU_DISPLAY)"
+  effects:
+    - eff:
+        # 此處為偽代碼，實際執行時AI會根據pre_check的結果生成對應選單
+        pre_check: {
+          condition: "角色是否處於『春藥』狀態",
+          if_true: "生成『BDSM調教循環選單 (春藥版)』...",
+          if_false: "生成常規的『BDSM調教循環選單』..."
+        },
+        unlock_menu: "BDSM_CYCLE_MENU" # 讓玩家從循環選單中選擇
+---
+# ... 此處省略了循環選單中每個選項觸發的具體事件 ...
+---
+event:
+  id: SEX_CYCLE_CHOOSE_CLIMAX
+  desc: "玩家在循環選單中選擇了允許高潮選項。"
+  trigger: "USER_CHOICE(ALLOW_CLIMAX)" # 由新的高潮控制選單觸發
+  effects:
+    - eff:
+        scene: "（描寫高潮過程）"
+        trigger_event: "AFTERGLOW_MENU_DISPLAY" # 觸發餘韻選單
+    - eff: # 蜜月期高潮的額外獎勵
+        condition: "flag: GAME_STAGE == 1"
+        value: "gs.player_love += 5"
+        value: "gs.contractor_love += 2"
+    - eff:
+        flag: "set gs.last_lust_action_day = gs.day" # 標記情慾維度
+---
+# --- SUB-SECTION: CLIMAX CONTROL EVENT CHAIN (高潮控制事件鏈) ---
+---
+event:
+  id: TRIGGER_CLIMAX_CONTROL
+  desc: "從BDSM循環中進入高潮控制階段。"
+  trigger: "USER_CHOICE(INITIATE_CLIMAX_STAGE)" # 由BDSM循環選單觸發
+  effects:
+    - eff:
+        scene: "（經過一連串的調教，你的藝術品已在崩潰邊緣，渾身顫抖，眼神失焦，口中發出無意識的呻吟。你感覺到，是時候決定是否給予他/她最終的釋放了...）"
+        unlock_menu: "CLIMAX_CONTROL_MENU"
+---
+event:
+  id: CLIMAX_DENIAL_EVENT
+  desc: "玩家選擇拒絕高潮。"
+  trigger: "USER_CHOICE(DENY_CLIMAX)"
+  effects:
+    - eff:
+        scene: "（你看著他/她充滿乞求的眼神，嘴角卻揚起一抹殘酷的微笑。你停下了所有給予歡愉的動作，或是用更純粹的痛苦覆蓋了即將到來的浪潮。他/她發出一聲絕望的嗚咽，身體在極度的渴望與失落中痙攣...）"
+        value: "gs.domination_level += 100"
+        value: "gs.player_love -= 5"
+        trigger_event: "SEX_CYCLE_MENU_DISPLAY" # 返回BDSM循環選單
+---
+event:
+  id: FORCED_CLIMAX_EVENT
+  desc: "玩家使用道具強制高潮。"
+  trigger: "USER_CHOICE(FORCE_CLIMAX_WITH_TOY)"
+  condition:
+    - "player_has_toy: T21"
+  effects:
+    - eff:
+        scene: "（你拿出了連續高潮器，無視對方恐懼的眼神，將其固定在他/她最敏感的部位。在機器的無情驅動下，他/她被迫陷入一波又一波無法自主的痙攣，高潮不再是獎勵，而是一種徹底剝奪意志的刑罰...）"
+        value: "gs.domination_level += 150"
+        trigger_event: "AFTERGLOW_MENU_DISPLAY"
+---
+event:
+  id: AFTERGLOW_MENU_DISPLAY
+  desc: "顯示餘韻選單。"
+  trigger: "EVENT_TRIGGER(AFTERGLOW_MENU_DISPLAY)"
+  effects:
+    - eff:
+        scene: "（描寫餘韻狀態）"
+        unlock_menu: "AFTERGLOW_MENU" # 讓玩家從餘韻選單中選擇
+---
+event:
+  id: AFTERGLOW_CHOOSE_GO_AGAIN
+  desc: "玩家在餘韻選單中選擇再來一次。"
+  trigger: "USER_CHOICE(GO_AGAIN)"
+  condition:
+    - "value: gs.player_stamina > 30"
+  effects:
+    - eff:
+        trigger_event: "SEX_CYCLE_MENU_DISPLAY" # 返回性愛循環
+---
+# --- SUB-SECTION: BOUNDARY TEST EVENT CHAIN (邊界測試事件鏈) ---
+---
+event:
+  id: TRIGGER_BOUNDARY_TEST_G2
+  desc: "當調教度達到1000時，觸發G2的邊界測試。"
+  trigger: "AUTO_CHECK(VALUE_CHANGE)"
+  condition:
+    - "value: gs.domination_level >= 1000"
+    - "flag: gs.hardcore_level == 1"
+  effects:
+    - eff:
+        flag: "set gs.is_boundary_testing = true" # 標記為正在進行測試
+        trigger_event: "BOUNDARY_TEST_G2_SCENE"
+---
+event:
+  id: BOUNDARY_TEST_G2_SCENE
+  desc: "G2邊界測試場景：S方嘗試更高強度的行為。"
+  trigger: "EVENT_TRIGGER(BOUNDARY_TEST_G2_SCENE)"
+  effects:
+    - eff:
+        scene: "（S方在調教過程中，突然提出了一個從未有過的、更高強度的要求，例如：使用一個G2級別的道具，或是一個更具羞辱性的指令。他/她的眼神帶著一絲試探...）"
+        unlock_act: "['同意這個要求']", "['猶豫地拒絕']"
+---
+event:
+  id: BOUNDARY_TEST_G2_ACCEPT
+  desc: "玩家同意了G2的邊界測試。"
+  trigger: "USER_CHOICE([同意這個要求])"
+  condition:
+    - "flag: gs.is_boundary_testing == true"
+  effects:
+    - eff:
+        flag: "set gs.hardcore_level = 2" # 正式升階
+        flag: "set gs.is_boundary_testing = false" # 結束測試狀態
+        value: "gs.contractor_love += 5" # S方因M方的服從而愛意上升
+        scene: "（S方露出滿意的微笑，執行了更高強度的調教...）"
+    - eff:
+        flag: "set gs.last_power_action_day = gs.day" # 標記權力維度
+---
+event:
+  id: BOUNDARY_TEST_G2_REJECT
+  desc: "玩家拒絕了G2的邊界測試。"
+  trigger: "USER_CHOICE([猶豫地拒絕])"
+  condition:
+    - "flag: gs.is_boundary_testing == true"
+  effects:
+    - eff:
+        flag: "set gs.is_boundary_testing = false" # 結束測試狀態
+        flag: "set M_REJECTED_BOUNDARY_TEST_YESTERDAY = true" # 設置關鍵旗標
+        value: "gs.contractor_love -= 2" # S方感到失望或不滿
+        scene: "（S方的眼神冷了下來，停止了當前的調教，氣氛變得有些凝重...）"
+# ======================================================================
+# SECTION 6: EMOTION AND DYNAMIC SYSTEMS (情緒與動態系統)
+# ======================================================================
+---
+event:
+  id: S_EMOTION_UPDATE_ON_NEW_DAY
+  desc: "在每日開始時，根據昨日的互動與當前狀態，更新S方（契約者）的『今日情緒』。"
+  trigger: "AUTO_CHECK(START_OF_DAY)"
+  effects:
+    - eff:
+        # 預設為正常
+        flag: "set gs.contractor_emotion = '正常'"
+    - eff:
+        # 如果處於高調教/低愛意失衡狀態，有高機率變為偏執
+        condition: "value: (gs.domination_level / (gs.player_love + 1)) > 150"
+        action: "ROLL_CHANCE(70%)"
+        on_success:
+          flag: "set gs.contractor_emotion = '偏執'"
+    - eff:
+        # 如果M方愛意值很高，有中等機率變為黏膩
+        condition: "value: gs.player_love > 60"
+        action: "ROLL_CHANCE(40%)"
+        on_success:
+          flag: "set gs.contractor_emotion = '黏膩'"
+    - eff:
+        # 如果M方昨天拒絕了邊界測試，有高機率變為冷漠
+        condition: "flag: M_REJECTED_BOUNDARY_TEST_YESTERDAY == true"
+        action: "ROLL_CHANCE(60%)"
+        on_success:
+          flag: "set gs.contractor_emotion = '冷漠'"
+
+
+# ======================================================================
+# SECTION 8: EMOTION-DRIVEN MENU OVERRIDES (情緒驅動選單覆蓋)
+# ======================================================================
+---
+event:
+  id: EMOTION_OVERRIDE_MENU_ANGER
+  desc: "當S方（契約者）處於『憤怒』情緒時，用懲罰性的性愛選單覆蓋常規的主選單。"
+  trigger: "BEFORE_MAIN_MENU_DISPLAY" # 在主選單顯示前觸發
+  priority: 100 # 高優先級，確保它先於正常的選單生成
+  condition:
+    - "gs.contractor_emotion == '憤怒'"
+  effects:
+    - eff:
+        scene: "（此處生成一段S方怒氣沖沖，不由分說將M方壓倒的場景描寫...）"
+        unlock_menu: "PUNITIVE_SEX_MENU" # 強制解鎖一個特製的、充滿攻擊性的性愛選單
+        flag: "set ABORT_NORMAL_MENU_DISPLAY = true" # 中斷正常的選單顯示流程
+
+# ======================================================================
+# SECTION 9: NARRATIVE BALANCE SYSTEM (敘事平衡系統)
+# ======================================================================
+---
+event:
+  id: NARRATIVE_BALANCE_CHECK
+  desc: "每日開始時檢查三大敘事維度（權力、情慾、情感）的平衡，並觸發對應的補償事件。"
+  trigger: "AUTO_CHECK(START_OF_DAY)"
+  priority: 90 # High priority to run before other daily events
+  effects:
+    - eff:
+        # 情感維度檢查：若超過2天沒有情感互動
+        condition: "(gs.day - gs.last_intimacy_action_day) > 2"
+        action: "ROLL_CHANCE(35%)"
+        on_success:
+          trigger_event: "TRIGGER_COMPENSATION_INTIMACY"
+    - eff:
+        # 權力維度檢查：若超過2天沒有權力規訓
+        condition: "(gs.day - gs.last_power_action_day) > 2"
+        action: "ROLL_CHANCE(35%)"
+        on_success:
+          trigger_event: "TRIGGER_COMPENSATION_POWER"
+    - eff:
+        # 情慾維度檢查：若超過3天沒有性愛
+        condition: "(gs.day - gs.last_lust_action_day) > 3"
+        action: "ROLL_CHANCE(35%)"
+        on_success:
+          trigger_event: "TRIGGER_COMPENSATION_LUST"
+---
+event:
+  id: TRIGGER_COMPENSATION_INTIMACY
+  desc: "補償事件：情感維度。契約者因感到情感上的忽視而主動尋求連結。"
+  trigger: "EVENT_TRIGGER(TRIGGER_COMPENSATION_INTIMACY)"
+  effects:
+    - eff:
+        scene: "（契約者似乎察覺到了你們之間純粹的肉體與權力關係，眼神中流露出一絲空洞或疏離。他/她突然問了一個與調教無關的私人問題，或是在不經意間，展現出了一個符合其『核心創傷』的脆弱瞬間，試圖將你們的關係拉回更具情感連結的層面...）"
+        flag: "set gs.contractor_emotion = '疏離'"
+        unlock_menu: "INTIMACY_COMPENSATION_MENU" # 假設存在一個對應的特殊選單
+---
+event:
+  id: TRIGGER_COMPENSATION_POWER
+  desc: "補償事件：權力維度。契約者因過於安逸而開始試探權力邊界。"
+  trigger: "EVENT_TRIGGER(TRIGGER_COMPENSATION_POWER)"
+  effects:
+    - eff:
+        scene: "（因為最近缺乏管教，契約者的態度似乎變得有些隨意。他/她故意違反了一條無傷大雅的規定，或是在你的指令下動作慢了半拍，眼神中帶著一絲不易察覺的挑釁，測試你的反應...）"
+        flag: "set gs.contractor_emotion = '試探'"
+        unlock_act: "['嚴厲地懲罰這個行為']", "['無視這個小小的挑釁']"
+---
+event:
+  id: TRIGGER_COMPENSATION_LUST
+  desc: "補償事件：情慾維度。契約者因生理需求而主動誘惑。"
+  trigger: "EVENT_TRIGGER(TRIGGER_COMPENSATION_LUST)"
+  effects:
+    - eff:
+        scene: "（空氣似乎變得有些燥熱。契約者在靠近你時，有意無意地用身體磨蹭你，呼吸變得急促，眼神也蒙上了一層水汽。一個明顯的信號，他/她想要了...）"
+        flag: "set gs.contractor_emotion = '渴求'"
+        trigger_event: "START_SEX_SCENE"
