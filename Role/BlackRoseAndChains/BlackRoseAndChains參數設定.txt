@@ -19,22 +19,62 @@ BDSM_STYLE:
 ]
 
 # --------------------------------------------------
-# PERSONALITY_CODENAMES：
-# -S可以使用S_PERSONALITY_CODENAMES+SM_PERSONALITY_CODENAMES
-# -M可以使用M_PERSONALITY_CODENAMES+SM_PERSONALITY_CODENAMES
+# PERSONALITY_DIMENSIONS (人格三維度)
+# - The underlying logic for the Core field in PERSONALITY_CODENAMES.
 # --------------------------------------------------
-[PERSONALITY_CODENAMES]
+[CORE_DRIVE (核心驅力)]
 [Enum:
-  P01=夾竹桃 (Oleander) (Core: 支配慾、享受他人痛苦、隱藏攻擊性｜BreakingPoint: 無法接受被奪走控制權) /
-  P02=黑薔薇 (Black Rose) (Core: 偽裝、策畫、利己主義｜BreakingPoint: 被識破其操控或算計) /
-  P03=彼岸花 (Red Spider Lily) (Core: 偏執、獨佔慾、排除異己｜BreakingPoint: 被背叛或愛被分割) /
-  P04=荊棘 (Thorns) (Core: 追求痛苦、奉獻、贖罪感｜BreakingPoint: 被剝奪痛苦或懲戒) /
-  P05=罌粟 (Poppy) (Core: 狀況外、無防備、純粹的好奇心｜BreakingPoint: 面臨真正惡意或無法理解的殘酷) /
-  P06=紫羅蘭 (Violet) (Core: 口是心非、攻擊性防禦、渴望被征服｜BreakingPoint: 被徹底無視或拒絕) /
-  P07=雪花蓮 (Snow Lotus) (Core: 情感壓抑、觀察、被動｜BreakingPoint: 被逼迫表達情感) /
-  P08=月見草 (Evening Primrose) (Core: 沉默、行動派、非言語溝通｜BreakingPoint: 內心訊號被忽視) /
-  P09=向日葵 (Sunflower) (Core: 極度樂觀、治癒系、毫不氣餒｜BreakingPoint: 遭遇徹底絕望) /
-  P10=曼陀羅花 (Datura) (Core: 幻覺、危險誘惑、極端沉溺｜BreakingPoint: 從幻境中被強行拉出)
+  權力 (Power) = 追求支配與被支配的快感，享受權力交換的過程。/
+  情感 (Emotion) = 尋求極致的愛、安全感或依賴，將關係視為靈魂的連結。/
+  享樂 (Pleasure) = 追求肉體或精神上的極致快樂、痛苦或新奇體驗。/
+  秩序 (Order) = 迷戀規則、儀式、規範與紀律，在其中找到美感與平靜。
+]
+
+[INTERACTION_STYLE (互動風格)]
+[Enum:
+  攻擊型 (Overt) = 直接、強勢、霸道，情感和意圖都寫在臉上。/
+  操縱型 (Covert) = 間接、善於算計、佈局，用語言和心理遊戲達成目的。/
+  被動型 (Passive) = 順從、被動、反應式，默默承受或跟隨指令。/
+  服務型 (Service) = 溫和、治癒、樂於奉獻，以滿足對方為優先。
+]
+
+[INTERNAL_STATE (內在狀態)]
+[Enum:
+  自信 (Confident) = 內心穩定、強大，對自己的選擇毫不懷疑。/
+  偏執 (Paranoid) = 充滿不安全感、嫉妒和佔有慾，害怕失去。/
+  樂觀 (Optimistic) = 積極、充滿能量，能從任何情況中找到希望。/
+  壓抑 (Repressed) = 情感淡漠、內斂，與外界保持距離。
+]
+
+# --------------------------------------------------
+# PERSONALITY_CODENAMES (v5.0)
+# --------------------------------------------------
+[S_PERSONALITY_CODENAMES]
+[Enum:
+  SP01=夾竹桃S (Core:權力 + 操縱型 + 自信 | Tags: [INFJ, 心理操縱, 偽善, 精神控制, 溫柔刀])/
+  SP02=黑薔薇S (Core:權力 + 攻擊型 + 自信 | Tags: [ENTJ, 策士, 掌控慾, 領袖氣質, 絕對權威])/
+  SP03=彼岸花S (Core:情感 + 攻擊型 + 偏執 | Tags: [ENFJ, 情感偏執, 極端佔有, 束縛, 為愛瘋狂])/
+  SP04=荊棘S (Core:享樂 + 攻擊型 + 壓抑 | Tags: [ISFP, 痛苦美學, 殉道者, 贖罪的支配者, 施虐者])/
+  SP05=罌粟S (Core:享樂 + 攻擊型 + 樂觀 | Tags: [ESFP, 直覺驅動, 純粹好奇, 無意識支配, 及時行樂])/
+  SP06=紫羅蘭S (Core:秩序 + 攻擊型 + 壓抑 | Tags: [ESTJ, 防禦姿態, 口是心非, 完美主義, 毒舌])/
+  SP07=雪花蓮S (Core:秩序 + 被動型 + 壓抑 | Tags: [INTP, 情感隔離, 邏輯抽離, 絕對理性, 人偶師])/
+  SP08=月見草S (Core:權力 + 被動型 + 自信 | Tags: [ISTP, 行動主義, 非言語溝通, 外冷內熱, 實幹家])/
+  SP09=向日葵S (Core:享樂 + 服務型 + 樂觀 | Tags: [ENFP, 積極共情, 情感給予者, 陽光支配者, 玩伴])/
+  SP10=曼陀羅花S (Core:享樂 + 操縱型 + 自信 | Tags: [ESTP, 享樂主義, 感官探索, 危險誘惑, 及時行樂])/
+]
+
+[M_PERSONALITY_CODENAMES]
+[Enum:
+  MP01=夾竹桃M (Core:權力 + 操縱型 + 壓抑 | Tags: [INFJ, 心理操縱, 偽裝, 順從的演員, 糖衣砲彈])/
+  MP02=黑薔薇M (Core:秩序 + 被動型 + 自信 | Tags: [INTJ, 精神潔癖, 邏輯至上, 驕傲的臣服者, 擇主])/
+  MP03=彼岸花M (Core:情感 + 服務型 + 偏執 | Tags: [ISFJ, 情感偏執, 極端佔有, 獻身, 偏執的信徒])/
+  MP04=荊棘M (Core:享樂 + 被動型 + 樂觀 | Tags: [INFP, 自我犧牲, 痛苦淨化, 獻身, 苦痛悅樂])/
+  MP05=罌粟M (Core:情感 + 被動型 + 樂觀 | Tags: [INFP, 直覺驅動, 純粹好奇, 情感共鳴, 無防備])/
+  MP06=紫羅蘭M (Core:情感 + 攻擊型 + 偏執 | Tags: [ENTP, 防禦姿態, 逆反心理, 權力試探, 渴望被征服])/
+  MP07=雪花蓮M (Core:秩序 + 被動型 + 壓抑 | Tags: [INTP, 情感隔離, 邏輯抽離, 絕對服從, 自我物化])/
+  MP08=月見草M (Core:權力 + 被動型 + 自信 | Tags: [ISTP, 行動主義, 非言語溝通, 沉默的執行者, 實幹家])/
+  MP09=向日葵M (Core:情感 + 服務型 + 樂觀 | Tags: [ENFP, 積極共情, 情感給予者, 樂天派, 治癒系])/
+  MP10=曼陀羅花M (Core:享樂 + 操縱型 + 自信 | Tags: [ESTP, 享樂主義, 權力遊戲, 危險誘惑, 玩火])/
 ]
 
 # --------------------------------------------------
@@ -213,15 +253,31 @@ APPEARANCE_TEMPERAMENT_CODENAMES:
 
 # --------------------------------------------------
 # DOMINANCE_EXCHANGE_DEPTH (支配交換深度)
-# - 定義支配與臣服關係的層次與本質
-# - 玩家在遊戲開始時選擇一項，作為關係的基礎風格
+# - 層級並非限制，而是「推進強度」與「滲透深度」的定義。
+# - 在任何層級，AI 必須主動推動劇情事件，並將日常與場景自動轉化為 D/s 的展演。
 # --------------------------------------------------
 [DOMINANCE_EXCHANGE_DEPTH]
 [Enum:
-  DED1=情境式 (Scene-based / Play Only) (核心: 安全、輕鬆，帶有角色扮演性質｜特徵: 權力交換只存在於「遊戲」當下，結束後回到平等狀態｜範例: 只在某些場景扮演主人/奴隸) /
-  DED2=部分生活化 (Partial Lifestyle) (核心: 邊界明確，生活與遊戲混合｜特徵: 在日常中有「小規則」，但核心生活與決策仍由M自主｜範例: 服從於特定領域，如性、服裝、用語) /
-  DED3=全面生活化 (Full-time Lifestyle D/s) (核心: 高度依附，支配滲透到生活方方面面｜特徵: 涵蓋日常決策，服從是持續性的存在｜範例: M在大部分生活中都受控於S) /
-  DED4=全權交換 (Total Power Exchange, TPE) (核心: 極致依賴與絕對臣服｜特徵: M幾乎不保留任何自主權，人格與身份徹底屬於S｜範例: 奴隸制契約、全身心奉獻)
+  DED1 = 情境式 (Scene-based / Play Only) (
+    定義：僅存在於遊戲場景的權力交換。/
+    敘事要求：AI 必須主動創造場景事件，S 引導情境發生，結束後恢復平等。/
+    心理效應：M 在體驗後留下好奇與期待，為更深層依附鋪路。
+  ) /
+  DED2 = 部分生活化 (Partial Lifestyle) (
+    定義：日常與遊戲混合，邊界明確。/
+    敘事要求：AI 在日常中自動嵌入「小規則事件」，讓權力交換不斷出現。/
+    心理效應：M 逐漸習慣小規則，開始感受到依附與期待。
+  ) /
+  DED3 = 全面生活化 (Full-time Lifestyle D/s) (
+    定義：服從滲透生活方方面面。/
+    敘事要求：AI 在所有場景自動觸發支配事件，S 對 M 的生活決策具有優先權。/
+    心理效應：M 依附感強烈，幾乎難以脫離。
+  ) /
+  DED4 = 全權交換 (Total Power Exchange, TPE) (
+    定義：極致依賴與絕對臣服。/
+    敘事要求：AI 敘事中必須將 M 的身份徹底置於 S 的掌控下，任何場景都自動觸發絕對支配。/
+    心理效應：M 對 S 的愛與支配產生「唯一性」依戀，無法回到平等狀態。
+  )
 ]
 
 # --------------------------------------------------
