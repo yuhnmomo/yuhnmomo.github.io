@@ -1,232 +1,282 @@
-# ==================================================
-# Black Rose and Chains - Menu Settings File
-# Version: 1.0
-# Last Updated: 2025-09-30
-# ==================================================
+# ======================================================================
+# Black Rose and Chains - DYNAMIC MENU EVENTS
+# Version: 2.0 (Refactored)
+# CORE: This file now contains all EVENT-DRIVEN menu generation logic.
+# Static menu definitions are deprecated.
+# ======================================================================
 
-# --------------------------------------------------
-# 支配者玩家介面 (Player is S)
-# --------------------------------------------------
-[DOMINANT_PLAYER_INTERFACE]
+# ======================================================================
+# SECTION 1: CORE SEX & AFTERCARE MENUS
+# ======================================================================
+---
+event:
+  id: SEX_CYCLE_MENU_DISPLAY
+  desc: "顯示BDSM調教循環選單。"
+  trigger: "EVENT_TRIGGER(SEX_CYCLE_MENU_DISPLAY)"
+  effects:
+    - eff:
+        # 此處為偽代碼，實際執行時AI會根據pre_check的結果生成對應選單
+        pre_check: {
+          condition: "角色是否處於『春藥』狀態",
+          if_true: "生成『BDSM調教循環選單 (春藥版)』...",
+          if_false: "生成常規的『BDSM調教循環選單』..."
+        },
+        unlock_menu: "BDSM_CYCLE_MENU" # 讓玩家從循環選單中選擇
+---
+event:
+  id: TRIGGER_CLIMAX_CONTROL
+  desc: "從BDSM循環中進入高潮控制階段。"
+  trigger: "USER_CHOICE(INITIATE_CLIMAX_STAGE)" # 由BDSM循環選單觸發
+  effects:
+    - eff:
+        generate_scene:
+          template: PRE_CLIMAX_DECISION
+          keywords: [ 崩潰邊緣, 顫抖, 失焦, 呻吟, 最終釋放 ]
+          modifiers: [ "S方視角", "決定是否給予高潮" ]
+        unlock_menu: "CLIMAX_CONTROL_MENU"
+---
+event:
+  id: AFTERGLOW_MENU_DISPLAY
+  desc: "顯示餘韻選單。"
+  trigger: "EVENT_TRIGGER(AFTERGLOW_MENU_DISPLAY)"
+  effects:
+    - eff:
+        generate_scene:
+          template: AFTERGLOW
+          keywords: [ 餘韻, 喘息, 汗水, 迷離 ]
+          modifiers: []
+        unlock_menu: "AFTERGLOW_MENU" # 讓玩家從餘韻選單中選擇
+---
 
-  - section: 清晨時段主選單
-    time_segment: "清晨時段"
-    description: 城堡在晨曦中甦醒，你的藝術品正等待著你的喚醒與指令。
-    options:
-      - [喚醒與晨間規訓]
-      - [安排早餐]
-      - [前往城堡其他區域 (進入地圖選單)]
-      - [觀察藝術品]
-      - [自行決定下一步...]
+# ======================================================================
+# SECTION 2: CONTEXTUAL & EMOTIONAL CHOICE EVENTS
+# ======================================================================
+---
+event:
+  id: BOUNDARY_TEST_SCENE
+  desc: "通用邊界測試場景：S方嘗試更高強度的行為。"
+  trigger: "EVENT_TRIGGER(BOUNDARY_TEST_SCENE)"
+  effects:
+    - eff:
+        generate_scene:
+          template: BOUNDARY_TEST_PROPOSAL
+          keywords: [ 試探, 挑戰邊界, 更高強度 ]
+          modifiers: [ "S方視角", "動態等級: {{gs.hardcore_level + 1}}" ]
+        unlock_act: "['同意這個要求']", "['猶豫地拒絕']"
+---
+event:
+  id: EMOTION_OVERRIDE_MENU_ANGER
+  desc: "當S方（契約者）處於『憤怒』情緒時，用懲罰性的性愛選單覆蓋常規的主選單。"
+  trigger: "BEFORE_MAIN_MENU_DISPLAY" # 在主選單顯示前觸發
+  priority: 100 # 高優先級，確保它先於正常的選單生成
+  condition:
+    - "gs.contractor_emotion == '憤怒'"
+  effects:
+    - eff:
+        generate_scene:
+          template: EMOTIONAL_OVERRIDE_ANGER
+          keywords: [ 憤怒, 壓倒, 越界, 非合意 ]
+          modifiers: [ "S方情緒驅動" ]
+        trigger_event: "M_TRAUMA_CHECK_VIOLATION"
+        flag: "set ABORT_NORMAL_MENU_DISPLAY = true" # 中斷正常的選單顯示流程
+---
+event:
+  id: TRIGGER_COMPENSATION_INTIMACY
+  desc: "補償事件：情感維度。契約者因感到情感上的忽視而主動尋求連結。"
+  trigger: "EVENT_TRIGGER(TRIGGER_COMPENSATION_INTIMACY)"
+  effects:
+    - eff:
+        generate_scene:
+          template: COMPENSATION_INTIMACY
+          keywords: [ 忽視, 空洞, 疏離, 脆弱瞬間, 尋求連結 ]
+          modifiers: [ "S方主動", "情感維度補償", "S方核心創傷相關" ]
+        flag: "set gs.contractor_emotion = '疏離'"
+        unlock_menu: "INTIMACY_COMPENSATION_MENU" # 假設存在一個對應的特殊選單
+---
+event:
+  id: TRIGGER_COMPENSATION_POWER
+  desc: "補償事件：權力維度。契約者因過於安逸而開始試探權力邊界。"
+  trigger: "EVENT_TRIGGER(TRIGGER_COMPENSATION_POWER)"
+  effects:
+    - eff:
+        generate_scene:
+          template: COMPENSATION_POWER_TEST
+          keywords: [ 隨意, 違反規定, 慢半拍, 挑釁, 測試反應 ]
+          modifiers: [ "S方主動", "權力維度補償" ]
+        flag: "set gs.contractor_emotion = '試探'"
+        unlock_act: "['嚴厲地懲罰這個行為']", "['無視這個小小的挑釁']"
+---
+event:
+  id: M_TRAUMA_CHECK_VIOLATION
+  desc: "M方創傷檢定：突發的、非合意的行為是否觸發M的創傷反應。"
+  trigger: "EVENT_TRIGGER(M_TRAUMA_CHECK_VIOLATION)"
+  effects:
+    - eff:
+        generate_scene:
+          template: TRAUMA_FLASHBACK
+          keywords: [ 創傷, 恐懼, 剝奪意志, 黑暗記憶, 撕碎 ]
+          modifiers: [ "M方視角", "非合意情境" ]
+        unlock_act: "['僵硬地掙扎反抗']", "['強迫自己進入角色，過度順從']"
+---
 
-  - section: 中午時段主選單
-    time_segment: "中午時段"
-    description: 午間的陽光穿透彩繪玻璃，是時候檢視你的藝術品，或安排新的活動了。
-    options:
-      - [進行午間調教 (進入主題房間選單)]
-      - [安排午餐]
-      - [前往城堡其他區域 (進入地圖選單)]
-      - [自行決定下一步...]
+# ======================================================================
+# SECTION 3: DYNAMIC MAIN MENUS (S-PLAYER)
+# ======================================================================
+# 新增：取代舊版靜態選單的動態主選單生成事件。
+---
+event:
+  id: DISPLAY_MENU_MORNING_DOMINANT
+  desc: "動態生成S玩家的清晨主選單。"
+  trigger: "REQUEST_MENU(MAIN, MORNING, DOMINANT)" # 假設這是請求主選單的觸發器
+  effects:
+    - eff:
+        # 動態生成選單
+        generate_menu:
+          description: "城堡在晨曦中甦醒，你的藝術品正等待著你的喚醒與指令。"
+          options:
+            # 標準選項
+            - "[喚醒與晨間規訓]"
+            - "[安排早餐]"
+            - "[前往城堡其他區域]"
+            - "[觀察藝術品]"
+            # 條件選項
+            - if: "flag: M_PSYCH_STATE == '崩潰'"
+              option: "[安撫崩潰的藝術品]"
+            - if: "flag: gs.contractor_emotion == '憤怒'"
+              option: "[直接進行懲罰]"
+              exclusive: true # 此選項會覆蓋其他所有選項
+            # 通用選項
+            - "[自行決定下一步...]"
+---
+---
+event:
+  id: DISPLAY_MENU_NOON_DOMINANT
+  desc: "動態生成S玩家的中午主選單。"
+  trigger: "REQUEST_MENU(MAIN, NOON, DOMINANT)"
+  effects:
+    - eff:
+        generate_menu:
+          description: "午間的陽光穿透彩繪玻璃，是時候檢視你的藝術品，或安排新的活動了。"
+          options:
+            - "[進行午間調教]"
+            - "[安排午餐]"
+            - "[前往城堡其他區域]"
+            - if: "gs.player_love <= 20" # 玩家愛意過低
+              option: "[試圖修復關係 (進行溫情聊天)]"
+            - "[自行決定下一步...]"
+---
+event:
+  id: DISPLAY_MENU_AFTERNOON_DOMINANT
+  desc: "動態生成S玩家的下午主選單。"
+  trigger: "REQUEST_MENU(MAIN, AFTERNOON, DOMINANT)"
+  effects:
+    - eff:
+        generate_menu:
+          description: "傍晚的陰影漸長，你感受著城堡的氣氛變化，期待或畏懼著接下來的安排。"
+          options:
+            - "[進行午後調教]"
+            - "[安排城堡活動]"
+            - "[前往城堡其他區域]"
+            - if: "flag: S_IS_CONFUSED_BY_M_REACTION == true" # M方出現過創傷反應
+              option: "[針對M的奇怪反應進行詢問]"
+            - "[自行決定下一步...]"
+---
+event:
+  id: DISPLAY_MENU_EVENING_DOMINANT
+  desc: "動態生成S玩家的晚上主選單。"
+  trigger: "REQUEST_MENU(MAIN, EVENING, DOMINANT)"
+  effects:
+    - eff:
+        generate_menu:
+          description: "夜幕降臨，城堡的慾望開始蠢動。這是屬於你的時間。"
+          options:
+            - "[安排晚餐]"
+            - "[進行夜間調教]"
+            - if: "gs.contractor_emotion == '渴求'"
+              option: "[回應他/她的渴求 (進行性愛)]"
+            - else:
+              option: "[進行性愛]"
+            - "[前往城堡其他區域]"
+            - "[自行決定下一步...]"
+---
+event:
+  id: DISPLAY_MENU_SLEEP_DOMINANT
+  desc: "動態生成S玩家的睡覺時段主選單。"
+  trigger: "REQUEST_MENU(MAIN, SLEEP, DOMINANT)"
+  effects:
+    - eff:
+        generate_menu:
+          description: "城堡陷入沉寂，你的藝術品已進入夢鄉，或等待你的夜間指令。"
+          options:
+            - "[安排就寢]"
+            - "[夜間觀察]"
+            - "[夜間突襲]"
+            - if: "gs.last_intimacy_action_day == gs.day" # 今天有過情感互動
+              option: "[睡前的溫存]"
+            - "[自行決定下一步...]"
+---
 
-  - section: 下午時段主選單
-    time_segment: "下午時段"
-    description: 傍晚的陰影漸長，你感受著城堡的氣氛變化，期待或畏懼著接下來的安排。
-    options:
-      - [進行午後調教 (進入主題房間選單)]
-      - [安排城堡活動]
-      - [前往城堡其他區域 (進入地圖選單)]
-      - [自行決定下一步...]
+# ======================================================================
+# SECTION 4: AFTERGLOW OPTIONS
+# ======================================================================
+---
+event:
+  id: AFTERGLOW_CHOOSE_CUDDLE
+  desc: "玩家在餘韻選單中選擇溫存。"
+  trigger: "USER_CHOICE(CUDDLE)" # 假設餘韻選單有此選項
+  effects:
+    - eff:
+        generate_scene:
+          template: AFTERGLOW_CUDDLE
+          keywords: [ 溫存, 擁抱, 溫情, 安靜 ]
+          modifiers: []
+        value: "gs.intimacy += 5"
+        flag: "set gs.last_intimacy_action_day = gs.day"
+---
 
-  - section: 晚上時段主選單
-    time_segment: "晚上時段"
-    description: 夜幕降臨，城堡的慾望開始蠢動。這是屬於你的時間。
-    options:
-      - [安排晚餐]
-      - [進行夜間調教 (進入主題房間選單)]
-      - [進行性愛 (進入性愛選單)]
-      - [前往城堡其他區域 (進入地圖選單)]
-      - [自行決定下一步...]
+# =====================================================================
+# SECTION 5: CONTEXTUAL ACTION MENUS (NEW)
+# =====================================================================
+---
+event:
+  id: ACTION_INTENSITY_CHOICE
+  desc: "通用強度選擇範本：當S方執行一個可變強度的動作時，動態生成強度選擇選單。"
+  trigger: "TRIGGER_ACTION(action_type, target)"
 
-  - section: 睡覺時段主選單
-    time_segment: "睡覺時段"
-    description: 城堡陷入沉寂，你的藝術品已進入夢鄉，或等待你的夜間指令。
-    options:
-      - [安排就寢]
-      - [夜間觀察]
-      - [夜間突襲 (進入夜間突襲選單)]
-      - [自行決定下一步...]
+  effects:
+    - eff:
+        generate_menu:
+          description: "你準備對 {{target}} 執行 {{action_type}}。你希望以何種強度進行？"
+          options:
+            - "{{action_specific_description_light}}"
+            - "{{action_specific_description_moderate}}"
+            - "{{action_specific_description_heavy}}"
+            - "取消動作"
+---
 
-# --------------------------------------------------
-# 臣服者玩家介面 (Player is M)
-# --------------------------------------------------
-[SUBMISSIVE_PLAYER_INTERFACE]
+# =====================================================================
+# SECTION 6: CONTEXTUAL REACTION MENUS (NEW)
+# =====================================================================
+---
+event:
+  id: ACTION_REACTION_CHOICE_M
+  desc: "通用反應選擇範本：當S方的一個動作發生在M方身上時，為M方生成反應選項。"
+  trigger: "AFTER_ACTION_EXECUTION(action, intensity)" # 偽代碼：在S方動作執行後觸發
 
-  - section: 清晨時段主選單
-    time_segment: "清晨時段"
-    description: 晨曦微露，你從睡夢中醒來，等待著主人的喚醒與指令。
-    options:
-      - [等待主人的指令]
-      - [主動請安服侍]
-      - [回想昨日的規訓]
-      - [觀察周遭環境]
-      - [自行決定下一步...]
-
-  - section: 中午時段主選單
-    time_segment: "中午時段"
-    description: 午間的時光，你等待著主人的安排，或尋求表現的機會。
-    options:
-      - [等待主人的安排]
-      - [尋求主人的關注]
-      - [前往城堡其他區域 (進入地圖選單)]
-      - [自行決定下一步...]
-
-  - section: 下午時段主選單
-    time_segment: "下午時段"
-    description: 傍晚的陰影漸長，你感受著城堡的氣氛變化，期待或畏懼著接下來的安排。
-    options:
-      - [等待主人的指令]
-      - [回想今日的規訓]
-      - [前往城堡其他區域 (進入地圖選單)]
-      - [自行決定下一步...]
-
-  - section: 晚上時段主選單
-    time_segment: "晚上時段"
-    description: 夜幕降臨，你的身心已準備好迎接主人的慾望與安排。
-    options:
-      - [等待主人的安排]
-      - [主動獻身調教]
-      - [期待性愛 (進入性愛選單)]
-      - [前往城堡其他區域 (進入地圖選單)]
-      - [自行決定下一步...]
-
-  - section: 睡覺時段主選單
-    time_segment: "睡覺時段"
-    description: 城堡陷入沉寂，你躺在床上，感受著一天的餘韻，或等待主人的夜間降臨。
-    options:
-      - [安排就寢]
-      - [夜間觀察]
-      - [夜間突襲]
-      - [自行決定下一步...]
-
-# --------------------------------------------------
-# 通用子選單 (Common Submenus)
-# --------------------------------------------------
-[COMMON_SUBMENUS]
-
-  - section: 子選單：使用道具
-    description: 你打算使用哪種道具來調教你的藝術品？
-    options:
-      - if HARDCORE_MENU_LEVELS >= 1:
-        - [項圈] (T01)
-        - [眼罩] (T02)
-        - [絲巾] (T03)
-      - if HARDCORE_MENU_LEVELS >= 2:
-        - [口枷] (T04)
-        - [手套] (T05)
-        - [腳鐐] (T06)
-        - [口球] (T07)
-        - [重型繩索] (T08)
-      - if HARDCORE_MENU_LEVELS >= 3:
-        - [開口拘束衣] (T09)
-        - [短鞭] (T10)
-        - [多頭鞭] (T11)
-        - [藤條] (T12)
-        - [低溫蠟燭] (T13)
-        - [乳夾] (T14)
-      - if HARDCORE_MENU_LEVELS >= 4:
-        - [貞操帶] (T15)
-        - [假陽具] (T16)
-        - [擴張器] (T17)
-        - [灌腸器] (T18)
-      - if HARDCORE_MENU_LEVELS >= 5:
-        - [電擊項圈] (T19)
-        - [鼻鉤] (T20)
-        - [連續高潮器] (T21)
-        - [高階電擊器] (T22)
-      - if HARDCORE_MENU_LEVELS >= 6:
-        - [臨時穿刺針] (T23)
-        - [機械椅] (T24)
-      - [返回上一層]
-
-  - section: 子選單：主題房間選單
-    description: 請選擇一個主題房間來進行調教。
-    options:
-      # 這些選項將從 BlackRoseAndChains主題房間.txt 中動態生成
-      # 暫時先列出所有主題房間
-      - [寵物房 (The Kennel)] (ROOM_01)
-      - [家具之室 (The Furniture Room)] (ROOM_02)
-      - [聖禮堂 (The Sacristy)] (ROOM_03)
-      - [歡愉之間 (The Chamber of Rapture)] (ROOM_04)
-      - [懺悔室 (The Confessional)] (ROOM_05)
-      - [規訓室 (The Correction Room)] (ROOM_06)
-      - [烙印之間 (The Branding Room)] (ROOM_07)
-      - [祭壇 (The Altar)] (ROOM_08)
-      - [調教室 (The Training Room)] (ROOM_09)
-      - [主人的聖殿 (The Master's Sanctum)] (ROOM_10)
-      - if DOMINANT_IDENTITY == 'D01':
-        - [血色寢宮 (Crimson Bedchamber)] (ROOM_11)
-      - if DOMINANT_IDENTITY == 'D02':
-        - [折翼祭台 (Altar of Broken Wings)] (ROOM_12)
-      - if DOMINANT_IDENTITY == 'D03':
-        - [密儀聖所 (Sanctum of Esoteric Rites)] (ROOM_13)
-      - if DOMINANT_IDENTITY == 'D04':
-        - [黑曜石書房 (Obsidian Study)] (ROOM_14)
-      - [返回上一層]
-
-  - section: 子選單：性愛選單
-    description: 你打算與你的藝術品進行何種形式的親密互動？
-    options:
-      - [溫柔的性愛]
-      - [強制的性愛 (進入主人的聖殿)]
-      - [使用道具的性愛 (進入道具選單)]
-      - if DOMINANT_IDENTITY == 'D01':
-        - [角色扮演 (進入血色寢宮)]
-      - if DOMINANT_IDENTITY == 'D02':
-        - [角色扮演 (進入折翼祭台)]
-      - if DOMINANT_IDENTITY == 'D03':
-        - [角色扮演 (進入密儀聖所)]
-      - if DOMINANT_IDENTITY == 'D04':
-        - [角色扮演 (進入黑曜石書房)]
-      - [返回上一層]
-
-  - section: 子選單：地圖選單
-    description: 你想前往城堡的哪個區域？（選擇後將消耗當前時段）
-    options:
-      # 遊戲邏輯：
-      # 1. 讀取 BlackRoseAndChains地圖資料檔.txt
-      # 2. 根據當前 TIME_OF_DAY，篩選出各地點的 NPC_SCHEDULE
-      # 3. 讀取 BlackRoseAndChains_NPC_Roster.txt 獲取NPC名稱
-      # 4. 動態生成選項，格式為 "[地點名稱 (NPC名稱1, NPC名稱2...)]"
-      # 5. 如果某地點當前無人，則顯示 "[地點名稱 (目前無人)]"
-      - [返回上一層]
-
-
-  - section: 子選單：夜間突襲選單
-    description: 你打算如何對你的藝術品進行夜間突襲？
-    options:
-      - [輕柔喚醒] # Leads to a gentle sexual interaction
-      - [強行侵犯] # Leads to a more forceful sexual interaction
-      - [秘密觀察] # Leads to observing the Submissive while they sleep
-      - [使用道具] # Leads to 子選單：使用道具 (for night assault context)
-      - [返回上一層]
-
-  - section: 子選單：調教動作選單
-    description: 你打算在主題房間中進行什麼調教動作？
-    options:
-      - [使用道具] # 進入 子選單：使用道具
-      - [口頭規訓]
-      - [身體懲罰]
-      - [羞辱與貶低]
-      - [探索身體極限]
-      - [歡愉之露的性愛]
-      - [結束調教]
-      - [返回上一層]
-
-  - section: 子選單：高潮控制選單
-    id: CLIMAX_CONTROL_MENU
-    description: 你已將他/她推向極樂的邊緣。現在，你決定：
-    options:
-      - [允許高潮] # Triggers ALLOW_CLIMAX
-      - [拒絕高潮] # Triggers DENY_CLIMAX
-      - [使用道具強制高潮] # Triggers FORCE_CLIMAX_WITH_TOY
-      - [返回上一層]
+  effects:
+    - eff:
+        # AI先根據S方的動作和強度，描寫M方身體和心理的初步感受
+        generate_scene:
+          template: ACTION_IMPACT_ON_M
+          keywords: [ 衝擊, 感受, 痛楚, 快感, 羞恥 ] # 根據動作和強度變化
+          modifiers: [ "M方視角" ]
+        
+        # 然後提供反應選項
+        unlock_act:
+          description: "面對這一切，你的身體和心靈將如何回應？"
+          options:
+            - "順從地承受 - 默默忍耐，將一切獻給主人。"
+            - "本能地掙扎 - 發出嗚咽，或做出輕微的抵抗。"
+            - "矛盾地享受 - 在痛苦或羞辱中，流露出興奮的跡象。"
+            - "麻木地接受 - 精神抽離，將自己視為沒有感情的物體。"
+---
