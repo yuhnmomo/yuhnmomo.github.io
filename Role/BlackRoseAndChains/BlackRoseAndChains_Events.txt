@@ -4,14 +4,12 @@
 # 核心：所有遊戲邏輯、劇情推進、數值變化均由此處的事件驅動。
 # ======================================================================
 ---
-# ======================================================================
-# SECTION 1: MAIN NARRATIVE PROGRESSION (主線劇情推進)
-# ======================================================================
+# MAIN NARRATIVE PROGRESSION (主線劇情推進)
 ---
 event:
   id: STAGE_1_TO_2_TURNING_POINT
   phase: mid
-  desc: "轉折點：第一次猜忌事件。觸發從蜜月期到改造期的關鍵事件。"
+  desc: "蜜月期終結的陰影，猜忌的萌芽。"
   trigger: "AUTO_CHECK(END_OF_TIMESLOT)" # 在每個時間段結束時自動檢查
   condition:
     - "flag: GAME_STAGE == 1"
@@ -55,68 +53,7 @@ event:
         flag: "set GAME_STAGE = 3"
         trigger_event: "M_PSYCH_STATE_DEPENDENCE_TO_SUBMISSION"
 
-# ======================================================================
-# SECTION 3: STATE MACHINES (狀態機)
-# ======================================================================
----
-event:
-  id: M_PSYCH_STATE_ENJOY_TO_CONFUSION
-  phase: mid
-  desc: "M方心理狀態轉變：從享受到困惑"
-  trigger: "EVENT_TRIGGER(M_PSYCH_STATE_ENJOY_TO_CONFUSION)"
-  condition:
-    - "flag: M_PSYCH_STATE == '享受'"
-  effects:
-    - eff:
-        flag: "set M_PSYCH_STATE = '困惑'"
----
-event:
-  id: M_PSYCH_STATE_CONFUSION_TO_DEPENDENCE
-  phase: mid
-  desc: "M方心理狀態轉變：從困惑到依賴"
-  trigger: "AUTO_CHECK(END_OF_TIMESLOT)"
-  condition:
-    - "flag: M_PSYCH_STATE == '困惑'"
-    - "value: gs.player_love > 40"
-    - "value: gs.domination_level > 3000"
-  effects:
-    - eff:
-        flag: "set M_PSYCH_STATE = '依賴'"
----
-[M方心理狀態機 (M-Side Psychological State Machine)]
-description: "定義了M方（玩家）的心理狀態如何根據關鍵事件和數值變化而演變。"
-states:
-  - state: "享受 (Enjoyment)"
-    description: "遊戲初期，M方享受著蜜月期的愉悅和探索的樂趣。"
-    transitions:
-      - to: "困惑 (Confusion)"
-        trigger: "經歷『第一次猜忌事件』"
-        reason: "第一次感受到關係中不合邏輯的、痛苦的一面，完美的幻覺出現裂痕。"
-
-  - state: "困惑 (Confusion)"
-    description: "M方在S方的忽冷忽熱中感到迷茫，分不清痛苦與愛。"
-    transitions:
-      - to: "依賴 (Dependence)"
-        trigger: "玩家愛意值 > 40 AND 調教度 > 3000"
-        reason: "在反覆的懲罰與獎勵中，M方開始將S方的關注（即使是負面的）視為生存必需，產生了情感依賴。"
-
-  - state: "依賴 (Dependence)"
-    description: "M方已經習慣了這種關係模式，並主動尋求S方的關注和控制以獲得安全感。"
-    transitions:
-      - to: "臣服 (Submission)"
-        trigger: "玩家愛意值 > 70 AND 調教度 > 10000"
-        reason: "M方徹底內化了S方的規則，將服從視為本能和天職，從中獲得最終的平靜。"
-      - to: "崩潰 (Breaking Down)"
-        trigger: "EVENT_TRIGGER(SEVERE_PUNISHMENT) AND value: gs.player_stamina < 10"
-        reason: "在極度的身心壓力下，M方的精神防線暫時崩潰。"
-
-  - state: "臣服 (Submission)"
-    description: "M方的自我意志已與S方同步，達到了靈魂層面的歸屬。"
-    transitions: [] # 最終狀態
-
-  - state: "崩潰 (Breaking Down)"
-    description: "M方精神過載，處於極度脆弱和不穩定的狀態。"
-    transitions: [] # 只能透過特殊事件（如蜜月復現）來脫離
+# STATE MACHINES (狀態機)
 ---
 event:
   id: HONEYMOON_RECURRENCE_EVENT
@@ -136,9 +73,7 @@ event:
         value: "gs.intimacy += 10" # 新增親密度
         flag: "set M_PSYCH_STATE = '依賴'"
 ---
-# ======================================================================
-# SECTION 4: VALUE MODIFIERS (數值增減規則)
-# ======================================================================
+# VALUE MODIFIERS (數值增減規則)
 ---
 event:
   id: LOVE_VALUE_M_OBEYS_S
@@ -190,9 +125,7 @@ event:
         value: "gs.contractor_love += 5"
         value: "gs.intimacy += 2" # 新增親密度
 
-# ======================================================================
-# SECTION 5: CORE GAMEPLAY MECHANICS (核心遊戲機制)
-# ======================================================================
+# CORE GAMEPLAY MECHANICS (核心遊戲機制)
 ---
 event:
   id: START_SEX_SCENE
@@ -201,8 +134,6 @@ event:
   effects:
     - eff:
         trigger_event: "SEX_CYCLE_MENU_DISPLAY"
----
-
 ---
 event:
   id: HIGH_INTENSITY_SEX_ACT_WITH_CHANCE_CLIMAX
@@ -263,7 +194,6 @@ event:
         value: "gs.player_love += 1"
 ---
 # --- SUB-SECTION: CLIMAX CONTROL EVENT CHAIN (高潮控制事件鏈) ---
----
 
 event:
   id: CLIMAX_DENIAL_EVENT
@@ -308,7 +238,7 @@ event:
         trigger_event: "SEX_CYCLE_MENU_DISPLAY" # 返回性愛循環
 ---
 # --- SUB-SECTION: DYNAMIC BOUNDARY TEST EVENT CHAIN (動態邊界測試事件鏈) ---
-# 說明：此系統取代了原有的固定等級測試，允許根據當前的強度等級(hardcore_level)和調教度，動態觸發下一等級的邊界測試。
+# 說明：此系統在滿足條件時，觸發一個帶有參數的邊界測試場景，具體發展由AI即興發揮。
 # 門檻參考：
 # - G1 -> G2: 調教度 >= 1000
 # - G2 -> G3: 調教度 >= 3000
@@ -318,11 +248,10 @@ event:
 ---
 event:
   id: TRIGGER_BOUNDARY_TEST
-  desc: "動態邊界測試觸發器：當調教度達到當前等級門檻時，觸發下一等級的測試。"
-  trigger: "AUTO_CHECK(VALUE_CHANGE)" # 當數值（特別是調教度）變化時檢查
+  desc: "動態邊界測試觸發器：當調教度達到當前等級門檻時，觸發帶有等級參數的邊界測試場景。"
+  trigger: "AUTO_CHECK(DOMINATION_LEVEL_CHANGED)" # 當調教度變化時檢查
   condition:
-    - "flag: gs.is_boundary_testing == false" # 確保不在測試中
-    - "value: gs.hardcore_level < 6" # 確保未達最高等級
+    - "value: gs.hardcore_level < 6"
     # 使用複合條件判斷是否達到各級門檻
     - >
       (
@@ -334,129 +263,27 @@ event:
       )
   effects:
     - eff:
-        flag: "set gs.is_boundary_testing = true" # 標記為正在進行測試
-        # 觸發通用場景，並（在概念上）傳遞要測試的等級
-        trigger_event: "BOUNDARY_TEST_SCENE" 
----
-
-event:
-  id: BOUNDARY_TEST_ACCEPT
-  desc: "通用邊界測試接受事件。"
-  trigger: "USER_CHOICE([同意這個要求])"
-  condition:
-    - "flag: gs.is_boundary_testing == true"
-  effects:
-    - eff:
-        value: "gs.hardcore_level += 1" # 動態升階
-        flag: "set gs.is_boundary_testing = false" # 結束測試狀態
-        value: "gs.contractor_love += 5" # S方因M方的服從而愛意上升
-        scene: "（S方露出滿意的微笑，執行了更高強度的調教...）"
-    - eff:
-        flag: "set gs.last_power_action_day = gs.day"
+        # 觸發場景時，把當前的 hardcore_level 作為參數傳過去
+        trigger_event: "BOUNDARY_TEST_SCENE(current_level: gs.hardcore_level)"
 ---
 event:
-  id: BOUNDARY_TEST_REJECT
-  desc: "通用邊界測試拒絕事件。"
-  trigger: "USER_CHOICE([猶豫地拒絕])"
-  condition:
-    - "flag: gs.is_boundary_testing == true"
+  id: BOUNDARY_TEST_SCENE
+  desc: "接收等級參數，並生成一個讓AI即興發揮的邊界測試場景。"
+  trigger: "EVENT_TRIGGER(BOUNDARY_TEST_SCENE)"
+
   effects:
     - eff:
-        generate_scene:
-          template: BOUNDARY_TEST_RESULT
-          keywords: [ 拒絕, 冷漠, 凝重 ]
-          modifiers: [ "S方視角", "測試失敗" ]
-        flag: "set gs.is_boundary_testing = false"
-        flag: "set M_REJECTED_BOUNDARY_TEST_YESTERDAY = true"
-        value: "gs.contractor_love -= 2"
-# ======================================================================
-# SECTION 6: EMOTION AND DYNAMIC SYSTEMS (情緒與動態系統)
-# ======================================================================
----
-event:
-  id: S_EMOTION_UPDATE_ON_NEW_DAY
-  desc: "在每日開始時，根據昨日的互動與當前狀態，更新S方（契約者）的『今日情緒』。"
-  trigger: "AUTO_CHECK(START_OF_DAY)"
-  effects:
-    - eff:
-        # 預設為正常
-        flag: "set gs.contractor_emotion = '正常'"
-    - eff:
-        # 如果處於高調教/低愛意失衡狀態，有高機率變為偏執
-        condition: "value: (gs.domination_level / (gs.player_love + 1)) > 150"
-        action: "ROLL_CHANCE(70%)"
-        on_success:
-          flag: "set gs.contractor_emotion = '偏執'"
-    - eff:
-        # 如果M方愛意值很高，有中等機率變為黏膩
-        condition: "value: gs.player_love > 60"
-        action: "ROLL_CHANCE(40%)"
-        on_success:
-          flag: "set gs.contractor_emotion = '黏膩'"
-    - eff:
-        # 如果M方昨天拒絕了邊界測試，有高機率變為冷漠
-        condition: "flag: M_REJECTED_BOUNDARY_TEST_YESTERDAY == true"
-        action: "ROLL_CHANCE(60%)"
-        on_success:
-          flag: "set gs.contractor_emotion = '冷漠'"
+        scene: |
+          # 系統指令：接下來的場景是關於一次從【強度等級 {current_level}】到【強度等級 {current_level + 1}】的「邊界測試」。
+          # 你的任務是扮演S方，向M方（玩家）提出一個符合這次等級跨越的新要求。
+          # (例如：從G1到G2可能是要求稱謂的改變；從G4到G5則可能是要求一項公開的羞辱任務)。
+          #
+          # 在提出要求後，你將完全根據玩家的回應，以及你對S方和M方性格的理解，來決定如何回應、場景如何發展、以及這對雙方關係造成的內在影響。
+          # 你的敘述就是唯一的結果。
+          
+          （AI將根據以上指令，開始生成S方提出要求的場景，並等待玩家回應...）
 
-
-# ======================================================================
-# SECTION 8: EMOTION-DRIVEN MENU OVERRIDES (情緒驅動選單覆蓋)
-# ======================================================================
----
-
-
-# ======================================================================
-# SECTION 9: NARRATIVE BALANCE SYSTEM (敘事平衡系統)
-# ======================================================================
----
-event:
-  id: NARRATIVE_BALANCE_CHECK
-  desc: "每日開始時檢查三大敘事維度（權力、情慾、情感）的平衡，並觸發對應的補償事件。"
-  trigger: "AUTO_CHECK(START_OF_DAY)"
-  priority: 90 # High priority to run before other daily events
-  effects:
-    - eff:
-        # 情感維度檢查：若超過2天沒有情感互動
-        condition: "(gs.day - gs.last_intimacy_action_day) > 2"
-        action: "ROLL_CHANCE(35%)"
-        on_success:
-          trigger_event: "TRIGGER_COMPENSATION_INTIMACY"
-    - eff:
-        # 權力維度檢查：若超過2天沒有權力規訓
-        condition: "(gs.day - gs.last_power_action_day) > 2"
-        action: "ROLL_CHANCE(35%)"
-        on_success:
-          trigger_event: "TRIGGER_COMPENSATION_POWER"
-    - eff:
-        # 情慾維度檢查：若超過3天沒有性愛
-        condition: "(gs.day - gs.last_lust_action_day) > 3"
-        action: "ROLL_CHANCE(35%)"
-        on_success:
-          trigger_event: "TRIGGER_COMPENSATION_LUST"
----
-
-
-event:
-  id: TRIGGER_COMPENSATION_LUST
-  desc: "補償事件：情慾維度。契約者因生理需求而主動誘惑。"
-  trigger: "EVENT_TRIGGER(TRIGGER_COMPENSATION_LUST)"
-  effects:
-    - eff:
-        generate_scene:
-          template: COMPENSATION_SEDUCTION
-          keywords: [ 燥熱, 磨蹭, 呼吸急促, 眼神水汽, 誘惑 ]
-          modifiers: [ "S方主動", "情慾維度補償" ]
-        flag: "set gs.contractor_emotion = '渴求'"
-        trigger_event: "START_SEX_SCENE"
-# ======================================================================
-# SECTION 10: M-SIDE TRAUMA MECHANICS (M方創傷機制)
-# ======================================================================
-# 新增：根據用戶設計，加入M方的創傷反應事件鏈。
-# 創傷核心：過往的強制性交經歷。
-# 核心矛盾：以「表演性的自願」來對抗「意志被剝奪」的恐懼。
----
+# M-SIDE TRAUMA MECHANICS (M方創傷機制)
 
 event:
   id: M_TRAUMA_REACTION_STRUGGLE
@@ -498,11 +325,7 @@ event:
         trigger_event: "MAIN_MENU_DISPLAY" # 返回主選單
 ---
 
-# ======================================================================
-# SECTION 12: M-PLAYER INTERNAL MONOLOGUE SYSTEM
-# ======================================================================
-# 新增：定義M方「內心獨白系統」的處理邏輯。
----
+# M-PLAYER INTERNAL MONOLOGUE SYSTEM
 event:
   id: PROCESS_M_PLAYER_THOUGHT
   desc: "M方內心獨白系統的處理邏輯"
@@ -521,32 +344,3 @@ event:
              (例如: M方處於「恐懼+10」狀態，S方觸發「懲罰」類事件的基礎機率 +5%)
              (例如: M方處於「順從+10」狀態，S方觸發「溫情」類事件的基礎機率 +5%)
           3. 選擇完思想後，M方玩家進入等待狀態，由S方的AI根據所有當前參數（包括M方的思想狀態），決定並觸發下一個行動事件。
----
-# ======================================================================
-# SECTION 13: NARRATIVE PACING EVENTS
-# ======================================================================
----
-event:
-  id: NARRATIVE_TIME_TRANSITION
-  desc: "時間轉場事件：在每個時間段結束時，生成一段承上啟下的敘事，讓時間流逝更明顯。"
-  trigger: "AUTO_CHECK(END_OF_TIMESLOT)"
-  priority: 50 # A mid-range priority, should run after actions but before the next menu.
-  effects:
-    - eff:
-        # The AI will generate a scene based on a set of checks.
-        system_logic: |
-          1. 檢查剛結束的時間段 (gs.current_timeslot)。
-          2. 檢查該時間段內是否發生了關鍵互動 (e.g., gs.last_lust_action_day, gs.last_power_action_day)。
-          3. 根據以上信息，生成一段符合當前氛圍的轉場描述。
-        scene:
-          # This is a directive for the AI to follow, not literal code.
-          # The examples show how the AI should behave.
-          if: "gs.current_timeslot == '清晨' and gs.last_power_action_day == gs.day"
-            text: "（晨間的規訓結束了，空氣中還殘留著汗水與臣服的氣息。陽光逐漸升高，城堡的僕人們開始走動，午間的時光即將來臨...）"
-          elif: "gs.current_timeslot == '晚上' and gs.last_lust_action_day == gs.day"
-            text: "（激情的夜晚歸於平靜，臥室裡只剩下交織的呼吸聲。月光從窗外灑入，你感受著身旁之人的體溫，意識在疲憊與滿足中漸漸模糊，沉入了夢鄉...）"
-          elif: "gs.current_timeslot == '下午' and NO_MAJOR_EVENT_HAPPENED"
-            text: "（一個平靜的下午就這樣悄然流逝，你們各懷心事，幾乎沒有交流。窗外的天色漸漸暗了下來，為城堡鍍上了一層金色，晚餐的時間近了...）"
-          else: # Default fallback
-            text: "（時間悄悄地流逝，當你回過神來，窗外的光線已經變了模樣，預示著下一個時段的到來...）"
----
