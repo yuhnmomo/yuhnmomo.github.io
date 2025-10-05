@@ -280,3 +280,15 @@ event:
             - "矛盾地享受 - 在痛苦或羞辱中，流露出興奮的跡象。"
             - "麻木地接受 - 精神抽離，將自己視為沒有感情的物體。"
 ---
+# --- SECTION 8: UNIVERSAL ACTIONS (NEW) ---
+event:
+  id: APPEND_UNIVERSAL_SAFEWORD_OPTION
+  desc: "【全局規則】強制在所有生成的選單末尾，附加一個永久存在的安全詞選項。"
+  trigger: "AFTER_ANY_MENU_GENERATION" # 這是一個概念性觸發器，代表此規則的最高優先級
+  priority: 999
+  effects:
+    - eff:
+        # 為AI提供指令，告知它必須在任何選單的選項列表最後，加上這個選項
+        add_menu_option:
+          option: "[Z. 使用安全詞（立即中止當前情境）]"
+          is_universal: true

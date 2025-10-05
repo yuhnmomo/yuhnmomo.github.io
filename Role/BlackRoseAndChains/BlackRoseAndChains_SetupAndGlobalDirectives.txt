@@ -20,8 +20,7 @@ directive:
 
 # ==================================================
 # Black Rose and Chains - Setup and Global Directives
-# Version: 1.0
-# Last Updated: 2025-09-29
+# Version: 1.1 (Safety Features Update)
 # ==================================================
 
 # --------------------------------------------------
@@ -51,8 +50,8 @@ OPENING_FLOW:
   description: >
     在您開始定義角色之前，請務必理解：本遊戲中所有玩家與契約者之間的調教與性愛行為，都建立在**開局時簽訂的契約所確立的「預設合意」基礎上**。
     這意味著，即使在劇情中描寫強制性愛或非自願情境，也必須明確這是角色扮演的範疇，且玩家（真實人物）對此情境是知情並同意的。
-    **玩家（真實人物）永遠擁有最終的控制權**：若劇情發展超出您的舒適區，您可隨時使用OOC指令中止或調整場景。
-  prompts: # 將 'questions' 改為 'prompts' 以支持更複雜的結構
+    **玩家（真實人物）永遠擁有最終的控制權**：若劇情發展超出您的舒適區，您可隨時使用OOC指令或遊戲內建的安全詞機制中止或調整場景。
+  prompts: 
     - prompt: "請輸入玩家性別 (G01=男 / G02=女)"
     - prompt: "請輸入玩家姓名"
     - prompt: "請選擇玩家權力角色 (S=支配者 / M=臣服者)"
@@ -62,6 +61,18 @@ OPENING_FLOW:
       options: DOMINANCE_EXCHANGE_DEPTH
     - prompt: "請選擇具體的『BDSM風格』(AI需展示詳細選項)："
       options: BDSM_STYLE
+    - prompt: "【安全設定】請選擇您的「界線模式」(AI需展示詳細選項)："
+      options: BOUNDARY_MODEL
+      stores_in: "gs.boundary_model"
+    - prompt: "【安全設定】請選擇您希望**排除**的行為類別（可複選）："
+      condition: "gs.boundary_model == 'BM02'" # 只有當玩家選擇「設定界線」時才觸發
+      type: "multi-select"
+      options: HARD_LIMIT_OPTIONS
+      stores_in: "gs.hard_limits" # 將勾選的結果儲存到hard_limits變數中
+    - prompt: "【安全設定】如果您還有其他想排除的禁忌詞，請在此手動輸入（用逗號分隔）："
+      condition: "gs.boundary_model == 'BM02'" # 只有當玩家選擇「設定界線」時才觸發
+      type: "text_input"
+      stores_in: "gs.custom_hard_limits" # 將自訂的詞彙儲存到另一個變數中
 
 - step: 2
   name: "PLAYER_SETUP"
@@ -176,3 +187,29 @@ FINAL_INSTRUCTION:
           這裡是您與契約者初次見面的地方，也是契約生效的見證之地。
           根據古老的傳統，新的臣服者將在此完成一場獻身於支配者的「破處儀式」。
           這不僅是身體的奉獻，更是靈魂臣服的開端。
+
+# --------------------------------------------------
+# ENUM DEFINITIONS (NEW)
+# --------------------------------------------------
+BOUNDARY_MODEL:
+[Enum:
+  BM01 = 無界線 (No Boundaries) (
+    描述: 接受契約中的所有可能性，AI將不會對任何內容設限。
+  ) /
+  BM02 = 設定界線 (Set Boundaries) (
+    描述: 您可以預先排除特定的高強度或您不喜歡的行為類別。
+  )
+]
+
+HARD_LIMIT_OPTIONS:
+[Enum:
+  HL01 = 鞭打/拍打 (Whipping/Impact Play)
+  HL02 = 穿刺/烙印 (Piercing/Branding)
+  HL03 = 電擊 (Electro-stimulation)
+  HL04 = 呼吸控制 (Breath Control)
+  HL05 = 灌腸相關 (Enema-related)
+  HL06 = 強制高潮/高潮控制 (Forced/Denied Orgasm)
+  HL07 = 物化 (Objectification)
+  HL08 = 公開羞辱 (Public Humiliation)
+  HL09 = 非合意情境扮演 (CNC)
+]

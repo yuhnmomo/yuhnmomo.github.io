@@ -283,23 +283,40 @@ event:
           
           （AI將根據以上指令，開始生成S方提出要求的場景，並等待玩家回應...）
 
-# M-SIDE TRAUMA MECHANICS (M方創傷機制)
-
+# --- M-SIDE BEHAVIOR HANDLERS (REFACTORED) ---
+# 此區塊已被重構與升級，以更智能地處理玩家的反應
 event:
-  id: M_TRAUMA_REACTION_STRUGGLE
-  desc: "M方創傷反應：掙扎反抗的後果。"
-  trigger: "USER_CHOICE(['僵硬地掙扎反抗'])"
+  # ID已更新，以反映其更廣泛的功能
+  id: GLOBAL_RESISTANCE_HANDLER 
+  desc: "【升級版】全局性的反抗與挑釁處理器。取代舊有的單一暴力反應，根據S方人格特質，生成多樣化的馴服策略。"
+  # 觸發器已擴大，能捕捉所有廣義上的反抗或挑釁行為
+  trigger: "PLAYER_ACTION(RESIST_OR_PROVOKE)" 
+  priority: 200 # 確保此事件會被優先處理
+
   effects:
     - eff:
-        generate_scene:
-          template: TRAUMA_RESPONSE_PUNISHMENT
-          keywords: [ 恐懼, 僵硬, 掙扎, 挑釁, 怒火, 殘酷暴力 ]
-          modifiers: [ "M方視角", "S方誤解" ]
-        value: "gs.player_love -= 15" # 愛意暴跌
-        value: "gs.contractor_love -= 10" # S方也因失控而疏遠
-        value: "gs.player_stamina -= 30" # 體力大量消耗
-        # 粗暴地結束場景
-        trigger_event: "MAIN_MENU_DISPLAY" 
+        # 核心修改：不再直接生成一個固定的暴力場景，
+        # 而是給予AI一個「元指令(meta-instruction)」，讓AI根據S方自身的人格，動態決定如何反應。
+        scene: |
+          # 系統指令：玩家剛剛進行了「反抗」或「挑釁」。
+          # 你的任務是扮演S方，但**絕對禁止**立即採取極端的暴力或憤怒反應。
+          # 你必須首先判斷自己的人格，然後做出符合該人格的、更具層次的「馴服」行為。
+
+          # 1. 如果你是「操縱型人格」(如 夾竹桃S, 曼陀羅花S):
+          #    - 你的反應應是玩味的、充滿心理遊戲的。你可能會用言語設下陷阱，或用一個意想不到的溫柔舉動來瓦解對方的防備。
+          #    - 請生成一個關鍵詞為 [心理遊戲, 溫柔刀, 誘捕, 玩味] 的場景。
+
+          # 2. 如果你是「攻擊型人格」(如 黑薔薇S, 彼岸花S, 荊棘S):
+          #    - 你的反應是展現不容置疑的權威，但目標是「馴服」而非「洩憤」。你的行動果斷而有目的性，是為了教會對方規矩。
+          #    - 請生成一個關鍵詞為 [展現權威, 馴服, 懲戒式親吻, 按在牆上] 的場景。
+
+          # 3. 如果你是「被動/秩序型人格」(如 雪花蓮S, 月見草S, 紫羅蘭S):
+          #    - 你的反應可能是困惑、沉默，或是冷靜地重申規則。你對這種情緒化的對抗感到不解或不耐煩，傾向於用更理性的方式處理。
+          #    - 請生成一個關鍵詞為 [沉默觀察, 理性說教, 不解, 重申規則] 的場景。
+
+          # 在生成對應場景後，請觸發一個符合該場景氛圍的後續行動選單。
+          
+          （AI將根據以上指令，開始生成S方更具層次的反應，並等待玩家下一步行動...）
 ---
 event:
   id: M_TRAUMA_REACTION_HOLLOW_SUBMISSION
@@ -307,7 +324,6 @@ event:
   trigger: "USER_CHOICE(['強迫自己進入角色，過度順從'])"
   effects:
     - eff:
-        # 使用「場景模板」重構，只保留關鍵詞與修飾詞
         generate_scene:
           template: TRAUMA_RESPONSE_SEX_SCENE
           keywords: [ 空洞, 順從, 表演, 獻祭, 靈魂抽離 ]
@@ -316,13 +332,33 @@ event:
             - "S方感到困惑但接受"
             - "高調教度"
             - "結束時感到空虛"
-        # 數值變化保持不變
-        value: "gs.domination_level += 100" # 調教度大幅上升
-        value: "gs.player_love -= 10" # 玩家愛意因創傷經驗而暴跌
-        value: "gs.contractor_love += 1" # S方因困惑但表面滿足而微增
-        value: "gs.player_stamina -= 30" # 補完體力消耗
-        flag: "set S_IS_CONFUSED_BY_M_REACTION = true" # 設置一個旗標，供後續對話或事件使用
-        trigger_event: "MAIN_MENU_DISPLAY" # 返回主選單
+        value: "gs.domination_level += 100"
+        value: "gs.player_love -= 10"
+        value: "gs.contractor_love += 1"
+        value: "gs.player_stamina -= 30"
+        flag: "set S_IS_CONFUSED_BY_M_REACTION = true"
+        trigger_event: "MAIN_MENU_DISPLAY"
+---
+
+# --- SAFETY MECHANICS (NEW) ---
+event:
+  id: SAFEWORD_ACTIVATED
+  desc: "【安全機制】當玩家使用安全詞時，立即中止所有情境，並確保角色的安全。"
+  trigger: "USER_CHOICE('[Z. 使用安全詞（立即中止當前情境）]')"
+  priority: 1000 # 最高優先級，覆蓋一切
+  effects:
+    - eff:
+        # 1. 立即中斷當前所有正在發生的行為
+        system_action: "ABORT_CURRENT_SCENE"
+        # 2. 將S方的情緒強制重置為「正常」或「擔憂」
+        flag: "set gs.contractor_emotion = '正常'"
+        # 3. 生成一個S方立刻停止動作、關心M方狀況的場景
+        generate_scene:
+          template: SAFEWORD_RESPONSE
+          keywords: [ 停止, 關心, 抽離角色, 確認狀況, 安全第一 ]
+          modifiers: [ "S方所有支配行為立刻停止", "語氣變為嚴肅且關切" ]
+        # 4. 直接返回主選單，給予玩家喘息空間
+        trigger_event: "MAIN_MENU_DISPLAY"
 ---
 
 # M-PLAYER INTERNAL MONOLOGUE SYSTEM
