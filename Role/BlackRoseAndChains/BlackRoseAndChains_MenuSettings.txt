@@ -66,18 +66,31 @@ event:
 ---
 event:
   id: EMOTION_OVERRIDE_MENU_ANGER
-  desc: "當S方（契約者）處於『憤怒』情緒時，用懲罰性的性愛選單覆蓋常規的主選單。"
+  desc: "當S方（契約者）處於『憤怒』情緒時，根據愛意值高低，觸發不同的反應。"
   trigger: "BEFORE_MAIN_MENU_DISPLAY" # 在主選單顯示前觸發
   priority: 100 # 高優先級，確保它先於正常的選單生成
   condition:
     - "gs.contractor_emotion == '憤怒'"
   effects:
+    # 新增：高愛意情況下的反應
     - eff:
+        desc: "High Love Anger Response"
+        # 假設愛意大於50為高
+        condition: "value: gs.contractor_love > 50" 
         generate_scene:
-          template: EMOTIONAL_OVERRIDE_ANGER
-          keywords: [ 憤怒, 壓倒, 越界, 非合意 ]
-          modifiers: [ "S方情緒驅動" ]
-        trigger_event: "M_TRAUMA_CHECK_VIOLATION"
+          template: EMOTIONAL_OVERRIDE_ANGER_SOFT
+          # 關鍵詞變為更複雜的、帶有安撫意味的
+          keywords: [ 壓抑怒火, 無奈, 嘆氣, 強硬的擁抱, 試圖溝通, 帶有懲罰意味的深吻 ]
+        flag: "set ABORT_NORMAL_MENU_DISPLAY = true" # 中斷正常的選單顯示流程
+
+    # 新增：低愛意情況下的反應
+    - eff:
+        desc: "Low Love Anger Response"
+        condition: "value: gs.contractor_love <= 50"
+        generate_scene:
+          template: EMOTIONAL_OVERRIDE_ANGER_HARD
+          # 使用我們之前討論過的、調弱版的關鍵詞
+          keywords: [ 不悅, 質問, 冷漠, 懲罰性親吻 ]
         flag: "set ABORT_NORMAL_MENU_DISPLAY = true" # 中斷正常的選單顯示流程
 ---
 event:
