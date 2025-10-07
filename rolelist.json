@@ -1,5 +1,54 @@
 [
     {
+        "id": "Hiraeth",
+        "title": "夢微知",
+        "description": "Role/Hiraeth/doc.md",
+        "files": [
+            {
+                "name": "後台設定",
+                "path": "Role/Hiraeth/夢微知後台設定.txt"
+            },
+            {
+                "name": "角色設定",
+                "path": "Role/Hiraeth/夢微知角色設定.txt"
+            },
+            {
+                "name": "世界書",
+                "path": "Role/Hiraeth/夢微知世界書.txt"
+            },
+            {
+                "name": "章節大綱",
+                "path": "Role/Hiraeth/夢微知章節大綱.txt"
+            },
+            {
+                "name": "互動情境指南",
+                "path": "Role/Hiraeth/互動情境指南.txt"
+            },
+            {
+                "name": "角色提示詞生成器",
+                "path": "Role/Hiraeth/角色提示詞生成器.txt"
+            },
+            {
+                "name": "貼在Gem使用說明",
+                "path": "Role/Hiraeth/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            {
+                "path": "Role/Hiraeth/img/Hiraeth01.png",
+                "alt": "夢微知圖片1"
+            },
+            {
+                "path": "Role/Hiraeth/img/Hiraeth02.png",
+                "alt": "夢微知圖片2"
+            },
+            {
+                "path": "Role/Hiraeth/img/Hiraeth03.png",
+                "alt": "夢微知圖片3"
+            }
+        ]
+    },
+    {
         "id": "BlackRoseAndChains",
         "title": "黑薔薇與鎖鍊",
         "description": "Role/BlackRoseAndChains/doc.md",
