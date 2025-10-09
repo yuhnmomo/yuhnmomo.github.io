@@ -398,15 +398,19 @@
         "files": [
             {
                 "name": "角色設定",
-                "path": "Role/smoke/過眼雲煙角色設定.md"
+                "path": "Role/smoke/過眼雲煙角色設定.txt"
             },
             {
                 "name": "後台設定",
-                "path": "Role/smoke/過眼雲煙後台設定.md"
+                "path": "Role/smoke/過眼雲煙後台設定.txt"
             },
             {
                 "name": "時間軸",
-                "path": "Role/smoke/時間軸.md"
+                "path": "Role/smoke/時間軸.txt"
+            },
+			{
+                "name": "互動情境指南",
+                "path": "Role/smoke/互動情境指南.txt"
             },
             {
                 "name": "貼在Gem使用說明.txt",
