@@ -61,7 +61,7 @@
                 <span>⏱️:<strong id="total-timer" class="font-bold ml-1">0</strong></span>
             </div>
             <!-- 開始按鈕 -->
-            <button id="new-game-button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1.5 px-3 rounded-md text-sm sm:text-base transition duration-200 shadow-sm">
+            <button id="new-game-button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-lg text-base sm:text-lg transition duration-200 shadow-md">
                 開始
             </button>
         </div>
@@ -99,9 +99,9 @@
             <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">7</button>
             <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">8</button>
             <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">9</button>
-            <button class="numpad-btn bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 sm:py-4 rounded-lg text-lg sm:text-xl transition">C</button>
+            <button class="numpad-btn bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">←</button>
             <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">0</button>
-            <button class="numpad-btn bg-red-400 hover:bg-red-500 text-white font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">←</button>
+            <button class="numpad-btn bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 sm:py-4 rounded-lg text-2xl sm:text-3xl transition">↵</button>
         </div>
 
     </div>
@@ -278,8 +278,8 @@
 
             const key = event.target.textContent;
 
-            if (key === 'C') {
-                answerInput.value = '';
+            if (key === '↵') {
+                checkAnswer();
             } else if (key === '←') {
                 answerInput.value = answerInput.value.slice(0, -1);
             } else {
@@ -309,7 +309,5 @@
 
 </body>
 </html>
-
-
 
 
