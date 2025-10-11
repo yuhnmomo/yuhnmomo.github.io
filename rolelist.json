@@ -671,5 +671,58 @@
                 "alt": "試駕總裁圖片 7"
             }
         ]
+    },
+    {
+        "id": "Polaris",
+        "title": "紫微星陣",
+        "description": "Role/Polaris/doc.md",
+        "files": [
+            {
+                "name": "後台設定",
+                "path": "Role/Polaris/紫微星陣後台設定.txt"
+            },
+            {
+                "name": "角色設定",
+                "path": "Role/Polaris/紫微星陣角色設定.txt"
+            },
+            {
+                "name": "玩家角色設定",
+                "path": "Role/Polaris/紫微星陣玩家角色設定.txt"
+            },
+            {
+                "name": "世界書",
+                "path": "Role/Polaris/紫微星陣世界書.txt"
+            },
+            {
+                "name": "章節大綱",
+                "path": "Role/Polaris/紫微星陣章節大綱.txt"
+            },
+            {
+                "name": "地圖檔",
+                "path": "Role/Polaris/紫微星陣地圖檔.txt"
+            },
+            {
+                "name": "互動情境指南",
+                "path": "Role/Polaris/互動情境指南.txt"
+            },
+            {
+                "name": "貼在Gem使用說明",
+                "path": "Role/Polaris/貼在Gem使用說明.txt"
+            }
+        ],
+        "images": [
+            { "path": "Role/Polaris/img/Polaris01.png", "alt": "紫微星陣圖片1" },
+            { "path": "Role/Polaris/img/Polaris02.png", "alt": "紫微星陣圖片2" },
+            { "path": "Role/Polaris/img/Polaris03.png", "alt": "紫微星陣圖片3" },
+            { "path": "Role/Polaris/img/Polaris04.png", "alt": "紫微星陣圖片4" },
+            { "path": "Role/Polaris/img/Polaris05.png", "alt": "紫微星陣圖片5" },
+            { "path": "Role/Polaris/img/Polaris06.png", "alt": "紫微星陣圖片6" },
+            { "path": "Role/Polaris/img/Polaris07.png", "alt": "紫微星陣圖片7" },
+            { "path": "Role/Polaris/img/Polaris08.png", "alt": "紫微星陣圖片8" },
+            { "path": "Role/Polaris/img/Polaris09.png", "alt": "紫微星陣圖片9" },
+            { "path": "Role/Polaris/img/Polaris10.png", "alt": "紫微星陣圖片10" },
+            { "path": "Role/Polaris/img/Polaris11.png", "alt": "紫微星陣圖片11" },
+            { "path": "Role/Polaris/img/Polaris12.png", "alt": "紫微星陣圖片12" }
+        ]
     }
 ]
