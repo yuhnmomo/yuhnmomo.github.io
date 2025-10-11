@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>九九乘法挑戰</title>
+    <!-- 引入 Tailwind CSS 方便快速美化頁面 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 使用一個可愛的字體 */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            touch-action: manipulation; /* 禁用雙擊縮放，提升行動裝置體驗 */
+        }
+        /* 當輸入框被選中時的樣式 */
+        .input-focus-ring:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        /* 禁用按鈕的樣式 */
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        /* 數字鍵盤按鈕點擊效果 */
+        .numpad-btn:active {
+            transform: scale(0.95);
+            filter: brightness(0.9);
+        }
+        /* 進度條的過渡效果 */
+        #question-timer-bar {
+            transition: width 0.2s linear, background-color 0.5s ease;
+        }
+    </style>
+</head>
+<body class="bg-blue-50 flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-md mx-4 bg-white rounded-2xl shadow-lg p-6 sm:p-8 text-center">
+        
+        <!-- 遊戲標題 -->
+        <h1 class="text-3xl sm:text-4xl font-bold text-blue-600 mb-2">九九乘法挑戰</h1>
+        <p class="text-gray-500 mb-6">挑戰你的速度極限！</p>
+
+        <!-- 統計數據顯示 -->
+        <div class="grid grid-cols-2 gap-4 bg-blue-100 rounded-lg p-4 mb-6 text-blue-800">
+            <div class="text-left">
+                <p class="text-sm">答對題數</p>
+                <p class="font-bold text-2xl"><span id="correct-count">0</span></p>
+            </div>
+            <div class="text-left">
+                <p class="text-sm">答錯題數</p>
+                <p class="font-bold text-2xl"><span id="incorrect-count">0</span></p>
+            </div>
+            <div class="text-left">
+                <p class="text-sm">成功率</p>
+                <p class="font-bold text-2xl"><span id="success-rate">0%</span></p>
+            </div>
+            <div class="text-left">
+                <p class="text-sm">總挑戰時間 (秒)</p>
+                <p class="font-bold text-2xl"><span id="total-timer">0</span></p>
+            </div>
+        </div>
+
+
+        <!-- 題目區域 -->
+        <div id="question-container" class="my-6">
+            <p id="question" class="text-5xl sm:text-6xl font-bold text-gray-800 tracking-wider"></p>
+        </div>
+
+        <!-- 每題作答時間進度條 -->
+        <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
+            <div id="question-timer-bar" class="bg-green-500 h-4 rounded-full" style="width: 100%;"></div>
+        </div>
+
+        <!-- 輸入與送出區域 -->
+        <div class="flex flex-col sm:flex-row gap-3 items-center justify-center">
+            <input type="number" id="answer-input" class="text-2xl text-center w-full sm:w-40 px-4 py-3 border-2 border-gray-300 rounded-lg transition duration-200 input-focus-ring" placeholder="答案" autocomplete="off">
+            <button id="submit-button" class="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg py-3 px-8 rounded-lg transition duration-200 transform hover:scale-105 shadow-md">
+                送出答案
+            </button>
+        </div>
+
+        <!-- 回饋訊息 -->
+        <div id="feedback" class="mt-6 h-8 text-xl font-semibold"></div>
+
+        <!-- 數字鍵盤 -->
+        <div id="numpad" class="grid grid-cols-3 gap-3 mt-4 max-w-xs mx-auto">
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">1</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">2</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">3</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">4</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">5</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">6</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">7</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">8</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">9</button>
+            <button class="numpad-btn bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 sm:py-4 rounded-lg text-xl transition">C</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">0</button>
+            <button class="numpad-btn bg-red-400 hover:bg-red-500 text-white font-bold py-3 sm:py-4 rounded-lg text-2xl transition">←</button>
+        </div>
+
+        <!-- 新遊戲按鈕 -->
+        <button id="new-game-button" class="mt-6 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200 text-lg shadow-md">
+            開始/重新開始
+        </button>
+
+    </div>
+
+    <script>
+        // 取得頁面上的元素
+        const questionEl = document.getElementById('question');
+        const answerInput = document.getElementById('answer-input');
+        const submitButton = document.getElementById('submit-button');
+        const newGameButton = document.getElementById('new-game-button');
+        const feedbackEl = document.getElementById('feedback');
+        const totalTimerEl = document.getElementById('total-timer');
+        const numpadEl = document.getElementById('numpad');
+        const correctCountEl = document.getElementById('correct-count');
+        const incorrectCountEl = document.getElementById('incorrect-count');
+        const successRateEl = document.getElementById('success-rate');
+        const questionTimerBar = document.getElementById('question-timer-bar');
+
+        // 遊戲狀態變數
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let num1, num2, correctAnswer;
+        
+        let totalTimerInterval; // 總時間計時器
+        let totalTimeElapsed = 0; // 總挑戰時間
+        
+        let questionTimerInterval; // 每題計時器
+        const QUESTION_TIME_LIMIT = 30;
+        let questionTimeLeft = QUESTION_TIME_LIMIT;
+
+        let gameActive = false;
+
+
+        // 更新統計數據顯示
+        function updateStats() {
+            correctCountEl.textContent = correctCount;
+            incorrectCountEl.textContent = incorrectCount;
+            const totalAttempted = correctCount + incorrectCount;
+            const rate = totalAttempted > 0 ? Math.round((correctCount / totalAttempted) * 100) : 0;
+            successRateEl.textContent = `${rate}%`;
+        }
+        
+        // 停止所有計時器
+        function stopAllTimers() {
+            clearInterval(totalTimerInterval);
+            clearInterval(questionTimerInterval);
+        }
+
+        // 處理時間到還沒答對的情況
+        function handleQuestionTimeout() {
+            incorrectCount++;
+            updateStats();
+            feedbackEl.textContent = `時間到！答案是 ${correctAnswer}`;
+            feedbackEl.classList.remove('text-green-500', 'text-yellow-500');
+            feedbackEl.classList.add('text-red-500');
+            if (gameActive) {
+                setTimeout(generateQuestion, 1500);
+            }
+        }
+
+        // 更新每題計時器的進度條
+        function updateQuestionTimerUI() {
+            const percentage = (questionTimeLeft / QUESTION_TIME_LIMIT) * 100;
+            questionTimerBar.style.width = `${percentage}%`;
+            
+            // 根據剩餘時間改變顏色
+            questionTimerBar.classList.remove('bg-green-500', 'bg-yellow-500', 'bg-red-500');
+            if (percentage < 25) {
+                questionTimerBar.classList.add('bg-red-500');
+            } else if (percentage < 50) {
+                questionTimerBar.classList.add('bg-yellow-500');
+            } else {
+                questionTimerBar.classList.add('bg-green-500');
+            }
+        }
+
+        // 開始每題的計時器
+        function startQuestionTimer() {
+            clearInterval(questionTimerInterval); // 清除舊的
+            questionTimeLeft = QUESTION_TIME_LIMIT;
+            updateQuestionTimerUI();
+
+            questionTimerInterval = setInterval(() => {
+                questionTimeLeft--;
+                updateQuestionTimerUI();
+                if (questionTimeLeft <= 0) {
+                    clearInterval(questionTimerInterval);
+                    handleQuestionTimeout();
+                }
+            }, 1000);
+        }
+        
+        // 產生新題目
+        function generateQuestion() {
+            num1 = Math.floor(Math.random() * 9) + 1;
+            num2 = Math.floor(Math.random() * 9) + 1;
+            correctAnswer = num1 * num2;
+            questionEl.textContent = `${num1} × ${num2} = ?`;
+            answerInput.value = '';
+            feedbackEl.textContent = '';
+            answerInput.focus();
+            startQuestionTimer();
+        }
+
+        // 檢查答案
+        function checkAnswer() {
+            if (!gameActive) return;
+
+            const userAnswer = parseInt(answerInput.value, 10);
+            if (isNaN(userAnswer)) {
+                feedbackEl.textContent = '請輸入數字喔！';
+                feedbackEl.classList.remove('text-green-500', 'text-red-500');
+                feedbackEl.classList.add('text-yellow-500');
+                return;
+            }
+
+            clearInterval(questionTimerInterval); // 停止本題計時
+
+            if (userAnswer === correctAnswer) {
+                correctCount++;
+                feedbackEl.textContent = '答對了！太棒了！';
+                feedbackEl.classList.remove('text-red-500', 'text-yellow-500');
+                feedbackEl.classList.add('text-green-500');
+            } else {
+                incorrectCount++;
+                feedbackEl.textContent = `答錯了，正確答案是 ${correctAnswer}`;
+                feedbackEl.classList.remove('text-green-500', 'text-yellow-500');
+                feedbackEl.classList.add('text-red-500');
+            }
+            
+            updateStats();
+            setTimeout(generateQuestion, 1200);
+        }
+
+        // 開始新遊戲
+        function startNewGame() {
+            gameActive = true;
+            correctCount = 0;
+            incorrectCount = 0;
+            totalTimeElapsed = 0;
+            totalTimerEl.textContent = 0;
+            updateStats();
+            answerInput.disabled = false;
+            submitButton.disabled = false;
+            numpadEl.classList.remove('opacity-50', 'pointer-events-none');
+            stopAllTimers();
+
+            // 啟動總時間計時器 (每秒更新)
+            totalTimerInterval = setInterval(() => {
+                totalTimeElapsed++;
+                totalTimerEl.textContent = totalTimeElapsed;
+            }, 1000);
+
+            generateQuestion();
+        }
+
+        // 幫按鈕加上事件監聽
+        submitButton.addEventListener('click', checkAnswer);
+        newGameButton.addEventListener('click', startNewGame);
+
+        // 讓使用者按下 Enter 鍵也能送出答案
+        answerInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                checkAnswer();
+            }
+        });
+
+        // 數字鍵盤的事件監聽
+        numpadEl.addEventListener('click', (event) => {
+            if (!gameActive || !event.target.matches('button')) return;
+
+            const key = event.target.textContent;
+
+            if (key === 'C') {
+                answerInput.value = '';
+            } else if (key === '←') {
+                answerInput.value = answerInput.value.slice(0, -1);
+            } else {
+                answerInput.value += key;
+            }
+            answerInput.focus();
+        });
+
+        // 頁面載入時的初始狀態
+        function initializeGame() {
+            answerInput.disabled = true;
+            submitButton.disabled = true;
+            numpadEl.classList.add('opacity-50', 'pointer-events-none');
+            questionEl.textContent = '準備好了嗎？';
+            feedbackEl.textContent = '點擊下方按鈕開始遊戲！';
+            feedbackEl.classList.add('text-gray-500');
+            updateStats();
+            updateQuestionTimerUI();
+        }
+
+        initializeGame();
+
+    </script>
+
+</body>
+</html>
+
