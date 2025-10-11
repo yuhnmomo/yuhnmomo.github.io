@@ -33,78 +33,76 @@
         #question-timer-bar {
             transition: width 0.2s linear, background-color 0.5s ease;
         }
+        /* 讓唯讀的輸入框看起來跟正常的一樣 */
+        input[readonly] {
+            background-color: white;
+            cursor: default;
+        }
     </style>
 </head>
 <body class="bg-blue-50 flex items-center justify-center min-h-screen">
 
-    <div class="w-full max-w-md mx-4 bg-white rounded-2xl shadow-lg p-6 sm:p-8 text-center">
+    <div class="w-full max-w-md mx-4 bg-white rounded-2xl shadow-lg p-4 sm:p-6 text-center">
         
         <!-- 遊戲標題 -->
-        <h1 class="text-3xl sm:text-4xl font-bold text-blue-600 mb-2">九九乘法挑戰</h1>
-        <p class="text-gray-500 mb-6">挑戰你的速度極限！</p>
+        <h1 class="text-2xl sm:text-4xl font-bold text-blue-600 mb-1">九九乘法挑戰</h1>
+        <p class="text-gray-500 mb-4 text-sm sm:text-base">挑戰你的速度極限！</p>
 
-        <!-- 統計數據顯示 -->
-        <div class="grid grid-cols-2 gap-4 bg-blue-100 rounded-lg p-4 mb-6 text-blue-800">
-            <div class="text-left">
-                <p class="text-sm">答對題數</p>
-                <p class="font-bold text-2xl"><span id="correct-count">0</span></p>
+        <!-- 頂部控制與統計列 -->
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-4 p-2 bg-gray-100 rounded-lg">
+            <!-- 統計數據 -->
+            <div class="flex items-center gap-x-2 text-xs sm:text-sm text-gray-700">
+                <span>⭕:<strong id="correct-count" class="font-bold text-green-600 ml-1">0</strong></span>
+                <span class="text-gray-300">|</span>
+                <span>❌:<strong id="incorrect-count" class="font-bold text-red-600 ml-1">0</strong></span>
+                <span class="text-gray-300">|</span>
+                <span>🎯:<strong id="success-rate" class="font-bold ml-1">0%</strong></span>
+                <span class="text-gray-300">|</span>
+                <span>⏱️:<strong id="total-timer" class="font-bold ml-1">0</strong></span>
             </div>
-            <div class="text-left">
-                <p class="text-sm">答錯題數</p>
-                <p class="font-bold text-2xl"><span id="incorrect-count">0</span></p>
-            </div>
-            <div class="text-left">
-                <p class="text-sm">成功率</p>
-                <p class="font-bold text-2xl"><span id="success-rate">0%</span></p>
-            </div>
-            <div class="text-left">
-                <p class="text-sm">總挑戰時間 (秒)</p>
-                <p class="font-bold text-2xl"><span id="total-timer">0</span></p>
-            </div>
+            <!-- 開始按鈕 -->
+            <button id="new-game-button" class="bg-green-500 hover:bg-green-600 text-white font-bold py-1.5 px-3 rounded-md text-sm sm:text-base transition duration-200 shadow-sm">
+                開始
+            </button>
         </div>
 
 
         <!-- 題目區域 -->
-        <div id="question-container" class="my-6">
+        <div id="question-container" class="my-4">
             <p id="question" class="text-5xl sm:text-6xl font-bold text-gray-800 tracking-wider"></p>
         </div>
 
         <!-- 每題作答時間進度條 -->
-        <div class="w-full bg-gray-200 rounded-full h-4 mb-6">
-            <div id="question-timer-bar" class="bg-green-500 h-4 rounded-full" style="width: 100%;"></div>
+        <div class="w-full bg-gray-200 rounded-full h-3 sm:h-4 mb-4">
+            <div id="question-timer-bar" class="bg-green-500 h-3 sm:h-4 rounded-full" style="width: 100%;"></div>
         </div>
 
         <!-- 輸入與送出區域 -->
-        <div class="flex flex-col sm:flex-row gap-3 items-center justify-center">
-            <input type="number" id="answer-input" class="text-2xl text-center w-full sm:w-40 px-4 py-3 border-2 border-gray-300 rounded-lg transition duration-200 input-focus-ring" placeholder="答案" autocomplete="off">
-            <button id="submit-button" class="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold text-lg py-3 px-8 rounded-lg transition duration-200 transform hover:scale-105 shadow-md">
+        <div class="flex flex-col sm:flex-row gap-2 items-center justify-center">
+            <input type="number" id="answer-input" class="text-xl sm:text-2xl text-center w-full sm:w-40 px-3 py-2 border-2 border-gray-300 rounded-lg transition duration-200 input-focus-ring" placeholder="答案" autocomplete="off" readonly>
+            <button id="submit-button" class="w-full sm:w-auto bg-blue-500 hover:bg-blue-600 text-white font-bold text-base sm:text-lg py-2.5 sm:py-3 px-6 sm:px-8 rounded-lg transition duration-200 transform hover:scale-105 shadow-md">
                 送出答案
             </button>
         </div>
 
         <!-- 回饋訊息 -->
-        <div id="feedback" class="mt-6 h-8 text-xl font-semibold"></div>
+        <div id="feedback" class="mt-4 h-6 text-base sm:text-xl font-semibold"></div>
 
         <!-- 數字鍵盤 -->
-        <div id="numpad" class="grid grid-cols-3 gap-3 mt-4 max-w-xs mx-auto">
-            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">1</button>
-            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">2</button>
-            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">3</button>
-            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">4</button>
-            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">5</button>
-            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">6</button>
-            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">7</button>
-            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">8</button>
-            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">9</button>
-            <button class="numpad-btn bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 sm:py-4 rounded-lg text-xl transition">C</button>
-            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-3 sm:py-4 rounded-lg text-2xl transition">0</button>
-            <button class="numpad-btn bg-red-400 hover:bg-red-500 text-white font-bold py-3 sm:py-4 rounded-lg text-2xl transition">←</button>
+        <div id="numpad" class="grid grid-cols-3 gap-2 mt-3 max-w-xs mx-auto">
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">1</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">2</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">3</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">4</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">5</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">6</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">7</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">8</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">9</button>
+            <button class="numpad-btn bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-2 sm:py-4 rounded-lg text-lg sm:text-xl transition">C</button>
+            <button class="numpad-btn bg-gray-200 hover:bg-gray-300 text-gray-800 font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">0</button>
+            <button class="numpad-btn bg-red-400 hover:bg-red-500 text-white font-bold py-2 sm:py-4 rounded-lg text-xl sm:text-2xl transition">←</button>
         </div>
-
-        <!-- 新遊戲按鈕 -->
-        <button id="new-game-button" class="mt-6 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg transition duration-200 text-lg shadow-md">
-            開始/重新開始
-        </button>
 
     </div>
 
@@ -241,6 +239,9 @@
         // 開始新遊戲
         function startNewGame() {
             gameActive = true;
+            newGameButton.textContent = '重來';
+            questionEl.classList.remove('text-3xl', 'sm:text-4xl');
+            questionEl.classList.add('text-5xl', 'sm:text-6xl');
             correctCount = 0;
             incorrectCount = 0;
             totalTimeElapsed = 0;
@@ -292,8 +293,11 @@
             answerInput.disabled = true;
             submitButton.disabled = true;
             numpadEl.classList.add('opacity-50', 'pointer-events-none');
+            newGameButton.textContent = '開始';
             questionEl.textContent = '準備好了嗎？';
-            feedbackEl.textContent = '點擊下方按鈕開始遊戲！';
+            questionEl.classList.remove('text-5xl', 'sm:text-6xl');
+            questionEl.classList.add('text-3xl', 'sm:text-4xl');
+            feedbackEl.textContent = '點擊「開始」按鈕進行遊戲！';
             feedbackEl.classList.add('text-gray-500');
             updateStats();
             updateQuestionTimerUI();
@@ -305,4 +309,7 @@
 
 </body>
 </html>
+
+
+
 
