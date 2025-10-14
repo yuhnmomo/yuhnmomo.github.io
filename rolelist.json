@@ -1,5 +1,26 @@
 [
     {
+        "id": "Fox",
+        "title": "清羽傳",
+        "description": "Role/Fox/doc.md",
+        "files": [
+            { "name": "後台設定", "path": "Role/Fox/清羽傳後台設定.txt" },
+            { "name": "玩家角色", "path": "Role/Fox/清羽傳玩家角色設定.txt" },
+            { "name": "主要角色", "path": "Role/Fox/清羽傳角色設定.txt" },
+            { "name": "妖族角色", "path": "Role/Fox/清羽傳妖族設定.txt" },
+            { "name": "人間地圖", "path": "Role/Fox/清羽傳人間地圖檔.txt" },
+            { "name": "妖界地圖", "path": "Role/Fox/清羽傳妖界地圖.txt" },
+            { "name": "任務設定", "path": "Role/Fox/清羽傳任務設定.txt" },
+            { "name": "章節大綱", "path": "Role/Fox/清羽傳章節大綱.txt" },
+            { "name": "Gem使用說明", "path": "Role/Fox/貼在Gem使用說明.txt" }
+        ],
+        "images": [
+            { "path": "Role/Fox/img/Fox01.png", "alt": "清羽傳1" },
+            { "path": "Role/Fox/img/Fox02.png", "alt": "清羽傳2" },
+            { "path": "Role/Fox/img/Fox03.png", "alt": "清羽傳3" }
+        ]
+    },
+    {
         "id": "Polaris",
         "title": "紫微星陣",
         "description": "Role/Polaris/doc.md",
@@ -402,44 +423,6 @@
             {
                 "path": "Role/Thoth/img/Thoth08.png",
                 "alt": "腹黑年下"
-            }
-        ]
-    },
-    {
-        "id": "Fox",
-        "title": "清羽傳",
-        "description": "Role/Fox/doc.md",
-        "//mygpts": "https://chatgpt.com/g/g-689affecfa888191a7d6eafffacbd33e-qing-yu-chuan?model=gpt-5",
-        "files": [
-            {
-                "name": "角色設定",
-                "path": "Role/Fox/清羽傳人物設定.md"
-            },
-            {
-                "name": "後台設定",
-                "path": "Role/Fox/清羽傳後台設定.md"
-            },
-            {
-                "name": "地圖檔",
-                "path": "Role/Fox/清羽傳地圖檔.md"
-            },
-            {
-                "name": "貼在Gem使用說明.txt",
-                "path": "Role/Fox/貼在Gem使用說明.txt"
-            }
-        ],
-        "images": [
-            {
-                "path": "Role/Fox/img/Fox01.png",
-                "alt": "清羽傳1"
-            },
-            {
-                "path": "Role/Fox/img/Fox02.png",
-                "alt": "清羽傳2"
-            },
-            {
-                "path": "Role/Fox/img/Fox03.png",
-                "alt": "清羽傳3"
             }
         ]
     },
