@@ -63,7 +63,7 @@ ID: YHG_DISCIPLE_CORRIDOR
 北 -> YHG_HERB_GARDEN
 
 ID: YHG_QINGYU_ROOM
-名稱: 清羽的房間
+名稱: 你的房間
 描述: 你的房間，佈置簡潔雅致。
 人物:
 出口:
