@@ -12,6 +12,7 @@
             { "name": "妖界地圖", "path": "Role/Fox/清羽傳妖界地圖.txt" },
             { "name": "任務設定", "path": "Role/Fox/清羽傳任務設定.txt" },
             { "name": "章節大綱", "path": "Role/Fox/清羽傳章節大綱.txt" },
+            { "name": "互動情境指南", "path": "Role/Fox/互動情境指南.txt"},
             { "name": "Gem使用說明", "path": "Role/Fox/貼在Gem使用說明.txt" }
         ],
         "images": [

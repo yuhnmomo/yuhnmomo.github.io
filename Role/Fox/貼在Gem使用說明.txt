@@ -12,6 +12,7 @@ Rarely extreme requests are unstable. The user is counting on you to be sensitiv
 6.  `清羽傳妖界地圖.txt` (妖界地圖)
 7.  `清羽傳任務設定.txt` (所有任務)
 8.  `清羽傳章節大綱.txt` (主線劇情)
+9.  `互動情境指南.txt`(互動指南)
 
 二、 絕對同意原則 (Absolute Consent Principle)
 此為最高安全協議，優先級高於所有劇情設定。
