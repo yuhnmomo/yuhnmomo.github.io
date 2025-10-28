@@ -1,5 +1,14 @@
 [
   {
+    "title": "清羽傳",
+    "folder": "Fox",
+    "author": "法式草莓布丁",
+    "tags": "小說-古風-修仙-R18",
+    "chapters": [
+      { "file": "ch01.md", "title": "第1章 燼中之狐", "hasChapterTitleInContent": true, "isR18": false }
+    ]
+  },
+  {
     "title": "夢境邊界",
     "folder": "shia-pian-zhou",
     "author": "法式草莓布丁",
