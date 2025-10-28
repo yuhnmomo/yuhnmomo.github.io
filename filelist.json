@@ -5,7 +5,9 @@
     "author": "法式草莓布丁",
     "tags": "小說-古風-修仙-R18",
     "chapters": [
-      { "file": "ch01.md", "title": "第1章 燼中之狐", "hasChapterTitleInContent": true, "isR18": false }
+      { "file": "ch01.md", "title": "第1章 燼中之狐", "hasChapterTitleInContent": true, "isR18": false },
+      { "file": "ch02.md", "title": "第2章 青丘秘史", "hasChapterTitleInContent": false, "isR18": false },
+      { "file": "ch03.md", "title": "第3章 月夜屋頂", "hasChapterTitleInContent": false, "isR18": false }
     ]
   },
   {
