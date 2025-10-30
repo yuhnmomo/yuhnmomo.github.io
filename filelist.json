@@ -7,7 +7,7 @@
     "chapters": [
       { "file": "ch01.md", "title": "第1章 燼中之狐", "hasChapterTitleInContent": true, "isR18": false },
       { "file": "ch02.md", "title": "第2章 青丘秘史", "hasChapterTitleInContent": false, "isR18": false },
-      { "file": "ch03.md", "title": "第3章 月夜屋頂", "hasChapterTitleInContent": false, "isR18": false },
+      { "file": "ch03.md", "title": "第3章 藏書閣", "hasChapterTitleInContent": false, "isR18": false },
       { "file": "ch04.md", "title": "第4章 月華與寒冰", "hasChapterTitleInContent": true, "isR18": false },
       { "file": "ch05.md", "title": "第5章 演武坪", "hasChapterTitleInContent": false, "isR18": false },
       { "file": "ch06.md", "title": "第6章 禁忌的邀約", "hasChapterTitleInContent": true, "isR18": true }
